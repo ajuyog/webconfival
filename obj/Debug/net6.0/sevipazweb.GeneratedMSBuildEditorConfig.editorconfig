@@ -1,0 +1,636 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = sevipazweb
+build_property.RootNamespace = sevipazweb
+build_property.ProjectDir = C:\Users\edgar.martinez\source\repos\Confinanza\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\edgar.martinez\source\repos\Confinanza
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/About/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWJvdXRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Accordions/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3JkaW9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/AddClients/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRkQ2xpZW50c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Alerts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWxlcnRzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Avatar/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXZhdGFyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Background/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFja2dyb3VuZFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Badges/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFkZ2VzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/BlogDetails/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvZ0RldGFpbHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Blog/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvZ1xpbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Border/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9yZGVyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Breadcrumbs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJlYWRjcnVtYnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Buttons/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnV0dG9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Calendar2/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FsZW5kYXIyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Cards/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyZHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Carousel/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2Fyb3VzZWxcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Cart/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/ChartChartJs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhcnRDaGFydEpzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/ChartEchart/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhcnRFY2hhcnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/ChartFlot/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhcnRGbG90XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/ChartMorris/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhcnRNb3JyaXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/ChartNvd3/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhcnROdmQzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Chat/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Checkout/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hlY2tvdXRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Clients/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Colors/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29sb3JzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/ComposeMail/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcG9zZU1haWxcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Counters/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291bnRlcnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/CreateInvoice/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlYXRlSW52b2ljZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/CreateTask/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlYXRlVGFza1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/CustomPages/construction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tUGFnZXNcY29uc3RydWN0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/CustomPages/error404.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tUGFnZXNcZXJyb3I0MDQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/CustomPages/error500.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tUGFnZXNcZXJyb3I1MDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/CustomPages/error501.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tUGFnZXNcZXJyb3I1MDEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/CustomPages/forgotpassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tUGFnZXNcZm9yZ290cGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/CustomPages/lockscreen.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tUGFnZXNcbG9ja3NjcmVlbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/CustomPages/login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tUGFnZXNcbG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/CustomPages/register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tUGFnZXNccmVnaXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/DataTable/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YVRhYmxlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Display/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGlzcGxheVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Dropdown/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRHJvcGRvd25cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/EditInvoice/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdEludm9pY2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/EditPost/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFBvc3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/EditProject/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFByb2plY3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/EditTask/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFRhc2tcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/EmptyPage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wdHlQYWdlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Faqs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFxc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/FeatherIcons/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmVhdGhlckljb25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/FileAttachment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsZUF0dGFjaG1lbnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/FileDetails/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsZURldGFpbHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/FileManager/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsZU1hbmFnZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Files/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/FlagIcons/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxhZ0ljb25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Flex/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxleFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/FontAwesome/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9udEF3ZXNvbWVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Footers/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9vdGVyc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/FormAdvanced/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybUFkdmFuY2VkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/FormEditable/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybUVkaXRhYmxlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/FormEditar/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybUVkaXRhclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/FormElements/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybUVsZW1lbnRzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/FormLayouts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybUxheW91dHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/FormValidation/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVZhbGlkYXRpb25cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/FormWizard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybVdpemFyZFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Gallery/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FsbGVyeVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Height/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGVpZ2h0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/InvoiceDetails/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52b2ljZURldGFpbHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/InvoiceList/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52b2ljZUxpc3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/IonicIcons/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW9uaWNJY29uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/LandingPage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGFuZGluZ1BhZ2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/LeafletMaps/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhZmxldE1hcHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/LInforme2018/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTEluZm9ybWUyMDE4XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Loader/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9hZGVyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/LObjetivos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTE9iamV0aXZvc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/LPrivacidad/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTFByaXZhY2lkYWRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/LProyectos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTFByb3llY3Rvc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/LReparacion - Copia (3)/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTFJlcGFyYWNpb24gLSBDb3BpYSAoMylcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/LReparacion/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTFJlcGFyYWNpb25cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/MailInbox/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbEluYm94XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/MailSettings/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbFNldHRpbmdzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/MapelMaps/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFwZWxNYXBzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Margin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFyZ2luXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/MediaObject/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWFPYmplY3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/MeterialIcons/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWV0ZXJpYWxJY29uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Modals/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kYWxzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Navigation/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmF2aWdhdGlvblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Notifications/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90aWZpY2F0aW9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Offcanvas/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT2ZmY2FudmFzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Opacity/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3BhY2l0eVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Padding/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFkZGluZ1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Pagination/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFnaW5hdGlvblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Panels/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFuZWxzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Pe7/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGU3XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Position/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zaXRpb25cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Pricing/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJpY2luZ1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/ProductDetails/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdERldGFpbHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Products/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Profile/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/ProgressBar/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZ3Jlc3NCYXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/ProjectDetails/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdERldGFpbHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/ProjectNew/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdE5ld1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/ProjectsList/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdHNMaXN0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Projects/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvamVjdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/RangeSlider/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFuZ2VTbGlkZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Rating/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmF0aW5nXGluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/ReadMail/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVhZE1haWxcaW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Scroll/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Nyb2xsXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Services/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Settings/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2V0dGluZ3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/-selector-model.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcLXNlbGVjdG9yLW1vZGVsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/landing/_app-header.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcbGFuZGluZ1xfYXBwLWhlYWRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/landing/_app-header1.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcbGFuZGluZ1xfYXBwLWhlYWRlcjEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/landing/_app-sidebar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcbGFuZGluZ1xfYXBwLXNpZGViYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/landing/_app-sidebar1.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcbGFuZGluZ1xfYXBwLXNpZGViYXIxLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/landing/_switcher.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcbGFuZGluZ1xfc3dpdGNoZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/_app-header.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcX2FwcC1oZWFkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/_app-headericon.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcX2FwcC1oZWFkZXJpY29uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/_app-sidebar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcX2FwcC1zaWRlYmFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/_footer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcX2Zvb3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/_footercustom.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcX2Zvb3RlcmN1c3RvbS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/_landingfooter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcX2xhbmRpbmdmb290ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/_switcher.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcX3N3aXRjaGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/layouts/_switchercustom.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGxheW91dHNcX3N3aXRjaGVyY3VzdG9tLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/_Layout1.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQxLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/_Layout2.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/_Layout3.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/_Layoutlandingpage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRsYW5kaW5ncGFnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/SimpleIcons/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2ltcGxlSWNvbnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/SweetAlerts/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3dlZXRBbGVydHNcaW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Switcher/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3dpdGNoZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/TableEditable/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVFZGl0YWJsZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Tables/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Tabs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFic1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Tags/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFnc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/TaskList/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFza0xpc3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Terms/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVybXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/ThemifyIcons/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGhlbWlmeUljb25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Thumbnails/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGh1bWJuYWlsc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Tickets/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Timeline/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGltZWxpbmVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/TimelogInvoice/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGltZWxvZ0ludm9pY2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Tooltipandpopover/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVG9vbHRpcGFuZHBvcG92ZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Treeview/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJlZXZpZXdcaW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/TypiconsIcons/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHlwaWNvbnNJY29uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Typography/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHlwb2dyYXBoeVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/UserList/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckxpc3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/VectorMaps/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVjdG9yTWFwc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/WeatherIcons/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2VhdGhlckljb25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Width/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2lkdGhcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Wishlist/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2lzaGxpc3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/edgar.martinez/source/repos/Confinanza/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-pova7frum5

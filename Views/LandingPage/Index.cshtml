@@ -1,0 +1,1538 @@
+@using System.Collections.Generic;
+@inject HttpClient Client
+
+@{
+	Layout = "_Layoutlandingpage";
+}
+            
+                <!--app-content open-->
+				<div class="hor-content main-content mt-0">
+					<div class="side-app">
+						<!-- CONTAINER -->
+						<div class="main-container">
+							<!-- Clients section-->
+							<div class="section pb-5">
+								<div class="container px-5 px-md-0">
+									<div class="overflow-hidden">
+										<div class="row">
+											@*@if (User.Identity.IsAuthenticated)
+												{
+													<h1>Welcome @User.Identity.Name</h1>
+													<h1>You are signed in</h1>
+													<h2><a asp-action="Privacy">
+												Go to protected page</a></h2>
+													<form asp-controller="LandingPage" 
+												asp-action="SignOut">
+														<button type="submit" name="signOutType" 
+												value="app">Sign Out</button>
+														<button type="submit" name="signOutType" 
+												value="all">Sign Out Completely</button>
+													</form>
+												}
+												else
+												{
+													<h1>You are not signed in</h1>
+													<form asp-controller="LandingPage" 
+												asp-action="SignIn">
+														<button type="submit">
+												Sign In</button>
+													</form>
+												}*@
+											<div class="col-lg-6 text-left pos-relative overflow-hidden market-image text-center">
+												<img alt="" class="logo-2" src="~/assets/images/landing/baner1.png" style="width:50% !important">
+											</div>
+											<div class="col-lg-6 text-left pos-relative overflow-hidden p-3">
+												<h1 class="text-shadow text-info" style="font-size:29px !important">Justo a tiempo para cumplir tus sueños</h1> 																				
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Testimonials section-->
+							<div class="section pb-5 bg-white" id="About">
+								<div class="container px-5 px-md-0">
+									<div class="row justify-content-center text-center">
+										<div class="col-lg-8 ps-4 mb-lg-0- mb-4">
+											<h3 class="header-family">Crédito de libranza para Pensionados y Empleados activos, del sector público y fuerzas militares.</h3>
+											
+										</div>
+									</div>
+									<div class="row justify-content-center">
+										<div class="col-lg-12">
+											<div class="responsive-screens">
+												<div class="slide">
+													<div class="row align-items-center">
+														<div class="col-md-7 col-12 px-0">
+															<div class="row">
+																<div class="col-md-6 col-12">
+																	<div class="d-flex">
+																		<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																				viewBox="0 0 24 24">
+																				<path fill="#8fbd56"
+																					d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																					opacity=".99" />
+																				<path fill="#8fbd56" opacity=".2"
+																					d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																			</svg></span>
+																		<div class="ms-3">
+																			<p>Sin importar tu reporte en las centrales</p>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6 col-12">
+																	<div class="d-flex">
+																		<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																				viewBox="0 0 24 24">
+																				<path fill="#8fbd56"
+																					d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																					opacity=".99" />
+																				<path fill="#8fbd56" opacity=".2"
+																					d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																			</svg></span>
+																		<div class="ms-3">
+																			<p>Monto máximo hasta de $100 millones</p>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6 col-12">
+																	<div class="d-flex">
+																		<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																				viewBox="0 0 24 24">
+																				<path fill="#8fbd56"
+																					d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																					opacity=".99" />
+																				<path fill="#8fbd56" opacity=".2"
+																					d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																			</svg></span>
+																		<div class="ms-3">
+																			<p>Rápido y ágil</p>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6 col-12">
+																	<div class="d-flex">
+																		<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																				viewBox="0 0 24 24">
+																				<path fill="#8fbd56"
+																					d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																					opacity=".99" />
+																				<path fill="#8fbd56" opacity=".2"
+																					d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																			</svg></span>
+																		<div class="ms-3">
+																			<p>Sin codeudor</p>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6 col-12">
+																	<div class="d-flex">
+																		<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																				viewBox="0 0 24 24">
+																				<path fill="#8fbd56"
+																					d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																					opacity=".99" />
+																				<path fill="#8fbd56" opacity=".2"
+																					d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																			</svg></span>
+																		<div class="ms-3">
+																			<p>Recogemos la cartera de otras entidades</p>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6 col-12">
+																	<div class="d-flex">
+																		<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																				viewBox="0 0 24 24">
+																				<path fill="#8fbd56"
+																					d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																					opacity=".99" />
+																				<path fill="#8fbd56" opacity=".2"
+																					d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																			</svg></span>
+																		<div class="ms-3">
+																			<p>La cuota, se descuenta directamente de tu nómina</p>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6 col-12">
+																	<div class="d-flex">
+																		<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																				viewBox="0 0 24 24">
+																				<path fill="#8fbd56"
+																					d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																					opacity=".99" />
+																				<path fill="#8fbd56" opacity=".2"
+																					d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																			</svg></span>
+																		<div class="ms-3">
+																			<p>Respuesta ágil y oportuna</p>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6 col-12">
+																	<div class="d-flex">
+																		<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																				viewBox="0 0 24 24">
+																				<path fill="#8fbd56"
+																					d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																					opacity=".99" />
+																				<path fill="#8fbd56" opacity=".2"
+																					d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																			</svg></span>
+																		<div class="ms-3">
+																			<p>Atendemos tu solicitud incluso si estás reportado o tienes historial crediticio</p>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6 col-12">
+																	<div class="d-flex">
+																		<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																				viewBox="0 0 24 24">
+																				<path fill="#8fbd56"
+																					d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																					opacity=".99" />
+																				<path fill="#8fbd56" opacity=".2"
+																					d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																			</svg></span>
+																		<div class="ms-3">
+																			<p>Aceptamos hasta un embargo</p>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6 col-12">
+																	<div class="d-flex">
+																		<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																				viewBox="0 0 24 24">
+																				<path fill="#8fbd56"
+																					d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																					opacity=".99" />
+																				<path fill="#8fbd56" opacity=".2"
+																					d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																			</svg></span>
+																		<div class="ms-3">
+																			<p>Recogemos tus obligaciones en un solo descuento</p>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6 col-12">
+																	<div class="d-flex">
+																		<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																				viewBox="0 0 24 24">
+																				<path fill="#8fbd56"
+																					d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																					opacity=".99" />
+																				<path fill="#8fbd56" opacity=".2"
+																					d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																			</svg></span>
+																		<div class="ms-3">
+																			<p>Y lo mejor, no tenemos costos ocultos somos claros desde el inicio.</p>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-5 col-12">
+															<img class="img-fluid float-md-end" src="~/assets/images/landing/pensionados.png" alt="">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Testimonials Close-->
+
+							<!-- Our motto section-->
+							<div class="section pb-5">
+								<div class="container px-5 px-md-0">
+									<div class="row text-center">
+										<div class="col-lg-12">
+											<h3 class="header-family">CONOCE AQUÍ NUESTRO CRÉDITO DE LIBRANZA :</h3>											
+										</div>
+									</div>
+									<div class="row mt-5">
+										<div class="col-lg-4 col-sm-6 why-image">
+											<div class="card">
+												<div class="card-body">
+													<a href="#features">
+														<div class="mb-2">
+															<img class="img-fluid" src="~/assets/images/landing/Why/pensionado.png" alt="">
+														</div>
+														<p class="fs-15">Sí eres Pensionado </p>
+													</a>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-4 col-sm-6 why-image">
+											<div class="card">
+												<div class="card-body">
+													<a href="#features">
+													<div class="mb-2">
+														<img class="img-fluid" src="~/assets/images/landing/Why/publico.png" alt="">
+													</div>
+													<p class="fs-15">Sí eres empleado del Sector Público</p>
+													</a>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-4 col-sm-6 why-image">
+											<div class="card">
+												<div class="card-body">
+													<a href="#features">
+													<div class="mb-2">
+														<img class="img-fluid" src="~/assets/images/landing/Why/militares.png" alt="">
+													</div>
+													<p class="fs-15">Sí eres empleado Fuerzas Militares </p>
+													</a>
+												</div>
+											</div>
+										</div>										
+									</div>
+								</div>
+							</div>
+							<!-- Our motto section end-->
+
+@*
+							<!-- Customization-->
+							<div class="section customizable pb-6">
+								<div class="container px-5 px-md-0">
+									<div class="row text-center justify-content-center">
+										<div class="col-lg-8 ps-4">
+											<h3 class="header-family">Libranza para pensionados</h3>
+										</div>
+									</div>
+									<div class="row align-items-center">
+										<div class="col-xl-5 customize-image text-center">
+											<img class="img-fluid p-5" src="~/assets/images/landing/pensionados.png" alt="">
+										</div>
+										<div class="col-xl-7 p-5">
+											<div class="row">
+												<div class="col-md-6 col-12">
+													<div class="d-flex">
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																viewBox="0 0 24 24">
+																<path fill="#8fbd56"
+																	d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																	opacity=".99" />
+																<path fill="#8fbd56" opacity=".2"
+																	d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+															</svg></span>
+														<div class="ms-3">
+															<p><strong>Monto:</strong> hasta 100 millones.</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6 col-12">
+													<div class="d-flex">
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																viewBox="0 0 24 24">
+																<path fill="#8fbd56"
+																	d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																	opacity=".99" />
+																<path fill="#8fbd56" opacity=".2"
+																	d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+															</svg></span>
+														<div class="ms-3">
+															<p><strong>Plazo:</strong> hasta 144 meses</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6 col-12">
+													<div class="d-flex">
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																viewBox="0 0 24 24">
+																<path fill="#8fbd56"
+																	d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																	opacity=".99" />
+																<path fill="#8fbd56" opacity=".2"
+																	d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+															</svg></span>
+														<div class="ms-3">
+															<p><strong>Edad:</strong> Desde 18 hasta los 84 años</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-12 col-12">
+													<div class="d-flex">
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																viewBox="0 0 24 24">
+																<path fill="#8fbd56"
+																	d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																	opacity=".99" />
+																<path fill="#8fbd56" opacity=".2"
+																	d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+															</svg></span>
+														<div class="ms-3">
+															<p><strong>Requisitos:</strong>
+																Sólo te solicitamos la copia de tu cédula y los últimos dos desprendibles de nómina.
+																Solicita tu crédito y cumple tus sueños..</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-12 col-12">
+													<div class="d-flex">
+														<a href="#Contact" class="btn btn-blue">Clic para solicitar tu credito ahora</a>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Customization close-->*@
+							<!-- Customization-->
+							@*<div class="section customizable pb-6">
+								<div class="container px-5 px-md-0">
+									<div class="row text-center justify-content-center">
+										<div class="col-lg-8 ps-4">
+											<h3 class="header-family">Libranza para empleado sector público</h3>
+										</div>
+									</div>
+									<div class="row align-items-center">
+										<div class="col-xl-5 customize-image text-center">
+											<img class="img-fluid p-5" src="~/assets/images/landing/publico.png" alt="">
+										</div>
+										<div class="col-xl-7 p-5">
+											<div class="row">
+												<div class="col-md-6 col-12">
+													<div class="d-flex">
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																viewBox="0 0 24 24">
+																<path fill="#8fbd56"
+																	d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																	opacity=".99" />
+																<path fill="#8fbd56" opacity=".2"
+																	d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+															</svg></span>
+														<div class="ms-3">
+															<p><strong>Monto:</strong> hasta 100 millones.</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6 col-12">
+													<div class="d-flex">
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																viewBox="0 0 24 24">
+																<path fill="#8fbd56"
+																	d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																	opacity=".99" />
+																<path fill="#8fbd56" opacity=".2"
+																	d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+															</svg></span>
+														<div class="ms-3">
+															<p><strong>Plazo:</strong> hasta 144 meses</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6 col-12">
+													<div class="d-flex">
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																viewBox="0 0 24 24">
+																<path fill="#8fbd56"
+																	d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																	opacity=".99" />
+																<path fill="#8fbd56" opacity=".2"
+																	d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+															</svg></span>
+														<div class="ms-3">
+															<p><strong>Edad:</strong> Desde 18 hasta los 84 años</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-12 col-12">
+													<div class="d-flex">
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																viewBox="0 0 24 24">
+																<path fill="#8fbd56"
+																	d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																	opacity=".99" />
+																<path fill="#8fbd56" opacity=".2"
+																	d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+															</svg></span>
+														<div class="ms-3">
+															<p><strong>Requisitos:</strong>
+																Sólo te solicitamos la copia de tu cédula y los últimos dos desprendibles de nómina.
+																Solicita tu crédito y cumple tus sueños..</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-12 col-12">
+													<div class="d-flex">
+														<a href="#Contact" class="btn btn-blue">Clic para solicitar tu credito ahora</a>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Customization close-->
+							<!-- Customization-->
+							<div class="section customizable pb-6">
+								<div class="container px-5 px-md-0">
+									<div class="row text-center justify-content-center">
+										<div class="col-lg-8 ps-4">
+											<h3 class="header-family">Libranza para empleado Fuerzas Militares</h3>
+										</div>
+									</div>
+									<div class="row align-items-center">
+										<div class="col-xl-5 customize-image text-center">
+											<img class="img-fluid p-5" src="~/assets/images/landing/fuerzasmilitares.png" alt="">
+										</div>
+										<div class="col-xl-7 p-5">
+											<div class="row">
+												<div class="col-md-6 col-12">
+													<div class="d-flex">
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																viewBox="0 0 24 24">
+																<path fill="#8fbd56"
+																	d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																	opacity=".99" />
+																<path fill="#8fbd56" opacity=".2"
+																	d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+															</svg></span>
+														<div class="ms-3">
+															<p><strong>Monto:</strong> hasta 100 millones.</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6 col-12">
+													<div class="d-flex">
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																viewBox="0 0 24 24">
+																<path fill="#8fbd56"
+																	d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																	opacity=".99" />
+																<path fill="#8fbd56" opacity=".2"
+																	d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+															</svg></span>
+														<div class="ms-3">
+															<p><strong>Plazo:</strong> hasta 132 meses (aplican condiciones de la pagaduría)</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6 col-12">
+													<div class="d-flex">
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																viewBox="0 0 24 24">
+																<path fill="#8fbd56"
+																	d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																	opacity=".99" />
+																<path fill="#8fbd56" opacity=".2"
+																	d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+															</svg></span>
+														<div class="ms-3">
+															<p><strong>Edad:</strong> Desde 18 hasta los 84 años</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-12 col-12">
+													<div class="d-flex">
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																viewBox="0 0 24 24">
+																<path fill="#8fbd56"
+																	d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																	opacity=".99" />
+																<path fill="#8fbd56" opacity=".2"
+																	d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+															</svg></span>
+														<div class="ms-3">
+															<p><strong>Requisitos:</strong>
+																Sólo te solicitamos la copia de tu cédula y los últimos dos desprendibles de nómina.
+																Solicita tu crédito y cumple tus sueños..</p>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-12 col-12">
+													<div class="d-flex">
+														<a href="#Contact" class="btn btn-blue">Clic para solicitar tu credito ahora</a>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Customization close-->*@
+
+							<!-- Clients section-->
+							<div class="bg-primary section" id="Clients">
+								<div class="container px-5 px-md-0">
+									<div class="row justify-content-center text-center">
+										<div class="col-lg-8 text-center">
+											<h3 class="header-family text-white">Nuestros convenios.</h3>
+											<p class="sub-text text-white pb-3">Pagadurias aceptadas para solicitudes de crédito.
+											</p>
+										</div>
+									</div>
+									<div class="row justify-content-center">
+										<div class="col-lg-12">
+											<div class="customer-logos">
+												<div class="slide"><img src="~/assets/images/landing/companies/logoCasur.png" alt=""></div>
+												<div class="slide"><img src="~/assets/images/landing/companies/logoColpensiones.png" alt=""></div>
+												<div class="slide"><img src="~/assets/images/landing/companies/logoCremil.png" alt=""></div>
+												<div class="slide"><img src="~/assets/images/landing/companies/logoFiduprevisora.png" alt=""></div>
+												<div class="slide"><img src="~/assets/images/landing/companies/logoAsulado.png" alt=""></div>
+												<div class="slide"><img src="~/assets/images/landing/companies/logoContraloriaGeneral.png" alt=""></div>
+												<div class="slide"><img src="~/assets/images/landing/companies/logoMapfre.png" alt=""></div>
+												<div class="slide"><img src="~/assets/images/landing/companies/logoProteccion.png" alt=""></div>
+												<div class="slide"><img src="~/assets/images/landing/companies/logoSegurosAlfa.png" alt=""></div>
+												<div class="slide"><img src="~/assets/images/landing/companies/logoSecretariaSincelejo.png" alt=""></div>
+											
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Clients section Close-->							
+
+							<!-- Pricing -->
+							<div class="section pb-7" id="features">
+								<div class="container px-5 px-md-0">
+									<div class="row text-center">
+										<div class="col-lg-12 ps-3">
+											<h3 class="header-family">Libranzas</h3>											
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xl-12">
+											<div class="pricing-tabs">												
+												<div class="tab-content">
+													<div class="tab-pane pb-0 active show" id="year">
+														<div class="row d-flex align-items-center justify-content-center">
+															<div class="col-lg-4 col-sm-8">
+																<div class="card p-3 pricing-card">
+																	<div class="card-header d-block text-justified pt-2">
+																		<p class="text-20 font-weight-semibold mb-1">Pensionados</p>																		
+																	</div>
+																	<div class="card-body pt-2">
+																		<ul class="text-justify pricing-body ps-0">
+																			<li class="mb-4"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong>Monto</strong>
+																				hasta 100 millones.</li>
+																			<li class="mb-4"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong>Edad </strong>
+																				Desde 18 hasta los 84 años</li>
+																			<li class="mb-4 text-muted"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> Plazo </strong>
+																				 hasta 144 meses</li>
+																			<li class="mb-4 text-muted text-nowrap"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> Requisitos </strong>
+																				 Sólo te solicitamos la copia de tu <br>cédula y los últimos dos desprendibles de nómina.<br />Solicita tu crédito y cumple tus sueños..
+																			 </li>																			
+																		</ul>
+																	</div>
+																	<div class="card-footer text-center border-top-0 pt-1"><br>
+																		<a href="#Contact" class="btn btn-blue">Clic para solicitar tu credito ahora</a>
+																	</div>
+																</div>
+															</div>
+															<div class="col-lg-4 col-sm-8">
+																<div class="card p-3 pricing-card">
+																	<div class="card-header d-block text-justified pt-2">
+																		<p class="text-20 font-weight-semibold mb-1">Empleado sector público</p>																		
+																	</div>
+																	<div class="card-body pt-2">
+																		<ul class="text-justify pricing-body ps-0">
+																			<li class="mb-4"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> Monto</strong>
+																				hasta 100 millones.</li>
+																			<li class="mb-4"><span
+																					class="text-info me-2 p-1 bg-info-transparent  rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong>Edad </strong>
+																				Desde 18 hasta los 84 años</li>
+																			<li class="mb-4"><span
+																					class="text-info me-2 p-1 bg-info-transparent  rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> Plazo</strong>
+																				hasta 144 meses</li>
+																			<li class="mb-4 text-muted"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> Requisitos </strong>
+																				 Sólo te solicitamos la copia de tu <br>cédula y los últimos dos desprendibles de nómina.<br />Solicita tu crédito y cumple tus sueños..</li>
+																			
+																		</ul>
+																	</div>
+																	<div class="card-footer text-center border-top-0 pt-1"><br>
+																		<a href="#Contact" class="btn btn-blue">Clic para solicitar tu credito ahora</a>
+																	</div>
+																</div>
+															</div>
+															<div class="col-lg-4 col-sm-8">
+																<div class="card-header d-block text-justified pt-2">
+																	<div class="card-header d-block text-justified pt-2">
+																		<p class="text-20 font-weight-semibold mb-1 pe-0">Empleado Fuerzas Militares
+																	</div>
+																	<div class="card-body pt-2">
+																		<ul class="text-justify pricing-body ps-0">
+																			<li class="mb-4"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> Monto</strong>
+																				hasta 100 millones.</li>
+																			<li class="mb-4"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong>Edad </strong>
+																				Desde 18 hasta los 84 años</li>
+																			<li class="mb-4"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> Plazo</strong>
+																				hasta 132 meses <<br />(aplican condiciones de la pagaduría)</li>
+																			<li class="mb-4"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> Requisitos
+																				</strong>  Sólo te solicitamos la copia de tu <br>cédula y los últimos dos desprendibles de nómina.<br />Solicita tu crédito y cumple tus sueños..</li>
+																			
+																		</ul>
+																	</div>
+																	<div class="card-footer text-center border-top-0 pt-1">
+																		<div class="card-footer text-center border-top-0 pt-1">
+																			<a href="#Contact" class="btn btn-blue">Clic para solicitar tu credito ahora</a>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="tab-pane" id="month">
+														<div class="row d-flex align-items-center justify-content-center">
+															<div class="col-lg-4 col-sm-8">
+																<div class="card p-3 pricing-card">
+																	<div class="card-header d-block text-justified pt-2">
+																		<p class="text-18 font-weight-semibold mb-1">Basic</p>
+																		<p class="text-justify font-weight-semibold mb-1"> <span
+																				class="text-30 me-2">$</span><span
+																				class="text-30 me-1">0</span><span class="text-24"><span
+																					class="op-0-5 text-muted text-20">/</span> month</span></p>
+																		<p class="text-13 mb-1">Lorem ipsum dolor sit amet consectetur
+																			adipisicing elit. Iure quos debitis aliquam .</p>
+																		<p class="text-13 mb-1 text-warning font-weight-">Billed monthly on
+																			regular basis!</p>
+																	</div>
+																	<div class="card-body pt-2">
+																		<ul class="text-justify pricing-body ps-0">
+																			<li class="mb-4"><span
+																					class="text-warning me-2 p-1 bg-warning-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> 2 Free</strong>
+																				Domain Name</li>
+																			<li class="mb-4"><span
+																					class="text-warning me-2 p-1 bg-warning-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong>3 </strong>
+																				One-Click Apps</li>
+																			<li class="mb-4 text-muted"><span
+																					class="text-gray me-2 p-1 bg-light-transparent rounded-pill text-10-f"><i
+																						class="fa fa-times"></i></span> <strong> 1 </strong>
+																				Databases</li>
+																			<li class="mb-4 text-muted"><span
+																					class="text-gray me-2 p-1 bg-light-transparent rounded-pill text-10-f"><i
+																						class="fa fa-times"></i></span> <strong> Unlimited </strong>
+																				Cloud Storage</li>
+																			<li class="mb-4 text-muted"><span
+																					class="text-gray me-2 p-1 bg-light-transparent rounded-pill text-10-f"><i
+																						class="fa fa-times"></i></span> <strong> Money </strong>
+																				BackGuarantee</li>
+																			<li class="mb-6 text-muted"><span
+																					class="text-gray me-2 p-1 bg-light-transparent rounded-pill text-10-f"><i
+																						class="fa fa-times"></i></span> <strong> 24/7</strong>
+																				support</li>
+																		</ul>
+																	</div>
+																	<div class="card-footer text-center border-top-0 pt-1">
+																		<button class="btn btn-lg btn-outline-warning btn-block">
+																			<span class="ms-4 me-4">Select</span>
+																		</button>
+																	</div>
+																</div>
+															</div>
+															<div class="col-lg-4 col-sm-8">
+																<div class="card p-3 pricing-card">
+																	<div class="card-header d-block text-justified pt-2">
+																		<p class="text-18 font-weight-semibold mb-1">Regular</p>
+																		<p class="text-justify font-weight-semibold mb-1"> <span
+																				class="text-30 me-2">$</span><span
+																				class="text-30 me-1">79</span><span class="text-24"><span
+																					class="op-0-5 text-muted text-20">/</span> month</span></p>
+																		<p class="text-13 mb-1">Lorem ipsum dolor sit amet consectetur
+																			adipisicing elit. Iure quos debitis aliquam .</p>
+																		<p class="text-13 mb-1 text-info font-weight-">Billed monthly on regular
+																			basis!</p>
+																	</div>
+																	<div class="card-body pt-2">
+																		<ul class="text-justify pricing-body ps-0">
+																			<li class="mb-4"><span
+																					class="text-info me-2 p-1 bg-info-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> 1 Free</strong>
+																				Domain Name</li>
+																			<li class="mb-4"><span
+																					class="text-info me-2 p-1 bg-info-transparent  rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong>4 </strong>
+																				One-Click Apps</li>
+																			<li class="mb-4"><span
+																					class="text-info me-2 p-1 bg-info-transparent  rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> 2 </strong>
+																				Databases</li>
+																			<li class="mb-4 text-muted"><span
+																					class="text-gray me-2 p-1 bg-light-transparent  rounded-pill text-10-f"><i
+																						class="fa fa-times"></i></span> <strong> Unlimited </strong>
+																				Cloud Storage</li>
+																			<li class="mb-4 text-muted"><span
+																					class="text-gray me-2 p-1 bg-light-transparent  rounded-pill text-10-f"><i
+																						class="fa fa-times"></i></span> <strong> Money </strong>
+																				BackGuarantee</li>
+																			<li class="mb-6 text-muted"><span
+																					class="text-gray me-2 p-1 bg-light-transparent  rounded-pill text-10-f"><i
+																						class="fa fa-times"></i></span> <strong> 24/7</strong>
+																				support</li>
+																		</ul>
+																	</div>
+																	<div class="card-footer text-center border-top-0 pt-1">
+																		<button class="btn btn-lg btn-outline-info btn-block">
+																			<span class="ms-4 me-4">Select</span>
+																		</button>
+																	</div>
+																</div>
+															</div>
+															<div class="col-lg-4 col-sm-8">
+																<div class="card p-3 border-primary pricing-card advanced">
+																	<div class="card-header d-block text-justified pt-2">
+																		<p class="text-18 font-weight-semibold mb-1 pe-0">Advanced<span
+																				class="float-end badge bg-primary text-white">Limited
+																				Deal</span></p>
+																		<p class="text-justify font-weight-semibold mb-1"> <span
+																				class="text-30 me-2">$</span><span
+																				class="text-30 me-1">129</span><span class="text-24"><span
+																					class="op-0-5 text-muted text-20">/</span> month</span></p>
+																		<p class="text-13 mb-2">Lorem ipsum dolor sit amet consectetur
+																			adipisicing elit. Iure quos debitis aliquam .</p>
+																		<p class="text-13 mb-1 text-primary font-weight-">Billed monthly on
+																			regular basis!</p>
+																	</div>
+																	<div class="card-body pt-2">
+																		<ul class="text-justify pricing-body ps-0">
+																			<li class="mb-4"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> 5 Free</strong>
+																				Domain Name</li>
+																			<li class="mb-4"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent  rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong>5 </strong>
+																				One-Click Apps</li>
+																			<li class="mb-4"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent  rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> 3 </strong>
+																				Databases</li>
+																			<li class="mb-4"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent  rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> Unlimited
+																				</strong> Cloud Storage</li>
+																			<li class="mb-4"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent  rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> Money </strong>
+																				BackGuarantee</li>
+																			<li class="mb-6"><span
+																					class="text-primary me-2 p-1 bg-primary-transparent  rounded-pill text-10-f"><i
+																						class="fa fa-check"></i></span> <strong> 24/7</strong>
+																				support</li>
+																		</ul>
+																	</div>
+																	<div class="card-footer text-center border-top-0 pt-1">
+																		<button class="btn btn-lg btn-primary text-white btn-block">
+																			<span class="ms-4 me-4">Select</span>
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Pricing close -->
+
+							<!-- Faq's -->
+							<section class="section bg-white" id="Nosotros">
+								<div class="container px-5 px-md-0">
+									<div class="row text-center">
+										<div class="col-lg-12">
+											<h3 class="header-family">Nosotros</h3>
+											@*<p class="text-default sub-text mb-5">Frequently asked questions and thieir answers.</p>*@
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="accordion" id="accordionExample">
+												<div class="accordion-item">
+													<h2 class="accordion-header" id="headingOne">
+														<button class="accordion-button" disabled type="button" data-bs-toggle="collapse"
+															data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+															QUIÉNES SOMOS:
+														</button>
+													</h2>
+													<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+														data-bs-parent="#accordionExample">
+														<div class="accordion-body text-muted text-justify">
+															<a href="https://confival.com/" class="text-primary" target="_blank"><strong>Confival Capital</strong></a> es un gestor profesional de activos alternativos con 10 años de experiencia en el mercado colombiano, 
+															que cuenta con vehículos de inversión dedicada a ofrecer soluciones de liquidez sobre derechos económicos judiciales.
+															Razón por la cual, nace <b class="text-primary">Confinancia</b>, con el objetivo de ofrecer créditos de libranza como una solución de inclusión 
+															financiera para pensionados y activos. Nos enfocamos en brindar segundas oportunidades a sectores desatendidos por 
+															los bancos y aquellos cuyo historial crediticio ha sido impedimento al momento de solicitar servicios financieros
+
+														</div>
+													</div>
+												</div>
+												<div class="accordion-item">
+													<h2 class="accordion-header" id="headingTwo">
+														<button class="accordion-button" disabled type="button" data-bs-toggle="collapse"
+															data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
+															MISIÓN:
+														</button>
+													</h2>
+													<div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
+														data-bs-parent="#accordionExample">
+														<div class="accordion-body text-muted text-justify">
+															Incursionamos en sectores de la población que han sido olvidados, entregando 
+															oportunidades de obtener un crédito acorde a sus necesidades, sueños y proyectos.  
+															Somos una compañía que se ha esforzado en moldear un crédito al que todos puedan acceder, ablandando políticas y ajustando filtros.
+															Generando así la posibilidad al cliente, independientemente de su perfil, de tener una segunda 
+															oportunidad en el mercado y en el sistema financiero.
+														</div>
+													</div>
+												</div>												
+											</div>
+										</div>
+										<div class="col-lg-6">
+											<div class="accordion" id="accordionExample1">
+												<div class="accordion-item">
+													<h2 class="accordion-header" id="headingFour">
+														<button class="accordion-button" disabled type="button" data-bs-toggle="collapse"
+															data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+															VISIÓN:
+														</button>
+													</h2>
+													<div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour"
+														data-bs-parent="#accordionExample1">
+														<div class="accordion-body text-muted text-justify">
+															En el 2025 estaremos posicionados como la primera compañía Fintech socialmente responsable, 
+															que brinda soluciones financieras con innovación y eficiencia para nuestros clientes, convenios y colaboradores.
+														</div>
+													</div>
+												</div>
+												<div class="accordion-item">
+													<h2 class="accordion-header" id="headingFive">
+														<button class="accordion-button " disabled type="button" data-bs-toggle="collapse"
+															data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+															VALORES: 
+														</button>
+													</h2>
+													<div id="collapseFive" class="accordion-collapse collapse show" aria-labelledby="headingFive"
+														data-bs-parent="#accordionExample1">
+														<div class="accordion-body text-muted">
+															<div class="row">
+																<div class="col-md-6 col-12">
+																<div class="d-flex">
+																	<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																			viewBox="0 0 24 24">
+																			<path fill="#8fbd56"
+																				d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																				opacity=".99" />
+																			<path fill="#8fbd56" opacity=".2"
+																				d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																		</svg></span>
+																	<div class="ms-3">
+																		<p>Transparencia</p>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6 col-12">
+																<div class="d-flex">
+																	<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																			viewBox="0 0 24 24">
+																			<path fill="#8fbd56"
+																				d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																				opacity=".99" />
+																			<path fill="#8fbd56" opacity=".2"
+																				d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																		</svg></span>
+																	<div class="ms-3">
+																		<p>Pasión</p>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6 col-12">
+																<div class="d-flex">
+																	<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																			viewBox="0 0 24 24">
+																			<path fill="#8fbd56"
+																				d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																				opacity=".99" />
+																			<path fill="#8fbd56" opacity=".2"
+																				d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																		</svg></span>
+																	<div class="ms-3">
+																		<p>Responsabilidad social</p>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6 col-12">
+																<div class="d-flex">
+																	<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																			viewBox="0 0 24 24">
+																			<path fill="#8fbd56"
+																				d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																				opacity=".99" />
+																			<path fill="#8fbd56" opacity=".2"
+																				d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																		</svg></span>
+																	<div class="ms-3">
+																		<p>Confianza</p>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6 col-12">
+																<div class="d-flex">
+																	<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																			viewBox="0 0 24 24">
+																			<path fill="#8fbd56"
+																				d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																				opacity=".99" />
+																			<path fill="#8fbd56" opacity=".2"
+																				d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																		</svg></span>
+																	<div class="ms-3">
+																		<p>Inclusión</p>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6 col-12">
+																<div class="d-flex">
+																	<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																			viewBox="0 0 24 24">
+																			<path fill="#8fbd56"
+																				d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																				opacity=".99" />
+																			<path fill="#8fbd56" opacity=".2"
+																				d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																		</svg></span>
+																	<div class="ms-3">
+																		<p>Innovación</p>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6 col-12">
+																<div class="d-flex">
+																	<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																			viewBox="0 0 24 24">
+																			<path fill="#8fbd56"
+																				d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																				opacity=".99" />
+																			<path fill="#8fbd56" opacity=".2"
+																				d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																		</svg></span>
+																	<div class="ms-3">
+																		<p>Orientación al cliente</p>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6 col-12">
+																<div class="d-flex">
+																	<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																			viewBox="0 0 24 24">
+																			<path fill="#8fbd56"
+																				d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																				opacity=".99" />
+																			<path fill="#8fbd56" opacity=".2"
+																				d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																		</svg></span>
+																	<div class="ms-3">
+																		<p>Agilidad y Oportunidad</p>
+																	</div>
+																</div>
+															</div>
+															</div>
+															
+														</div>
+													</div>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+							<!-- Faq's -->
+
+							<!-- Team -->
+							<div class="section pb-7" id="Team">
+								<div class="container px-5 px-md-0">
+									<div class="row text-center justify-content-center">
+										<div class="col-lg-8 ps-3">
+											<h3 class="header-family">Nuestro equipo</h3>
+											@*<p class="text-default sub-text mb-5">The key to this success is the hardwork and the dedication
+												that our team put into work.</p>*@
+										</div>
+									</div>
+									<div class="row text-center team">
+										<div class="col-lg-3 col-sm-6 mb-5">
+											<div class="bg-white shadow-sm p-5 team-card"><img
+													src="~/assets/images/landing/team/JaimeInfante.jpg" alt=""
+													class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+												<h5 class="mb-1">Jaime Infante</h5><span class="text-muted">CEO</span>
+												<ul class="social mb-0 list-inline mt-4">
+													@*<li class="list-inline-item"><a href="#" class="social"><i class="fe fe-facebook"></i></a>
+													</li>
+													<li class="list-inline-item"><a href="#" class="social"><i class="fe fe-instagram"></i></a>
+													</li>*@
+													<li class="list-inline-item"><a href="https://www.linkedin.com/in/jaime-orlando-infante-acosta-a6507278/" class="social" target="_blank"><i class="fe fe-linkedin"></i></a>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-lg-3 col-sm-6 mb-5">
+											<div class="bg-white shadow-sm p-5 team-card"><img
+													src="~/assets/images/landing/team/ladyPedraza.jpg" alt="" width="100"
+													class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+												<h5 class="mb-1">Lady Pedraza</h5><span class="text-muted">Gerente General</span>
+												<ul class="social mb-0 list-inline mt-4">
+													@*<li class="list-inline-item"><a href="#" class="social"><i class="fe fe-facebook"></i></a>
+													</li>
+													<li class="list-inline-item"><a href="#" class="social"><i class="fe fe-instagram"></i></a>
+													</li>*@
+													<li class="list-inline-item"><a href="https://www.linkedin.com/in/lady-diana-pedraza-lopez-b95aa6252?original_referer=" class="social" target="_blank"><i class="fe fe-linkedin"></i></a>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-lg-3 col-sm-6 mb-5">
+											<div class="bg-white shadow-sm p-5 team-card"><img
+													src="~/assets/images/landing/team/NancyRojas.png" alt="" width="100"
+													class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+												<h5 class="mb-1">Nancy Rojas</h5><span class="text-muted">Directora Administrativo</span>
+												<ul class="social mb-0 list-inline mt-4">
+													@*<li class="list-inline-item"><a href="#" class="social"><i class="fe fe-facebook"></i></a>
+													</li>
+													<li class="list-inline-item"><a href="#" class="social"><i class="fe fe-instagram"></i></a>
+													</li>*@
+													<li class="list-inline-item"><a href="https://www.linkedin.com/in/nancy-edith-rojas-zarate-759649116/" class="social" target="_blank"><i class="fe fe-linkedin"></i></a>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-lg-3 col-sm-6 mb-5">
+											<div class="bg-white shadow-sm p-5 team-card"><img
+													src="~/assets/images/landing/team/WilliamGuiza.jpg" alt="" width="100"
+													class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+												<h5 class="mb-1">William Guiza</h5><span class="text-muted">Director Comercial</span>
+												<ul class="social mb-0 list-inline mt-4">
+													@*<li class="list-inline-item"><a href="#" class="social"><i class="fe fe-facebook"></i></a>
+													</li>
+													<li class="list-inline-item"><a href="#" class="social"><i class="fe fe-instagram"></i></a>
+													</li>*@
+													<li class="list-inline-item"><a href="https://www.linkedin.com/in/william-g%C3%BCiza-2839674b/" class="social" target="_blank"><i class="fe fe-linkedin"></i></a>
+													</li>
+												</ul>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+							<!-- Team close -->
+
+							<!-- Contact-->
+							<div class="bg-image-landing bg-white section" id="Contact">
+								<div class="container px-5 px-md-0">
+									<div class="row text-center justify-content-center">
+										<div class="col-lg-8">
+											<h3 class="header-family">Solicitud de crédito</h3>
+										</div>
+									</div>
+									<div class="row">
+										<div class="card mt-3 mb-0">
+											<div class="card-body text-dark px-0 pb-0">
+												<div class="statistics-info">
+													<div class="col-xl-12 col-12">
+														<div class="row">
+															<div class="col-xl-6 col-md-12 col-sm-12">
+																<div class="services-statistics">
+																	<div class="row">
+																		<div class="col-6">
+																			<div class="card p-0">
+																				<div class="card-body p-0">
+																					<div class="row">
+																						<div class="col-xl-3 col-md-3 col-sm-3">
+																							<div
+																								class="counter-icon border border-primary text-primary">
+																								<i class="fe fe-map-pin"></i>
+																							</div>
+																						</div>
+																						<div class="col-xl-9 col-md-9 px-0 mb-1 col-sm-9">
+																							<h5 class="mb-1 fw-semibold">Sede Principal</h5>
+																							<p class="fs-13 text-muted">Bogota, Colombia
+																							</p>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-6">
+																			<div class="card p-0">
+																				<div class="card-body p-0">
+																					<div class="row">
+																						<div class="col-xl-3 col-md-3 col-sm-3">
+																							<div
+																								class="counter-icon border border-primary text-primary">
+																								<i class="fe fe-headphones"></i>
+																							</div>
+																						</div>
+																						<div class="col-xl-9 col-md-9 px-0 mb-1 col-sm-9">
+																							<h5 class="mb-1 fw-semibold">Correo y Telefono</h5>
+																							<p class="mb-0 fs-13 text-muted">+57 3024210805
+																							</p>
+																							<p class="fs-13 text-muted">info@confinancia.com.co</p>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-6">
+																			<div class="card p-0">
+																				<div class="card-body p-0">
+																					<div class="row">
+																						<div class="col-xl-3 col-md-3 col-sm-3">
+																							<div
+																								class="counter-icon border border-primary text-primary">
+																								<i class="fe fe-mail"></i>
+																							</div>
+																						</div>
+																						<div class="col-xl-9 col-md-9 px-0 mb-1 col-sm-9">
+																							<h5 class="mb-1 fw-semibold">Contacto</h5>
+																							<p class="mb-0 fs-13 text-muted"><a class=" text-muted" href="www.confinancia.com.co" target="_blank">www.confinancia.com.co</a>
+																								</p>
+																							<p class="fs-13 text-muted">contacto@confinancia.com.co</p>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-6">
+																			<div class="card p-0">
+																				<div class="card-body p-0">
+																					<div class="row">
+																						<div class="col-xl-3 col-md-3 col-sm-3">
+																							<div
+																								class="counter-icon border border-primary text-primary">
+																								<i class="fe fe-airplay"></i>
+																							</div>
+																						</div>
+																						<div class="col-xl-9 col-md-9 px-0 mb-1 col-sm-9">
+																							<h5 class="mb-1 fw-semibold">Horario</h5>
+																							<p class="mb-0 fs-13 text-muted">Lun - Vie: 8am
+																								- 6pm</p>																							
+																							</p>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-xl-6 col-md-12 col-sm-12">
+																<div class="">
+																	<form class="form-horizontal  m-t-20 row" action="LandingPage/Index" method="post" name="formSolicitudC" id="formSolicitudC">
+																		<div class="col-xl-6">
+																			<div class="form-group">
+																				<input class="form-control" type="email" required="" placeholder="Correo electronico" name="Email">
+																			</div>
+																		</div>
+																		<div class="col-xl-6">
+																			<div class="form-group">
+																				<input class="form-control" type="text" required=""
+																					placeholder="Numero de identificación" name="Id">
+																			</div>
+																		</div>
+																		<div class="col-xl-6">
+																			<div class="form-group">
+																				<input class="form-control" type="text" required=""
+																					placeholder="Nombres" name="Nombre">
+																			</div>
+																		</div>
+																		<div class="col-xl-6">
+																			<div class="form-group">
+																				<input class="form-control" type="text" required=""
+																					placeholder="Apellidos" name="Apellido">
+																			</div>
+																		</div>
+																		<div class="col-xl-6">
+																			<div class="form-group">
+																				<input class="form-control" type="text" required=""
+																					placeholder="Numero de contacto" name="Contacto">
+																			</div>
+																		</div>
+																		<div class="col-xl-6">
+																			<div class="form-group">
+																				<input class="form-control" type="text" 
+																				placeholder="Numero de contacto adicional" name="ContactoAdi">
+																			</div>
+																		</div>
+																		<div class="col-xl-6">
+																			<div class="form-group">
+																				<select class="form-control" required="" name="idEP">
+																						<option > Entidad pagadora</option>
+																					@foreach(var iEP in Model.EP){
+																						<option value="@iEP.Id"> @iEP.Nombre</option>
+																					}
+																					</select>
+																			</div>
+																		</div>
+																		<div class="col-xl-6">
+																			<div class="form-group">
+																				<select class="form-control" required="" name="idTN">
+																						<option > Tipo Nombramiento</option>
+																					@foreach(var iEP in Model.TN){
+																						<option value="@iEP.Id"> @iEP.Nombre</option>
+																					}
+																				</select>
+																			</div>
+																		</div>
+																		<div class="col-xl-6">
+																			<div class="form-group">
+																				<label class="form-label">Monto a solicitar</label>
+																				@*<input class="form-control" type="number" required=""
+																					placeholder="Monto a solicitar" name="Monto">*@
+																				<div class="range-group">
+																					<div class="col-lg-6 col-sm-12">
+																						<input id="Monto" name="Monto" type="range"  min="1000000" max="100000000" onchange="rangeMontoChanged(this)" value="1000000"> 
+
+																					</div>
+																					<div class="col-lg-6  col-sm-12">
+																						<input type="text" inputmode="numeric" size="9" class="border range-group-text br-5 p-2 ms-4" id="inputRange2" name="inputRange2"  value="$ 1.000.000"
+																								 onfocus="inputMontoFocus(this)" onblur="inputMontoKey(this)">
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-xl-6">
+																			<div class="form-group">
+																				<label class="form-label">Plazo (meses)</label>
+																				@*<input class="form-control" type="number" required=""
+																					placeholder="Plazo (#meses)" name="Plazo">*@
+
+																				<div class="range-group">
+																					<input name="Plazo" type="range"  min="6" max="144" onmousemove="inputRange1.value= value" value="6"> 
+																					<output class="border range-group-text br-5 p-2 ms-4" id="inputRange1"></output> 
+																				</div>
+																			</div>
+
+																		</div>
+																		@*<div class="col-xl-6">
+																			<div class="form-group">
+																				<input class="form-control" type="number" required=""
+																					placeholder="Cuota mensual" name="Cuota">
+																			</div>
+																		</div>*@
+																		<div class="col-xl-12">
+																			<p class="text-muted ">Para continuar debe ver y aceptar nuestra politica de privacidad y tratamiendo de datos personales <strong><i>"Ley 1581 de 2012"</i> </strong></p>
+																		</div>
+																		<div class="col-xl-12">
+																			 <a class="modal-effect mb-3 btn btn-primary" id="modalPoliticas" >Continuar</a>																																					
+																		</div>																		
+																		<div class="">
+																			@*@foreach( var iMenu in Model){
+																				@iMenu.nombre;
+																			}*@
+																			
+																			
+																		</div>
+																	</form>
+																</div>
+																<div>
+																	<br />
+																	
+																	@if(@Model.data != ""){
+																		<div class="alert alert-success alert-dismissible fade show" role="alert">
+																			<span class="alert-inner--text">@Model.data</span>
+																			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="right: -13px">
+																				<span aria-hidden="true">×</span>
+																			</button>
+																		</div>
+																	}
+																
+																</div>
+															</div>
+															
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--Contact close-->
+
+							<!--Support-->
+							<div class="demo-screen-skin bg-primary">
+								<div class="container text-center text-white px-5 px-md-0">
+									<div id="demo" class="row">
+										<div class="col-lg-6">
+											<div class="feature-1">
+												<a href="#"></a>
+												<div class="mb-3">
+													<i class="si si-bubbles"></i>
+												</div>
+												<h4 class="fs-25">Servicio al cliente</h4>
+												<p class="mb-1 text-white">
+													<a class="text-white"  asp-controller="CustomPages" asp-action="construction">¿Necesita ayuda? Entra a nuestro Portal de Servicio Al Cliente de Confinancia.</a>
+												</p>
+												
+											</div>
+										</div>
+										<div class="col-lg-6 mt-5 mt-xl-0 mt-lg-0">
+											<div class="feature-1">
+												<a href="#"></a>
+												<div class="mb-3">
+													<i class="si si-bubbles"></i>
+												</div>
+												<h4 class="fs-25">Únete a nuestro equipo Comercial</h4>
+												<p class="mb-1 text-white">
+													<a class="text-white"  asp-controller="CustomPages" asp-action="construction">Une tu experiencia a la nuestra. Si tienes experiencia comercial en el sector de Libranza, a ti te estamos buscando.</a></p>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--Support close-->
+
+							@*<!-- </Footer> -->
+							<div class="demo-footer">
+								<div class="container px-5 px-md-0">
+									<div class="card mb-0 px-0">
+										<div class="card-body px-0">
+											<div class="top-footer">
+												<div class="row">
+													<div class="col-lg-4 col-sm-12 col-md-12">
+														<h6 class="text-uppercase mb-3 font-weight-semibold">About</h6>
+														<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+															laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
+															architecto beatae vitae dicta sunt
+															explicabo.
+														</p>
+														<p class="mb-5 mb-lg-2">Duis aute irure dolor in reprehenderit in voluptate velit esse
+															cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat .</p>
+													</div>
+													<div class="col-lg-2 col-sm-6 col-md-4">
+														<h6 class="text-uppercase mb-2 font-weight-semibold">Pages</h6>
+														<ul class="list-unstyled mb-5 mb-lg-0">
+															<li><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
+															<li><a asp-controller="Alerts" asp-action="Index" >Elements</a></li>
+															<li><a asp-controller="FormElements" asp-action="Index" >Forms</a></li>
+															<li><a asp-controller="ChartEchart" asp-action="Index" >Charts</a></li>
+															<li><a asp-controller="Datatable" asp-action="Index" >Tables</a></li>
+															<li><a asp-controller="FileAttachment" asp-action="Index" >Other Pages</a></li>
+														</ul>
+													</div>
+													<div class="col-lg-2 col-sm-6 col-md-4">
+														<h6 class="text-uppercase mb-2 font-weight-semibold">Information</h6>
+														<ul class="list-unstyled mb-5 mb-lg-0">
+															<li><a asp-controller="About" asp-action="Index">Our Team</a></li>
+															<li><a asp-controller="About" asp-action="Index">Contact US</a></li>
+															<li><a asp-controller="About" asp-action="Index">About</a></li>
+															<li><a asp-controller="Services" asp-action="Index">Services</a></li>
+															<li><a asp-controller="Blog" asp-action="Index">Blog</a></li>
+															<li><a asp-controller="Terms" asp-action="Index">Terms and Services</a></li>
+														</ul>
+													</div>
+													<div class="col-lg-4 col-sm-12 col-md-4">
+														<h6 class="text-uppercase mb-2 font-weight-semibold">Contact</h6>
+														<p><i class="fa fa-home me-3 mb-2"></i> New York, NY 10012, US</p>
+														<p><i class="fa fa-envelope me-3 mb-2"></i> info@gmail.com</p>
+														<p><i class="fa fa-phone me-3 mb-2"></i> + 01 234 567 88</p>
+														<p><i class="fa fa-print me-3 mb-2"></i> + 01 234 567 89</p>
+														<hr>
+														<h6 class="text-uppercase mb-0 font-weight-semibold">Payments</h6>
+														<ul class="footer-payments">
+															<li><a href="javascript:void(0);"><i class="fa fa-cc-amex text-muted"
+																		aria-hidden="true"></i></a></li>
+															<li><a href="javascript:void(0);"><i class="fa fa-cc-visa text-muted"
+																		aria-hidden="true"></i></a></li>
+															<li><a href="javascript:void(0);"><i class="fa fa-credit-card-alt text-muted"
+																		aria-hidden="true"></i></a></li>
+															<li><a href="javascript:void(0);"><i class="fa fa-cc-mastercard text-muted"
+																		aria-hidden="true"></i></a></li>
+															<li><a href="javascript:void(0);"><i class="fa fa-cc-paypal text-muted"
+																		aria-hidden="true"></i></a></li>
+														</ul>
+													</div>
+												</div>
+											</div>
+											<footer class="main-footer px-0 pb-0">
+												<div class="row ">
+													<div class="col-xl-8 col-lg-12 col-md-12 footer1">Copyright © 2022 <a
+															href="javascript:void(0)">Noa</a>. Designed with <span
+															class="fa fa-heart text-danger"></span> by <a href="javascript:void(0)"> Spruko </a>
+													</div>
+													<div class="col-xl-4 col-lg-12 col-md-12 ms-auto text-end">
+														<ul class="footer-social-list ">
+															<li><a href="https://www.facebook.com/" target="_blank"><i
+																		class="fa fa-facebook"></i></a></li>
+															<li><a href="https://www.google.com/" target="_blank"><i class="fa fa-google"></i></a>
+															</li>
+															<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a>
+															</li>
+															<li><a href="https://www.linkedin.com/" target="_blank"><i
+																		class="fa fa-linkedin"></i></a></li>
+														</ul>
+													</div>
+												</div>
+											</footer>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Footer close -->*@
+							<!-- APP-FOOTER -->
+							<partial name="~/Views/Shared/layouts/_landingfooter.cshtml" />
+							<!--/APP-FOOTER-->
+						</div>
+					</div>
+					<!-- CONTAINER CLOSED -->
+				</div>
+
+				<div class="modal fade" data-bs-backdrop="static"  id="modaldemo8">
+					<div class="modal-dialog modal-dialog-centered text-center" role="document">
+						<div class="modal-content modal-content-demo">
+							<div class="modal-header">
+								<h5 class="modal-title">AUTORIZACIÓN DE TRATAMIENTO DE DATOS PERSONALES, ACTUALIZACIÓN DE INFORMACIÓN Y MEDIOS DE CONTACTO</h5><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" ><span aria-hidden="true">&times;</span></button>
+							</div>
+							<div class="modal-body text-justify">
+								
+								<p>"Autorización Tratamiento de Datos y Consulta Centrales de Riesgo: En calidad de cliente de CONFINANCIA SAS, autorizo y acepto las obligaciones legales dispuestas por la ley 1527 de 2012, 1328 de 2009, ley 1581 de 2012 y el decreto 1377 de 2013. (i) Autorizo de manera irrevocable a CONFINANCIA SAS para que consulte, solicite, suministre, reporte, procese, obtenga, compile, intercambie, modifique, emplee, analice, estudie, conserve, confirme, reciba y obtenga de cualquier fuente y/o reportar a las centrales de riesgo establecidas en el país o a cualquier otra entidad nacional o internacional que maneje o administre bases de datos, envíe toda la información que se refiere a mi comportamiento crediticio, comercial, financiero y de servicios a cualquier operador de información legalmente constituido, de conformidad con lo establecido en el ordenamiento jurídico. Es así que quienes tengan acceso a estos operadores de información, podrán conocer esta información de conformidad con la Legislación vigente. (ii) Autorizo a CONFINANCIA SAS la consulta del desprendible de pago de nomina en plataformas digitales con acceso."</p>
+
+								<p class="text-muted ">El registro de la solicitud en virtud de la aceptación de nuestra política de privacidad y tratamiento de datos personales </p>
+
+							</div>
+							<div class="modal-footer text-center">
+								<button id="btnSubmitSolicitud" class="btn btn-pill btn-w-sm py-2 waves-effect waves-light" style=" background-color: #e90d6f; color:white;" data-bs-dismiss="modal" >Registrar solicitud</button>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+@section scripts {
+			<!-- Sweet-alert js  -->
+			<script src="~/assets/plugins/sweet-alert/sweetalert.min.js"></script>
+			<script src="~/assets/plugins/sweet-alert/jquery.sweet-alert.js"></script>
+}

@@ -1,0 +1,7 @@
+C:\xampp\htdocs\dotnetproject\noa\obj\Release\net6.0\PubTmp\Out\noa.exe
+C:\xampp\htdocs\dotnetproject\noa\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
+C:\xampp\htdocs\dotnetproject\noa\obj\Release\net6.0\PubTmp\Out\appsettings.json
+C:\xampp\htdocs\dotnetproject\noa\obj\Release\net6.0\PubTmp\Out\noa.dll
+C:\xampp\htdocs\dotnetproject\noa\obj\Release\net6.0\PubTmp\Out\noa.deps.json
+C:\xampp\htdocs\dotnetproject\noa\obj\Release\net6.0\PubTmp\Out\noa.runtimeconfig.json
+C:\xampp\htdocs\dotnetproject\noa\obj\Release\net6.0\PubTmp\Out\noa.pdb
