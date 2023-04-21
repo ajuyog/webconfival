@@ -66,7 +66,7 @@ $(document).on("ready",function(){
     owl.owlCarousel({
         loop: true,
         rewind: false,
-        margin: 25,
+        margin: 10,
         animateIn: 'fadeInDowm',
         animateOut: 'fadeOutDown',
         autoplay: false,
@@ -78,15 +78,15 @@ $(document).on("ready",function(){
         responsiveClass: true,
         responsive: {
             0: {
-                items: 1,
+                items: 3,
                 nav: true
             },
             600: {
-                items: 2,
+                items: 3,
                 nav: true
             },
             1300: {
-                items: 4,
+                items: 3,
                 nav: true
             }
         }
