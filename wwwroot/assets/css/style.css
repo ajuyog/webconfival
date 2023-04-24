@@ -299,17 +299,32 @@ body {
 
 .h-carousel-c{
     height: 500px;
+    width: 888px;
+    margin: auto;
+    
 }
 
-@media (max-width:900px) {
+@media (max-width:1024px) {
     .h-carousel-c {
         height: 300px;
+        width: 703px;
+        margin: auto;
     }
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
+    .h-carousel-c {
+        height: 250px;
+        width: 444px;
+        margin: auto;
+    }
+}
+
+@media (max-width:560px) {
     .h-carousel-c {
         height: 200px;
+        width: 355px;
+        margin: auto;
     }
 }
 
@@ -427,14 +442,12 @@ body {
 
 .animation {
     cursor: pointer;
-    height: 150px;
     border-radius: 5px;
 }
 
 @media(max-width: 800px) {
     .animation {
         cursor: pointer;
-        height: 120px;
         border-radius: 5px;
     }
 }
@@ -442,7 +455,6 @@ body {
 @media(max-width: 600px) {
     .animation {
         cursor: pointer;
-        height: 80px;
         border-radius: 5px;
     }
 }
@@ -453,6 +465,7 @@ body {
     text-align:center;
     font-size:20px;
     font-weight: 600;
+    color:darkslategray;
 }
 
 @media(max-width: 1200px){
@@ -538,6 +551,20 @@ body {
     margin-left: 230px;
     margin-right: 230px;
 }
+
+#photo-accordion {
+    display: none;
+}
+
+@media(max-width: 768px) {
+    #photo-accordion{
+        display:block;
+    }
+    #photo-accordion-dos{
+        display:none;
+    }
+}
+
 
 .margin-tabs-li {
     margin: auto;
@@ -8554,29 +8581,39 @@ a.card-tabs-item.active {
 
 .carousel-inner {
     position: relative;
-    width: 100%;
     overflow: hidden;
     border-radius: 5px;
     height: 500px;
+    width: 888px;
 }
 
-@media (max-width:900px) {
+@media (max-width:1024px) {
     .carousel-inner {
         position: relative;
-        width: 100%;
         overflow: hidden;
         border-radius: 5px;
         height: 300px;
+        width: 703px;
     }
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
     .carousel-inner {
         position: relative;
-        width: 100%;
+        overflow: hidden;
+        border-radius: 5px;
+        height: 250px;
+        width: 444px;
+    }
+}
+
+@media (max-width:560px) {
+    .carousel-inner {
+        position: relative;
         overflow: hidden;
         border-radius: 5px;
         height: 200px;
+        width: 355px;
     }
 }
 
@@ -19558,6 +19595,18 @@ a.chip:hover {
     padding: 1.3rem 1.4rem;
     border-radius: 50%;
     text-align: center;
+}
+
+@media (max-width: 580px) {
+    .statistics-info .counter-icon {
+        margin-bottom: 1rem;
+        display: inline-flex;
+        width: 5rem;
+        height: 5rem;
+        padding: 1.3rem 1.4rem;
+        border-radius: 50%;
+        text-align: center;
+    }
 }
 
 .statistics-info .counter-icon i {

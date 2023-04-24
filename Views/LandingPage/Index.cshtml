@@ -59,6 +59,7 @@
 			
 			<!-- Inicio INICIO-->
 			<div class="section pb-5 bg-white" id="Inicio">
+
 				<!-- Seccion 1 -- Qué hacemos en Confival? -->
 				<div class="container px-5 px-md-0">
 					<div class="row justify-content-center text-center">
@@ -74,25 +75,26 @@
 									<div class="carousel-inner">
 										<div id="vid1" class="carousel-item active">
 											<a class="modal-effect" data-bs-effect="effect-just-me" data-bs-toggle="modal" href="#modaldemo8">
-												<img alt="" class="d-block h-carousel-c" width="100%" src="~/assets/images/landing/Carrousel-1-Confival.png" data-bs-holder-rendered="true">
+												<img alt="" class="d-block h-carousel-c" src="~/assets/images/landing/Carrousel-1-Confival.png" data-bs-holder-rendered="true">
 											</a>
 										</div>
+
 										<div id="vid2" class="carousel-item">
 											<a class="modal-effect" data-bs-effect="effect-just-me" data-bs-toggle="modal" href="#modaldemo10">
-												<img alt="" class="d-block w-100 h-carousel-c" width="100%" src="~/assets/images/landing/Carrousel-2-Confival.png" data-bs-holder-rendered="true">
+												<img alt="" class="d-block h-carousel-c" src="~/assets/images/landing/Carrousel-2-Confival.png" data-bs-holder-rendered="true">
 											</a>
 										</div>
 										<div id="vid3" class="carousel-item">
 											<a class="modal-effect" data-bs-effect="effect-just-me" data-bs-toggle="modal" href="#modaldemo11">
-												<img alt="" class="d-block w-100 h-carousel-c" width="100%" src="~/assets/images/landing/Carrousel-3-Confival.png" data-bs-holder-rendered="true">
+												<img alt="" class="d-block h-carousel-c" src="~/assets/images/landing/Carrousel-3-Confival.png" data-bs-holder-rendered="true">
 											</a>
 										</div>
 									</div>
-									<a class="carousel-control-prev" href="#carousel-captions1" role="button" data-bs-slide="prev">
+									<a class="carousel-dark carousel-control-prev" href="#carousel-captions1" role="button" data-bs-slide="prev">
 										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 										<span class="sr-only">Previous</span>
 									</a>
-									<a class="carousel-control-next" href="#carousel-captions1" role="button" data-bs-slide="next">
+									<a class="carousel-dark carousel-control-next" href="#carousel-captions1" role="button" data-bs-slide="next">
 										<span class="carousel-control-next-icon" aria-hidden="true"></span>
 										<span class="sr-only">Next</span>
 									</a>
@@ -148,55 +150,64 @@
 				<div class="container px-5 px-md-0" style="padding-bottom:6px;">
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
-							<div class="card overflow-hidden">
-								<div class="card-body">
-									<div class="panel-group1" id="accordion11" role="tablist">
-										<div class="card overflow-hidden mb-2 border-0">
-											<h3 class="header-family">
-												<a class="accordion-toggle panel-heading1 collapsed shadow-accordion" data-bs-toggle="collapse" data-bs-parent="#accordion11" href="#collapseFour1" aria-expanded="false">¿Cómo es el proceso de compra de sentencias?</a>
-											</h3>
-											<div id="collapseFour1" class="panel-collapse collapse" role="tabpanel" aria-expanded="false" style="padding-top:17px;">
-												<div class="avatar-list indicators" style="margin: auto;">
-													<div class="row pad-text">
-														<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-12 avatar-center">
-															<h3 class="text-p"><span class="avatar avatar-xxl rounded-circle bg-primary"><strong>1</strong></span></h3>
-														</div>
-														<div class="col-xl-11 col-lg-10 col-md-9 col-sm-7 col-xs-2 text-p">
-															<h4>Diligencia los datos básicos aquí para obtener una oferta de compra.</h4>
-														</div>
+							<div class="accordion" id="accordionProceso">
+								<div class="accordion-item shadow-accordion">
+									<h2 class="accordion-header" id="headingNineteen">
+										<button class="accordion-button collapsed " type="button" data-bs-toggle="collapse"
+												data-bs-target="#collapseNineteen" aria-expanded="false" aria-controls="collapseNineteen" style="font-size:1.325rem;">
+												¿Cómo es el proceso de compra de sentencias?
+										</button>
+									</h2>
+									<div id="collapseNineteen" class="accordion-collapse collapse" aria-labelledby="headingNineteen"
+										 data-bs-parent="#accordionProceso">
+										<div class="accordion-body text-muted">
+
+											<div class="avatar-list indicators" style="margin: auto;">
+												<div class="row pad-text">
+													<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-12 avatar-center">
+														<h3 class="text-p"><span class="avatar avatar-xxl rounded-circle bg-primary"><strong>1</strong></span></h3>
 													</div>
-													<div class="row  pad-text">
-														<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-12 avatar-center">
-															<h3 class="text-p"><span class="avatar avatar-xxl rounded-circle bg-primary"><strong>2</strong></span></h3>
-														</div>
-														<div class="col-xl-11 col-lg-10 col-md-9 col-sm-7 col-xs-2 text-p">
-															<h4>Nos comunicaremos contigo para presentarte una oferta y solicitarte algunos documentos.</h4>
-														</div>
+													<div class="col-xl-11 col-lg-10 col-md-9 col-sm-7 col-xs-2 text-p">
+														<h4>Diligencia los datos básicos aquí para obtener una oferta de compra.</h4>
 													</div>
-													<div class="row  pad-text">
-														<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-12 avatar-center">
-															<h3 class="text-p"><span class="avatar avatar-xxl rounded-circle bg-primary"><strong>3</strong></span></h3>
-														</div>
-														<div class="col-xl-11 col-lg-10 col-md-9 col-sm-7 col-xs-2 text-p">
+												</div>
+												<div class="row  pad-text">
+													<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-12 avatar-center">
+														<h3 class="text-p"><span class="avatar avatar-xxl rounded-circle bg-primary"><strong>2</strong></span></h3>
+													</div>
+													<div class="col-xl-11 col-lg-10 col-md-9 col-sm-7 col-xs-2 text-p">
+														<h4>Nos comunicaremos contigo para presentarte una oferta y solicitarte algunos documentos.</h4>
+													</div>
+												</div>
+												<div class="row  pad-text">
+													<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-12 avatar-center">
+														<h3 class="text-p"><span class="avatar avatar-xxl rounded-circle bg-primary"><strong>3</strong></span></h3>
+													</div>
+													<div class="col-xl-11 col-lg-10 col-md-9 col-sm-7 col-xs-2 text-p">
 														<h4>Firma y auténtica los documentos de cesión y envíalos en físico a nuestra sede principal: Cra. 14 No. 100 – 19 oficina 401 en Bogotá.</h4>
-														</div>
 													</div>
-													<div class="row  pad-text">
-														<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-12 avatar-center">
-															<h3 class="text-p"><span class="avatar avatar-xxl rounded-circle bg-primary"><strong>4</strong></span></h3>
-														</div>
-														<div class="col-xl-11 col-lg-10 col-md-9 col-sm-7 col-xs-2 text-p">
+												</div>
+												<div class="row  pad-text">
+													<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-12 avatar-center">
+														<h3 class="text-p"><span class="avatar avatar-xxl rounded-circle bg-primary"><strong>4</strong></span></h3>
+													</div>
+													<div class="col-xl-11 col-lg-10 col-md-9 col-sm-7 col-xs-2 text-p">
 														<h4>Nosotros nos encargamos del resto para que puedas disfrutar de tu dinero pronto. Una vez completados estos pasos, y al contar con la aceptación de la cesión de créditos. Estás listo para recibir y disfrutar del dinero en tu cuenta bancaria. Recuerda que en Confival te acompañamos en tu proceso. Conoce cuándo te va a pagar el Estado.</h4>
-														</div>
 													</div>
 												</div>
 											</div>
+
 										</div>
 									</div>
 								</div>
 							</div>
+
+
+
 						</div>
 					</div>
+
+
 				</div>
 
 				<!-- Seccion 3 -- Beneficios de Confival -->
@@ -728,20 +739,20 @@
 																					<!-- Status de informacion personal -->
 																					<div id="confirmacion-celular-iz">
 																						<div class="d-flex" >
-																						<span>
-																							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																									viewBox="0 0 24 24">
-																								<path fill="#8fbd56"
-																										d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																										opacity=".99" />
-																								<path fill="#8fbd56" opacity=".2"
-																										d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																							</svg>
-																						</span>
-																						<div class="ms-3">
-																							<p>El correo electronico fue validado exitosamente</p>
+																							<span>
+																								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+																										viewBox="0 0 24 24">
+																									<path fill="#8fbd56"
+																											d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
+																											opacity=".99" />
+																									<path fill="#8fbd56" opacity=".2"
+																											d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
+																								</svg>
+																							</span>
+																							<div class="ms-3">
+																								<p>El correo electronico fue validado exitosamente</p>
+																							</div>
 																						</div>
-																					</div>
 																					</div>
 																					<div class="hide-info" id="confirmacion-celular">
 																						<div class="d-flex">
@@ -787,15 +798,21 @@
 																					</div>
 																					<div>
 																						<div id="btn-validar-correo">
-																							<a href="#Contact" class="btn btn-pill btn-primary" onclick="showOTPCorreo()">Validar Correo</a>
+																							<a href="#Contact" class="btn btn-primary" onclick="showOTPCorreo()">Validar Correo</a>
 																						</div>
 																						<div id="put-timer"></div>
 																						<div id="mesage-resend" class="hide-info">
 																							<h6 class="alert-danger-cancel pad-text">El codigo OTP enviado a su correo electronico ha vencido</h6>
 																						</div>
 																						<div id="new-otp-mail" class="hide-info">
-																							<a href="#Contact" class="btn btn-pill btn-primary" onclick="resendMail()">Solicitar un nuevo Codigo OTP</a>
-																							<a href="#Contact" class="btn btn-pill btn-danger" onclick="restart()">Cancelar solicitud</a>
+																							<div class="row">
+																								<div class="col-lg-6 col-md-12 pad-text">
+																									<a href="#Contact" class="btn btn-primary" onclick="resendMail()">Nuevo Codigo OTP</a>
+																								</div>
+																								<div class="col-lg-6 col-md-12">
+																									<a href="#Contact" class="btn btn-danger" onclick="restart()">Cancelar solicitud</a>
+																								</div>
+																							</div>
 																						</div>
 																					</div>
 																					<div class="hide-info pad-text" id="correo-otp">
@@ -805,18 +822,18 @@
 																									<div class="otp-input text-start mb-2">
 																										<label>Ingrese su codigo OTP de 6 digitos</label>
 																										<div class="d-flex align-items-center justify-content-between mt-2">
-																											<input type="text" maxlength="1" class="form-control inputs shadow-accordion" placeholder="" id="numero-uno" />
-																											<input type="text" maxlength="1" class="form-control inputs shadow-accordion" placeholder="" id="numero-dos"/>
-																											<input type="text" maxlength="1" class="form-control inputs shadow-accordion" placeholder="" id="numero-tres"/>
-																											<input type="text" maxlength="1" class="form-control inputs shadow-accordion" placeholder="" id="numero-cuatro"/>
-																											<input type="text" maxlength="1" class="form-control inputs shadow-accordion" placeholder="" id="numero-cinco"/>
-																											<input type="text" maxlength="1" class="form-control inputs shadow-accordion" placeholder="" id="numero-seis" />
+																											<input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-uno" />
+																											<input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-dos"/>
+																											<input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-tres"/>
+																											<input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-cuatro"/>
+																											<input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-cinco"/>
+																											<input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-seis" />
 																										</div>
 																									</div>
 																									<div class="invalid-feedback" id="invalid-otp-mail">El codigo ingresado no corresponde al enviado a su correo</div>
 																								</div>
 																								<div>
-																									<a href="#Contact" class="btn btn-pill btn-primary" onclick="showCelular()">Validar Codigo OTP</a>
+																									<a href="#Contact" class="btn btn-primary" onclick="showCelular()">Validar Codigo OTP</a>
 																								</div>
 																							</div>
 																						</div>
@@ -830,15 +847,21 @@
 																						<div class="invalid-feedback pad-text" id="invalid-celular">Ingrese un numero celular valido</div>
 																					</div>
 																					<div id="btn-validar-celular">
-																						<a href="#Contact" class="btn btn-pill btn-primary" onclick="showOTPCelular()">Validar Celular de contacto</a>
+																						<a href="#Contact" class="btn btn-primary" onclick="showOTPCelular()">Validar No. Celular</a>
 																					</div>
 																					<div id="put-timer2"></div>
 																					<div id="mesage-resend-celular" class="hide-info">
 																						<h6 class="alert-danger-cancel pad-text">El codigo OTP enviado a su numero celular ha vencido</h6>
 																					</div>
 																					<div id="new-otp-celular" class="hide-info">
-																						<a href="#Contact" class="btn btn-pill btn-primary" onclick="resendMesage()">Solicitar un nuevo Codigo OTP</a>
-																						<a href="#Contact" class="btn btn-pill btn-danger" onclick="restart2()">Cancelar solicitud</a>
+																						<div class="row">
+																							<div class="col-lg-6 col-md-12 pad-text">
+																								<a href="#Contact" class="btn btn-primary" onclick="resendMesage()">Nuevo Codigo OTP</a>
+																							</div>
+																							<div class="col-lg-6 col-md-12">
+																								<a href="#Contact" class="btn btn-danger" onclick="restart2()">Cancelar solicitud</a>
+																							</div>
+																						</div>
 																					</div>
 																					<div class="hide-info pad-text" id="mensaje-otp">
 																						<div class="row">
@@ -847,18 +870,18 @@
 																									<div class="otp-input text-start mb-2">
 																										<label>Ingrese su codigo OTP de 6 digitos</label>
 																										<div class="d-flex align-items-center justify-content-between mt-2">
-																											<input type="text" maxlength="1" class="form-control inputs shadow-accordion" placeholder="" id="numero-uno-m" />
-																											<input type="text" maxlength="1" class="form-control inputs shadow-accordion" placeholder="" id="numero-dos-m" />
-																											<input type="text" maxlength="1" class="form-control inputs shadow-accordion" placeholder="" id="numero-tres-m" />
-																											<input type="text" maxlength="1" class="form-control inputs shadow-accordion" placeholder="" id="numero-cuatro-m" />
-																											<input type="text" maxlength="1" class="form-control inputs shadow-accordion" placeholder="" id="numero-cinco-m" />
-																											<input type="text" maxlength="1" class="form-control inputs shadow-accordion" placeholder="" id="numero-seis-m" />
+																											<input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-uno-m" />
+																											<input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-dos-m" />
+																											<input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-tres-m" />
+																											<input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-cuatro-m" />
+																											<input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-cinco-m" />
+																											<input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-seis-m" />
 																										</div>
 																									</div>
 																									<div class="invalid-feedback" id="invalid-otp-celular">El codigo ingresado no corresponde al enviado a su numero de celular</div>
 																								</div>
 																								<div>
-																									<a href="#Contact" class="btn btn-pill btn-primary" onclick="showDatosPersonales()">Validar Codigo OTP</a>
+																									<a href="#Contact" class="btn btn-primary" onclick="showDatosPersonales()">Validar Codigo OTP</a>
 																								</div>
 																							</div>
 																						</div>
@@ -893,7 +916,7 @@
 																						</div>
 																					</div>
 																					<div id="btn-validar-documento">
-																						<a href="#Contact" class="btn btn-pill btn-primary" onclick="validarNumero()">Validar documento</a>
+																						<a href="#Contact" class="btn btn-primary" onclick="validarNumero()">Validar documento</a>
 																					</div>
 																				</div>
 
@@ -901,10 +924,10 @@
 																				<div class="hide-info" id="confirmar-documento">
 																					<div class="row">
 																						<div class="card">
-																							<div class="card-header border-bottom">
-																								<div class="card-title">Confirma tu informacion a continuación</div>
+																							<div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;">
+																								<div class="card-title" style="font-size: 0.9rem;">Confirma tu informacion a continuación</div>
 																							</div>
-																							<div class="card-body">
+																							<div class="card-body" style="padding: 0;">
 																								<div class="row">
 																									<div class="col-lg-12 col-md-12 col-sm-12">
 																										<div class="form-group">
@@ -929,11 +952,11 @@
 																								</div>
 																							</div>
 																							<div class="row">
-																								<div class="col-lg-3 col-md-3 col-sm-12" id="confirmar-identidad">
-																									<a href="#Contact" class="btn btn-pill btn-primary" onclick="saveLead()">Confirmar Datos</a>
+																								<div class="col-lg-3 col-md-3 col-sm-12 pad-text" id="confirmar-identidad">
+																									<a href="#Contact" class="btn btn-primary" onclick="saveLead()">Confirmar Datos</a>
 																								</div>
 																								<div class="col-lg-3 offset-lg-6 col-md-3 offset-md-6 col-sm-12" id="no-soy-yo">
-																									<a href="#Contact" class="btn btn-pill btn-danger" onclick="restart3()">No soy yo !!</a>
+																									<a href="#Contact" class="btn btn-danger" onclick="restart3()">No soy yo !!</a>
 																								</div>
 																							</div>
 																						</div>
@@ -946,11 +969,11 @@
 																						<h5 class="header-family">No tenemos información tuya</h5>
 																						<h5>¿ Tu documento de identicación esta bien digitado ?</h5>
 																						<div class="row">
-																							<div class="col-lg-3 col-md-3 col-sm-12" id="confirmar-identidad">
-																								<a href="#Contact" class="btn btn-pill btn-primary" onclick="crearLead()">Si, estan bien !!</a>
+																							<div class="col-lg-3 col-md-3 col-sm-12 pad-text" id="confirmar-identidad">
+																								<a href="#Contact" class="btn btn-primary" onclick="crearLead()">Si, estan bien !!</a>
 																							</div>
 																							<div class="col-lg-3 offset-lg-6 col-md-3 offset-md-6 col-sm-12" id="no-soy-yo">
-																								<a href="#Contact" class="btn btn-pill btn-danger" onclick="restart3()">No, no lo estan !!</a>
+																								<a href="#Contact" class="btn btn-danger" onclick="restart3()">No, no lo estan !!</a>
 																							</div>
 																						</div>
 																					</div>
@@ -958,10 +981,10 @@
 																				<div class="hide-info" id="crear-lead">
 																					<div class="row">
 																						<div class="card">
-																							<div class="card-header border-bottom">
-																								<div class="card-title">Ingresa tu informacion personal a continuación</div>
+																							<div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;">
+																								<div class="card-title" style="font-size: 0.9rem;">Ingresa tu informacion personal a continuación</div>
 																							</div>
-																							<div class="card-body">
+																							<div class="card-body" style="padding: 0;">
 																								<div class="row">
 																									<div class="col-lg-12 col-md-12 col-sm-12">
 																										<div class="form-group">
@@ -981,13 +1004,12 @@
 																										<div class="form-group">
 																											<input type="text" class="form-control" placeholder="Segundo Apellido" id="segundo-apellido-new">
 																											<div class="invalid-feedback pad-text" id="invalid-segundo-apellido-new">El campo 'Segundo Apellido' es obligatorio</div>
-
 																										</div>
 																									</div>
 																								</div>
 																							</div>
 																							<div id="btn-validar-documento">
-																								<a href="#Contact" class="btn btn-pill btn-primary" onclick="saveLeadNew()">Confirmar Datos</a>
+																								<a href="#Contact" class="btn btn-primary" onclick="saveLeadNew()">Confirmar Datos</a>
 																							</div>
 																						</div>
 																					</div>
@@ -1064,7 +1086,7 @@
 																						</div>
 																					</div>
 																					<div id="btn-validar-celular">
-																						<a href="#Contact" class="btn btn-pill btn-primary">Quiero que me contacten</a>
+																						<a href="#Contact" class="btn btn-primary">Quiero que me contacten</a>
 																					</div>
 																				</div>
 																			</div>
@@ -1238,7 +1260,7 @@
 												<div class="responsive-screens">
 													<div class="slide">
 														<div class="row align-items-center">
-															<div class="col-md-6 col-12 px-0">
+															<div class="col-md-6 col-12 px-0 pad-text">
 																<div class="row">
 																	<div class="col-12">
 																		<div class="d-flex">
@@ -1455,14 +1477,14 @@
 										<div class="row justify-content-center">
 											<div class="col-lg-12">
 												<div class="responsive-screens">
-													<div class="slide">
+													<div class="slide" style="width:100%;">
 														<div class="row align-items-center">
 
 															<!-- Accordion-01 -->
 															<div class="row margin-accordion-row">
 																<div class="col-md-5 col-12 px-0 margin-accordion-center">
 																	<div class="row">
-																		<div class="col-12">
+																		<div class="col-12 pad-text">
 																			<div class="pad-img">
 																				<img alt="" src="~/assets/images/landing/CompraSentncias1.jpg" />
 																			</div>
@@ -1588,8 +1610,8 @@
 															</div>
 
 															<!-- Accordion-2 -->
-															<div class="row margin-accordion-row">
-																<div class="col-md-7 col-12 px-0 margin-accordion-center">
+															<div class="row margin-accordion-row" id="photo-accordion-dos">
+																<div class="col-md-7 col-12 margin-accordion-center">
 																	<div class="accordion" id="accordionPreguntasF-2">
 																		<div class="accordion" id="accordionPF-2">
 																			<div class="accordion-item shadow-accordion-2">
@@ -1690,11 +1712,124 @@
 																		</div>
 																	</div>
 																</div>
-																<div class="col-md-5 col-12 margin-accordion-center">
+																<div class="col-md-5 col-12 px-0 margin-accordion-center">
 																	<div class="row">
-																		<div class="col-12">
+																		<div class="col-12 pad-text">
 																			<div class="pad-img">
 																				<img alt="" src="~/assets/images/landing/CompraSentncias2.jpg" />
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="row margin-accordion-row" id="photo-accordion">
+																<div class="col-md-5 col-12 px-0 margin-accordion-center">
+																	<div class="row">
+																		<div class="col-12 pad-text">
+																			<div class="pad-img">
+																				<img alt="" src="~/assets/images/landing/CompraSentncias2.jpg" />
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-7 col-12 margin-accordion-center">
+																	<div class="accordion" id="accordionPreguntasF-2">
+																		<div class="accordion" id="accordionPF-2">
+																			<div class="accordion-item shadow-accordion-2">
+																				<h2 class="accordion-header" id="headingEleven">
+																					<button class="accordion-button collapsed shadow-accordion-2" type="button" data-bs-toggle="collapse"
+																							data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+																						¿Cuánto dinero pagarían por mi Sentencia?
+																					</button>
+																				</h2>
+																				<div id="collapseEleven" class="accordion-collapse collapse" aria-labelledby="headingEleven"
+																					 data-bs-parent="#accordionPF-2">
+																					<div class="accordion-body text-muted">
+																						<p>Esto dependerá del monto de la sentencia, además de la fecha de ejecutoria y del turno de pago asignado. Si quieres conocer una cotización real del valor de tu sentencia deja tus datos <a href="https://info.confival.com/cotiza-el-valor-de-tu-sentencia-y-conciliacion-judicial"><strong>aquí</strong></a> y en menos de3 días hábiles recibirás la propuesta borrador para la compra de tu Sentencia.</p>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="accordion-item shadow-accordion-2">
+																				<h2 class="accordion-header" id="headingTwelve">
+																					<button class="accordion-button collapsed shadow-accordion-2" type="button" data-bs-toggle="collapse"
+																							data-bs-target="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+																						¿En cuánto tiempo se realiza la compra de Sentencias y/o Conciliaciones Judiciales?
+																					</button>
+																				</h2>
+																				<div id="collapseTwelve" class="accordion-collapse collapse" aria-labelledby="headingTwelve"
+																					 data-bs-parent="#accordionPF-2">
+																					<div class="accordion-body text-muted">
+																						<p>
+																							Si se encuentran todos los documentos de la Sentencia y está aprobada la cesión de venta de derechos puede tardar en total <strong>3 meses.</strong>
+																						</p>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="accordion-item shadow-accordion-2">
+																				<h2 class="accordion-header" id="headingThirteen">
+																					<button class="accordion-button collapsed shadow-accordion-2" type="button" data-bs-toggle="collapse"
+																							data-bs-target="#collapseThirteen" aria-expanded="false" aria-controls="collapseThirteen">
+																						¿Cómo puedo cotizar el valor de mi Sentencia?
+																					</button>
+																				</h2>
+																				<div id="collapseThirteen" class="accordion-collapse collapse" aria-labelledby="headingThirteen"
+																					 data-bs-parent="#accordionPF-2">
+																					<div class="accordion-body text-muted">
+																						<p>
+																							<a href="https://info.confival.com/cotiza-el-valor-de-tu-sentencia-y-conciliacion-judicial"><strong>Aquí</strong></a>
+																							, debes contar con los datos básicos para solicitud de propuesta, que son los siguientes:
+																						</p>
+																						<p>
+																							<ul>
+																								<li>
+																									<i class="fa fa-chevron-right"></i>Nombre del caso tal y como sale en la primera hoja de la sentencia.
+																								</li>
+																								<li>
+																									<i class="fa fa-chevron-right"></i>Monto del fallo en SMLV a nombre de cada beneficiario reconocido.
+																								</li>
+																								<li>
+																									<i class="fa fa-chevron-right"></i>Fecha de la ejecutoria.
+																								</li>
+																								<li>
+																									<i class="fa fa-chevron-right"></i>Fecha de radicación de la cuenta de cobro.
+																								</li>
+																								<li>
+																									<i class="fa fa-chevron-right"></i>Fecha de asignación de turno de pago.
+																								</li>
+																							</ul>
+																						</p>
+																						<p>
+																							Deberás enviar la información descrita anteriormente al correo info@confival.com con las palabras: <strong>Solicitud de propuesta + su nombre</strong>, te presentaremos en 3 días hábiles la propuesta borrador.
+																						</p>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="accordion-item shadow-accordion-2">
+																				<h2 class="accordion-header" id="headingFourteen">
+																					<button class="accordion-button collapsed shadow-accordion-2" type="button" data-bs-toggle="collapse"
+																							data-bs-target="#collapseFourteen" aria-expanded="false" aria-controls="collapseFourteen">
+																						¿Quién debe firmar los documentos para la negociación de mi sentencia?
+																					</button>
+																				</h2>
+																				<div id="collapseFourteen" class="accordion-collapse collapse" aria-labelledby="headingFourteen"
+																					 data-bs-parent="#accordionPF-2">
+																					<div class="accordion-body text-muted">
+																						<p>
+																							<ul>
+																								<li>
+																									<i class="fa fa-chevron-right"></i>En caso de una cesión parcial de los beneficiarios, son ellos quienes deben firmar y autenticar los documentos.
+																								</li>
+																								<li>
+																									<i class="fa fa-chevron-right"></i>En caso de una cesión de honorarios. el abogado deberá firmar y autenticar los documentos.
+																								</li>
+																								<li>
+																									<i class="fa fa-chevron-right"></i>Si tanto beneficiarios como abogado ceden. Ambos deberán firmar y autenticar los documentos.
+																								</li>
+																							</ul>
+																						</p>
+																					</div>
+																				</div>
 																			</div>
 																		</div>
 																	</div>
@@ -1705,7 +1840,7 @@
 															<div class="row margin-accordion-row">
 																<div class="col-md-5 col-12 px-0 margin-accordion-center">
 																	<div class="row">
-																		<div class="col-12">
+																		<div class="col-12 pad-text">
 																			<div class="pad-img">
 																				<img alt="" src="~/assets/images/landing/CompraSentncias3.jpg" />
 																			</div>
@@ -2548,6 +2683,10 @@
 
 		<!-- PROGRESS BAR JS-->
 		<script src="../assets/js/progress.js"></script>
+
+		<!-- UTILIDAD -->
+
+		<script src="../assets/js/utilidad.js"></script>
 		
 	
 

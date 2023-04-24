@@ -30,7 +30,7 @@ function showOTPCorreo() {
             data: { correo: mail },
             success: function () {
                 $("#correo-otp").removeClass("hide-info");
-                $("#put-timer").append('<div class="col-xl-12 col-sm-12 col-xs-12"><div class="card"><div class="card-header border-bottom"><h5 class="card-title">Hemos enviado un codigo OTP a tu correo electronico, ingresalo en el siguiente campo antes de que la cuenta regresiva se acabe.</h5></div><div class="card-body"><div class="example bg-primary-transparent border-primary text-primary"><div class="d-sm-flex"><span class="mb-sm-0 mb-3"><i class="fs-30 fe fe-clock"></i></span><div class="ms-sm-5 mb-sm-0 mb-3"><span id="timer-countercallback" class="h3"></span><h5 class="mb-0 mt-1">Verifica tu correo electronico!!!</h5></div><span class="h1 text-center ms-auto mb-0 mb-sm-0 mb-3 "></span></div></div></div></div></div>')
+                $("#put-timer").append('<div><div class="card"><div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;"><h5 class="card-title" style="font-size: 0.9rem;">Hemos enviado un codigo OTP a tu correo electronico, ingresalo en el siguiente campo antes de que la cuenta regresiva se acabe.</h5></div><div class="card-body" style="padding: 0;"><div class="example bg-primary-transparent border-primary text-primary" style="padding:1rem;"><div class="d-sm-flex"><span class="mb-sm-0 mb-3"><i class="fs-30 fe fe-clock"></i></span><div class="ms-sm-5 mb-sm-0 mb-3"><span id="timer-countercallback" class="h3"></span><h5 class="mb-0 mt-1" id="verifica-correo">Verifica tu correo electronico!!!</h5></div><span class="h1 text-center ms-auto mb-0 mb-sm-0 mb-3 "></span></div></div></div></div></div>')
                 activeTimer();
             }
         });
@@ -51,6 +51,7 @@ function activeTimer() {
             $("#numero-cuatro").val("");
             $("#numero-cinco").val("");
             $("#numero-seis").val("");
+            $("#verifica-correo").addClass("hide-info");
             $("#invalid-otp-mail").css("display", "none");
         }
     });
@@ -123,7 +124,7 @@ function showOTPCelular() {
             data: { numero: celular },
             success: function () {
                 $("#mensaje-otp").removeClass("hide-info");
-                $("#put-timer2").append('<div class="col-xl-12 col-sm-12 col-xs-12"><div class="card"><div class="card-header border-bottom"><h5 class="card-title">Hemos enviado un codigo OTP a tu numero celular, ingresalo en el siguiente campo antes de que la cuenta regresiva se acabe.</h5></div><div class="card-body"><div class="example bg-primary-transparent border-primary text-primary"><div class="d-sm-flex"><span class="mb-sm-0 mb-3"><i class="fs-30 fe fe-clock"></i></span><div class="ms-sm-5 mb-sm-0 mb-3"><span id="timer-countercallback2" class="h3"></span><h5 class="mb-0 mt-1">Verifica tu numero celular!!!</h5></div><span class="h1 text-center ms-auto mb-0 mb-sm-0 mb-3 "></span></div></div></div></div></div>')
+                $("#put-timer2").append('<div class="col-xl-12 col-sm-12 col-xs-12"><div class="card"><div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;"><h5 class="card-title" style="font-size: 0.9rem;">Hemos enviado un codigo OTP a tu numero celular, ingresalo en el siguiente campo antes de que la cuenta regresiva se acabe.</h5></div><div class="card-body" style="padding: 0;"><div class="example bg-primary-transparent border-primary text-primary" style="padding:1rem;"><div class="d-sm-flex"><span class="mb-sm-0 mb-3"><i class="fs-30 fe fe-clock"></i></span><div class="ms-sm-5 mb-sm-0 mb-3"><span id="timer-countercallback2" class="h3"></span><h5 class="mb-0 mt-1" id="verificar-celular">Verifica tu numero celular!!!</h5></div><span class="h1 text-center ms-auto mb-0 mb-sm-0 mb-3 "></span></div></div></div></div></div>')
                 activeTimer2();
             }
         });
@@ -144,6 +145,7 @@ function activeTimer2() {
             $("#numero-cuatro-m").val("");
             $("#numero-cinco-m").val("");
             $("#numero-seis-m").val("");
+            $("#verificar-celular").addClass("hide-info");
             $("#invalid-otp-celular").css("display", "none");
         }
     });
@@ -332,10 +334,7 @@ function saveLeadNew() {
 
 }
 
-function widthConfival() {
-    $(".slick-slide").css("width", "100%");
-    $(".slick-track").css("width", "100%");
-}
+
 
 
 
