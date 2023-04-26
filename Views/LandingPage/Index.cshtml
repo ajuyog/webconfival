@@ -139,11 +139,9 @@
 
 				<!-- Seccion 2 -- ¿Cómo es el proceso de compra de sentencias? -->
 				<div class="container px-5 px-md-0">
-					<div class="container px-5 px-md-0">
-						<div class="row text-center pad-text">
-							<div class="col-lg-12">
-								<h3 class="header-family">Proceso de compra</h3>
-							</div>
+					<div class="row text-center pad-text">
+						<div class="col-lg-12">
+							<h3 class="header-family">Proceso de compra</h3>
 						</div>
 					</div>
 				</div>
@@ -673,7 +671,7 @@
 											<div class="row ">
 												<div class="col-xl-12 col-md-12 col-sm-12 pad-text">
 													<div class="">
-														<form class="form-horizontal  m-t-20 row" action="Oportunidad/SeccionUno" method="post" name="formSolicitudC" id="formSolicitudC">
+														<form class="form-horizontal  m-t-20 row needs-validation" action="Oportunidad/SeccionUno" method="post" name="formSolicitudC" id="formSolicitudC">
 															<div class="col-xl-12 col-md-12">
 																<div class="card">
 																	<div class="card-header border-bottom">
@@ -795,6 +793,20 @@
 																					<div class="form-group">
 																						<input class="form-control" type="email" placeholder="Correo electronico" name="Email" id="mail">
 																						<div class="invalid-feedback pad-text" id="invalid-mail">Ingrese un correo electronico valido</div>
+																					</div>
+																					<div id="politica-hide">
+																						<div class="row">
+																							<div class="col-lg-1 col-md-12">
+																								<div class="material-switch">
+																									<input id="uncheckedPrimarySwitch-politica" name="switch01" type="checkbox" onclick="politica()" />
+																									<label for="uncheckedPrimarySwitch-politica" class="label-primary"></label>
+																								</div>
+																							</div>
+																							<div class="col-lg-10 col-md-12 margin-auto">
+																								<p>Autorizo el tratamiento de mis datos y acepto la Política de Tratamiento de Datos Personales</p>
+																							</div>
+																							<div class="invalid-feedback pad-text" id="invalid-politica">Debes autorizar nuestra política de tratamiento de datos personales</div>
+																						</div>
 																					</div>
 																					<div>
 																						<div id="btn-validar-correo">
@@ -932,31 +944,55 @@
 																									<div class="col-lg-12 col-md-12 col-sm-12">
 																										<div class="form-group">
 																											<label class="form-label">Nombre(s) completo(s)</label>
-																											<input type="text" class="form-control mb-4" value="Readonly Text" placeholder="Input box (readonly)" readonly id="nombres">
+																											<input type="text" class="form-control mb-4" id="nombres">
+																											<div class="invalid-feedback pad-text" id="invalid-nombres">El campo Nombre(s) completo(s) es obligatorio</div>
 																										</div>
 																									</div>
 																								</div>
-																								<div class="row">
+																								<div class="row pad-text">
 																									<div class="col-lg-6 col-md-6 col-sm-12">
 																										<div class="form-group">
 																											<label class="form-label">Primer Apellido</label>
-																											<input type="text" class="form-control mb-4" value="Readonly Text" placeholder="Input box (readonly)" readonly id="primer-apellido">
+																											<input type="text" class="form-control mb-4" id="primer-apellido">
+																											<div class="invalid-feedback pad-text" id="invalid-primer-apellido">El campo Segundo Apellido es obligatorio</div>
 																										</div>
 																									</div>
 																									<div class="col-lg-6 col-md-6 col-sm-12">
 																										<div class="form-group">
 																											<label class="form-label">Segundo Apellido</label>
-																											<input type="text" class="form-control mb-4" value="Readonly Text" placeholder="Input box (readonly)" readonly id="segundo-apellido">
+																											<input type="text" class="form-control mb-4" id="segundo-apellido">
+																											<div class="invalid-feedback pad-text" id="invalid-segundo-apellido">El campo Primer Apellido es obligatorio</div>
 																										</div>
 																									</div>
 																								</div>
 																							</div>
-																							<div class="row">
-																								<div class="col-lg-3 col-md-3 col-sm-12 pad-text" id="confirmar-identidad">
-																									<a href="#Contact" class="btn btn-primary" onclick="saveLead()">Confirmar Datos</a>
+
+																							<div class="margin-auto" id="btn-confirmar-datos">
+																								<div class="row pad-text">
+																									<div class="col-12 pad-text" id="confirmar-identidad">
+																										<a href="#Contact" class="btn btn-primary" onclick="saveLead()">Confirmar Datos</a>
+																									</div>
 																								</div>
-																								<div class="col-lg-3 offset-lg-6 col-md-3 offset-md-6 col-sm-12" id="no-soy-yo">
-																									<a href="#Contact" class="btn btn-danger" onclick="restart3()">No soy yo !!</a>
+																							</div>
+
+																							<div class="margin-auto hide-info" id="btn-volver-intentar">
+																								<div class="row pad-text">
+																									<div class="col-12 pad-text" id="confirmar-identidad">
+																										<a href="#Contact" class="btn btn-primary" onclick="saveLead()">Volver a intentar</a>
+																									</div>
+																								</div>
+																							</div>
+
+																							<div id="alerta-verifica-error-text" class="hide-info pad-text">
+																								<div class="alert alert-danger alert-dismissible fade show" role="alert">
+																									<i class="fa fa-frown-o me-2" aria-hidden="true"></i>Al parecer alguno de los campos de 'nombres' o 'apellidos' no concuerdan con tu numero de documento, verificalos y vuelve a intentar
+																								</div>
+																							</div>
+
+																							<div id="alerta-verifica-error-btn" class="hide-info">
+																								<div class="alert alert-danger alert-dismissible fade show" role="alert">
+																									<i class="fa fa-frown-o me-2 pad-text" aria-hidden="true"></i>Si, es el caso corrige tu numero de documento
+																									<a href="#Contact" class="btn btn-danger" onclick="restart3()">Quiero corregir mi documento !!</a>
 																								</div>
 																							</div>
 																						</div>
@@ -2529,6 +2565,163 @@
 			</div>
 			<!-- Servicios - FIN-->
 
+
+			<!-- BLOG - Inicio -->
+
+			<div class="section pb-5 bg-white" id="Blog">
+				<div class="container px-5 px-md-0">
+					<div class="row justify-content-center text-center">
+						<div class="col-lg-8 ps-4 mb-lg-0- mb-4">
+							<h3 class="header-family">Blog Confival</h3>
+						</div>
+					</div>
+				</div>
+				<div class="container px-5 px-md-0">
+					<div class="row justify-content-center">
+						<!-- BLOG Principal -->
+						<div class="col-xl-7 col-lg-6 col-md-12 blog-card-confival-mr20">
+							<div class="card overflow-hidden">
+								<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="1" class="card custom-card background-image-blog img1 mb-0">
+								</a>
+								<div class="card-body">
+									<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="1" class="text-dark blog-title">Best Place To visit For a Holiday!</a>
+									<p class="mb-0 text-muted mt-4">I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure.</p>
+									<p class="text-muted">I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure.</p>
+									<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="1" class="btn btn-outline-primary mt-2">Leer más</a>
+								</div>
+								<div class="card-footer">
+									<div class="d-sm-flex align-items-center">
+										<div class="avatar-list indicators">
+											<div class="avatar avatar-md rounded-circle">
+												<img src="~/assets/images/users/4.jpg" class="rounded-circle">
+											</div>
+
+										</div>
+										<h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Jiggel mossin</h6>
+										<div class="d-sm-flex ms-sm-auto">
+											<a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0   text-muted">Dec-01-2021</div></a>
+											<a class="me-0 d-flex" href="#"><span class="fe fe-message-square text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">11 Comments</div></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Navegacion List Blogs -->
+						<div class="col-xl-4 col-lg-5 col-md-12 blog-card-confival">
+							<div class="card overflow-hidden">
+								<div class="">
+									<div class="card-header border-bottom d-block">
+										<div class="tabs-menu">
+											<h3 class="header-family">Todas las noticias</h3>
+										</div>
+									</div>
+									<div class="card-body">
+										<div class="tab-content">
+											<div class="tab-pane active">
+												<div class="item-list">
+													<!-- List Blogs -->
+													<ul class="list-group mb-0">
+														<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">
+															<img src="~/assets/images/photos/blog-sm1.jpg" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">
+															<div>
+																<span class="d-block text-muted">Tourism</span>
+																<a href="#" class="text-dark text-16 font-weight-semibold">Explore tourism by visitinig places.</a>
+																<small class="d-block text-muted">2 day ago</small>
+															</div>
+														</li>
+														<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">
+															<img src="~/assets/images/photos/blog-sm2.jpg" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">
+															<div>
+																<span class="d-block text-muted">Beautician</span>
+																<a href="#" class="text-dark text-16 font-weight-semibold">Beautification courses are available.</a>
+																<small class="d-block text-muted">2 hrs ago</small>
+															</div>
+														</li>
+														<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">
+															<img src="~/assets/images/photos/blog-sm3.jpg" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">
+															<div>
+																<span class="d-block text-muted">Music</span>
+																<a href="#" class="text-dark text-16 font-weight-semibold">Music in a peaceful way </a>
+																<small class="d-block text-muted">1 day ago</small>
+															</div>
+														</li>
+														<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">
+															<img src="~/assets/images/photos/blog-sm4.jpg" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">
+															<div>
+																<span class="d-block text-muted">Literature</span>
+																<a href="#" class="text-dark text-16 font-weight-semibold">English and spanish classes in Your way</a>
+																<small class="d-block text-muted">1 week ago</small>
+															</div>
+														</li>
+														<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">
+															<img src="~/assets/images/photos/blog-sm5.jpg" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">
+															<div>
+																<span class="d-block text-muted">Health</span>
+																<a href="#" class="text-dark text-16 font-weight-semibold">Health care and fitness awareness</a>
+																<small class="d-block text-muted">22 hrs ago</small>
+															</div>
+														</li>
+														<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">
+															<img src="~/assets/images/photos/blog-sm2.jpg" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">
+															<div>
+																<span class="d-block text-muted">Health</span>
+																<a href="#" class="text-dark text-16 font-weight-semibold">Health care and fitness awareness</a>
+																<small class="d-block text-muted">22 hrs ago</small>
+															</div>
+														</li>
+													</ul>
+
+													<!-- Paginador-->
+													<div class="col-12">
+														<div class="card margin-auto">
+															<div class="card-body">
+																<ul class="pagination page-0 ">
+																	<li class="page-item">
+																		<a aria-label="Last" class="page-link" href="#"><i class="fa fa-angle-double-left"></i></a>
+																	</li>
+																	<li class="page-item">
+																		<a aria-label="Next" class="page-link" href="#"><i class="fa fa-angle-left"></i></a>
+																	</li>
+
+																	<li class="page-item">
+																		<a class="page-link" href="#">2</a>
+																	</li>
+																	<li class="page-item active">
+																		<a class="page-link" href="#">3</a>
+																	</li>
+																	<li class="page-item">
+																		<a class="page-link hidden-xs-down" href="#">4</a>
+																	</li>
+
+																	<li class="page-item">
+																		<a aria-label="Next" class="page-link" href="#"><i class="fa fa-angle-right"></i></a>
+																	</li>
+																	<li class="page-item">
+																		<a aria-label="Last" class="page-link" href="#"><i class="fa fa-angle-double-right"></i></a>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- BLOG - Fin -->
+
+
+
+
+
 			<!-- MODAL INICIO -->
 
 			<div class="modal fade" data-bs-backdrop="static"  id="modaldemo9">
@@ -2688,7 +2881,7 @@
 
 		<script src="../assets/js/utilidad.js"></script>
 		
-	
+
 
 
 }

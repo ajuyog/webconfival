@@ -9,21 +9,47 @@
                 $(this).blur();
             }
         }
-
     });
+    var nombresVerifica = "";
+    var primerApellidoVerifica = "";
+    var segundoApellidoVerifica = "";
+    $("#uncheckedPrimarySwitch-politica").val("on");
 });
+
+// --- VALIDACION DE POLITICA TRATAMIENTO DE DATOS --- //
+function politica() {
+    var statusPolitica = $("#uncheckedPrimarySwitch-politica").val();
+    if (statusPolitica == "on" || statusPolitica == "false") {
+        $("#uncheckedPrimarySwitch-politica").val("true");
+    }
+    if (statusPolitica == "true") {
+        $("#uncheckedPrimarySwitch-politica").val("false");
+    }
+};
 
 // --- VALIDACION DE CORREO ELECTRONICO CON OTP --- //
 function showOTPCorreo() {
     var mail = $("#mail").val();
     var validMail = new RegExp(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/);
+    var politica = $("#uncheckedPrimarySwitch-politica").val();
     if (validMail.test(mail) == false) {
         $("#invalid-mail").css("display", "block");
     } else {
+        $("#invalid-mail").css("display", "none");
+    }
+    if (politica == "on" || politica == "false") {
+        $("#invalid-politica").css("display", "block");
+    } else {
+        $("#invalid-politica").css("display", "none");
+    }
+    if (validMail.test(mail) == true && politica == "true") {
         $("#btn-validar-celular").removeClass("hide-info");
         $("#btn-validar-correo").addClass("hide-info");
+        $("#politica-hide").addClass("hide-info");
         $("#invalid-mail").css("display", "none");
+        $("#invalid-politica").css("display", "none");
         $("#mail").addClass("disable-writing");
+        $("#uncheckedPrimarySwitch-politica").val("false");
         $.ajax({
             type: "GET",
             url: '/Oportunidad/SendMail',
@@ -35,7 +61,7 @@ function showOTPCorreo() {
             }
         });
     }
-}
+};
 function activeTimer() {
     $('#timer-countercallback').countdown({
         from: 30,
@@ -55,13 +81,13 @@ function activeTimer() {
             $("#invalid-otp-mail").css("display", "none");
         }
     });
-}
+};
 function resendMail() {
     $("#new-otp-mail").addClass("hide-info");
     $("#mesage-resend").addClass("hide-info");
     $("#put-timer").children("div").remove();
     showOTPCorreo();
-}
+};
 function showCelular() {
     var number1 = $("#numero-uno").val();
     var number2 = $("#numero-dos").val();
@@ -90,13 +116,13 @@ function showCelular() {
             }
         }
     });
-}
+};
 function notificacionCorreo(data) {
     notif({
         msg: "Validacion correcta " + data,
         type: "success"
     });
-}
+};
 function restart() {
     $("#btn-validar-correo").removeClass("hide-info");
     $("#mail").removeClass("disable-writing");
@@ -104,7 +130,7 @@ function restart() {
     $("#put-timer").children("div").remove();
     $("#new-otp-mail").addClass("hide-info");
     $("#mesage-resend").addClass("hide-info");
-}
+};
 
 // --- VALIDACION DE CELULAR DE CONTACTO CON OTP --- //
 function showOTPCelular() {
@@ -129,7 +155,7 @@ function showOTPCelular() {
             }
         });
     }
-}
+};
 function activeTimer2() {
     $('#timer-countercallback2').countdown({
         from: 30,
@@ -149,13 +175,13 @@ function activeTimer2() {
             $("#invalid-otp-celular").css("display", "none");
         }
     });
-}
+};
 function resendMesage() {
     $("#new-otp-celular").addClass("hide-info");
     $("#mesage-resend-celular").addClass("hide-info");
     $("#put-timer2").children("div").remove();
     showOTPCelular();
-}
+};
 function restart2() {
     // -- Limpio el input de celular -- //
     $("#celular-hide").addClass("hide-info");
@@ -178,7 +204,7 @@ function restart2() {
     $("#new-otp-mail").addClass("hide-info");
     $("#btn-validar-correo").removeClass("hide-info");
     $("#confirmacion-mail").addClass("hide-info");
-}
+};
 
 // --- VALIDACION DE DOCUMENTO DE IDENTIDAD --- //
 function showDatosPersonales() {
@@ -209,7 +235,7 @@ function showDatosPersonales() {
             }
         }
     });
-}
+};
 function validarNumero() {
     var numeroDocumento = $("#documento").val();
     var tipoDocumento = $("#tipo-documento").val();
@@ -226,10 +252,10 @@ function validarNumero() {
     if(tipoDocumento > 0) {
         $("#invalid-tipo-documento").css("display", "none");
     }
-
     // -- CONSUMIR API REGISTRADURIA -- //
     if (numeroDocumento.length > 0 && tipoDocumento > 0) {
         var numeroDocumento = $("#documento").val();
+        
         $("#segundo-intento").addClass("hide-info");
         $("#documento").addClass("disable-writing");
         $("#tipo-documento").prop('disabled', 'disabled');
@@ -241,10 +267,17 @@ function validarNumero() {
             success: function (result) {
                 if (result == 1032437606) {
                     $("#confirmar-documento").removeClass("hide-info");
-                    $("#nombres").val("Steeven");
-                    $("#primer-apellido").val("Morales");
-                    $("#segundo-apellido").val("Medina");
+                    $("#nombres").val("");
+                    $("#primer-apellido").val("");
+                    $("#segundo-apellido").val("");
                     $("#validacion-tres").addClass("hide-info");
+                    nombresVerifica = "Steeven";
+                    primerApellidoVerifica = "Morales";
+                    segundoApellidoVerifica = "Medina";
+                    $("#btn-volver-intentar").addClass("hide-info");
+                    $("#btn-confirmar-datos").removeClass("hide-info");
+                    $("#alerta-verifica-error-text").addClass("hide-info");
+                    $("#alerta-verifica-error-btn").addClass("hide-info");
                 } else {
                     $("#validacion-tres").addClass("hide-info");
                     $("#segundo-intento").addClass("hide-info");
@@ -253,11 +286,11 @@ function validarNumero() {
             }
         });
     }
-}
+};
 function crearLead() {
     $("#confirmar-lead").addClass("hide-info");
     $("#crear-lead").removeClass("hide-info");
-}
+};
 function restart3() {
     $("#confirmar-documento").addClass("hide-info");
     $("#documento").removeClass("disable-writing");
@@ -269,22 +302,52 @@ function restart3() {
     $("#segundo-intento").removeClass("hide-info");
     $("#confirmar-lead").addClass("hide-info");
 
-}
+};
 function saveLead() {
-    $("#validacion-cuatro").removeClass("hide-info");
-    $("#documento-hide").addClass("hide-info");
-    $("#confirmar-documento").addClass("hide-info");
-    $("#oportunidad-hide").removeClass("hide-info");
-    $("#crear-lead").addClass("hide-info");
+    // -- 1 valido el formulario -- //
+    var nombresInput = $("#nombres").val();
+    var primerApellidoInput = $("#primer-apellido").val();
+    var segundoApellidoInput = $("#segundo-apellido").val();
+    if (nombresInput.length == 0) {
+        $("#invalid-nombres").css("display", "block");
+    } else {
+        $("#invalid-nombres").css("display", "none");
+    }
+    if (primerApellidoInput.length == 0) {
+        $("#invalid-primer-apellido").css("display", "block");
+    } else {
+        $("#invalid-primer-apellido").css("display", "none");
+    }
+    if (segundoApellidoInput.length == 0) {
+        $("#invalid-segundo-apellido").css("display", "block");
+    } else {
+        $("#invalid-segundo-apellido").css("display", "none");
+    }
+    // -- 2 valido los datos "Input" VS datos "Verifica" -- //
+    if (nombresInput.length > 0 && primerApellidoInput.length > 0 && segundoApellidoInput.length > 0) {
+        if (nombresVerifica.toLowerCase() == nombresInput.trim().toLowerCase() &&
+            primerApellidoVerifica.toLowerCase() == primerApellidoInput.trim().toLowerCase() &&
+            segundoApellidoVerifica.toLowerCase() == segundoApellidoInput.trim().toLowerCase()) {
+            $("#validacion-cuatro").removeClass("hide-info");
+            $("#documento-hide").addClass("hide-info");
+            $("#confirmar-documento").addClass("hide-info");
+            $("#oportunidad-hide").removeClass("hide-info");
+            $("#crear-lead").addClass("hide-info");
 
-    // -- UPDATE PROGRESS BAR -- //
-    $("#progres-66").addClass("hide-info");
-    $("#progres-100").removeClass("hide-info");
-    $("#confirmacion-celular").addClass("hide-info");
-    $("#confirmacion-celular-iz").addClass("hide-info");
-    $("#icon-info-oportunidad").removeClass("hide-info");
-
-}
+            // -- UPDATE PROGRESS BAR -- //
+            $("#progres-66").addClass("hide-info");
+            $("#progres-100").removeClass("hide-info");
+            $("#confirmacion-celular").addClass("hide-info");
+            $("#confirmacion-celular-iz").addClass("hide-info");
+            $("#icon-info-oportunidad").removeClass("hide-info");
+        } else {
+            $("#alerta-verifica-error-text").removeClass("hide-info");
+            $("#alerta-verifica-error-btn").removeClass("hide-info");
+            $("#btn-confirmar-datos").addClass("hide-info");
+            $("#btn-volver-intentar").removeClass("hide-info");
+        }
+    }
+};
 function saveLeadNew() {
 
     var nombres = $("#nombres-new").val();

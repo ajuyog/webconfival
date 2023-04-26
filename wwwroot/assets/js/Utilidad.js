@@ -3,7 +3,7 @@
 //});
 
 //$(function () {
-//    $(".slide.slick-slide.slick-current.slick-active").eq("3").css("width", "100%");
+//    $("#uncheckedPrimarySwitch").val("off");
 //});
 
 
