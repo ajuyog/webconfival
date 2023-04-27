@@ -3,6 +3,7 @@
 	public class SubComentarioDTO
 	{
 		public int Id { get; set; }
+        public int SubComentario { get; set; }
         public int ComentarioId { get; set; }
 		public string Nota { get; set; }
 		public string Autor { get; set; }

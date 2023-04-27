@@ -25,7 +25,6 @@ public class BlogController : Controller
     public IActionResult GetById(int idBlog)
     {
         // Esta es el API - esta pendiente
-
         var model = new BlogDTO()
         {
             Id = idBlog,
@@ -52,6 +51,7 @@ public class BlogController : Controller
                         new SubComentarioDTO()
                         {
                             Id = 1,
+                            SubComentario = 20,
                             Autor = "Autor desconocido",
                             ComentarioId = 1,
                             FechaPublicacion= DateTime.Now,
@@ -61,7 +61,8 @@ public class BlogController : Controller
                         new SubComentarioDTO()
                         {
                             Id = 2,
-                            Autor = "Autor desconocido",
+							SubComentario = 21,
+							Autor = "Autor desconocido",
                             ComentarioId = 1,
                             FechaPublicacion= DateTime.Now,
                             ImgAutor = "/assets/images/users/4.jpg",
@@ -81,6 +82,7 @@ public class BlogController : Controller
 				}
 			},
 		};
+
 		return View(model);
 	}
 

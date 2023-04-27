@@ -776,15 +776,24 @@
 
 																				<!-- Mensajes temporales -->
 																				<div class="hide-info pad-text" id="validacion-dos">
-																					<h5 ><span class="check-form-0"><i class="fa fa-check"></i></span> Tu correo electronico fue validado correctamente.</h5>
+																					<div class="alert alert-default" role="alert">
+																						<span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>
+																						<span class="alert-inner--text"><strong>Tu correo electronico!</strong> fue validado correctamente</span>
+																					</div>
 																					<h5>Continuemos con tu numero celular de contacto.</h5>
 																				</div>
 																				<div  class="hide-info pad-text" id="validacion-tres">
-																					<h5><span class="check-form-0"><i class="fa fa-check"></i></span> Tu numero de celular fue validado correctamente.</h5>
+																					<div class="alert alert-default" role="alert">
+																						<span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>
+																						<span class="alert-inner--text"><strong>Tu numero de celular!</strong> fue validado correctamente</span>
+																					</div>
 																					<h5>Continuemos con tus numero de documento.</h5>
 																				</div>
 																				<div class="hide-info pad-text" id="validacion-cuatro">
-																					<h5><span class="check-form-0"><i class="fa fa-check"></i></span> Tu documento de identificación fue validado correctamente.</h5>
+																					<div class="alert alert-default" role="alert">
+																						<span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>
+																						<span class="alert-inner--text"><strong>Tu documento de identificación!</strong> fue validado correctamente</span>
+																					</div>
 																					<h5>Continuemos información de tu sentencia ó concialiación</h5>
 																				</div>
 
@@ -813,8 +822,11 @@
 																							<a href="#Contact" class="btn btn-primary" onclick="showOTPCorreo()">Validar Correo</a>
 																						</div>
 																						<div id="put-timer"></div>
-																						<div id="mesage-resend" class="hide-info">
-																							<h6 class="alert-danger-cancel pad-text">El codigo OTP enviado a su correo electronico ha vencido</h6>
+																						<div id="mesage-resend" class="pad-text hide-info">
+																							<div class="alert alert-danger mb-0 pad-text" role="alert">
+																								<span class="alert-inner--icon me-2"><i class="fe fe-slash"></i></span>
+																								<span class="alert-inner--text"><strong>El codigo OTP</strong> enviado a su correo electronico ha vencido.</span>
+																							</div>
 																						</div>
 																						<div id="new-otp-mail" class="hide-info">
 																							<div class="row">
@@ -862,8 +874,13 @@
 																						<a href="#Contact" class="btn btn-primary" onclick="showOTPCelular()">Validar No. Celular</a>
 																					</div>
 																					<div id="put-timer2"></div>
-																					<div id="mesage-resend-celular" class="hide-info">
-																						<h6 class="alert-danger-cancel pad-text">El codigo OTP enviado a su numero celular ha vencido</h6>
+																					<div id="mesage-resend-celular" class="pad-text hide-info">
+
+																						<div class="alert alert-danger mb-0 pad-text" role="alert">
+																							<span class="alert-inner--icon me-2"><i class="fe fe-slash"></i></span>
+																							<span class="alert-inner--text"><strong>El codigo OTP</strong> enviado a su numero celular ha vencido.</span>
+																						</div>
+
 																					</div>
 																					<div id="new-otp-celular" class="hide-info">
 																						<div class="row">
@@ -966,7 +983,6 @@
 																									</div>
 																								</div>
 																							</div>
-
 																							<div class="margin-auto" id="btn-confirmar-datos">
 																								<div class="row pad-text">
 																									<div class="col-12 pad-text" id="confirmar-identidad">
@@ -974,7 +990,6 @@
 																									</div>
 																								</div>
 																							</div>
-
 																							<div class="margin-auto hide-info" id="btn-volver-intentar">
 																								<div class="row pad-text">
 																									<div class="col-12 pad-text" id="confirmar-identidad">
@@ -982,13 +997,11 @@
 																									</div>
 																								</div>
 																							</div>
-
 																							<div id="alerta-verifica-error-text" class="hide-info pad-text">
 																								<div class="alert alert-danger alert-dismissible fade show" role="alert">
-																									<i class="fa fa-frown-o me-2" aria-hidden="true"></i>Al parecer alguno de los campos de 'nombres' o 'apellidos' no concuerdan con tu numero de documento, verificalos y vuelve a intentar
+																									<i class="fa fa-frown-o me-2" aria-hidden="true"></i>Al parecer alguno de los campos de 'Nombre(s) completo(s)' o 'Apellidos' no concuerdan con tu numero de documento, verificalos y vuelve a intentar
 																								</div>
 																							</div>
-
 																							<div id="alerta-verifica-error-btn" class="hide-info">
 																								<div class="alert alert-danger alert-dismissible fade show" role="alert">
 																									<i class="fa fa-frown-o me-2 pad-text" aria-hidden="true"></i>Si, es el caso corrige tu numero de documento
@@ -1002,14 +1015,16 @@
 																				<!-- FORMULARIO DOCUMENTO NO EXISTENTE -->
 																				<div class="hide-info" id="confirmar-lead">
 																					<div class="row">
-																						<h5 class="header-family">No tenemos información tuya</h5>
-																						<h5>¿ Tu documento de identicación esta bien digitado ?</h5>
+																						<div class="alert alert-primary" role="alert">
+																							<span class="alert-inner--icon me-2"><i class="fe fe-bell"></i></span>
+																							<span class="alert-inner--text"><strong>No tenemos información tuya !</strong> ¿ Tu documento de identicación esta bien digitado ?</span>
+																						</div>
 																						<div class="row">
 																							<div class="col-lg-3 col-md-3 col-sm-12 pad-text" id="confirmar-identidad">
-																								<a href="#Contact" class="btn btn-primary" onclick="crearLead()">Si, estan bien !!</a>
+																								<a href="#Contact" class="btn btn-primary" onclick="crearLead()">Si, esta bien !!</a>
 																							</div>
 																							<div class="col-lg-3 offset-lg-6 col-md-3 offset-md-6 col-sm-12" id="no-soy-yo">
-																								<a href="#Contact" class="btn btn-danger" onclick="restart3()">No, no lo estan !!</a>
+																								<a href="#Contact" class="btn btn-danger" onclick="restart3()">No, no lo esta !!</a>
 																							</div>
 																						</div>
 																					</div>
@@ -2565,9 +2580,7 @@
 			</div>
 			<!-- Servicios - FIN-->
 
-
 			<!-- BLOG - Inicio -->
-
 			<div class="section pb-5 bg-white" id="Blog">
 				<div class="container px-5 px-md-0">
 					<div class="row justify-content-center text-center">
@@ -2600,7 +2613,7 @@
 										<h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Jiggel mossin</h6>
 										<div class="d-sm-flex ms-sm-auto">
 											<a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0   text-muted">Dec-01-2021</div></a>
-											<a class="me-0 d-flex" href="#"><span class="fe fe-message-square text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">11 Comments</div></a>
+											<a class="me-0 d-flex" asp-controller="Blog" asp-action="GetById" asp-route-idBlog="1"><span class="fe fe-message-square text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">11 Comments</div></a>
 										</div>
 									</div>
 								</div>

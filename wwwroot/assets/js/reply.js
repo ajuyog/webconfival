@@ -25,6 +25,8 @@ function replay() {
     // Creating submit button
     let submitButton = document.createElement('button');
     submitButton.setAttribute('class', "btn btn-success ms-3");
+    submitButton.setAttribute('onclick', "prueba");
+
     submitButton.innerText = "Submit";
 
     // appending text are to div
