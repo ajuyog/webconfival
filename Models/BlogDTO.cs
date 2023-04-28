@@ -10,8 +10,8 @@ namespace confinancia.Models
         public string Contenido { get; set; }
         public string IntroUno { get; set; }
         public string IntroDos { get; set; }
-        public string Autor { get; set; }
-        public string ImgAutor { get; set; }
+        public List<CategoriaDTO> Categorias { get; set; }
+        public AutorDTO Autor { get; set; }
         public DateTime FechaPublicacion { get; set; }
         public List<ComentariosDTO> Comentarios { get; set; }
     }

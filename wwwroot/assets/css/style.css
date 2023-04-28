@@ -594,10 +594,21 @@ body {
     margin: auto;
 }
 
+.derechos-confival{
+    text-align: center;
+    color: white;
+}
+
+.footer-confival {
+    background-color: #08618F;
+    box-shadow: none;
+}
+
+/*-------------------------------------------------------------*/
+
 .margin-tabs-li {
     margin: auto;
 }
-
 
 [tabindex="-1"]:focus {
     outline: 0 !important;
@@ -26520,7 +26531,7 @@ img {
 }
 
 .landing-page .top-footer ul a:hover {
-    color: var(--primary-bg-color);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .landing-page .demo-footer .top-footer img {
@@ -26537,12 +26548,17 @@ img {
 }
 
 .landing-page .top-footer a {
-    color: rgba(255, 255, 255, 0.5);
+    color: white;
+    line-height: 2;
+}
+
+.landing-page .top-footer a:hover {
+    color: rgba(0, 136, 204, 0.5);
     line-height: 2;
 }
 
 .landing-page .top-footer p {
-    color: rgba(255, 255, 255, 0.5);
+    color: white;
 }
 
 .landing-page .top-footer h6 {
@@ -26602,7 +26618,7 @@ img {
 }
 
 .landing-page .main-footer {
-    padding: 20px 30px 20px 280px;
+    /*padding: 20px 30px 20px 280px;*/
     font-size: 14px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
