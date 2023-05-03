@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
+﻿
 namespace confinancia.Models
 {
 	public class BlogDTO

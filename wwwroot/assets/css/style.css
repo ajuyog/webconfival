@@ -421,6 +421,11 @@ body {
     border-radius: 10px;
 }
 
+.shadow-card-blogs {
+    border: 1px solid rgba(0, 136, 204, 0.5) !important;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
 .blog-casos {
     margin-right: 15px;
     align-items: start;
@@ -26969,6 +26974,19 @@ img {
 .landing-page .card {
     background-color: transparent;
     box-shadow: none;
+}
+
+.landing-page .card-confival-blogs {
+    background-color: transparent;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 10px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 25px;
+}
+
+.landing-page .card-confival-blogs-publicar {
+    background-color: transparent;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 10px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 25px;
+    border-radius: 15px;
 }
 
 .landing-page .main-footer {
@@ -81781,6 +81799,11 @@ button.bg-custom-yellow-darkest:focus {
 
 .border {
     border: 1px solid #eaedf1 !important;
+}
+
+.border-confival-blogs{
+    border: 1px solid rgba(0, 136, 204, 0.5) !important;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 5px 10px 0 rgba(0, 0, 0, 0.19);
 }
 
 .border-top {
