@@ -65,7 +65,7 @@ function AgregarBotonesIterarTextArea() {
 };
 
 // --- ONCHAGE INPUTPS --- //
-$("#titulo-blog").on("change", function () {
+$("#titulo-blog").on("keyup", function () {
     var div = $("#contenido-blog-visualizar");
     var titulo = $("#titulo-blog").val();
     div.children().remove();
@@ -89,7 +89,7 @@ function readURL(input) {
     }
 };
 
-$("#primer-parrafo").on("change", function () {
+$("#primer-parrafo").on("keyup", function () {
     var divDos = $("#contenido-blog-visualizar-parrafo");
     divDos.children().remove();
     var primerParrafo = $("#primer-parrafo").val();
@@ -97,17 +97,18 @@ $("#primer-parrafo").on("change", function () {
     AgregarBotones();
 });
 
-$("#subtitulo-uno-blog").on("change", function () {
+$("#subtitulo-uno-blog").on("keyup", function () {
     var divTres = $("#contenido-blog-visualizar-parrafo-dos");
     var subTituloUno = $("#subtitulo-uno-blog").val();
     if (subTituloUno.length != 0) {
         $("#invalid-segundo-parrafo").css("display", "none");
     }
-    divTres.append('<h3>' + subTituloUno + '</h3><br>');
+    divTres.children("h3").remove();
+    divTres.append('<h3>' + subTituloUno + '</h3>');
     AgregarBotonesDos();
 });
 
-$("#segundo-parrafo").on("change", function () {
+$("#segundo-parrafo").on("keyup", function () {
     var divTres = $("#contenido-blog-visualizar-parrafo-dos");
     var segundoParrafo = $("#segundo-parrafo").val();
     var stPrimero = $("#subtitulo-uno-blog").val();
@@ -116,14 +117,16 @@ $("#segundo-parrafo").on("change", function () {
         $("#invalid-segundo-parrafo").css("display", "block");
         $("#segundo-parrafo").val("");
     } else {
+        divTres.children("p").remove();
         divTres.append('<p>' + segundoParrafo + '</p> ');
         AgregarBotonesDos();
     }
 });
 
-$("#segundo-parrafo-textarea").on("change", function () {
+$("#segundo-parrafo-textarea").on("keyup", function () {
     var divTres = $("#contenido-blog-visualizar-parrafo-dos");
     var segundoParrafoTextArea = $("#segundo-parrafo-textarea").val();
+    divTres.children("p").remove();
     divTres.append('<p>' + segundoParrafoTextArea + '</p> ');
     AgregarBotonesDosTextArea();
 });
@@ -160,10 +163,13 @@ $("#parrafo-iterar-textarea").on("change", function () {
 
 // --- BOTONES FINALIZAR --- //
 function Publicar() {
-    $("#seccion-uno-publicar").children().remove();
-    $("#seccion-dos-publicar").children().remove();
-    $("#seccion-btn-publicar").children().remove();
-    $("#form-blog-create-success").append('<div class="alert alert-default pad-text" role="alert"><span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span><span class="alert-inner--text"><strong>Tu publicación esta siendo analisada</strong> Uno de nuestros colaboradores, se te notificara al correo electronico cuando sea aprovada !!!</span><div class="row"><div class="col-12"><a href="#PublicarBlog" class="btn btn-success" onclick="restartBlog()" style="margin-top:20px;">Quiero publicar otro Blog!!</a></div></div></div>')
+    var visualizador = $("#visualizar-blog-principal");
+    var visualizadorConfirmar = $("#visualizar-blog-confirmar");
+    var visualizadorCampos = $("#visualizador-campos");
+
+    visualizador.addClass("hide-info");
+    visualizadorCampos.addClass("hide-info");
+    visualizadorConfirmar.removeClass("hide-info");
 };
 
 function restartBlog() {
