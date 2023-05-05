@@ -609,8 +609,16 @@ body {
     box-shadow: none;
 }
 
-/*-------------------------------------------------------------*/
+.bg-primary-v-dos {
+    background-color: #08618F;
+}
 
+.card-blog-publicar {
+    border: 3px solid whitesmoke;
+    border-radius: 6px;
+}
+
+/*-------------------------------------------------------------*/
 .margin-tabs-li {
     margin: auto;
 }
@@ -26887,7 +26895,7 @@ img {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    border: 1px solid #8fbd56;
+    border: 1px solid #0088CC;
     transition: all 0.3s;
     font-size: 1rem;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);
@@ -29412,8 +29420,8 @@ body.rtl .buy-now {
 }
 
 .footer .social ul li a {
-    width: 30px;
-    height: 30px;
+    width: 37px;
+    height: 37px;
     display: block;
     border: 1px solid #eceef7;
     line-height: 25px;

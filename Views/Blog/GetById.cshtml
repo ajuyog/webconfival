@@ -239,109 +239,184 @@
 
 		<!-- PUBLICAR BLOG BLOG -->
 		<div class="section pb-5 bg-white" id="PublicarBlog">
-			<div class="container px-5 px-md-0" style="padding-top:20px;">
+			<div class="container px-5 px-md-0" style="padding-top:20px;" >
 				<div class="row justify-content-center text-center">
 					<div class="col-lg-8 ps-4 mb-lg-0- mb-4">
 						<h3 class="header-family pad-text">Publicar Blog</h3>
 					</div>
 				</div>
-				<div class="row pad-text">
-					<div class="col-lg-12 col-md-12">
-						<div class="card-confival-blogs-publicar border-confival-blogs">
-							<div class="card-header">
-								<h4 class="card-title margin-auto"><i class="fa fa-comments-o" style="color: #0088CC; font-size: 25px;"></i>  Publica tu blog con nosotros...</h4>
-							</div>
-							<div class="card-body">
-								<div class="form-group">
-									<label class="form-label text-dark">Titulo</label>
-									<input type="text" class="form-control" id="titulo-blog">
-									<div class="invalid-feedback" id="invalid-titulo-blog">El campo 'Titulo' es requerido</div>
-								</div>
-								<div class="col-sm-12 col-md-12 col-xl-12">
-									<label class="form-label text-muted">Contenido: </label>
+				<div class="card">
+					<div class="card-body card-blog-publicar">
+						<div class="row justify-content-center">
+							<div class="col-xl-4 col-sm-12 col-xs-12">
+								<h4 class="card-title margin-auto pad-text"><i class="fa fa-comments-o" style="color: #0088CC; font-size: 25px;"></i>  Publica tu blog con nosotros...</h4>
+
+								<!-- Seccion 1 -->
+								<div id="seccion-uno-publicar">
+									<h4 class="header-family mt-3">Empecemos con el Titulo</h4>
 									<div class="form-group">
-										<div id="summernote"></div>
+										<label class="form-label">TiTulo</label>
+										<input class="form-control" type="text" placeholder="Titulo de tu blog" id="titulo-blog">
 									</div>
-									<div class="invalid-feedback" id="invalid-summernote">El campo 'Contenido' debe contener mas de 4.000 caracteres</div>
-								</div>
-								<div class="form-group">
-									<label class="form-label">Categorias</label>
-									<select multiple class="form-control select2-show-search form-select" data-placeholder="Seleccione..." id="categorias-publicar">
-										<option value="1">Economia</option>
-										<option value="2">Sentencias</option>
-										<option value="3">Legal</option>
-										<option value="4">Sociedad</option>
-										<option value="5">Indicadores</option>
-									</select>
-									<div class="invalid-feedback" id="invalid-categorias-publicar">Selecione al menos una categoria</div>
-								</div>
-								<div class="form-group pad-text">
-									<label class="form-label">Imagen del Blog</label>
-									<div class="col-sm-12 col-md-12">
-										<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="img-blog-publicar"/>
+									<div class="form-group">
+										<label class="form-label">Imagen del Blog</label>
+										<div class="col-sm-12 col-md-12">
+										<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-blog" />
+										</div>
 									</div>
-									<div class="invalid-feedback" id="invalid-img-blog-publicar">Adjunte una imagen para el blog en formato 'jpeg' o 'png'</div>
+									<div class="form-group">
+										<label class="form-label">Primer Parrafo</label>
+										<textarea class="form-control mb-4" placeholder="Empieza con el primer parrafo" rows="8" id="primer-parrafo"></textarea>
+									</div>
 								</div>
-							</div>
-						</div>
-						<div class="card-confival-blogs-publicar border-confival-blogs">
-							<div class="card-header pad-text">
-								<h4 class="card-title margin-auto"><i class="mdi mdi-account-plus" style="color: #0088CC; font-size: 25px;"></i>  Ingresa tu informacion personal...</h4>
-							</div>
-							<div class="card-body">
-								<div class="form-group">
-									<label class="form-label text-dark">Nombre(s)</label>
-									<input type="text" class="form-control" id="nombre-publicar">
-									<div class="invalid-feedback" id="invalid-nombre-publicar">El campo 'Nombre(s)' es requerido</div>
+
+								<!-- Seccion 2 -->
+								<div id="seccion-dos-publicar" class="hide-info">
+									<h4 class="header-family mt-3">Adiciona un segundo parrafo</h4>
+									<div class="form-group" >
+										<label class="form-label">SubTiTulo</label>
+										<input class="form-control" type="text" placeholder="Subtitulo de tu blog" id="subtitulo-uno-blog">
+									</div>
+									<div class="form-group">
+										<label class="form-label">Segundo Parrafo</label>
+										<textarea class="form-control mb-4" placeholder="Continua con el segundo parrafo" rows="8" id="segundo-parrafo"></textarea>
+									</div>
+										<div class="invalid-feedback" id="invalid-segundo-parrafo">Primero debes asignar un Subtitulo para este parrafo</div>
 								</div>
-								<div class="row">
-									<div class="col-lg-6 col-md-12">
-										<div class="form-group">
-											<div class="form-group">
-												<label class="form-label text-dark">Primer Apellido</label>
-												<input type="text" class="form-control" id="p-apellido-publicar">
-												<div class="invalid-feedback" id="invalid-p-apellido-publicar">El campo 'Primer Apellido' es requerido</div>
+
+								<!-- Seccion 2 textArea -->
+								<div id="seccion-dos-publicar-textarea" class="hide-info">
+									<h4 class="header-family mt-3">Adiciona un segundo parrafo</h4>
+									<div class="form-group">
+										<label class="form-label">Segundo Parrafo</label>
+										<textarea class="form-control mb-4" placeholder="Continua con el segundo parrafo" rows="8" id="segundo-parrafo-textarea"></textarea>
+									</div>
+								</div>
+
+								<!-- Seccion 3 Iterar -->
+								<div id="seccion-publicar-iterar" class="hide-info">
+									<h4 class="header-family mt-3">Adiciona un nuevo parrafo</h4>
+									<div class="form-group">
+										<label class="form-label">SubTiTulo</label>
+										<input class="form-control" type="text" placeholder="Subtitulo de tu blog" id="subtitulo-iterar">
+									</div>
+									<div class="form-group">
+										<label class="form-label">Nuevo Parrafo</label>
+										<textarea class="form-control mb-4" placeholder="Continua con un nuevo parrafo" rows="8" id="parrafo-iterar"></textarea>
+									</div>
+									<div class="invalid-feedback" id="invalid-parrafo-iterar">Primero debes asignar un Subtitulo para este parrafo</div>
+
+								</div>
+
+								<!-- Seccion 3 TextArea Iterar -->
+								<div id="seccion-publicar-iterar-textarea" class="hide-info">
+									<h4 class="header-family mt-3">Adiciona un nuevo parrafo</h4>
+									<div class="form-group">
+										<label class="form-label">Nuevo Parrafo</label>
+										<textarea class="form-control mb-4" placeholder="Continua con un nuevo parrafo" rows="8" id="parrafo-iterar-textarea"></textarea>
+									</div>
+								</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+								<!-- Seccion Botones -->
+								<div id="seccion-btn-publicar" class="hide-info">
+									<h4 class="header-family mt-3">Adiciona un segundo parrafo</h4>
+									<div class="alert alert-info" role="alert">
+										<span class="alert-inner--icon me-2"><i class="fe fe-bell"></i></span>
+										<span class="alert-inner--text"><strong>Info!</strong>¿ Deseas agregar un Subtitulo para este parrafo ?</span>
+										<div class="row">
+											<div class="col-xl-4 col-sm-12 col-xs-12">
+												<a href="#PublicarBlog" class="btn btn-success" onclick="AddSubtitulo()" style="margin-top:20px;">Si. si quiero !!</a>
+											</div>
+											<div class="col-xl-4 col-sm-12 col-xs-12">
+												<a href="#PublicarBlog" class="btn btn-danger" onclick="AddParrafo()" style="margin-top:20px;">No. ni quiero !!</a>
 											</div>
 										</div>
 									</div>
-									<div class="col-lg-6 col-md-12">
-										<div class="form-group">
-											<label class="form-label text-dark">Segundo Apellido</label>
-											<input type="text" class="form-control" id="s-apellido-publicar">
-											<div class="invalid-feedback" id="invalid-s-apellido-publicar">El campo 'Segundo Apellido' es requerido</div>
-										</div>
-									</div>
 								</div>
-								<div class="form-group">
-									<label class="form-label text-dark">Correo electronico</label>
-									<input type="text" class="form-control" id="correo-publicar">
-									<div class="invalid-feedback" id="invalid-correo-publicar">Ingrese un correo electronico valido</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-6 col-md-12">
-										<div class="form-group">
-											<label class="form-label text-dark">Descripción</label>
-											<textarea id="descripcion-publicar" class="form-control text-area border-1" placeholder="Cuentanos algo sobre ti" rows="9"></textarea>
-											<div class="invalid-feedback" id="invalid-descripcion-publicar">El campo 'Descripción' debe contener mas de 200 caracteres</div>
-										</div>
-									</div>
-									<div class="col-lg-6 col-md-12">
-										<div class="form-group">
-											<label class="form-label">Imagen de perfil</label>
-											<div class="col-sm-12 col-md-12">
-												<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png"/ id="avatar-publicar">
+
+								<!-- Seccion Botones dos -->
+								<div id="seccion-btn-publicar-dos" class="hide-info">
+									<h4 class="header-family mt-3">Adiciona un parrafo</h4>
+									<div class="alert alert-info" role="alert">
+										<span class="alert-inner--icon me-2"><i class="fe fe-bell"></i></span>
+										<span class="alert-inner--text"><strong>Info!</strong>¿ Deseas agregar un Subtitulo para este nuevo parrafo ?</span>
+										<div class="row">
+											<div class="col-xl-4 col-sm-12 col-xs-12">
+												<a href="#PublicarBlog" class="btn btn-success" onclick="AddSubtituloIterar()" style="margin-top:20px;">Si. si quiero !!</a>
 											</div>
-											<div class="invalid-feedback" id="invalid-avatar-publicar">Adjunte una imagen para su perfil en formato 'jpeg' o 'png'</div>
+											<div class="col-xl-4 col-sm-12 col-xs-12">
+												<a href="#PublicarBlog" class="btn btn-danger" onclick="AddParrafoIterar()" style="margin-top:20px;">No. ni quiero !!</a>
+											</div>
 										</div>
 									</div>
+								</div>
+
+								<!-- Seccion Botones Iterar-->
+								<div id="seccion-btn-publicar-iterar" class="hide-info">
+									<h4 class="header-family mt-3">Adiciona un parrafo</h4>
+									<div class="alert alert-info" role="alert">
+										<span class="alert-inner--icon me-2"><i class="fe fe-bell"></i></span>
+										<span class="alert-inner--text"><strong>Info!</strong>¿ Deseas agregar un Subtitulo para este nuevo parrafo ?</span>
+										<div class="row">
+											<div class="col-xl-4 col-sm-12 col-xs-12">
+												<a href="#PublicarBlog" class="btn btn-success" onclick="LimpiarSubtituloIterar()" style="margin-top:20px;">Si. si quiero !!</a>
+											</div>
+											<div class="col-xl-4 col-sm-12 col-xs-12">
+													<a href="#PublicarBlog" class="btn btn-danger" onclick="LimpiarParrafoIterar()" style="margin-top:20px;">No. ni quiero !!</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								
+
+
+							</div>
+
+
+
+							<div class="col-xl-8 col-sm-12 col-xs-12">
+								<div class="row justify-content-center text-center">
+									<h4 class="margin-auto pad-text">Visualiza tu blog.....</h4>
+									<div id="contenido-blog-visualizar"></div>
+									<div class="ps-relative p-1 bg-light br-5 hide-info" id="img-onchange">
+										<img src="" alt="img" class="cover-image br-5 ms-auto me-auto wp-100" id="blah"><br>
+										<span class="badge bg-primary-gradient blog-label label5">Blogs Confival</span>
+									</div>
+									<div id="contenido-blog-visualizar-parrafo" style="margin-top:20px;"></div>
+									<div id="contenido-blog-visualizar-parrafo-dos" style="margin-top:20px;"></div>
+									<div id="contenido-blog-visualizar-iterar" style="margin-top:20px;"></div>
+									<div id="form-blog-create-success"></div>
+
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row justify-content-center">
-					<a href="#PublicarBlog" class="btn btn-primary margin-auto" style="width:200px;" onclick="PublicarBlog()">Publicar Ahora</a>
-				</div>
+
+
+
+
+
+
+
+		
 			</div>
 		</div>
 
@@ -360,7 +435,7 @@
 	<script src="../assets/js/form-comentario.js"></script>
 	<script src="../assets/js/Blogs.js"></script>
 	<!-- FORMEDITOR JS -->
-	<script src="~/assets/plugins/quill/quill.min.js"></script>
+	@*<script src="~/assets/plugins/quill/quill.min.js"></script>*@
 
 	<!--Internal Fancy uploader js-->
 	<script src="~/assets/plugins/fancyuploder/jquery.ui.widget.js"></script>
@@ -379,7 +454,7 @@
 	<script src="~/assets/js/formelementadvnced.js"></script>
 
 	<!-- TASK EDIT JS-->
-	<script src="~/assets/js/task-create.js"></script>
+	@*<script src="~/assets/js/task-create.js"></script>*@
 
 	<!-- INTERNAL Summernote Editor js -->
 	<script src="~/assets/plugins/summernote-editor/summernote1.js"></script>
@@ -388,6 +463,15 @@
 	<!--Internal Fileuploads js-->
 	<script src="~/assets/plugins/fileuploads/js/fileupload.js"></script>
 	<script src="~/assets/plugins/fileuploads/js/file-upload.js"></script>
+
+	<!-- INTERNAl JQUERY.STEPS JS -->
+	<script src="~/assets/plugins/jquery-steps/jquery.steps.min.js"></script>
+	<script src="~/assets/plugins/parsleyjs/parsley.min.js"></script>
+
+	<!-- INTERNAL ACCORDION-WIZARD-FORM JS-->
+	<script src="~/assets/plugins/accordion-Wizard-Form/jquery.accordion-wizard.min.js"></script>
+	<script src="~/assets/js/form-wizard.js"></script>
+
 
 }
 
