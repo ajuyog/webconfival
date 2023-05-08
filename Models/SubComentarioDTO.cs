@@ -8,5 +8,5 @@
 		public string Nota { get; set; }
 		public AutorDTO Autor { get; set; }
 		public DateTime FechaPublicacion { get; set; }
-	}
+    }
 }

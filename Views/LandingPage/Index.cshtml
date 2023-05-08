@@ -24,29 +24,6 @@
 				<div class="container px-5 px-md-0">
 					<div class="overflow-hidden">
 						<div class="row">
-							@*@if (User.Identity.IsAuthenticated)
-								{
-									<h1>Welcome @User.Identity.Name</h1>
-									<h1>You are signed in</h1>
-									<h2><a asp-action="Privacy">
-								Go to protected page</a></h2>
-									<form asp-controller="LandingPage" 
-								asp-action="SignOut">
-										<button type="submit" name="signOutType" 
-								value="app">Sign Out</button>
-										<button type="submit" name="signOutType" 
-								value="all">Sign Out Completely</button>
-									</form>
-								}
-								else
-								{
-									<h1>You are not signed in</h1>
-									<form asp-controller="LandingPage" 
-								asp-action="SignIn">
-										<button type="submit">
-								Sign In</button>
-									</form>
-								}*@
 							<div class="col-lg-12 text-left pos-relative overflow-hidden market-image text-center banner">
 								<a href="https://api.whatsapp.com/send?phone=573146699814&text=Hola%20me%20encuentro%20interesado%20">
 									<img alt="" class="logo-2" src="~/assets/images/landing/Banner.png">
@@ -129,24 +106,18 @@
 										</div>
 									</div>
 								</div>
-							
 							</div>
-							@*<div class="card-footer">
-							</div>*@
 						</div>
 					</div>
-
 				</div>
 
 				<!-- Seccion 2 -- ¿Cómo es el proceso de compra de sentencias? -->
-				<div class="container px-5 px-md-0">
+				<div class="container px-5 px-md-0" style="padding-bottom:30px;">
 					<div class="row text-center pad-text">
 						<div class="col-lg-12">
 							<h3 class="header-family">Proceso de compra</h3>
 						</div>
 					</div>
-				</div>
-				<div class="container px-5 px-md-0" style="padding-bottom:6px;">
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							<div class="accordion" id="accordionProceso">
@@ -195,18 +166,12 @@
 													</div>
 												</div>
 											</div>
-
 										</div>
 									</div>
 								</div>
 							</div>
-
-
-
 						</div>
 					</div>
-
-
 				</div>
 
 				<!-- Seccion 3 -- Beneficios de Confival -->
@@ -271,6 +236,8 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- Seccion 4 -- Carrousel Entidades -->
 				<div class="px-5 px-md-0" style="padding-bottom:80px;">
 					<div class="bg-primary-v-dos section">
 					<div class="container px-5 px-md-0">
@@ -299,7 +266,7 @@
 				</div>
 				</div>
 
-				<!-- Seccion 4 -- Algunos de nuestros casos de éxito -->
+				<!-- Seccion 5 -- Algunos de nuestros casos de éxito -->
 				<div class="container px-5 px-md-0" style="padding-bottom:6px;">
 					<div class="row justify-content-center text-center">
 						<div class="col-lg-8 ps-4 mb-lg-0- mb-4 pad-text">
@@ -577,7 +544,7 @@
 					</div>
 				</div>
 
-				<!-- Seccion 5 -- ¿Confival en cifras? -->
+				<!-- Seccion 6 -- ¿Confival en cifras? -->
 				<div class="container px-5 px-md-0" style="padding-bottom:6px;">
 					<div class="row justify-content-center text-center">
 						<div class="col-lg-8 ps-4 mb-lg-0- mb-4 pad-text">
@@ -606,7 +573,7 @@
 					</div>
 				</div>
 
-				<!-- Seccion 6 -- Preguntas Frecuentes -->
+				<!-- Seccion 7 -- Preguntas Frecuentes -->
 				<div class="container px-5 px-md-0" style="padding-bottom:35px;">
 					<div class="container px-5 px-md-0">
 					<div class="row text-center pad-text">
@@ -683,7 +650,7 @@
 					</div>
 				</div>
 
-				<!-- Seccion 7 -- Contacto -->
+				<!-- Seccion 8 -- Contacto -->
 				<div class="bg-image-landing bg-white section" id="Contact">
 					<div class="container px-5 px-md-0">
 						<div class="row text-center justify-content-center">
@@ -765,16 +732,7 @@
 																					<!-- Status de informacion personal -->
 																					<div id="confirmacion-celular-iz">
 																						<div class="d-flex" >
-																							<span>
-																								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																										viewBox="0 0 24 24">
-																									<path fill="#8fbd56"
-																											d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																											opacity=".99" />
-																									<path fill="#8fbd56" opacity=".2"
-																											d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																								</svg>
-																							</span>
+																							<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																							<div class="ms-3">
 																								<p>El correo electronico fue validado exitosamente</p>
 																							</div>
@@ -782,16 +740,7 @@
 																					</div>
 																					<div class="hide-info" id="confirmacion-celular">
 																						<div class="d-flex">
-																							<span>
-																								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																									 viewBox="0 0 24 24">
-																									<path fill="#8fbd56"
-																										  d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																										  opacity=".99" />
-																									<path fill="#8fbd56" opacity=".2"
-																										  d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																								</svg>
-																							</span>
+																							<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																							<div class="ms-3">
 																								<p>El numero celular fue validado exitosamente</p>
 																							</div>
@@ -1175,18 +1124,6 @@
 															</div>
 														</form>
 													</div>
-
-													@*<div><br />
-														@if (@Model.data != "")
-														{
-															<div class="alert alert-success alert-dismissible fade show" role="alert">
-																<span class="alert-inner--text">@Model.data</span>
-																<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="right: -13px">
-																	<span aria-hidden="true">×</span>
-																</button>
-															</div>
-														}
-													</div>*@
 												</div>
 
 												<!-- Contacto Confival -->
@@ -1272,7 +1209,6 @@
 																								Lun - Vie: 8am
 																								- 6pm
 																							</p>
-																							</p>
 																						</div>
 																					</div>
 																				</div>
@@ -1292,7 +1228,6 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
 			<!-- Inicio FIN-->
 
@@ -1311,8 +1246,8 @@
 								<!-- Tabs -->
 								<ul class="nav panel-tabs">
 									<li class="margin-tabs-li"><a href="#tab5" class="active me-1 text-default my-1" data-bs-toggle="tab" onclick="widthConfival()">Compra de Sentencias</a></li>
-									<li class="margin-tabs-li"><a href="#tab7" data-bs-toggle="tab" class="me-1 text-default my-1" onclick="widthConfival()">Estructuración de negocios especiales</a></li>
 									<li class="margin-tabs-li"><a href="#tab6" data-bs-toggle="tab" class="me-1 text-default my-1" onclick="widthConfival()">Activos Inmobiliarios</a></li>
+									<li class="margin-tabs-li"><a href="#tab7" data-bs-toggle="tab" class="me-1 text-default my-1" onclick="widthConfival()">Estructuración de negocios especiales</a></li>
 								</ul>
 							</div>
 						</div>
@@ -1349,16 +1284,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>Reciben sus honorarios de manera <strong>ágil, segura </strong>y de forma anticipada.</p>
 																			</div>
@@ -1366,16 +1292,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p><strong>Liquidez</strong> inmediata para sus proyectos de inversión.</p>
 																			</div>
@@ -1383,16 +1300,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p><strong>Ayudan a sus clientes</strong> al disponer de su dinero de manera ágil y anticipada.</p>
 																			</div>
@@ -1400,16 +1308,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>Cuentan con la posibilidad de ser embajadores Confival, permitiéndoles recibir más beneficios.</p>
 																			</div>
@@ -1426,16 +1325,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					<strong>Rapidez, seguridad y transparencia </strong>en el proceso de compra de sentencias.
@@ -1445,16 +1335,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					<strong>Acompañamiento </strong> en todo el proceso de venta.
@@ -1464,16 +1345,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					<strong>Reducción significativa en los tiempos</strong> de espera para obtener el dinero pactado con el Estado.
@@ -1483,16 +1355,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					<strong>Asesoría financiera </strong>para invertir el dinero de la venta de la sentencia de una manera eficiente.
@@ -2066,16 +1929,7 @@
 																<div class="row">
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Rapidez y Diligencia en el estudio
@@ -2085,16 +1939,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Acompañamiento durante el proceso de venta
@@ -2104,16 +1949,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Anticipamos el porcentaje de su Valor
@@ -2123,16 +1959,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Brindamos Soluciones Integrales
@@ -2142,16 +1969,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Evite tiempos del proceso ordinario
@@ -2161,16 +1979,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Red de contactos en las principales zonas del país
@@ -2189,7 +1998,6 @@
 
 									<!-- Indicadores 2 -->
 									<partial name="~/Views/Shared/_Indicadores.cshtml" model="modelI2" />
-
 									<!-- Seccion 2 -- Confival estructurando activos inmobiliarios -->
 									<div class="container px-5 px-md-0" style="padding-bottom:50px;">
 										<div class="row justify-content-center">
@@ -2228,8 +2036,8 @@
 											</div>
 										</div>
 									</div>
-								</div>
 
+								</div>
 								<div class="tab-pane " id="tab7">
 									<!-- Seccion 1 -- Estructuración de Negocios Especiales -->
 									<div class="px-md-0">
@@ -2246,31 +2054,30 @@
 									</div>
 									<div class="container px-5 px-md-0" style="padding-bottom:50px;">
 										<div class="col-lg-12">
-												<div class="responsive-screens">
-													<div class="slide">
-														<div class="row align-items-center">
-															<div class="col-md-6 col-12 px-0">
-																<div class="row">
-																	<div class="col-12">
-																		<div class="col-10">
-																			<img alt="" src="~/assets/images/landing/negocios-especiales.jpg" />
-																		</div>
+											<div class="responsive-screens">
+												<div class="slide">
+													<div class="row align-items-center">
+														<div class="col-md-6 col-12 px-0">
+															<div class="row">
+																<div class="col-12">
+																	<div class="col-10">
+																		<img alt="" src="~/assets/images/landing/negocios-especiales.jpg" />
 																	</div>
 																</div>
 															</div>
-															<div class="col-md-6 col-12">
-																<div class="row">
-																	<div class="col-12">
-																		<div class="col-10">
-																			<h3 class="header-family pad-text">¿Qué es estructuración de negocios especiales?</h3>
-																		</div>
+														</div>
+														<div class="col-md-6 col-12">
+															<div class="row">
+																<div class="col-12">
+																	<div class="col-10">
+																		<h3 class="header-family pad-text">¿Qué es estructuración de negocios especiales?</h3>
 																	</div>
-																	<div class="col-12">
-																		<div class="d-flex">
-																			<div class="ms-3">
-																				<p>Confival es una firma de inversión privada que se enfoca en la deuda a corto plazo garantizada por bienes raíces, que producen ingresos en Colombia.</p>
-																				<p>Nuestros fondos se enfocan en proveer financiamiento puente, típicamente a un año, para transacciones comerciales de bienes raíces.</p>
-																			</div>
+																</div>
+																<div class="col-12">
+																	<div class="d-flex">
+																		<div class="ms-3">
+																			<p>Confival es una firma de inversión privada que se enfoca en la deuda a corto plazo garantizada por bienes raíces, que producen ingresos en Colombia.</p>
+																			<p>Nuestros fondos se enfocan en proveer financiamiento puente, típicamente a un año, para transacciones comerciales de bienes raíces.</p>
 																		</div>
 																	</div>
 																</div>
@@ -2279,6 +2086,7 @@
 													</div>
 												</div>
 											</div>
+										</div>
 									</div>
 
 									<!-- Seccion 2 -- Ventajas de los Activos Alternativos 2 -->
@@ -2384,16 +2192,7 @@
 																<div class="row">
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Finanzas corporativas
@@ -2403,16 +2202,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Gestión de riesgos empresariales
@@ -2422,16 +2212,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Asesoría financiera, organizacional y de mercados
@@ -2441,16 +2222,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Estructuración financiera de proyectos de inversión
@@ -2460,16 +2232,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Diseño y estructuración de títulos valores
@@ -2479,16 +2242,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Valoración de empresas
@@ -2498,16 +2252,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Reestructuración de pasivos y consecución de recursos para financiación de proyectos
@@ -2517,16 +2262,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Diseño y asesoría en la administración de recursos y portafolios de inversión
@@ -2536,16 +2272,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Asesoría para comercializar activos fijos (inmuebles) con fondos de inversión inmobiliaria
@@ -2555,16 +2282,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Titularizaciones y emisiones de Valores
@@ -2574,16 +2292,7 @@
 																	</div>
 																	<div class="col-12">
 																		<div class="d-flex">
-																			<span>
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-																						viewBox="0 0 24 24">
-																					<path fill="#8fbd56"
-																							d="M10.3125,16.09375a.99676.99676,0,0,1-.707-.293L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328l-6.1875,6.1875A.99676.99676,0,0,1,10.3125,16.09375Z"
-																							opacity=".99" />
-																					<path fill="#8fbd56" opacity=".2"
-																							d="M12,2A10,10,0,1,0,22,12,10.01146,10.01146,0,0,0,12,2Zm5.207,7.61328-6.1875,6.1875a.99963.99963,0,0,1-1.41406,0L6.793,12.98828A.99989.99989,0,0,1,8.207,11.57422l2.10547,2.10547L15.793,8.19922A.99989.99989,0,0,1,17.207,9.61328Z" />
-																				</svg>
-																			</span>
+																			<partial name="~/Views/Shared/_IconoCheckCircle.cshtml" />
 																			<div class="ms-3">
 																				<p>
 																					Tax Planning
@@ -2725,15 +2434,10 @@
 			</div>
 			<!-- BLOG - Fin -->
 
-
 			<!-- FOOTERS -->
 			<partial name="~/Views/Shared/_Footer1.cshtml" />
 
-
-
-
 			<!-- MODAL INICIO -->
-
 			<div class="modal fade" data-bs-backdrop="static"  id="modaldemo9">
 				<div class="modal-dialog modal-dialog-centered text-center" role="document">
 					<div class="modal-content modal-content-demo">
@@ -2752,7 +2456,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="modal fade" data-bs-backdrop="static"  id="modaldemo8">
 				<div class="modal-dialog modal-dialog-centered text-center" role="document" id="modal-video">
 					<div class="modal-content modal-content-demo">
@@ -2767,7 +2470,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="modal fade effect-just-me" data-bs-backdrop="static" id="modaldemo10">
 				<div class="modal-dialog modal-dialog-centered text-center" role="document" id="modal-video2">
 					<div class="modal-content modal-content-demo">
@@ -2782,7 +2484,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="modal fade effect-just-me" data-bs-backdrop="static" id="modaldemo11">
 				<div class="modal-dialog modal-dialog-centered text-center" role="document" id="modal-video2">
 					<div class="modal-content modal-content-demo">
@@ -2797,13 +2498,9 @@
 					</div>
 				</div>
 			</div>
-
 			<!-- MODAL FIN -->
-
 		</div>
 	</div>
-
-
 </div>
 
 
@@ -2890,8 +2587,4 @@
 		<!-- UTILIDAD -->
 
 		<script src="../assets/js/utilidad.js"></script>
-		
-
-
-
 }
