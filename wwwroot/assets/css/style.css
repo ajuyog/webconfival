@@ -618,6 +618,11 @@ body {
     border-radius: 6px;
 }
 
+.card-servicios-confival {
+    border: 2px solid darkgray;
+    border-radius: 2px;
+}
+
 /*-------------------------------------------------------------*/
 .margin-tabs-li {
     margin: auto;

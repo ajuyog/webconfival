@@ -294,5 +294,11 @@ public class LandingPageController : Controller
         return View(lstBlogsPorCategoria);
     }
 
+	[HttpGet]
+	public IActionResult ServicioLanding()
+	{
+		return View();
+	}
+
 
 }
