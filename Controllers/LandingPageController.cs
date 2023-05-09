@@ -300,5 +300,29 @@ public class LandingPageController : Controller
 		return View();
 	}
 
+	public IActionResult SignIn()
+	{
+		var props = new AuthenticationProperties();
+		props.RedirectUri = "/LandingPage/SignInSuccess";
+
+		return Challenge(props);
+	}
+	public IActionResult SignInSuccess()
+	{
+		return RedirectToAction("Index", "Home");
+	}
+	public IActionResult SignOut(string signOutType)
+	{
+		if (signOutType == "app")
+		{
+			HttpContext.SignOutAsync().Wait();
+		}
+		if (signOutType == "all")
+		{
+			return Redirect("https://login.microsoftonline.com/common/oauth2/v2.0/logout");
+		}
+		return RedirectToAction("Index");
+	}
+
 
 }

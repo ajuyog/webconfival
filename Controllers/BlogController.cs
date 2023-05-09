@@ -399,4 +399,10 @@ public class BlogController : Controller
 		};
         return lstBlogsPorCategoria;
     }
+
+	[HttpGet]
+	public IActionResult Create()
+	{
+		return View();
+	}
 }

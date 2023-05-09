@@ -1,0 +1,82 @@
+﻿@{
+    Layout = "_Layout3";
+}
+<!-- PAGE-HEADER -->
+<div class="page-header">
+	<div>
+		<h1 class="page-title">Bienvenido</h1>
+	</div>
+	<div class="ms-auto pageheader-btn">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0);">Pages</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Inicio</li>
+		</ol>
+	</div>
+</div>
+<!-- PAGE-HEADER END -->
+<!-- ROW-1 OPEN -->
+<div class="row" id="user-profile">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
+				<div class="row align-items-center">
+					<div class="col-lg-12 col-md-12 col-xl-6">
+						<div class="d-flex flex-wrap align-items-center">
+							<div class="profile-img-main rounded">
+								<img src="~/assets/images/faces/6.jpg" alt="img" class="m-0 p-1 rounded hrem-6">
+							</div>
+							<div class="ms-4">
+								<h4>Elena Gilbert</h4>
+								<p class="text-muted mb-2">Servicios Microsoft Graph</p>
+								<a href="#" class="btn btn-primary btn-sm"><i class="fa fa-rss"></i> Follow</a>
+								<a href="mail-inbox.html" class="btn btn-secondary btn-sm"><i class="fa fa-envelope"></i> E-mail</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12 col-md-12 col-xl-6">
+						<div class="d-md-flex flex-wrap justify-content-lg-end">
+							<div class="media m-3">
+								<div class="media-icon bg-primary me-3 mt-1">
+									<i class="fe fe-file-plus fs-20 text-white"></i>
+								</div>
+								<div class="media-body">
+									<span class="text-muted">Posts</span>
+									<div class="fw-semibold fs-25">
+										328
+									</div>
+								</div>
+							</div>
+							<div class="media m-3">
+								<div class="media-icon bg-info me-3 mt-1">
+									<i class="fe fe-users  fs-20 text-white"></i>
+								</div>
+								<div class="media-body">
+									<span class="text-muted">Followers</span>
+									<div class="fw-semibold fs-25">
+										937k
+									</div>
+								</div>
+							</div>
+							<div class="media m-3">
+								<div class="media-icon bg-warning me-3 mt-1">
+									<i class="fe fe-wifi fs-20 text-white"></i>
+								</div>
+								<div class="media-body">
+									<span class="text-muted">Following</span>
+									<div class="fw-semibold fs-25">
+										2,876
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<!-- PROFILE JS -->
+	<script src="~/assets/js/profile.js"></script>
+}
