@@ -29,7 +29,6 @@ function AgregarBotones() {
         seccionBotonoes.removeClass("hide-info");
     }
 };
-
 function AgregarBotonesDos() {
     var subtitulo = $("#subtitulo-uno-blog").val();
     var segundoParrafo = $("#segundo-parrafo").val();
@@ -38,7 +37,6 @@ function AgregarBotonesDos() {
         seccionBotonoesDos.removeClass("hide-info");
     }
 };
-
 function AgregarBotonesDosTextArea() {
     var segundoParrafoTextArea = $("#segundo-parrafo-textarea").val();
     var seccionBotonoesDos = $("#seccion-btn-publicar-dos");
@@ -46,25 +44,54 @@ function AgregarBotonesDosTextArea() {
         seccionBotonoesDos.removeClass("hide-info");
     }
 };
-
-function AgregarBotonesIterar() {
-    var subtituloIterar = $("#subtitulo-iterar").val();
-    var parrafoIterar = $("#parrafo-iterar").val();
-    var seccionBotonesIterar = $("#seccion-btn-publicar-iterar");
-    if (subtituloIterar.length != 0 && parrafoIterar != 0) {
-        seccionBotonesIterar.removeClass("hide-info");
+function AgregarBotonesTres() {
+    var subtitulo = $("#subtitulo-tres-blog").val();
+    var parrafo = $("#parrafo-tres-blog").val();
+    var seccionBotonesTres = $("#seccion-btn-publicar-tres");
+    if (subtitulo.length != 0 && parrafo != 0) {
+        seccionBotonesTres.removeClass("hide-info");
     }
 };
-
-function AgregarBotonesIterarTextArea() {
-    var parrafoTextAreaIterar = $("#parrafo-iterar-textarea").val();
-    var seccionBotonesIterar = $("#seccion-btn-publicar-iterar");
-    if (parrafoTextAreaIterar.length != 0) {
-        seccionBotonesIterar.removeClass("hide-info");
+function AgregarBotonesTresTextArea() {
+    var parrafo = $("#parrafo-tres-textarea").val();
+    var seccionBotones = $("#seccion-btn-publicar-tres");
+    if (parrafo.length != 0) {
+        seccionBotones.removeClass("hide-info");
+    }
+};
+function AgregarBotonesCuatro() {
+    var subtitulo = $("#subtitulo-cuatro-blog").val();
+    var parrafo = $("#parrafo-cuatro-blog").val();
+    var botones = $("#seccion-btn-publicar-cuatro");
+    if (subtitulo.length != 0 && parrafo.length != 0) {
+        botones.removeClass("hide-info");
+    }
+};
+function AgregarBotonesCuatroTextArea() {
+    var parrafo = $("#parrafo-cuatro-textarea").val();
+    var botones = $("#seccion-btn-publicar-cuatro");
+    if (parrafo.length != 0) {
+        botones.removeClass("hide-info");
+    }
+};
+function IniciarGaleria() {
+    var subtitulo = $("#subtitulo-cinco-blog").val();
+    var parrafo = $("#parrafo-cinco-blog").val();
+    var boton = $("#seccion-btn-publicar-cinco");
+    if (subtitulo.length != 0 && parrafo.length != 0) {
+        boton.removeClass("hide-info");
+    }
+};
+function IniciarGaleriaTextArea() {
+    var parrafo = $("#parrafo-cinco-textarea").val();
+    var botones = $("#seccion-btn-publicar-cinco");
+    if (parrafo.length != 0) {
+        botones.removeClass("hide-info");
     }
 };
 
 // --- ONCHAGE INPUTPS --- //
+/// --- seccion 1 --- ///
 $("#titulo-blog").on("keyup", function () {
     var div = $("#contenido-blog-visualizar");
     var titulo = $("#titulo-blog").val();
@@ -72,13 +99,11 @@ $("#titulo-blog").on("keyup", function () {
     div.append('<h2>' + titulo + '</h2><br>');
     AgregarBotones();
 });
-
 $("#imagen-blog").on("change", function () {
     $("#img-onchange").removeClass("hide-info");
     readURL(this);
     AgregarBotones();
 });
-
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -88,7 +113,6 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
     }
 };
-
 $("#primer-parrafo").on("keyup", function () {
     var divDos = $("#contenido-blog-visualizar-parrafo");
     divDos.children().remove();
@@ -97,8 +121,9 @@ $("#primer-parrafo").on("keyup", function () {
     AgregarBotones();
 });
 
+/// --- seccion 2 --- ///
 $("#subtitulo-uno-blog").on("keyup", function () {
-    var divTres = $("#contenido-blog-visualizar-parrafo-dos");
+    var divTres = $("#contenido-blog-visualizar-subtitulo-dos");
     var subTituloUno = $("#subtitulo-uno-blog").val();
     if (subTituloUno.length != 0) {
         $("#invalid-segundo-parrafo").css("display", "none");
@@ -107,7 +132,6 @@ $("#subtitulo-uno-blog").on("keyup", function () {
     divTres.append('<h3>' + subTituloUno + '</h3>');
     AgregarBotonesDos();
 });
-
 $("#segundo-parrafo").on("keyup", function () {
     var divTres = $("#contenido-blog-visualizar-parrafo-dos");
     var segundoParrafo = $("#segundo-parrafo").val();
@@ -122,7 +146,6 @@ $("#segundo-parrafo").on("keyup", function () {
         AgregarBotonesDos();
     }
 });
-
 $("#segundo-parrafo-textarea").on("keyup", function () {
     var divTres = $("#contenido-blog-visualizar-parrafo-dos");
     var segundoParrafoTextArea = $("#segundo-parrafo-textarea").val();
@@ -131,34 +154,99 @@ $("#segundo-parrafo-textarea").on("keyup", function () {
     AgregarBotonesDosTextArea();
 });
 
-$("#subtitulo-iterar").on("change", function () {
-    var divIterar = $("#contenido-blog-visualizar-iterar");
-    var subtituloIterar = $("#subtitulo-iterar").val();
-    if (subtituloIterar.length != 0) {
-        $("#invalid-parrafo-iterar").css("display", "none");
+/// --- seccion 3 --- ///
+$("#subtitulo-tres-blog").on("keyup", function () {
+    var divTres = $("#contenido-blog-visualizar-subtitulo-tres");
+    var subtituloTres = $("#subtitulo-tres-blog").val();
+    if (subtituloTres.length != 0) {
+        $("#invalid-parrafo-tres").css("display", "none");
     }
-    divIterar.append('<h3>' + subtituloIterar + '</h3><br>')
-    AgregarBotonesIterar();
+    divTres.children("h3").remove();
+    divTres.append('<h3>' + subtituloTres + '</h3>')
+    AgregarBotonesTres();
 });
-
-$("#parrafo-iterar").on("change", function () {
-    var divIterar = $("#contenido-blog-visualizar-iterar");
-    var parrafoIterar = $("#parrafo-iterar").val();
-    var stPrimeroIterar = $("#subtitulo-iterar").val();
-    if (stPrimeroIterar.length == 0) {
-        $("#invalid-parrafo-iterar").css("display", "block");
-        $("#parrafo-iterar").val("");
+$("#parrafo-tres-blog").on("keyup", function () {
+    var divTres = $("#contenido-blog-visualizar-parrafo-tres");
+    var parrafoTres = $("#parrafo-tres-blog").val();
+    var stPrimero = $("#subtitulo-tres-blog").val();
+    if (stPrimero.length == 0) {
+        $("#invalid-parrafo-tres").css("display", "block");
+        $("#parrafo-tres-blog").val("");
     } else {
-        divIterar.append('<p>' + parrafoIterar + '</p>');
-        AgregarBotonesIterar();
+        divTres.children("p").remove();
+        divTres.append('<p>' + parrafoTres + '</p>');
+        AgregarBotonesTres();
     }
 });
+$("#parrafo-tres-textarea").on("keyup", function () {
+    var divTres = $("#contenido-blog-visualizar-parrafo-tres");
+    var parrafo = $("#parrafo-tres-textarea").val();
+    divTres.children("p").remove();
+    divTres.append('<p>' + parrafo + '</p>');
+    AgregarBotonesTresTextArea();
+});
 
-$("#parrafo-iterar-textarea").on("change", function () {
-    var divIterar = $("#contenido-blog-visualizar-iterar");
-    var parrafoIterar = $("#parrafo-iterar-textarea").val();
-    divIterar.append('<p>' + parrafoIterar + '</p>');
-    AgregarBotonesIterarTextArea();
+/// --- seccion 4 --- ///
+$("#subtitulo-cuatro-blog").on("keyup", function () {
+    var divCuatro = $("#contenido-blog-visualizar-subtitulo-cuatro");
+    var subtitulo = $("#subtitulo-cuatro-blog").val();
+    if (subtitulo.length != 0) {
+        $("#invalid-parrafo-cuatro").css("display", "none");
+    }
+    divCuatro.children("h3").remove();
+    divCuatro.append('<h3>' + subtitulo + '</h3>')
+    AgregarBotonesCuatro();
+});
+$("#parrafo-cuatro-blog").on("keyup", function () {
+    var divCuatro = $("#contenido-blog-visualizar-parrafo-cuatro");
+    var parrafo = $("#parrafo-cuatro-blog").val();
+    var subtituloInvalid = $("#subtitulo-cuatro-blog").val()
+    if (subtituloInvalid.length == 0) {
+        $("#invalid-parrafo-cuatro").css("display", "block");
+        $("#parrafo-cuatro-blog").val("");
+    }
+    divCuatro.children("p").remove();
+    divCuatro.append('<p>' + parrafo + '<p>')
+    AgregarBotonesCuatro();
+
+});
+$("#parrafo-cuatro-textarea").on("keyup", function () {
+    var divCuatro = $("#contenido-blog-visualizar-parrafo-cuatro");
+    var parrafo = $("#parrafo-cuatro-textarea").val();
+    divCuatro.children("p").remove();
+    divCuatro.append('<p>' + parrafo + '</p>');
+    AgregarBotonesCuatroTextArea();
+});
+
+/// --- seccion 5 --- ///
+$("#subtitulo-cinco-blog").on("keyup", function () {
+    var divCinco = $("#contenido-blog-visualizar-subtitulo-quinto");
+    var subtitulo = $("#subtitulo-cinco-blog").val();
+    if (subtitulo.length != 0) {
+        $("#invalid-parrafo-cinco").css("display", "none");
+    }
+    divCinco.children("h3").remove();
+    divCinco.append('<h3>' + subtitulo + '</h3>');
+    IniciarGaleria();
+});
+$("#parrafo-cinco-blog").on("keyup", function () {
+    var divCinco = $("#contenido-blog-visualizar-parrafo-quinto");
+    var parrafo = $("#parrafo-cinco-blog").val();
+    var subtituloInvalid = $("#subtitulo-cinco-blog").val()
+    if (subtituloInvalid.length == 0) {
+        $("#invalid-parrafo-cinco").css("display", "block");
+        $("#parrafo-cinco-blog").val("");
+    }
+    divCinco.children("p").remove();
+    divCinco.append('<p>' + parrafo + '<p>');
+    IniciarGaleria();
+});
+$("#parrafo-cinco-textarea").on("keyup", function () {
+    var divCinco = $("#contenido-blog-visualizar-parrafo-quinto");
+    var parrafo = $("#parrafo-cinco-textarea").val();
+    divCinco.children("p").remove();
+    divCinco.append('<p>' + parrafo + '</p>');
+    IniciarGaleriaTextArea();
 });
 
 // --- BOTONES FINALIZAR --- //
@@ -171,7 +259,6 @@ function Publicar() {
     visualizadorCampos.addClass("hide-info");
     visualizadorConfirmar.removeClass("hide-info");
 };
-
 function restartBlog() {
     location.reload(true);
 };
@@ -186,7 +273,6 @@ function Continuar() {
     seccionBotonoes.remove();
     seccionDos.removeClass("hide-info");
 };
-
 function AddSubtitulo() {
     var seccionDos = $("#seccion-dos-publicar");
     var seccionBotones = $("#seccion-btn-publicar");
@@ -196,7 +282,6 @@ function AddSubtitulo() {
     seccionUno.addClass("hide-info");
     seccionDos.removeClass("hide-info");
 };
-
 function AddParrafo() {
     var seccionDos = $("#seccion-dos-publicar-textarea");
     var seccionBotones = $("#seccion-btn-publicar");
@@ -206,20 +291,18 @@ function AddParrafo() {
     seccionBotones.addClass("hide-info");
     seccionDos.removeClass("hide-info");
 };
-
-function AddSubtituloIterar() {
-    var seccionIterar = $("#seccion-publicar-iterar");
+function AddSubtituloTres() {
+    var seccionTres = $("#seccion-tres-publicar");
     var seccionBotonesDos = $("#seccion-btn-publicar-dos");
 
-    seccionIterar.removeClass("hide-info");
+    seccionTres.removeClass("hide-info");
     seccionBotonesDos.addClass("hide-info");
     // Limpio todas las secciones anteriores //
     $("#seccion-dos-publicar-textarea").addClass("hide-info");
     $("#seccion-dos-publicar").addClass("hide-info");
 };
-
-function AddParrafoIterar() {
-    var seccionIterarTextArea = $("#seccion-publicar-iterar-textarea");
+function AddParrafoTres() {
+    var seccionIterarTextArea = $("#seccion-publicar-tres-textarea");
     var seccionBotonesDos = $("#seccion-btn-publicar-dos");
 
     seccionIterarTextArea.removeClass("hide-info");
@@ -228,36 +311,56 @@ function AddParrafoIterar() {
     $("#seccion-dos-publicar-textarea").addClass("hide-info");
     $("#seccion-dos-publicar").addClass("hide-info");
 };
+function AddSubtituloCuatro() {
+    var seccionCuatro = $("#seccion-cuatro-publicar");
+    var seccionBotonesTres = $("#seccion-btn-publicar-tres");
 
-function LimpiarSubtituloIterar() {
-    var seccionBotonesIterar = $("#seccion-btn-publicar-iterar");
-    var inputSubtitulo = $("#subtitulo-iterar");
-    var textArea = $("#parrafo-iterar");
-    var textAreaS = $("#parrafo-iterar-textarea");
+    seccionCuatro.removeClass("hide-info");
+    seccionBotonesTres.addClass("hide-info");
 
-    $("#seccion-publicar-iterar-textarea").addClass("hide-info");
-    $("#seccion-publicar-iterar").removeClass("hide-info");
-
-    inputSubtitulo.val("");
-    textArea.val("");
-    textAreaS.val("");
-    seccionBotonesIterar.addClass("hide-info");
+    // Limpio todas las secciones anteriores //
+    $("#seccion-dos-publicar-textarea").addClass("hide-info");
+    $("#seccion-dos-publicar").addClass("hide-info");
+    $("#seccion-publicar-tres-textarea").addClass("hide-info");
+    $("#seccion-tres-publicar").addClass("hide-info");
 };
+function AddParrafoCuatro() {
+    var seccion = $("#seccion-publicar-cuatro-textarea");
+    var seccionBotones = $("#seccion-btn-publicar-tres");
 
-function LimpiarParrafoIterar() {
-    var seccionBotonesIterar = $("#seccion-btn-publicar-iterar");
-    var textAreaS = $("#parrafo-iterar-textarea");
-    var inputSubtitulo = $("#subtitulo-iterar");
-    var textArea = $("#parrafo-iterar");
+    seccion.removeClass("hide-info");
+    seccionBotones.addClass("hide-info");
+    // Limpio todas las secciones anteriores //
+    $("#seccion-dos-publicar-textarea").addClass("hide-info");
+    $("#seccion-dos-publicar").addClass("hide-info");
+    $("#seccion-publicar-tres-textarea").addClass("hide-info");
+    $("#seccion-tres-publicar").addClass("hide-info");
+};
+function AddSubtituloQuinto() {
+    var seccionCinco = $("#seccion-cinco-publicar");
+    var seccionBotonesCuatro = $("#seccion-btn-publicar-cuatro");
 
-    $("#seccion-publicar-iterar-textarea").removeClass("hide-info");
-    $("#seccion-publicar-iterar").addClass("hide-info");
+    seccionCinco.removeClass("hide-info");
+    seccionBotonesCuatro.addClass("hide-info");
+    // Limpio todas las secciones anteriores //
+    $("#seccion-dos-publicar-textarea").addClass("hide-info");
+    $("#seccion-dos-publicar").addClass("hide-info");
+    $("#seccion-publicar-tres-textarea").addClass("hide-info");
+    $("#seccion-tres-publicar").addClass("hide-info");
+    $("#seccion-publicar-cuatro-textarea").addClass("hide-info");
+    $("#seccion-cuatro-publicar").addClass("hide-info");
+};
+function AddParrafoQuinto() {
+    var seccion = $("#seccion-publicar-cinco-textarea");
+    var seccionBotones = $("#seccion-btn-publicar-cuatro");
 
-    seccionBotonesIterar.addClass("hide-info");
-    textAreaS.val("");
-    inputSubtitulo.val("");
-    textArea.val("");
-
+    seccion.removeClass("hide-info");
+    seccionBotones.addClass("hide-info");
+    // Limpio todas las secciones anteriores //
+    $("#seccion-dos-publicar-textarea").addClass("hide-info");
+    $("#seccion-dos-publicar").addClass("hide-info");
+    $("#seccion-publicar-tres-textarea").addClass("hide-info");
+    $("#seccion-tres-publicar").addClass("hide-info");
+    $("#seccion-publicar-cuatro-textarea").addClass("hide-info");
+    $("#seccion-cuatro-publicar").addClass("hide-info");
 }
-
-

@@ -1,3 +1,5 @@
+
+
 @charset "UTF-8";
 /*------------------------------------------------------------------
 [Master Stylesheet]
@@ -621,6 +623,10 @@ body {
 .card-servicios-confival {
     border: 2px solid darkgray;
     border-radius: 2px;
+}
+
+.border-bottom-header {
+    border-bottom: 1px solid #eaedf1;
 }
 
 /*-------------------------------------------------------------*/
@@ -7171,6 +7177,18 @@ a.btn-teritary svg {
     margin-bottom: 0;
     background-color: rgba(0, 0, 0, 0.03);
     border-bottom: none;
+}
+
+.card-header-blogs {
+    background: none;
+    padding: 0.8rem 1.6rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.0);
+    border-bottom: 1px solid #eaedf1
 }
 
 .card-header .card-title {
