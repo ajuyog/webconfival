@@ -61342,7 +61342,7 @@ svg.nvd3-svg {
 }
 
 .ps__thumb-y {
-    background-color: #77bc2175;
+    background-color: #0088CC;
     border-radius: 6px;
     transition: background-color 0.2s linear, width 0.2s ease-in-out;
     -webkit-transition: background-color 0.2s linear, width 0.2s ease-in-out;
@@ -61363,8 +61363,8 @@ svg.nvd3-svg {
 .ps__rail-y:hover>.ps__thumb-y,
 .ps__rail-y:focus>.ps__thumb-y,
 .ps__rail-y.ps--clicking .ps__thumb-y {
-    background-color: #84bf8bad;
-    width: 3px;
+    background-color: #0088CC;
+    width: 4px;
 }
 
 /* MS supports */
