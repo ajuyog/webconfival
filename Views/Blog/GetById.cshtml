@@ -1,0 +1,294 @@
+﻿@model confinancia.Models.BlogDTO
+@{
+	Layout = "_Layoutlandingpage2";
+}
+
+<div class="hor-content main-content mt-0">
+	<div class="side-app">
+		<!-- CONTAINER -->
+		<div class="main-container">
+
+			<!-- PAGE-HEADER -->
+			<div class="container px-5 px-md-0">
+				<div class="page-header">
+					<div class="pageheader-btn">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">Blogs Confial</li>
+							<li class="breadcrumb-item active" aria-current="page">@Model.Titulo</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+
+			<!-- DETALLES BLOG -->
+			<div class="section pb-5 bg-white border-bottom" style="padding-bottom:50px;">
+				<div class="container px-5 px-md-0">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-xl-8">
+											<div class="">
+												<div class="d-sm-flex d-block align-items-center">
+													<div class="d-flex align-items-center mb-sm-0 mb-2">
+														<div class="me-3">
+															<img class="media-object rounded-circle thumb-sm" alt="64x64" src="@Model.Autor.Img" width="50">
+														</div>
+														<h6 class="mb-0 text-muted ms-2 text-13 me-sm-0 me-2">@Model.Autor.Nombre</h6>
+													</div>
+													<a href="#" class="d-f-ai-c mx-0 mb-sm-0 mb-2 mx-sm-4 mx-0 text-13"><span class="fe fe-calendar text-muted me-1 text-15"></span><span class="mt-0 mt-0 text-muted">@Model.FechaPublicacion.ToString()</span></a>
+													<a href="#" class="me-0 d-f-ai-c mb-sm-0 mb-2 text-13"><span class="fe fe-message-square text-muted me-1 text-15"></span><span class="mt-0 mt-0 text-muted">@Model.Comentarios.Count</span></a>
+												</div>
+												<div>
+													<h3 class="font-weight-normal text-dark-light mt-4 mb-4">@Model.Titulo</h3>
+												</div>
+											</div>
+											<div class="ps-relative p-1 bg-light br-5">
+												<img src="@Model.ImgBlog" alt="img" class="cover-image br-5 ms-auto me-auto wp-100">
+												<span class="badge bg-primary-gradient blog-label label5">Blogs Confival</span>
+											</div>
+											<div class=" mb-2 mt-5 content">
+												<p class="text-muted text-14">@Model.IntroUno</p>
+												<p class="text-muted text-14">@Model.IntroDos</p>
+												<p class="text-muted text-14">@Model.Contenido</p>
+											</div>
+											<div class=" mt-2 pt-2 pb-3 border-top footer-container-main blog-footer">
+												<div class="footer border-top-0 p-0 icons-bg d-sm-flex">
+													<div class="social m-0">
+														<ul class="text-center">
+															<li>
+																<a class="social-icon" href="javascript:void(0)"><i class="fa fa-facebook"></i></a>
+															</li>
+															<li>
+																<a class="social-icon" href="javascript:void(0)"><i class="fa fa-twitter"></i></a>
+															</li>
+															<li>
+																<a class="social-icon" href="javascript:void(0)"><i class="fa fa-rss"></i></a>
+															</li>
+															<li>
+																<a class="social-icon" href="javascript:void(0)"><i class="fa fa-youtube"></i></a>
+															</li>
+															<li>
+																<a class="social-icon" href="javascript:void(0)"><i class="fa fa-linkedin"></i></a>
+															</li>
+															<li>
+																<a class="social-icon" href="javascript:void(0)"><i class="fa fa-google-plus"></i></a>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+											<div class="mt-4 pt-5 border-top">
+												<h3 class="card-title">Comments:</h3>
+												@foreach(var item in Model.Comentarios)
+												{
+													<div class="media mb-4 overflow-visible">
+														<div class="me-3">
+															<img class="media-object rounded-circle thumb-sm" alt="64x64" src="@item.Autor.Img">
+														</div>
+														<div class="media-body overflow-visible">
+															<div class="border mb-5 p-4 br-5 boton-edit">
+																<h5 class="mt-0">@item.Autor.Nombre<span class="text-muted fs-12 ms-1">@item.FechaPublicacion</span></h5>
+																<span><i class="fe fe-thumb-up text-danger"></i></span>
+																<p class="font-13 text-muted">@item.Nota</p>
+																<span class="reply">
+																	<a onclick="responder(@item.Id.ToString())" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
+																</span>
+															</div>
+															<div id="@item.Id.ToString()" class="cancel-form-comment"></div>
+
+															@foreach(var subitem in item.SubComentarios)
+															{
+																<div>
+																	<div class="media mb-4 overflow-visible boton-edit-2">
+																		<div class="me-3">
+																			<img class="media-object rounded-circle thumb-sm" alt="64x64" src="@subitem.Autor.Img">
+																		</div>
+																		<div class="media-body border p-4 overflow-visible br-5">
+																			<h5 class="mt-0">@subitem.Autor.Nombre<span class="text-muted fs-12 mx-1 bg-normal-light">Reply to @item.Autor.Nombre </span><span class="text-muted fs-12 ms-1">@subitem.FechaPublicacion</span></h5>
+																			<span><i class="fe fe-thumb-up text-danger"></i></span>
+																			<p class="font-13 text-muted">
+																				@subitem.Nota
+																			</p>
+																			<span class="reply">
+																				<a onclick="responderDos(@subitem.SubComentario)" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
+																			</span>
+																		</div>
+																	</div>
+																	<div id="@subitem.SubComentario" class="cancel-form-comment"></div>
+																</div>
+															}
+														</div>
+													</div>
+												}
+												<div id="main-form-comentario">
+													<div class="row row-xs form-group-wrapper">
+														<h3 class="card-title">Realiza tu comentario sobre este blog:</h3>
+														<div class="col-md-6">
+															<div class="main-form-group my-1">
+																<input class="form-control border-0" id="comentario-nombre" placeholder="Nombre" type="text">
+																<label for="name" class="form-label mb-1">Nombre</label>
+															</div>
+															<div class="invalid-feedback" id="invalid-comentario-nombre">El campo nombre es requerido</div>
+														</div>
+														<div class="col-md-6">
+															<div class="main-form-group my-1">
+																<input class="form-control border-0" id="comentario-profesion" placeholder="Profesión" type="text">
+																<label for="mail" class="form-label mb-1">Profesión</label>
+															</div>
+															<div class="invalid-feedback" id="invalid-comentario-profesion">El campo profesion es requerido</div>
+														</div>
+														<div class="col-md-12 mt-2">
+															<div class="main-form-group">
+																<textarea name="message" id="comentario-comentario" class="form-control text-area border-0" placeholder="Comentario" rows="3"></textarea>
+																<label for="message" class="form-label mb-1">Comentario</label>
+															</div>
+															<div class="invalid-feedback" id="invalid-comentario-comentario">El campo comentario es requerido</div>
+														</div>
+														<div class="col-md-12 my-2">
+															<button class="btn btn-primary text-white float-end" onclick="EnviarComentario()">Enviar</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xl-4">
+											<div class="card-confival-blogs overflow-hidden border-confival-blogs br-5">
+												<div class="card-header border-bottom">
+													<h4 class="card-title header-family">Acerca  del autor</h4>
+												</div>
+												<div class="card-body">
+													<div class="text-center">
+														<img class="card-img-top w-100 w-100" src="@Model.Autor.Img" alt="">
+														<div class="br-5 pt-3 text-justify">
+															<p class="m-0 text-muted">
+																@Model.Autor.Descripcion
+															</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="card-confival-blogs border-confival-blogs overflow-hidden">
+												<div class="card-header border-bottom">
+														<h4 class="card-title mb-1 header-family">Categorias del Blog</h4>
+												</div>
+												<div class="card-body">
+													<div>
+														<div class="tags">
+															@foreach (var item in Model.Categorias)
+															{
+																<a onclick="BlogsCategoria(@item.Id)" class="tag">@item.Nombre</a>
+															}
+														</div>
+													</div>
+												</div>
+											</div>
+											<div id="blogs-categoria"></div>
+											<div class="card-confival-blogs border-confival-blogs">
+												<div class="card-header border-bottom">
+													<h4 class="card-title header-family">Blogs que te podrian interesar</h4>
+												</div>
+												<div class="card-body">
+													<div class="item-list">
+														<ul class="list-group mb-0">
+															<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">
+																<img src="~/assets/images/photos/blog-sm1.jpg" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">
+																<div>
+																	<span class="d-block text-muted">Tourism</span>
+																	<a href="#" class="text-dark text-16 font-weight-semibold">Explore tourism by visitinig places.</a>
+																	<small class="d-block text-gray">2 day ago</small>
+																</div>
+															</li>
+															<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">
+																<img src="~/assets/images/photos/blog-sm2.jpg" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">
+																<div>
+																	<span class="d-block text-muted">Beautician</span>
+																	<a href="#" class="text-dark text-16 font-weight-semibold">Beautification courses are available.</a>
+																	<small class="d-block text-gray">2 hrs ago</small>
+																</div>
+															</li>
+															<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">
+																<img src="~/assets/images/photos/blog-sm3.jpg" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">
+																<div>
+																	<span class="d-block text-muted">Music</span>
+																	<a href="#" class="text-dark text-16 font-weight-semibold">Music in a peaceful way </a>
+																	<small class="d-block text-gray">1 day ago</small>
+																</div>
+															</li>
+															<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">
+																<img src="~/assets/images/photos/blog-sm4.jpg" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">
+																<div>
+																	<span class="d-block text-muted">Health</span>
+																	<a href="#" class="text-dark text-16 font-weight-semibold">Health care and fitness awareness</a>
+																	<small class="d-block text-gray">22 hrs ago</small>
+																</div>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<partial name="~/Views/Shared/_Footer1.cshtml" />
+
+</div>
+
+
+
+
+@section scripts {
+
+	<script src="../assets/js/form-comentario.js"></script>
+	<script src="../assets/js/Blogs.js"></script>
+
+
+	<!--Internal Fancy uploader js-->
+	<script src="~/assets/plugins/fancyuploder/jquery.ui.widget.js"></script>
+	<script src="~/assets/plugins/fancyuploder/jquery.fileupload.js"></script>
+	<script src="~/assets/plugins/fancyuploder/jquery.iframe-transport.js"></script>
+	<script src="~/assets/plugins/fancyuploder/jquery.fancy-fileupload.js"></script>
+	<script src="~/assets/plugins/fancyuploder/fancy-uploader.js"></script>
+
+	<!-- SELECT2 JS -->
+	<script src="~/assets/plugins/select2/select2.full.min.js"></script>
+
+	<!-- BLOG-EDIT JS-->
+	<script src="~/assets/js/blog-edit.js"></script>
+
+	<!-- FORM ELEMENTADVANCED JS -->
+	<script src="~/assets/js/formelementadvnced.js"></script>
+
+	<!-- TASK EDIT JS-->
+	@*<script src="~/assets/js/task-create.js"></script>*@
+
+	<!-- INTERNAL Summernote Editor js -->
+	<script src="~/assets/plugins/summernote-editor/summernote1.js"></script>
+	<script src="~/assets/js/summernote.js"></script>
+
+	<!--Internal Fileuploads js-->
+	<script src="~/assets/plugins/fileuploads/js/fileupload.js"></script>
+	<script src="~/assets/plugins/fileuploads/js/file-upload.js"></script>
+
+	<!-- INTERNAl JQUERY.STEPS JS -->
+	<script src="~/assets/plugins/jquery-steps/jquery.steps.min.js"></script>
+	<script src="~/assets/plugins/parsleyjs/parsley.min.js"></script>
+
+	<!-- INTERNAL ACCORDION-WIZARD-FORM JS-->
+	<script src="~/assets/plugins/accordion-Wizard-Form/jquery.accordion-wizard.min.js"></script>
+	<script src="~/assets/js/form-wizard.js"></script>
+
+
+}
+
+

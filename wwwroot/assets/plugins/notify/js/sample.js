@@ -30,9 +30,9 @@
   });
 }).call(this);
 
-		 function not1(){
+		 function not1(data){
         notif({
-				msg: "<b>Success:</b> Well done Details Submitted Successfully",
+				msg: "<b>Success:</b> Well done Details Submitted Successfully" + data,
 				type: "success"
 			});
         }

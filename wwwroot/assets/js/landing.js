@@ -66,7 +66,7 @@ $(document).on("ready",function(){
     owl.owlCarousel({
         loop: true,
         rewind: false,
-        margin: 25,
+        margin: 10,
         animateIn: 'fadeInDowm',
         animateOut: 'fadeOutDown',
         autoplay: false,
@@ -78,15 +78,15 @@ $(document).on("ready",function(){
         responsiveClass: true,
         responsive: {
             0: {
-                items: 1,
+                items: 3,
                 nav: true
             },
             600: {
-                items: 2,
+                items: 3,
                 nav: true
             },
             1300: {
-                items: 4,
+                items: 3,
                 nav: true
             }
         }
@@ -274,28 +274,28 @@ reveal();
 
 
 // section menu active
-function onScroll(event) {
-    const sections = document.querySelectorAll(".side-menu__item");
-    const scrollPos =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop;
+//function onScroll(event) {
+//    const sections = document.querySelectorAll(".side-menu__item");
+//    const scrollPos =
+//        window.pageYOffset ||
+//        document.documentElement.scrollTop ||
+//        document.body.scrollTop;
 
-    sections.forEach((elem) => {
-        const val = elem.getAttribute("href");
-        const refElement = document.querySelector(val);
-        const scrollTopMinus = scrollPos + 73;
-        if (
-            refElement.offsetTop <= scrollTopMinus &&
-            refElement.offsetTop + refElement.offsetHeight > scrollTopMinus
-        ) {
-            elem.classList.add("active");
-        } else {
-            elem.classList.remove("active");
-        }
-    })
-}
-window.document.addEventListener("scroll", onScroll);
+//    sections.forEach((elem) => {
+//        const val = elem.getAttribute("href");
+//        const refElement = document.querySelector(val);
+//        const scrollTopMinus = scrollPos + 73;
+//        if (
+//            refElement.offsetTop <= scrollTopMinus &&
+//            refElement.offsetTop + refElement.offsetHeight > scrollTopMinus
+//        ) {
+//            elem.classList.add("active");
+//        } else {
+//            elem.classList.remove("active");
+//        }
+//    })
+//}
+//window.document.addEventListener("scroll", onScroll);
 
 
 // DEMO Swticher Base

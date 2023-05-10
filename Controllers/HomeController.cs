@@ -1,34 +1,13 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using noa.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace noa.Controllers;
-
-public class HomeController : Controller
+namespace confinancia.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
+	public class HomeController : Controller
+	{
+		public IActionResult Index()
+		{
 
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
-
-    [Authorize]
-    [Route("/Home")]
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
+			return View();
+		}
+	}
 }
