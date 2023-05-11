@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+	<head>
+
+		<!-- META DATA -->
+		<meta charset="UTF-8">
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="description" content="Justo a tiempo para cumplir tus sueños">
+		<meta name="author" content="Spruko Technologies Private Limited">
+		<meta name="keywords" content="Libranza, credito, pensiones, militares, publico, pensionado.">
+
+		<!-- FAVICON -->
+		<link rel="shortcut icon" type="image/x-icon" href="~/assets/images/landing/confival-ico.ico" />
+
+		<!-- TITLE -->
+		<title> 🏅 Compra de sentencias y conciliaciones Judiciales</title>
+
+		<!-- BOOTSTRAP CSS -->
+		<link id="style" href="~/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true"/>
+
+		<!-- STYLE CSS -->
+		<link href="~/assets/css/style.css" rel="stylesheet" asp-append-version="true"/>
+		<link href="~/assets/css/skin-modes.css" rel="stylesheet" asp-append-version="true" />
+
+		<!--- FONT-ICONS CSS -->
+		<link href="~/assets/css/icons.css" rel="stylesheet" asp-append-version="true"/>
+
+		
+	</head>
+
+	<body class="ltr app horizontal landing-page">
+		@*<a href="#Contact" class="buy-now">Cotiza tu sentencia aqui</a>*@
+		
+
+		<!-- GLOBAL-LOADER -->
+		<div id="global-loader">
+			<img src="~/assets/images/loader.svg" class="loader-img" alt="Loader">
+		</div>
+		<!-- /GLOBAL-LOADER -->
+
+		<!-- PAGE -->
+		<div class="page">
+			<div class="page-main">
+         	
+				<!-- APP-HEADER -->
+				<partial name="~/Views/Shared/layouts/landing/_app-header.cshtml" />
+         		<!--/ APP-HEADER -->
+
+				<!-- APP-SIDEBAR -->
+				<partial name="~/Views/Shared/layouts/landing/_app-sidebar.cshtml" />
+				<!--/APP-SIDEBAR-->
+
+                @RenderBody()
+
+			</div>
+
+		</div>
+
+		<!-- BACK-TO-TOP -->
+		<a href="#top" id="back-to-top"><i class="fa fa-long-arrow-up"></i></a>
+
+		<!-- JQUERY JS -->
+		<script src="~/assets/js/jquery.min.js"></script>
+
+		<!-- BOOTSTRAP JS -->
+		<script src="~/assets/plugins/bootstrap/js/popper.min.js"></script>
+		<script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+		
+		<!-- SIDE-MENU JS -->
+		@*<script src="~/assets/plugins/sidemenu/sidemenu.js"></script>*@
+
+		<!-- STICKY JS -->
+		<script src="~/assets/js/sticky.js"></script>
+		
+        @await RenderSectionAsync("Scripts", required: false)
+
+		<!-- Owl carousel JS -->
+		<script src="~/assets/landing/lib/company-slider/slider.js"></script>
+		<script src="~/assets/landing/lib/owl-carousel/owl.carousel.js"></script>
+		<!-- INPUT MASK JS-->
+		
+		<script>
+				// SUBMIT Formulario solicitud credito
+			
+			$(document).ready(function () {
+				$('#btnSubmitSolicitud').on('click', function () {
+                    if (document.formSolicitudC.reportValidity()) {
+						$('#formSolicitudC').submit();
+					}
+				});
+				$('#modalPoliticas').on('click', function () {
+                    if (document.formSolicitudC.reportValidity()) {
+						$('#modaldemo8').modal("show");
+					}
+				});
+					
+					
+			});
+
+			function rangeMontoChanged(obj){
+				var number = parseInt(obj.value);
+                var iRange = document.getElementById("inputRange2");
+                iRange.value =  "$ "+ number.toLocaleString("es-CO");
+			}
+			function inputMontoKey(obj){
+				
+				var number = parseInt(obj.value);
+                var iRange = document.getElementById("Monto");                
+                if (number > 100000000){
+                    number = 100000000;
+				}
+				 if (number < 1000000){
+                    number = 1000000;
+				}
+				iRange.value = number
+				obj.value = "$ "+ number.toLocaleString("es-CO");
+			}
+			function inputMontoFocus(obj){
+				var number = parseInt(obj.value.substring(2).replaceAll(".",""));  
+                if (number > 100000000){
+                    number = 100000000;
+				}
+				 if (number < 1000000){
+                    number = 1000000;
+				}
+				obj.value = number;
+                //inputMontoKey(obj);
+			}
+		</script>
+		<!-- landing JS -->
+		<script src="~/assets/js/landing.js"></script>
+		<!-- CUSTOM JS -->
+		<script src="~/assets/js/custom.js"></script>
+	</body>
+</html>
