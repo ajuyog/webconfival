@@ -1,0 +1,226 @@
+@using System.Collections.Generic;
+@using confinancia.Models;
+
+@{
+	Layout = "_Layoutlandingpage3";
+	
+}
+            
+ <!--app-content open-->
+<div class="hor-content main-content mt-0">
+	<div class="side-app">
+		<!-- CONTAINER -->
+		<div class="main-container">
+			<!-- Clients section-->
+			<div class="section pb-5">
+				<div class="container px-5 px-md-0">
+					<div class="overflow-hidden">
+						<div class="row">
+							<div class="col-lg-12 text-left pos-relative overflow-hidden market-image text-center banner">
+								<a href="https://api.whatsapp.com/send?phone=573146699814&text=Hola%20me%20encuentro%20interesado%20">
+									<img alt="" class="logo-2" src="~/assets/images/landing/Banner.png">
+									<img alt="" class="logo" src="~/assets/images/landing/Banner-Movil-2.png">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="section pb-5 bg-white" id="Contacto">
+				<div class="container px-5 px-md-0">
+					<div class="row justify-content-center"> 
+						<div class="col col-sm-12"> 
+							<div class=""> 
+								<div class=""> 
+									<div class="ml-subscribe-form row large-gutters align-items-center" id="mlb2-5646992-5"> 
+										<div class="ml-block-form col-12 col-md-6 order-md-last order-first mb-4 mb-md-0"> 
+											<div class="ml-video-5 mb-4 mb-md-0"> 
+												<div class="embed-responsive embed-responsive-16by9"> 
+													<iframe class="embed-responsive-item" frameborder="0" allowfullscreen="" src="https://www.youtube-nocookie.com/embed/16ZAbWDz3DE?rel=0&amp;showinfo=0"></iframe> 
+												</div> 
+											</div> 
+										</div> 
+										<div class="ml-block-form col-12 col-md-6"> 
+											<div class="row mb-4"> 
+												<div class="col"> 
+													<h1 style="text-align:center"><strong>¿Aún no sabes cuándo te pagará el Estado tu sentencia de reparación?</strong></h1> 
+													<p style="text-align:center">En Confival te ayudamos para que conozcas la fecha estimada de tu pago, ¡Nos contactaremos contigo!<br></p>
+												</div> 
+											</div> 
+											<div xp-if="variable.formPreview.value == 'form'"> 
+												<form class="mb-0" method="POST"> 
+													<div class="row"> 
+														<div class="col"> 
+															<div> 
+																<div class="form-group ml-field-email ml-validate-email ml-validate-required mb-2"> 
+																	<input aria-required="true" aria-label="email" type="email" class="form-control" data-inputmask="" name="mail" placeholder="Correo" autocomplete="email" aria-invalid="false"> 
+																</div> 
+															</div>
+															<div> 
+																<div class="form-group ml-field-name ml-validate-required mb-2"> 
+																	<input aria-required="true" aria-label="name" type="text" class="form-control" data-inputmask="" name="name" placeholder="Nombre Completo" autocomplete="name" aria-invalid="false">
+																</div> 
+															</div>
+															<div>
+																<div class="form-group ml-field-phone ml-validate-required mb-2"> 
+																	<input aria-required="true" aria-label="phone" type="text" class="form-control" data-inputmask="" name="phone" placeholder="Número de Celular" autocomplete="" aria-invalid="false"> 
+																</div> 
+															</div>
+															<div> 
+																<div class="form-group ml-field-tu_caso_es_de_reparacion_directa ml-validate-required mb-0"> 
+																	<input aria-required="true" aria-label="tu_caso_es_de_reparacion_directa" type="text" class="form-control" data-inputmask="" name="reparacionDirecta" placeholder="¿Tu caso es de reparación directa?" autocomplete="" aria-invalid="false">
+																</div>
+															</div> 														
+														</div>													
+													</div> 
+													<div class="row mt-4"> 
+														<div class="col"> 
+															<div class="form-group button-block mb-0"> 
+																<button class="btn btn-primary" type="submit"> Obtén el turno de pago </button> 
+																<button style="display:none;border-top-right-radius:30px;border-bottom-right-radius:30px" class="btn btn-block loading" type="button" disabled="disabled"> 
+																	<div class="spinner-border" style="width:1.25rem;height:1.25rem" role="status"> 
+																		<span class="sr-only">Loading...</span> 
+																	</div> 
+																</button> 
+															</div> 
+														</div> 
+													</div>
+												</form> 
+											</div> 
+										</div>
+									</div> 
+								</div>
+							</div> 
+						</div> 
+					</div>
+				</div>
+			</div>
+				<!-- Seccion 4 -- Carrousel Entidades -->
+				<div class="px-5 px-md-0" style="padding-bottom:80px;">
+					<div class="bg-primary-v-dos section">
+						<div class="container px-5 px-md-0">
+							<div class="row justify-content-center text-center">
+								<div class="col-lg-8 text-center">
+									<h3 class="header-family text-white">Entidades</h3>
+									<p class="sub-text text-white pb-3">
+										A las que Confival le compra sentencias
+									</p>
+								</div>
+							</div>
+							<div class="row justify-content-center">
+								<div class="col-lg-12">
+									<div class="customer-logos">
+										<div class="slide"><img src="~/assets/images/landing/Inpec.svg" alt=""></div>
+										<div class="slide"><img src="~/assets/images/landing/Ejercito.svg" alt=""></div>
+										<div class="slide"><img src="~/assets/images/landing/Fiscalia.svg" alt=""></div>
+										<div class="slide"><img src="~/assets/images/landing/Invias.svg" alt=""></div>
+										<div class="slide"><img src="~/assets/images/landing/MiniDefensa.svg" alt=""></div>
+										<div class="slide"><img src="~/assets/images/landing/Policia.svg" alt=""></div>
+										<div class="slide"><img src="~/assets/images/landing/Rama.svg" alt=""></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+				
+
+				
+
+			
+
+			<!-- FOOTERS -->
+			<partial name="~/Views/Shared/_Footer1.cshtml" />
+			
+		</div>
+	</div>
+</div>
+
+
+@section scripts {
+		<!-- Star Rating-1 Js-->
+		<script src="~/assets/plugins/ratings-2/jquery.star-rating.js"></script>
+		<script src="~/assets/plugins/ratings-2/star-rating.js"></script>
+
+		<!-- Sweet-alert js  -->
+		<script src="~/assets/js/carousel-confival.js"></script>
+		<script src="~/assets/plugins/sweet-alert/sweetalert.min.js"></script>
+		<script src="~/assets/plugins/sweet-alert/jquery.sweet-alert.js"></script>
+
+		<script src="~/assets/plugins/rating/jquery-rate-picker.js"></script>
+		<script src="~/assets/plugins/rating/rating-picker.js"></script>
+
+		<!-- Bootstrap-Date Range Picker js-->
+		<script src="~/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+
+		<!-- jQuery UI Date Picker js -->
+		<script src="~/assets/plugins/date-picker/jquery-ui.js"></script>
+
+		<!-- bootstrap-datepicker js (Date picker Style-01) -->
+		<script src="~/assets/plugins/bootstrap-datepicker/js/datepicker.js"></script>
+
+		<!-- Amaze UI Date Picker js-->
+		<script src="~/assets/plugins/amazeui-datetimepicker/js/amazeui.datetimepicker.min.js"></script>
+
+		<!-- Simple Date Time Picker js-->
+		<script src="~/assets/plugins/jquery-simple-datetimepicker/jquery.simple-dtpicker.js"></script>
+
+		<!-- SELECT2 JS -->
+		<script src="~/assets/plugins/select2/select2.full.min.js"></script>
+
+		<!-- BOOTSTRAP MAX-LENGTH JS -->
+@*		<script src="~/assets/plugins/bootstrap-maxlength/dist/bootstrap-maxlength.min.js"></script>
+*@
+		<!--Internal Fileuploads js-->
+		<script src="~/assets/plugins/fileuploads/js/fileupload.js"></script>
+		<script src="~/assets/plugins/fileuploads/js/file-upload.js"></script>
+
+		<!--Internal Fancy uploader js-->
+		<script src="~/assets/plugins/fancyuploder/jquery.ui.widget.js"></script>
+		<script src="~/assets/plugins/fancyuploder/jquery.fileupload.js"></script>
+		<script src="~/assets/plugins/fancyuploder/jquery.iframe-transport.js"></script>
+		<script src="~/assets/plugins/fancyuploder/jquery.fancy-fileupload.js"></script>
+		<script src="~/assets/plugins/fancyuploder/fancy-uploader.js"></script>
+
+		<!-- FORM ELEMENTADVANCED JS -->
+		<script src="~/assets/js/formelementadvnced.js"></script>
+
+		<!-- FORM OPORTUNIDAD JS -->
+		<script src="~/assets/js/form-oportunidad.js"></script>
+
+		<!-- INTERNAL Notifications js -->
+		<script src="~/assets/plugins/notify/js/rainbow.js"></script>
+		<script src="~/assets/plugins/notify/js/sample.js"></script>
+		<script src="~/assets/plugins/notify/js/jquery.growl.js"></script>
+		<script src="~/assets/plugins/notify/js/notifIt.js"></script>
+
+		<!-- TIME COUNTER JS-->
+		<script src="~/assets/plugins/counters/jquery.missofis-countdown.js"></script>
+		<script src="~/assets/plugins/counters/counter.js"></script>
+
+		<!-- COUNT-DOWN JS-->
+		<script src="~/assets/plugins/counters/count-down.js"></script>
+		<script src="~/assets/plugins/countdown/moment.min.js"></script>
+		<script src="~/assets/plugins/countdown/moment-timezone.min.js"></script>
+		<script src="~/assets/plugins/countdown/moment-timezone-with-data.min.js"></script>
+		<script src="~/assets/plugins/countdown/countdowntime.js"></script>
+
+		<!-- COUNTERS JS-->
+
+		<script src="~/assets/plugins/counters/counterup.min.js"></script>
+		<script src="~/assets/plugins/counters/waypoints.min.js"></script>
+		<script src="~/assets/plugins/counters/counters-1.js"></script>
+
+		<!-- SIDEBAR JS -->
+		<script src="~/assets/plugins/sidebar/sidebar.js"></script>
+
+		<!-- PROGRESS BAR JS-->
+		<script src="../assets/js/progress.js"></script>
+
+		<!-- UTILIDAD -->
+
+		<script src="../assets/js/utilidad.js"></script>
+}
