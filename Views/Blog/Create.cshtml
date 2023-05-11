@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "_Layout3";
 }
-<div class="page-header">
+<div class="page-header" id="PublicarBlog">
 	<div>
 		<h1 class="page-title">Crear Blogs Confival</h1>
 	</div>
@@ -16,7 +16,6 @@
 
 
 <div class="row">
-
 	<div id="visualizar-blog-confirmar" class="hide-info">
 		<div class="card">
 			<div class="card-body">
@@ -70,7 +69,6 @@
 							<!-- Seccion 5 -->
 							<div id="contenido-blog-visualizar-subtitulo-quinto" style="margin-top:20px;"></div>
 							<div id="contenido-blog-visualizar-parrafo-quinto" style="margin-top:20px;"></div>
-
 
 							<div id="contenido-blog-visualizar-iterar" style="margin-top:20px;"></div>
 							<div id="form-blog-create-success"></div>
@@ -355,8 +353,26 @@
 		</div>
 
 		<!-- Seccion 10 -->
-
-
+		<div id="seccion-categorias" class="hide-info">
+			<div class="card">
+				<div class="card-header-blogs">
+					<h4 class="mt-3 header-blog-publicar">Selecciona las categorias del Blog !!</h4>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label class="form-label">categorias</label>
+						<select multiple class="form-control select2-show-search form-select" data-placeholder="Seleccione..." id="lst-categorias">
+@*							<option label="Choose one"></option>
+*@							<option value="1">Economia</option>
+							<option value="2">Legal</option>
+							<option value="3">Activos inmobiliarios</option>
+							<option value="4">Sentencias</option>
+							<option value="5">Testimonios</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
 
@@ -376,10 +392,14 @@
 						</p>
 					</div>
 				</div>
-				<div class="card-footer">
-					<a href="#PublicarBlog" class="btn btn-primary" onclick="Publicar()">Finalizar !!</a>
+			</div>
+			<div class="card">
+				<div class="card-body">
+					<p class="text-muted">Saltar al siguiente paso: </p>
+					<p>
+						<a href="#PublicarBlog" class="btn btn-primary" onclick="NextGallery()" style="margin-top:20px;">Crear Galeria</a>
+					</p>
 				</div>
-
 			</div>
 		</div>
 
@@ -398,8 +418,13 @@
 						</p>
 					</div>
 				</div>
-				<div class="card-footer">
-					<a href="#PublicarBlog" class="btn btn-primary" onclick="Publicar()">Finalizar !!</a>
+			</div>
+			<div class="card">
+				<div class="card-body">
+					<p class="text-muted">Saltar al siguiente paso: </p>
+					<p>
+						<a href="#PublicarBlog" class="btn btn-primary" onclick="NextGallery()" style="margin-top:20px;">Crear Galeria</a>
+					</p>
 				</div>
 			</div>
 		</div>
@@ -419,10 +444,16 @@
 						</p>
 					</div>
 				</div>
-				<div class="card-footer">
-					<a href="#PublicarBlog" class="btn btn-primary" onclick="Publicar()">Finalizar !!</a>
+			</div>
+			<div class="card">
+				<div class="card-body">
+					<p class="text-muted">Saltar al siguiente paso: </p>
+					<p>
+						<a href="#PublicarBlog" class="btn btn-primary" onclick="NextGallery()" style="margin-top:20px;">Crear Galeria</a>
+					</p>
 				</div>
 			</div>
+
 		</div>
 
 		<!-- Seccion Botones Cuatro-->
@@ -440,10 +471,17 @@
 						</p>
 					</div>
 				</div>
-				<div class="card-footer">
-					<a href="#PublicarBlog" class="btn btn-primary" onclick="Publicar()">Finalizar !!</a>
+			</div>
+			<div class="card">
+				<div class="card-body">
+					<p class="text-muted">Saltar al siguiente paso: </p>
+					<p>
+						<a href="#PublicarBlog" class="btn btn-primary" onclick="NextGallery()" style="margin-top:20px;">Crear Galeria</a>
+					</p>
 				</div>
 			</div>
+
+
 		</div>
 
 		<!-- Seccion Botones Cinco-->
@@ -457,7 +495,7 @@
 						<p class="text-muted">¿Deseas agregar una galeria de imagenes al Blog?</p>
 						<p>
 							<a href="#PublicarBlog" class="btn btn-success" onclick="AddGallery()" style="margin-top:20px;">Si, si quiero !!</a>
-							<a href="#PublicarBlog" class="btn btn-info" onclick="WithOutGallery()" style="margin-top:20px;">No, no quiero !!</a>
+							<a href="#PublicarBlog" class="btn btn-info" onclick="NextCategoria()" style="margin-top:20px;">No, no quiero !!</a>
 						</p>
 					</div>
 				</div>
@@ -472,10 +510,10 @@
 				</div>
 				<div class="card-body">
 					<div class="caption">
-						<p class="text-muted">¿Deseas agregar una primera imagen?</p>
+						<p class="text-muted">¿Deseas agregar una segunda imagen?</p>
 						<p>
 							<a href="#PublicarBlog" class="btn btn-success" onclick="AddGallery2()" style="margin-top:20px;">Si, si quiero !!</a>
-							<a href="#PublicarBlog" class="btn btn-info" onclick="WithOutGallery()" style="margin-top:20px;">No, no quiero !!</a>
+							<a href="#PublicarBlog" class="btn btn-info" onclick="NextCategoria()" style="margin-top:20px;">No, no quiero !!</a>
 						</p>
 					</div>
 				</div>
@@ -490,10 +528,10 @@
 				</div>
 				<div class="card-body">
 					<div class="caption">
-						<p class="text-muted">¿Deseas agregar una segunda imagen?</p>
+						<p class="text-muted">¿Deseas agregar una tercera imagen?</p>
 						<p>
 							<a href="#PublicarBlog" class="btn btn-success" onclick="AddGallery3()" style="margin-top:20px;">Si, si quiero !!</a>
-							<a href="#PublicarBlog" class="btn btn-info" onclick="WithOutGallery()" style="margin-top:20px;">No, no quiero !!</a>
+							<a href="#PublicarBlog" class="btn btn-info" onclick="NextCategoria()" style="margin-top:20px;">No, no quiero !!</a>
 						</p>
 					</div>
 				</div>
@@ -508,10 +546,10 @@
 				</div>
 				<div class="card-body">
 					<div class="caption">
-						<p class="text-muted">¿Deseas agregar una tercera imagen?</p>
+						<p class="text-muted">¿Deseas agregar una cuarta imagen?</p>
 						<p>
 							<a href="#PublicarBlog" class="btn btn-success" onclick="AddGallery4()" style="margin-top:20px;">Si, si quiero !!</a>
-							<a href="#PublicarBlog" class="btn btn-info" onclick="WithOutGallery()" style="margin-top:20px;">No, no quiero !!</a>
+							<a href="#PublicarBlog" class="btn btn-info" onclick="NextCategoria()" style="margin-top:20px;">No, no quiero !!</a>
 						</p>
 					</div>
 				</div>
@@ -522,20 +560,18 @@
 		<div id="seccion-btn-imagen-cuatro-g" class="hide-info">
 			<div class="card">
 				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Galeria de imagenes</h4>
+					<h4 class="mt-3 header-blog-publicar">Siguiente paso</h4>
 				</div>
 				<div class="card-body">
 					<div class="caption">
-						<p class="text-muted">¿Deseas agregar una cuarta imagen?</p>
+						<p class="text-muted">Continua agregando las categorias del Blog</p>
 						<p>
-							<a href="#PublicarBlog" class="btn btn-success" onclick="AddGallery5()" style="margin-top:20px;">Si, si quiero !!</a>
-							<a href="#PublicarBlog" class="btn btn-info" onclick="WithOutGallery()" style="margin-top:20px;">No, no quiero !!</a>
+							<a href="#PublicarBlog" class="btn btn-primary" onclick="AddGallery5()" style="margin-top:20px;">Continuar !!</a>
 						</p>
 					</div>
 				</div>
 			</div>
 		</div>
-	
 	
 	</div>
 </div>
@@ -554,4 +590,10 @@
 
 	<!-- Internal Chat js-->
 	<script src="~/assets/js/chat.js"></script>
+
+	<!-- SELECT2 JS -->
+	<script src="~/assets/plugins/select2/select2.full.min.js"></script>
+
+	<!-- FORM ELEMENTADVANCED JS -->
+	<script src="~/assets/js/formelementadvnced.js"></script>
 }
