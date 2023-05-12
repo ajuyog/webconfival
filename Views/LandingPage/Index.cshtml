@@ -1286,9 +1286,6 @@
 					</div>
 				</div>
 			</div>
-
-
-
 			<!-- Servicios - FIN-->
 
 			<!-- BLOG - Inicio -->
@@ -1310,7 +1307,6 @@
 								<div class="card-body">
 									<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@Model.FirstOrDefault().Id" class="text-dark blog-title">@Model.FirstOrDefault().Titulo</a>
 									<p class="mb-0 text-muted mt-4">@Model.FirstOrDefault().IntroUno</p>
-									<p class="text-muted">@Model.FirstOrDefault().Contenido</p>
 									<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@Model.FirstOrDefault().Id" class="btn btn-outline-primary mt-2">Leer más</a>
 								</div>
 								<div class="card-footer">

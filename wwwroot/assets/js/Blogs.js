@@ -36,12 +36,18 @@ function AgregarBotonesDos() {
     if (subtitulo.length != 0 && segundoParrafo.length != 0) {
         seccionBotonoesDos.removeClass("hide-info");
     }
+    if (subtitulo.length == 0 || segundoParrafo.length == 0) {
+        seccionBotonoesDos.addClass("hide-info");
+    }
 };
 function AgregarBotonesDosTextArea() {
     var segundoParrafoTextArea = $("#segundo-parrafo-textarea").val();
     var seccionBotonoesDos = $("#seccion-btn-publicar-dos");
     if (segundoParrafoTextArea.length != 0) {
         seccionBotonoesDos.removeClass("hide-info");
+    }
+    if (segundoParrafoTextArea.length == 0) {
+        seccionBotonoesDos.addClass("hide-info");
     }
 };
 function AgregarBotonesTres() {
@@ -51,12 +57,18 @@ function AgregarBotonesTres() {
     if (subtitulo.length != 0 && parrafo != 0) {
         seccionBotonesTres.removeClass("hide-info");
     }
+    if (subtitulo.length == 0 || parrafo == 0) {
+        seccionBotonesTres.addClass("hide-info");
+    }
 };
 function AgregarBotonesTresTextArea() {
     var parrafo = $("#parrafo-tres-textarea").val();
     var seccionBotones = $("#seccion-btn-publicar-tres");
     if (parrafo.length != 0) {
         seccionBotones.removeClass("hide-info");
+    }
+    if (parrafo.length == 0) {
+        seccionBotones.addClass("hide-info");
     }
 };
 function AgregarBotonesCuatro() {
@@ -66,12 +78,18 @@ function AgregarBotonesCuatro() {
     if (subtitulo.length != 0 && parrafo.length != 0) {
         botones.removeClass("hide-info");
     }
+    if (subtitulo.length == 0 || parrafo.length == 0) {
+        botones.addClass("hide-info");
+    }
 };
 function AgregarBotonesCuatroTextArea() {
     var parrafo = $("#parrafo-cuatro-textarea").val();
     var botones = $("#seccion-btn-publicar-cuatro");
     if (parrafo.length != 0) {
         botones.removeClass("hide-info");
+    }
+    if (parrafo.length == 0) {
+        botones.addClass("hide-info");
     }
 };
 function IniciarGaleria() {
@@ -81,12 +99,19 @@ function IniciarGaleria() {
     if (subtitulo.length != 0 && parrafo.length != 0) {
         boton.removeClass("hide-info");
     }
+    if (subtitulo.length == 0 || parrafo.length == 0) {
+        boton.addClass("hide-info");
+    }
+    
 };
 function IniciarGaleriaTextArea() {
     var parrafo = $("#parrafo-cinco-textarea").val();
     var botones = $("#seccion-btn-publicar-cinco");
     if (parrafo.length != 0) {
         botones.removeClass("hide-info");
+    }
+    if (parrafo.length == 0) {
+        botones.addClass("hide-info");
     }
 };
 
@@ -325,18 +350,26 @@ function AddSubtitulo() {
     var seccionBotones = $("#seccion-btn-publicar");
     var seccionUno = $("#seccion-uno-publicar");
 
-    seccionBotones.addClass("hide-info");
-    seccionUno.addClass("hide-info");
-    seccionDos.removeClass("hide-info");
+    var validacion = validarFormulario1();
+
+    if (validacion == 0) {
+        seccionBotones.addClass("hide-info");
+        seccionUno.addClass("hide-info");
+        seccionDos.removeClass("hide-info");
+    }
 };
 function AddParrafo() {
     var seccionDos = $("#seccion-dos-publicar-textarea");
     var seccionBotones = $("#seccion-btn-publicar");
     var seccionUno = $("#seccion-uno-publicar");
 
-    seccionUno.addClass("hide-info");
-    seccionBotones.addClass("hide-info");
-    seccionDos.removeClass("hide-info");
+    var validacion = validarFormulario1();
+
+    if (validacion == 0) {
+        seccionUno.addClass("hide-info");
+        seccionBotones.addClass("hide-info");
+        seccionDos.removeClass("hide-info");
+    }
 };
 function AddSubtituloTres() {
     var seccionTres = $("#seccion-tres-publicar");
@@ -522,4 +555,32 @@ function NextCategoria() {
 
 
 
+};
+function validarFormulario1() {
+    var count = 0;
+    var imagenPrincipal = $("#imagen-blog").get(0).files;
+    var titulo = $("#titulo-blog").val();
+    var parrafo = $("#primer-parrafo").val();
+    if (imagenPrincipal.length == 0) {
+        $("#invalid-imagen-blog-principal").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-imagen-blog-principal").css("display", "none");
+    }
+    if (titulo.length == 0) {
+        $("#invalid-titulo-blog").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-titulo-blog").css("display", "none");
+    }
+    if (parrafo.length == 0) {
+        $("#invalid-primer-parrafo").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-primer-parrafo").css("display", "none");
+    }
+    if (imagenPrincipal.length > 0 && titulo.length > 0 && parrafo.length > 0) {
+        count = 0;
+    }
+    return count;
 }

@@ -90,16 +90,22 @@
 						<label class="form-label">Titulo</label>
 						<input class="form-control" type="text" placeholder="Titulo de tu blog" id="titulo-blog">
 					</div>
+					<div class="invalid-feedback" id="invalid-titulo-blog">Debes agregar un titulo para el blog</div>
+
 					<div class="form-group">
 						<label class="form-label">Imagen del Blog</label>
 						<div class="col-sm-12 col-md-12">
 							<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-blog" />
 						</div>
+						<div class="invalid-feedback" id="invalid-imagen-blog-principal">Debes agregar una imagen</div>
+
 					</div>
 					<div class="form-group">
 						<label class="form-label">Primer Parrafo</label>
 						<textarea class="form-control mb-4" placeholder="Empieza con el primer parrafo" rows="8" id="primer-parrafo"></textarea>
 					</div>
+					<div class="invalid-feedback" id="invalid-primer-parrafo">Debes agregar un primer parrafo al blog</div>
+
 				</div>
 			</div>
 		</div>
@@ -135,6 +141,8 @@
 						<label class="form-label">Segundo Parrafo</label>
 						<textarea class="form-control mb-4" placeholder="Continua con el segundo parrafo" rows="8" id="segundo-parrafo-textarea"></textarea>
 					</div>
+					<div class="invalid-feedback" id="invalid-segundo-parrafo-textarea">Debes agregar un parrafo</div>
+
 				</div>
 			</div>
 		</div>
@@ -362,8 +370,8 @@
 					<div class="form-group">
 						<label class="form-label">categorias</label>
 						<select multiple class="form-control select2-show-search form-select" data-placeholder="Seleccione..." id="lst-categorias">
-@*							<option label="Choose one"></option>
-*@							<option value="1">Economia</option>
+							<option label="Seleccione..."></option>
+							<option value="1">Economia</option>
 							<option value="2">Legal</option>
 							<option value="3">Activos inmobiliarios</option>
 							<option value="4">Sentencias</option>
@@ -580,7 +588,7 @@
 					<h4 class="mt-3 header-blog-publicar">Genial !!</h4>
 				</div>
 				<div class="card-body">
-					<p class="text-muted">Haz Finalizado</p>
+					<p class="text-muted">Agrega las categorias que consideres necesarias y procede a publicar</p>
 					<p>
 						<a href="#PublicarBlog" class="btn btn-primary" onclick="Publicar()" style="margin-top:20px;">Publicar !!</a>
 					</p>
