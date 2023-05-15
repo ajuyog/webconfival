@@ -8,7 +8,7 @@
             var div = $("#blogs-categoria") 
             div.children("div").remove();
             var name = result[0].categorias[0].nombre;
-            div.append('<div class="card-confival-blogs border-confival-blogs"><div class="card-header border-bottom"><h4 class="card-title header-family">Principales blogs de ' + name + '</h4></div><div class="card-body"><div class="item-list add-confival-dos"><ul class="list-group mb-0 add-confival"></ul></div></div></div>');
+            div.append('<div class="card-confival-blogs border"><div class="card-header border-bottom"><h4 class="card-title header-family">Principales blogs de ' + name + '</h4></div><div class="card-body"><div class="item-list add-confival-dos"><ul class="list-group mb-0 add-confival"></ul></div></div></div>');
             $.each(result, function (element, index) {
                 if (result.length > count) {
                     count = count + 1;
@@ -133,7 +133,23 @@ function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $('#blah').attr('src', e.target.result);
+            var dinamico = "";
+            if (input.id == "imagen-blog") {
+                dinamico = $('#blah');
+            }
+            if (input.id == "imagen-g-uno") {
+                dinamico = $('#blah-dos');
+            }
+            if (input.id == "imagen-g-dos") {
+                dinamico = $('#blah-tres');
+            }
+            if (input.id == "imagen-g-tres") {
+                dinamico = $('#blah-cuatro');
+            }
+            if (input.id == "imagen-g-cuatro") {
+                dinamico = $('#blah-cinco');
+            }
+            dinamico.attr('src', e.target.result);
         }
         reader.readAsDataURL(input.files[0]);
     }
@@ -320,6 +336,29 @@ $("#lst-categorias").on("change", function () {
         $("#seccion-btn-finalizar").addClass("hide-info");
     }
 })
+
+
+
+
+$("#imagen-g-uno").on("change", function () {
+    $("#onchange-ig-uno").removeClass("hide-info");
+    readURL(this);
+});
+
+$("#imagen-g-dos").on("change", function () {
+    $("#onchange-ig-dos").removeClass("hide-info");
+    readURL(this);
+});
+
+$("#imagen-g-tres").on("change", function () {
+    $("#onchange-ig-tres").removeClass("hide-info");
+    readURL(this);
+});
+$("#imagen-g-cuatro").on("change", function () {
+    $("#onchange-ig-cuatro").removeClass("hide-info");
+    readURL(this);
+});
+
 
 // --- BOTONES FINALIZAR --- //
 function Publicar() {

@@ -34,50 +34,6 @@
 </div>
 
 <div class="row">
-	<div class="col-xl-8 col-sm-12 col-xs-12" id="visualizar-blog-principal">
-		<div class="card">
-			<div class="main-chat-header pt-3 d-block d-sm-flex">
-				<div class="margin-auto">
-					<h3 class="margin-auto">Visualiza tu blog</h3>
-				</div>
-			</div>
-			<div class="card-body">
-				<div class="main-chat-body flex-2" id="ChatBody">
-					<div class="content-inner">
-						<div class="row justify-content-center text-center">
-
-							<!-- Seccion 1 -->
-							<div id="contenido-blog-visualizar"></div>
-							<div class="ps-relative p-1 bg-light br-5 hide-info" id="img-onchange">
-								<img src="" alt="img" class="cover-image br-5 ms-auto me-auto wp-100" id="blah"><br>
-								<span class="badge bg-primary-gradient blog-label label5">Blogs Confival</span>
-							</div>
-							<div id="contenido-blog-visualizar-parrafo" style="margin-top:20px;"></div>
-							
-							<!-- Seccion 2 -->
-							<div id="contenido-blog-visualizar-subtitulo-dos" style="margin-top:20px;"></div>
-							<div id="contenido-blog-visualizar-parrafo-dos" style="margin-top:20px;"></div>
-
-							<!-- Seccion 3 -->
-							<div id="contenido-blog-visualizar-subtitulo-tres" style="margin-top:20px;"></div>
-							<div id="contenido-blog-visualizar-parrafo-tres" style="margin-top:20px;"></div>
-
-							<!-- Seccion 4 -->
-							<div id="contenido-blog-visualizar-subtitulo-cuatro" style="margin-top:20px;"></div>
-							<div id="contenido-blog-visualizar-parrafo-cuatro" style="margin-top:20px;"></div>
-
-							<!-- Seccion 5 -->
-							<div id="contenido-blog-visualizar-subtitulo-quinto" style="margin-top:20px;"></div>
-							<div id="contenido-blog-visualizar-parrafo-quinto" style="margin-top:20px;"></div>
-
-							<div id="contenido-blog-visualizar-iterar" style="margin-top:20px;"></div>
-							<div id="form-blog-create-success"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 	<div class="col-xl-4 col-sm-12 col-xs-12" id="visualizador-campos">
 		<!-- Seccion 1 -->
 		<div id="seccion-uno-publicar">
@@ -265,15 +221,24 @@
 							<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-g-uno" />
 						</div>
 						<div class="invalid-feedback" id="invalid-imagen-g-uno">Debes agregar una imagen</div>
-
 					</div>
 					<div class="form-group">
 						<label class="form-label">Descripción</label>
 						<textarea class="form-control mb-4" placeholder="Descripcion" rows="3" id="descripcion-ig-uno"></textarea>
 					</div>
+					<div class="form-group" style="padding-bottom: 35px;">
+						<label class="form-label">URL Fuente</label>
+						<input class="form-control" type="text" placeholder="URL Fuente" id="url-fuente-ig-uno">
+					</div>
+					<hr />
+					<p>Datos Metadata</p>
 					<div class="form-group">
-						<label class="form-label">Referencia</label>
-						<input class="form-control" type="text" placeholder="URL de referencia" id="referencia-ig-uno">
+						<label class="form-label">Texto alternativo</label>
+						<input class="form-control" type="text" placeholder="Alt=' '" id="texto-alternativo-ig-uno">
+					</div>
+					<div class="form-group">
+						<label class="form-label">Titulo</label>
+						<textarea class="form-control mb-4" placeholder="Titulo=' '" rows="3" id="titulo-ig-uno"></textarea>
 					</div>
 				</div>
 			</div>
@@ -292,15 +257,24 @@
 							<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-g-dos" />
 						</div>
 						<div class="invalid-feedback" id="invalid-imagen-g-dos">Debes agregar una imagen</div>
-
 					</div>
 					<div class="form-group">
 						<label class="form-label">Descripción</label>
 						<textarea class="form-control mb-4" placeholder="Descripcion" rows="3" id="descripcion-ig-dos"></textarea>
 					</div>
+					<div class="form-group" style="padding-bottom: 35px;">
+						<label class="form-label">URL Fuente</label>
+						<input class="form-control" type="text" placeholder="URL de referencia" id="url-fuente-ig-dos">
+					</div>
+					<hr />
+					<p>Datos Metadata</p>
 					<div class="form-group">
-						<label class="form-label">Referencia</label>
-						<input class="form-control" type="text" placeholder="URL de referencia" id="referencia-ig-dos">
+						<label class="form-label">Texto alternativo</label>
+						<input class="form-control" type="text" placeholder="Alt=''" id="texto-alternativo-ig-dos">
+					</div>
+					<div class="form-group">
+						<label class="form-label">Titulo</label>
+						<textarea class="form-control mb-4" placeholder="Titulo=' '" rows="3" id="titulo-ig-dos"></textarea>
 					</div>
 				</div>
 			</div>
@@ -325,9 +299,19 @@
 						<label class="form-label">Descripción</label>
 						<textarea class="form-control mb-4" placeholder="Descripcion" rows="3" id="descripcion-ig-tres"></textarea>
 					</div>
+					<div class="form-group" style="padding-bottom: 35px;">
+						<label class="form-label">URL Fuente</label>
+						<input class="form-control" type="text" placeholder="URL de referencia" id="url-fuente-ig-tres">
+					</div>
+					<hr />
+					<p>Datos Metadata</p>
 					<div class="form-group">
-						<label class="form-label">Referencia</label>
-						<input class="form-control" type="text" placeholder="URL de referencia" id="referencia-ig-tres">
+						<label class="form-label">Texto alternativo</label>
+						<input class="form-control" type="text" placeholder="Alt=''" id="texto-alternativo-ig-tres">
+					</div>
+					<div class="form-group">
+						<label class="form-label">Titulo</label>
+						<textarea class="form-control mb-4" placeholder="Titulo=' '" rows="3" id="titulo-ig-tres"></textarea>
 					</div>
 				</div>
 			</div>
@@ -346,15 +330,24 @@
 							<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-g-cuatro" />
 						</div>
 						<div class="invalid-feedback" id="invalid-imagen-g-cuatro">Debes agregar una imagen</div>
-
 					</div>
 					<div class="form-group">
 						<label class="form-label">Descripción</label>
 						<textarea class="form-control mb-4" placeholder="Descripcion" rows="3" id="descripcion-ig-cuatro"></textarea>
 					</div>
+					<div class="form-group" style="padding-bottom: 35px;">
+						<label class="form-label">URL Fuente</label>
+						<input class="form-control" type="text" placeholder="URL de referencia" id="url-fuente-ig-cuatro">
+					</div>
+					<hr />
+					<p>Datos Metadata</p>
 					<div class="form-group">
-						<label class="form-label">Referencia</label>
-						<input class="form-control" type="text" placeholder="URL de referencia" id="referencia-ig-cuatro">
+						<label class="form-label">Texto alternativo</label>
+						<input class="form-control" type="text" placeholder="Alt=''" id="texto-alternativo-ig-cuatro">
+					</div>
+					<div class="form-group">
+						<label class="form-label">Titulo</label>
+						<textarea class="form-control mb-4" placeholder="Titulo=' '" rows="3" id="titulo-ig-cuatro"></textarea>
 					</div>
 				</div>
 			</div>
@@ -595,6 +588,89 @@
 				</div>
 			</div>
 			
+		</div>
+
+
+	</div>
+	<div class="col-xl-8 col-sm-12 col-xs-12" id="visualizar-blog-principal">
+		<div class="card">
+			<div class="main-chat-header pt-3 d-block d-sm-flex">
+				<div class="margin-auto">
+					<h3 class="margin-auto">Visualiza tu blog</h3>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="main-chat-body flex-2" id="ChatBody">
+					<div class="content-inner">
+						<div class="row justify-content-center text-center">
+
+							<!-- Seccion 1 -->
+							<div id="contenido-blog-visualizar"></div>
+							<div class="ps-relative p-1 bg-light br-5 hide-info" id="img-onchange">
+								<img src="" alt="img" class="cover-image br-5 ms-auto me-auto wp-100" id="blah"><br>
+								<span class="badge bg-primary-gradient blog-label label5">Blogs Confival</span>
+							</div>
+							<div id="contenido-blog-visualizar-parrafo" style="margin-top:20px;"></div>
+							
+							<!-- Seccion 2 -->
+							<div id="contenido-blog-visualizar-subtitulo-dos" style="margin-top:20px;"></div>
+							<div id="contenido-blog-visualizar-parrafo-dos" style="margin-top:20px;"></div>
+
+							<!-- Seccion 3 -->
+							<div id="contenido-blog-visualizar-subtitulo-tres" style="margin-top:20px;"></div>
+							<div id="contenido-blog-visualizar-parrafo-tres" style="margin-top:20px;"></div>
+
+							<!-- Seccion 4 -->
+							<div id="contenido-blog-visualizar-subtitulo-cuatro" style="margin-top:20px;"></div>
+							<div id="contenido-blog-visualizar-parrafo-cuatro" style="margin-top:20px;"></div>
+
+							<!-- Seccion 5 -->
+							<div id="contenido-blog-visualizar-subtitulo-quinto" style="margin-top:20px;"></div>
+							<div id="contenido-blog-visualizar-parrafo-quinto" style="margin-top:20px;"></div>
+
+							<div id="contenido-blog-visualizar-iterar" style="margin-top:20px;"></div>
+							<div id="form-blog-create-success"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="card">
+			<div class="main-chat-header pt-3 d-block d-sm-flex">
+				<div class="margin-auto">
+					<h3 class="margin-auto">Visualiza la galeria</h3>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="text-center demo-gallery">
+					<div class="mt-2">
+						<ul id="lightgallery" class="list-unstyled row row-sm">
+							<li class="col-sm-6 col-lg-4">
+								<div class="ps-relative p-1 bg-light br-5 hide-info" id="onchange-ig-uno">
+									<img src="" alt="img" height="90" class="cover-image br-5 ms-auto me-auto wp-100" id="blah-dos"><br>
+								</div>
+							</li>
+							<li class="col-sm-6 col-lg-4">
+								<div class="ps-relative p-1 bg-light br-5 hide-info" id="onchange-ig-dos">
+									<img src="" alt="img" height="90" class="cover-image br-5 ms-auto me-auto wp-100" id="blah-tres"><br>
+								</div>
+							</li>
+							<li class="col-sm-6 col-lg-4">
+								<div class="ps-relative p-1 bg-light br-5 hide-info" id="onchange-ig-tres">
+									<img src="" alt="img" height="90" class="cover-image br-5 ms-auto me-auto wp-100" id="blah-cuatro"><br>
+								</div>
+							</li>
+							<li class="col-sm-6 col-lg-4">
+								<div class="ps-relative p-1 bg-light br-5 hide-info" id="onchange-ig-cuatro">
+									<img src="" alt="img" height="90" class="cover-image br-5 ms-auto me-auto wp-100" id="blah-cinco"><br>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 
 

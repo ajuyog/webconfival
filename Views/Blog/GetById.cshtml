@@ -155,7 +155,7 @@
 											</div>
 										</div>
 										<div class="col-xl-4">
-											<div class="card-confival-blogs overflow-hidden border-confival-blogs br-5">
+											<div class="card-confival-blogs overflow-hidden border br-5">
 												<div class="card-header border-bottom">
 													<h4 class="card-title header-family">Acerca  del autor</h4>
 												</div>
@@ -170,7 +170,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="card-confival-blogs border-confival-blogs overflow-hidden">
+											<div class="card-confival-blogs border overflow-hidden">
 												<div class="card-header border-bottom">
 														<h4 class="card-title mb-1 header-family">Categorias del Blog</h4>
 												</div>
@@ -186,7 +186,28 @@
 												</div>
 											</div>
 											<div id="blogs-categoria"></div>
-											<div class="card-confival-blogs border-confival-blogs">
+											<div class="card-confival-blogs overflow-hidden border">
+												<div class="card-header border-bottom">
+													<h4 class="card-title header-family">Galeria</h4>
+												</div>
+												<div class="card-body">
+													<div class="text-center demo-gallery">
+														<div class="mt-2">
+															<ul id="lightgallery" class="list-unstyled row row-sm">
+																@foreach (var item in Model.Galeria)
+																{
+																	<li class="col-sm-6 col-lg-4">
+																		<a href="javascript:void(0)">
+																			<img class="img-responsive br-5 w-100" height="90" src="@item.URLImagen" alt="@item.Alt" title="@item.Titulo">
+																		</a>
+																	</li>
+																}
+															</ul>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="card-confival-blogs border">
 												<div class="card-header border-bottom">
 													<h4 class="card-title header-family">Blogs que te podrian interesar</h4>
 												</div>
