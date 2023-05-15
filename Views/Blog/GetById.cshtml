@@ -33,7 +33,7 @@
 												<div class="d-sm-flex d-block align-items-center">
 													<div class="d-flex align-items-center mb-sm-0 mb-2">
 														<div class="me-3">
-															<img class="media-object rounded-circle thumb-sm" alt="64x64" src="@Model.Autor.Img" width="50">
+															<img class="media-object rounded-circle thumb-sm" alt="64x64" src="@Model.Autor.ImagenAutor.URLImagen" width="50">
 														</div>
 														<h6 class="mb-0 text-muted ms-2 text-13 me-sm-0 me-2">@Model.Autor.Nombre</h6>
 													</div>
@@ -45,12 +45,10 @@
 												</div>
 											</div>
 											<div class="ps-relative p-1 bg-light br-5">
-												<img src="@Model.ImgBlog" alt="img" class="cover-image br-5 ms-auto me-auto wp-100">
+												<img src="@Model.Galeria.FirstOrDefault().URLImagen" alt="@Model.Galeria.FirstOrDefault().Alt.ToString()" title="@Model.Galeria.FirstOrDefault().Titulo.ToString()" class="cover-image br-5 ms-auto me-auto wp-100">
 												<span class="badge bg-primary-gradient blog-label label5">Blogs Confival</span>
 											</div>
 											<div class=" mb-2 mt-5 content">
-												<p class="text-muted text-14">@Model.IntroUno</p>
-												<p class="text-muted text-14">@Model.IntroDos</p>
 												<p class="text-muted text-14">@Model.Contenido</p>
 											</div>
 											<div class=" mt-2 pt-2 pb-3 border-top footer-container-main blog-footer">
@@ -85,13 +83,13 @@
 												{
 													<div class="media mb-4 overflow-visible">
 														<div class="me-3">
-															<img class="media-object rounded-circle thumb-sm" alt="64x64" src="@item.Autor.Img">
+															<img class="media-object rounded-circle thumb-sm" alt="64x64" src="@item.Autor.ImagenAutor.URLImagen">
 														</div>
 														<div class="media-body overflow-visible">
 															<div class="border mb-5 p-4 br-5 boton-edit">
 																<h5 class="mt-0">@item.Autor.Nombre<span class="text-muted fs-12 ms-1">@item.FechaPublicacion</span></h5>
 																<span><i class="fe fe-thumb-up text-danger"></i></span>
-																<p class="font-13 text-muted">@item.Nota</p>
+																<p class="font-13 text-muted">@item.Contenido</p>
 																<span class="reply">
 																	<a onclick="responder(@item.Id.ToString())" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
 																</span>
@@ -103,20 +101,23 @@
 																<div>
 																	<div class="media mb-4 overflow-visible boton-edit-2">
 																		<div class="me-3">
-																			<img class="media-object rounded-circle thumb-sm" alt="64x64" src="@subitem.Autor.Img">
+																			<img class="media-object rounded-circle thumb-sm" alt="@subitem.Autor.ImagenAutor.Alt.ToString()" title="@subitem.Autor.ImagenAutor.Titulo.ToString()" src="@subitem.Autor.ImagenAutor.URLImagen">
 																		</div>
 																		<div class="media-body border p-4 overflow-visible br-5">
 																			<h5 class="mt-0">@subitem.Autor.Nombre<span class="text-muted fs-12 mx-1 bg-normal-light">Reply to @item.Autor.Nombre </span><span class="text-muted fs-12 ms-1">@subitem.FechaPublicacion</span></h5>
 																			<span><i class="fe fe-thumb-up text-danger"></i></span>
 																			<p class="font-13 text-muted">
-																				@subitem.Nota
+																				@subitem.Contenido
 																			</p>
 																			<span class="reply">
-																				<a onclick="responderDos(@subitem.SubComentario)" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
+																				<a onclick="responderDos(@subitem.ComentarioId, @subitem.Id)" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
 																			</span>
 																		</div>
 																	</div>
-																	<div id="@subitem.SubComentario" class="cancel-form-comment"></div>
+																	@{
+																		var identificador = @subitem.ComentarioId.ToString() + "s" + @subitem.Id.ToString();
+																	}
+																	<div id="@identificador" class="cancel-form-comment"></div>
 																</div>
 															}
 														</div>
@@ -160,7 +161,7 @@
 												</div>
 												<div class="card-body">
 													<div class="text-center">
-														<img class="card-img-top w-100 w-100" src="@Model.Autor.Img" alt="">
+														<img class="card-img-top w-100 w-100" src="@Model.Autor.ImagenAutor.URLImagen" alt="@Model.Autor.ImagenAutor.Alt" title="@Model.Autor.ImagenAutor.Titulo">
 														<div class="br-5 pt-3 text-justify">
 															<p class="m-0 text-muted">
 																@Model.Autor.Descripcion
