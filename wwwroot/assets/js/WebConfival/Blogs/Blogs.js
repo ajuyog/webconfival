@@ -327,12 +327,20 @@ $("#imagen-g-cuatro").on("change", function () {
 });
 
 /// --- seccion 10 --- ///
-$("#lst-categorias").on("change", function () {
-    var lstCategorias = $("#lst-categorias").val().length
-    if (lstCategorias > 0) {
+$("#categorias-principal").on("change", function () {
+    var cartegoriaPrincipal = $("#categorias-principal").val();
+    if (cartegoriaPrincipal.length > 0) {
         $("#seccion-btn-finalizar").removeClass("hide-info");
+
+        var idCategoria = $("#categorias-principal").val();
+        var lstCategorias = $("#lst-categorias").children();
+        $.each(lstCategorias, function (element, index) {
+            if (index.value == idCategoria) {
+                index.remove();
+            }
+        });
     }
-    if (lstCategorias == 0) {
+    if (cartegoriaPrincipal.length == 0) {
         $("#seccion-btn-finalizar").addClass("hide-info");
     }
 })
@@ -353,17 +361,17 @@ $("#imagen-g-cuatro").on("change", function () {
     readURL(this);
 });
 
-
 // --- BOTONES FINALIZAR --- //
 function Publicar() {
     var tituloJQ = $("#contenido-blog-visualizar").children("h2").html();
     var contenidoJQ = $("#contenido-blog-visualizar-parrafo").html() + $("#contenido-blog-visualizar-subtitulo-dos").html() + $("#contenido-blog-visualizar-parrafo-dos").html() + $("#contenido-blog-visualizar-subtitulo-tres").html() + $("#contenido-blog-visualizar-parrafo-tres").html() + $("#contenido-blog-visualizar-subtitulo-cuatro").html() + $("#contenido-blog-visualizar-parrafo-cuatro").html() + $("#contenido-blog-visualizar-subtitulo-quinto").html() + $("#contenido-blog-visualizar-parrafo-quinto").html();
     var lstCategoriasJQ = $("#lst-categorias").val();
+    var categoriaPrincipal = $("#categorias-principal").val();
     var array = JSON.stringify(lstCategoriasJQ);
     $.ajax({
         type: "GET",
         url: '/Blog/CreateBlog',
-        data: { titulo: tituloJQ, contenido: contenidoJQ, lstCategorias: array },
+        data: { titulo: tituloJQ, contenido: contenidoJQ, lstCategorias: array, categoria: categoriaPrincipal },
         success: function (result) {
             if (result == true) {
                 var visualizador = $("#visualizar-blog-principal");
@@ -374,8 +382,8 @@ function Publicar() {
                 visualizadorCampos.addClass("hide-info");
                 visualizadorConfirmar.removeClass("hide-info");
             } else {
-                restart();
                 $("#api-error").modal('show');
+                //restartBlog();
             }
         }
     });

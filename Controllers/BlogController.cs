@@ -649,10 +649,12 @@ public class BlogController : Controller
 	}
 
 	[HttpGet]
-	public async Task<bool> CreateBlog(string titulo, string contenido, List<string> lstCategorias)
+	public async Task<bool> CreateBlog(string titulo, string contenido, List<string> lstCategorias, string categoria)
 	{
 		var array = lstCategorias.FirstOrDefault().Split(",");
-		int[] numeros = new int[0];
+		var categoriaPrincipal = Convert.ToInt32(categoria.Replace('"', ' ').Trim());
+		int[] numeros = new int[1];
+		numeros[numeros.Length - 1] = categoriaPrincipal;
 		foreach (var item in array)
 		{
 			var valor = Convert.ToInt32(item.Replace('[', ' ').Replace(']', ' ').Replace('"', ' ').Trim());
@@ -680,6 +682,13 @@ public class BlogController : Controller
 		{
 			return false;
 		}
+	}
+
+	[HttpGet]
+	public IActionResult AddCategory()
+	{
+		var model = new CategoriaDTO() { };
+		return View(model);
 	}
 
 }

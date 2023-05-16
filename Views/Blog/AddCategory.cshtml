@@ -1,0 +1,42 @@
+﻿@model confinancia.Models.CategoriaDTO
+@{
+    Layout = "_Layout3";
+}
+<!-- PAGE-HEADER -->
+<div class="page-header">
+	<div>
+		<h1 class="page-title">Crear Categorias</h1>
+	</div>
+	<div class="ms-auto pageheader-btn">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0);">Blogs</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Categoria</li>
+			<li class="breadcrumb-item active" aria-current="page">Crear Categoria</li>
+
+		</ol>
+	</div>
+</div>
+<!-- PAGE-HEADER END -->
+<!-- row -->
+<div class="row">
+	<div class="col-lg-12 col-md-12">
+		<div class="card">
+			<div class="card-header border-bottom">
+				<h3 class="card-title">Crear</h3>
+			</div>
+			<div class="card-body">
+				<p class="text-muted">Ingresa el nombre de la nueva categoria.</p>
+				<div class="row">
+					<div class="col-md-10 mb-3">
+						<input class="form-control" placeholder="Nombre" type="text">
+					</div>
+					<div class="invalid-feedback" id="invalid-nombre-categoria">Debes asignar un 'Nombre' a la categoria</div>
+					<div class="col-md-2">
+						<button class="btn btn-primary btn-block" onclick="CrearCategoria()">Crear</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

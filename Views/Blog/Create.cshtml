@@ -360,10 +360,11 @@
 					<h4 class="mt-3 header-blog-publicar">Selecciona las categorias del Blog !!</h4>
 				</div>
 				<div class="card-body">
+
 					<div class="form-group">
-						<label class="form-label">categorias</label>
-						<select multiple class="form-control select2-show-search form-select" data-placeholder="Seleccione..." id="lst-categorias">
-							<option label="Seleccione..."></option>
+						<label class="form-label">Categoria principal</label>
+						<select class="form-control select2 form-select" data-placeholder="Seleccione .." id="categorias-principal">
+							<option label="Choose one"></option>
 							<option value="1">Economia</option>
 							<option value="2">Legal</option>
 							<option value="3">Activos inmobiliarios</option>
@@ -371,7 +372,24 @@
 							<option value="5">Testimonios</option>
 						</select>
 					</div>
+					<div class="form-group">
+						<label class="form-label">Categorias secundarias</label>
+						<select multiple class="form-control select2-show-search form-select" id="lst-categorias">
+							<option disabled value="">Seleccione..</option>
+							<option value="1">Economia</option>
+							<option value="2">Legal</option>
+							<option value="3">Activos inmobiliarios</option>
+							<option value="4">Sentencias</option>
+							<option value="5">Testimonios</option>
+						</select>
+						<span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+					</div>
+
+
+
 				</div>
+
+				
 			</div>
 		</div>
 
@@ -581,7 +599,7 @@
 					<h4 class="mt-3 header-blog-publicar">Genial !!</h4>
 				</div>
 				<div class="card-body">
-					<p class="text-muted">Agrega las categorias que consideres necesarias y procede a publicar</p>
+					<p class="text-muted">Agrega las categorias secundarias que consideres necesarias y procede a publicar</p>
 					<p>
 						<a href="#PublicarBlog" class="btn btn-primary" onclick="Publicar()" style="margin-top:20px;">Publicar !!</a>
 					</p>
@@ -670,15 +688,37 @@
 			</div>
 		</div>
 	</div>
+
+
+	<div class="modal fade" id="api-error">
+		<div class="modal-dialog modal-dialog-centered text-center " role="document">
+			<div class="modal-content tx-size-sm">
+				<div class="modal-body text-center p-4">
+					<button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+					<i class="ion-wrench fs-65 text-primary lh-1 mb-5 d-inline-block"></i>
+					<h4 class="text-success tx-semibold">Estamos trabajando para solucionar!</h4>
+					<p class="text-muted">Nuestro sistema esta presentando cambios, intentalo de nuevo mas tarde.</p>
+					<button aria-label="Close" class="btn btn-success pd-x-25" data-bs-dismiss="modal">Cerrar</button>
+					<a class="btn btn-info pd-x-25" href="https://localhost:7191/#Servicios">Inicio</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
 @section scripts {
-	<script src="../assets/js/Blogs.js"></script>
+	<script src="../assets/js/WebConfival/Blogs/Blogs.js"></script>
+
+	<!-- SELECT2 JS -->
+	<script src="~/assets/plugins/select2/select2.full.min.js"></script>
 
 	<!--Internal Fileuploads js-->
 	<script src="~/assets/plugins/fileuploads/js/fileupload.js"></script>
 	<script src="~/assets/plugins/fileuploads/js/file-upload.js"></script>
+
+	<!-- FORM ELEMENTADVANCED JS -->
+	<script src="~/assets/js/formelementadvnced.js"></script>
 
 	<!--- TABS JS -->
 	<script src="~/assets/plugins/tabs/jquery.multipurpose_tabcontent.js"></script>
@@ -686,10 +726,4 @@
 
 	<!-- Internal Chat js-->
 	<script src="~/assets/js/chat.js"></script>
-
-	<!-- SELECT2 JS -->
-	<script src="~/assets/plugins/select2/select2.full.min.js"></script>
-
-	<!-- FORM ELEMENTADVANCED JS -->
-	<script src="~/assets/js/formelementadvnced.js"></script>
 }
