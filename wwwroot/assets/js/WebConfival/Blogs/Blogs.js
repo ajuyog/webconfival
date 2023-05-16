@@ -331,9 +331,24 @@ $("#categorias-principal").on("change", function () {
     var cartegoriaPrincipal = $("#categorias-principal").val();
     if (cartegoriaPrincipal.length > 0) {
         $("#seccion-btn-finalizar").removeClass("hide-info");
-
         var idCategoria = $("#categorias-principal").val();
         var lstCategorias = $("#lst-categorias").children();
+
+
+        //$.ajax({
+        //    type: "GET",
+        //    url: '/Blog/CategoryPartialView',
+        //    success: function (result) {
+        //        $("#lst-categorias").children().remove();
+        //        $("#lst-categorias").append('<option disabled value="">Seleccione..</option>')
+        //        var json = JSON.parse(result);
+        //        console.log(json);
+        //        $.each(json, function (element, index) {
+        //            $("#lst-categorias").append('<option value="' + index.id + '">' + index.nombre + '</option>')
+
+        //        });
+        //    }
+        //});
         $.each(lstCategorias, function (element, index) {
             if (index.value == idCategoria) {
                 index.remove();

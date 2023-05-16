@@ -1,8 +1,7 @@
 using confinancia.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-
-
+using System.Net.Http.Headers;
 
 namespace noa.Controllers;
 
@@ -643,10 +642,45 @@ public class BlogController : Controller
     }
 
 	[HttpGet]
-	public IActionResult Create()
+	public async Task<IActionResult> Create()
 	{
-		return View();
+		var model = new List<CategoriaDTO>();
+		var client = new HttpClient();
+		var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/categoria");
+		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
+		var content = new StringContent(string.Empty);
+		content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+		request.Content = content;
+		var response = await client.SendAsync(request);
+		if (response.IsSuccessStatusCode)
+		{
+			var responseStream = await response.Content.ReadAsStringAsync();
+			var lstCategorias = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
+			model = lstCategorias.ToList();
+		}
+		return View(model);
 	}
+
+	[HttpGet]
+	public async Task<string> CategoryPartialView()
+	{
+		var list = new List<CategoriaDTO>();
+		var client = new HttpClient();
+		var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/categoria");
+		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
+		var content = new StringContent(string.Empty);
+		content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+		request.Content = content;
+		var response = await client.SendAsync(request);
+		if (response.IsSuccessStatusCode)
+		{
+			return  await response.Content.ReadAsStringAsync();
+			//var lstCategorias = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
+			//list = lstCategorias.ToList();
+		}
+		return "fallo";
+	}
+
 
 	[HttpGet]
 	public async Task<bool> CreateBlog(string titulo, string contenido, List<string> lstCategorias, string categoria)

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<confinancia.Models.CategoriaDTO>
+@{
     Layout = "_Layout3";
 }
 <div class="page-header" id="PublicarBlog">
@@ -365,28 +366,13 @@
 						<label class="form-label">Categoria principal</label>
 						<select class="form-control select2 form-select" data-placeholder="Seleccione .." id="categorias-principal">
 							<option label="Choose one"></option>
-							<option value="1">Economia</option>
-							<option value="2">Legal</option>
-							<option value="3">Activos inmobiliarios</option>
-							<option value="4">Sentencias</option>
-							<option value="5">Testimonios</option>
+							@foreach(var item in Model)
+							{
+								<option value="@item.Id">@item.Nombre</option>
+							}
 						</select>
 					</div>
-					<div class="form-group">
-						<label class="form-label">Categorias secundarias</label>
-						<select multiple class="form-control select2-show-search form-select" id="lst-categorias">
-							<option disabled value="">Seleccione..</option>
-							<option value="1">Economia</option>
-							<option value="2">Legal</option>
-							<option value="3">Activos inmobiliarios</option>
-							<option value="4">Sentencias</option>
-							<option value="5">Testimonios</option>
-						</select>
-						<span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
-					</div>
-
-
-
+					<partial name="~/Views/Blog/_CategoriasSecundarias.cshtml" />
 				</div>
 
 				
