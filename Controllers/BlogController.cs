@@ -1,7 +1,8 @@
-using System.Diagnostics;
 using confinancia.Models;
 using Microsoft.AspNetCore.Mvc;
-using noa.Models;
+using Newtonsoft.Json;
+
+
 
 namespace noa.Controllers;
 
@@ -646,4 +647,39 @@ public class BlogController : Controller
 	{
 		return View();
 	}
+
+	[HttpGet]
+	public async Task<bool> CreateBlog(string titulo, string contenido, List<string> lstCategorias)
+	{
+		var array = lstCategorias.FirstOrDefault().Split(",");
+		int[] numeros = new int[0];
+		foreach (var item in array)
+		{
+			var valor = Convert.ToInt32(item.Replace('[', ' ').Replace(']', ' ').Replace('"', ' ').Trim());
+			Array.Resize(ref numeros, numeros.Length + 1);
+			numeros[numeros.Length -1] = valor;
+		}
+		var obj = new BlogBetaDTO()
+		{
+			Titulo = titulo,
+			Contenido = contenido,
+			CategoriaId = numeros
+		};
+		var json = JsonConvert.SerializeObject(obj);
+		var client = new HttpClient();
+		var request = new HttpRequestMessage(HttpMethod.Post, "https://apileadconfival.azurewebsites.net/api/blog");
+		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
+		var content = new StringContent(json, null, "application/json");
+		request.Content = content;
+		var response = await client.SendAsync(request);
+		if (response.IsSuccessStatusCode)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 }

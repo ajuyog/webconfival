@@ -336,20 +336,14 @@ $("#lst-categorias").on("change", function () {
         $("#seccion-btn-finalizar").addClass("hide-info");
     }
 })
-
-
-
-
 $("#imagen-g-uno").on("change", function () {
     $("#onchange-ig-uno").removeClass("hide-info");
     readURL(this);
 });
-
 $("#imagen-g-dos").on("change", function () {
     $("#onchange-ig-dos").removeClass("hide-info");
     readURL(this);
 });
-
 $("#imagen-g-tres").on("change", function () {
     $("#onchange-ig-tres").removeClass("hide-info");
     readURL(this);
@@ -362,13 +356,32 @@ $("#imagen-g-cuatro").on("change", function () {
 
 // --- BOTONES FINALIZAR --- //
 function Publicar() {
-    var visualizador = $("#visualizar-blog-principal");
-    var visualizadorConfirmar = $("#visualizar-blog-confirmar");
-    var visualizadorCampos = $("#visualizador-campos");
+    var tituloJQ = $("#contenido-blog-visualizar").children("h2").html();
+    var contenidoJQ = $("#contenido-blog-visualizar-parrafo").html() + $("#contenido-blog-visualizar-subtitulo-dos").html() + $("#contenido-blog-visualizar-parrafo-dos").html() + $("#contenido-blog-visualizar-subtitulo-tres").html() + $("#contenido-blog-visualizar-parrafo-tres").html() + $("#contenido-blog-visualizar-subtitulo-cuatro").html() + $("#contenido-blog-visualizar-parrafo-cuatro").html() + $("#contenido-blog-visualizar-subtitulo-quinto").html() + $("#contenido-blog-visualizar-parrafo-quinto").html();
+    var lstCategoriasJQ = $("#lst-categorias").val();
+    var array = JSON.stringify(lstCategoriasJQ);
+    $.ajax({
+        type: "GET",
+        url: '/Blog/CreateBlog',
+        data: { titulo: tituloJQ, contenido: contenidoJQ, lstCategorias: array },
+        success: function (result) {
+            if (result == true) {
+                var visualizador = $("#visualizar-blog-principal");
+                var visualizadorConfirmar = $("#visualizar-blog-confirmar");
+                var visualizadorCampos = $("#visualizador-campos");
 
-    visualizador.addClass("hide-info");
-    visualizadorCampos.addClass("hide-info");
-    visualizadorConfirmar.removeClass("hide-info");
+                visualizador.addClass("hide-info");
+                visualizadorCampos.addClass("hide-info");
+                visualizadorConfirmar.removeClass("hide-info");
+            } else {
+                restart();
+                $("#api-error").modal('show');
+            }
+        }
+    });
+
+
+    
 };
 function restartBlog() {
     location.reload(true);

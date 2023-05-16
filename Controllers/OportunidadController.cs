@@ -62,6 +62,8 @@ namespace confinancia.Controllers
 			}
 		}
 
+		
+
 		[HttpGet]
 		public int SendMessage(string numero)
 		{
