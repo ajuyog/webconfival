@@ -330,27 +330,26 @@ $("#categorias-principal").on("change", function () {
         $("#seccion-btn-finalizar").removeClass("hide-info");
         var idCategoria = $("#categorias-principal").val();
         var lstCategorias = $("#lst-categorias").children();
-        /*$("#reload").load('/Blog/CategoryPartialView');*/
+        $.ajax({
+            type: "GET",
+            url: '/Blog/ConsultarSubCategorias',
+            data: { id: idCategoria },
+            success: function (result) {
+                $.each(result, function (element, index) {
+                    if (index.id == parseInt(idCategoria)) {
+                        result.splice(index.id - 1, 1);
+                        return false;
+                    }
+                })
+                console.log(result);
+                lstCategorias.remove();
+                $("#lst-categorias").append('<option disabled value="">Seleccione..</option>')
+                $.each(result, function (element, index) {
+                    $("#lst-categorias").append('<option value="' + index.id + '">' + index.nombre + '</option>')
 
-        //$.ajax({
-        //    type: "GET",
-        //    url: '/Blog/CategoryPartialView',
-        //    success: function (result) {
-        //        $("#lst-categorias").children().remove();
-        //        $("#lst-categorias").html('<option disabled value="">Seleccione..</option>')
-        //        var json = JSON.parse(result);
-        //        console.log(json);
-        //        $.each(json, function (element, index) {
-        //            $("#lst-categorias").html('<option value="' + index.id + '">' + index.nombre + '</option>')
-
-        //        });
-        //    }
-        //});
-        //$.each(lstCategorias, function (element, index) {
-        //    if (index.value == idCategoria) {
-        //        index.remove();
-        //    }
-        //});
+                });
+            }
+        });
     }
     if (cartegoriaPrincipal.length == 0) {
         $("#seccion-btn-finalizar").addClass("hide-info");
