@@ -372,7 +372,13 @@
 							}
 						</select>
 					</div>
-					<partial name="~/Views/Blog/_CategoriasSecundarias.cshtml" />
+					<div id="reload">
+						
+						<partial name="~/Views/Blog/_CategoriasSecundarias.cshtml" model="@Model"/>
+	
+						@*@Html.Partial("_CategoriasSecundarias.cshtml", Model);*@
+							
+					</div>
 				</div>
 
 				

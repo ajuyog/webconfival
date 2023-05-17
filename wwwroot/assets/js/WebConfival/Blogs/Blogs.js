@@ -7,13 +7,10 @@
         success: function ( result ) {
             var div = $("#blogs-categoria") 
             div.children("div").remove();
-            var name = result[0].categorias[0].nombre;
-            div.append('<div class="card-confival-blogs border"><div class="card-header border-bottom"><h4 class="card-title header-family">Principales blogs de ' + name + '</h4></div><div class="card-body"><div class="item-list add-confival-dos"><ul class="list-group mb-0 add-confival"></ul></div></div></div>');
-            $.each(result, function (element, index) {
-                if (result.length > count) {
-                    count = count + 1;
-                    $(".add-confival").append('<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0"><img src="' + index.imgBlog + '" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img"><div><span class="d-block text-muted">' + index.categorias[0].nombre + '</span><a href="#" class="text-dark text-16 font-weight-semibold">' + index.titulo + '</a><small class="d-block text-gray">2 day ago</small></div></li>')
-                }
+            var name = result.nombre;
+            div.append('<div class="card-confival-blogs border"><div class="card-header border-bottom"><h4 class="card-title header-family">Principales blogs de la categoria: ' + name + '</h4></div><div class="card-body"><div class="item-list add-confival-dos"><ul class="list-group mb-0 add-confival"></ul></div></div></div>');
+            $.each(result.blogs, function (element, index) {
+                $(".add-confival").append('<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0"><img src="~/assets/images/photos/blogmain2.jpg" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img"><div><span class="d-block text-muted">' + name + '</span><a href="#" class="text-dark text-16 font-weight-semibold">' + index.titulo + '</a><small class="d-block text-gray">2 day ago</small></div></li>')
             })
         }
     });
@@ -333,27 +330,27 @@ $("#categorias-principal").on("change", function () {
         $("#seccion-btn-finalizar").removeClass("hide-info");
         var idCategoria = $("#categorias-principal").val();
         var lstCategorias = $("#lst-categorias").children();
-
+        /*$("#reload").load('/Blog/CategoryPartialView');*/
 
         //$.ajax({
         //    type: "GET",
         //    url: '/Blog/CategoryPartialView',
         //    success: function (result) {
         //        $("#lst-categorias").children().remove();
-        //        $("#lst-categorias").append('<option disabled value="">Seleccione..</option>')
+        //        $("#lst-categorias").html('<option disabled value="">Seleccione..</option>')
         //        var json = JSON.parse(result);
         //        console.log(json);
         //        $.each(json, function (element, index) {
-        //            $("#lst-categorias").append('<option value="' + index.id + '">' + index.nombre + '</option>')
+        //            $("#lst-categorias").html('<option value="' + index.id + '">' + index.nombre + '</option>')
 
         //        });
         //    }
         //});
-        $.each(lstCategorias, function (element, index) {
-            if (index.value == idCategoria) {
-                index.remove();
-            }
-        });
+        //$.each(lstCategorias, function (element, index) {
+        //    if (index.value == idCategoria) {
+        //        index.remove();
+        //    }
+        //});
     }
     if (cartegoriaPrincipal.length == 0) {
         $("#seccion-btn-finalizar").addClass("hide-info");
