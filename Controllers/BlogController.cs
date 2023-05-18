@@ -9,21 +9,21 @@ namespace noa.Controllers;
 
 public class BlogController : Controller
 {
-
-    private readonly ILogger<BlogController> _logger;
+	#region CONSTRUCTOR
+	private readonly ILogger<BlogController> _logger;
 
     public BlogController(ILogger<BlogController> logger)
     {
         _logger = logger;
     }
+	#endregion
 
-    //[Route("/blog")]
-    //public IActionResult Index()
-    //{
-    //    return View();
-    //}
-
-    [HttpGet]
+	/// <summary>
+	///  Devuelve la vista de Blog por Id
+	/// </summary>
+	/// <param name="idBlog"></param>
+	/// <returns></returns>
+	[HttpGet]
     public IActionResult GetById(int idBlog)
     {
         // Esta es el API - esta pendiente
@@ -178,7 +178,11 @@ public class BlogController : Controller
 		return View(model);
 	}
 
-	[Authorize]
+	/// <summary>
+	/// Consulta los tres blogs mas recientes por idCategoria
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns></returns>
     [HttpGet]
     public async Task<BlogsCategoriaDTO> ConsultarPorCategoria(int id)
     {
@@ -204,6 +208,10 @@ public class BlogController : Controller
 		}
     }
 
+	/// <summary>
+	/// Devuleve la vista de Crear Blogs
+	/// </summary>
+	/// <returns></returns>
 	[Authorize]
 	[HttpGet]
 	public async Task<IActionResult> Create()
@@ -225,9 +233,13 @@ public class BlogController : Controller
 		return View(model);
 	}
 
+	/// <summary>
+	/// Devuelve la lista de categorias 
+	/// </summary>
+	/// <returns></returns>
 	[Authorize]
 	[HttpGet]
-	public async Task<List<CategoriaDTO>> ConsultarSubCategorias(int id)
+	public async Task<List<CategoriaDTO>> ConsultarCategorias()
 	{
 		var list = new List<CategoriaDTO>();
 		var client = new HttpClient();
@@ -249,6 +261,14 @@ public class BlogController : Controller
 		}
 	}
 
+	/// <summary>
+	/// Permite crear un blog
+	/// </summary>
+	/// <param name="titulo"></param>
+	/// <param name="contenido"></param>
+	/// <param name="lstCategorias"></param>
+	/// <param name="categoria"></param>
+	/// <returns></returns>
 	[Authorize]
 	[HttpGet]
 	public async Task<bool> CreateBlog(string titulo, string contenido, List<string> lstCategorias, string categoria)
@@ -257,18 +277,25 @@ public class BlogController : Controller
 		var categoriaPrincipal = Convert.ToInt32(categoria.Replace('"', ' ').Trim());
 		int[] numeros = new int[1];
 		numeros[numeros.Length - 1] = categoriaPrincipal;
-		foreach (var item in array)
+		var obj = new BlogBetaDTO();
+		if (lstCategorias[0] == "[]")
 		{
-			var valor = Convert.ToInt32(item.Replace('[', ' ').Replace(']', ' ').Replace('"', ' ').Trim());
-			Array.Resize(ref numeros, numeros.Length + 1);
-			numeros[numeros.Length -1] = valor;
+			obj.Titulo = titulo;
+			obj.Contenido = contenido;
+			obj.CategoriaId = numeros;
 		}
-		var obj = new BlogBetaDTO()
+		else
 		{
-			Titulo = titulo,
-			Contenido = contenido,
-			CategoriaId = numeros
-		};
+			foreach (var item in array)
+			{
+				var valor = Convert.ToInt32(item.Replace('[', ' ').Replace(']', ' ').Replace('"', ' ').Trim());
+				Array.Resize(ref numeros, numeros.Length + 1);
+				numeros[numeros.Length -1] = valor;
+			}
+			obj.Titulo = titulo;
+			obj.Contenido = contenido;
+			obj.CategoriaId = numeros;
+		}
 		var json = JsonConvert.SerializeObject(obj);
 		var client = new HttpClient();
 		var request = new HttpRequestMessage(HttpMethod.Post, "https://apileadconfival.azurewebsites.net/api/blog");
@@ -286,12 +313,41 @@ public class BlogController : Controller
 		}
 	}
 
+	/// <summary>
+	/// Devuelve las vista para crear una categoria
+	/// </summary>
+	/// <returns></returns>
 	[Authorize]
 	[HttpGet]
 	public IActionResult AddCategory()
 	{
 		var model = new CategoriaDTO() { };
 		return View(model);
+	}
+
+	[Authorize]
+	[HttpGet]
+	public async Task<bool> SaveCategoria(string nombre) {
+		var obj = new CategoriaDTO()
+		{
+			Id = 0,
+			Nombre = nombre
+		};
+		var json = JsonConvert.SerializeObject(obj);
+		var client = new HttpClient();
+		var request = new HttpRequestMessage(HttpMethod.Post, "https://apileadconfival.azurewebsites.net/api/categoria");
+		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
+		var content = new StringContent(json, null, "application/json");
+		request.Content = content;
+		var response = await client.SendAsync(request);
+		if (response.IsSuccessStatusCode)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 }

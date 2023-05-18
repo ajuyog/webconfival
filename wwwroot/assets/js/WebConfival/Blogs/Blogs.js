@@ -332,8 +332,7 @@ $("#categorias-principal").on("change", function () {
         var lstCategorias = $("#lst-categorias").children();
         $.ajax({
             type: "GET",
-            url: '/Blog/ConsultarSubCategorias',
-            data: { id: idCategoria },
+            url: '/Blog/ConsultarCategorias',
             success: function (result) {
                 $.each(result, function (element, index) {
                     if (index.id == parseInt(idCategoria)) {
