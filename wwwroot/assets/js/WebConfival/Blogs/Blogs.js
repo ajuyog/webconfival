@@ -68,6 +68,10 @@ function AgregarBotonesTresTextArea() {
         seccionBotones.addClass("hide-info");
     }
 };
+
+
+
+
 function AgregarBotonesCuatro() {
     var subtitulo = $("#subtitulo-cuatro-blog").val();
     var parrafo = $("#parrafo-cuatro-blog").val();

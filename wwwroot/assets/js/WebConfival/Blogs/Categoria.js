@@ -25,9 +25,6 @@
         });
     }
 };
-
-
-
 function GuardarCategoria(nombreCorregido){
     $.ajax({
         type: "GET",
@@ -59,7 +56,6 @@ function Valid() {
     }
     return count;
 };
-
 function restartCategoria() {
     location.reload(true);
 }
