@@ -26,18 +26,17 @@
 						<span class="side-menu__label">Blogs</span><i class="angle fa fa-angle-right"></i>
 					</a>
 					<ul class="slide-menu">
-						<li class="side-menu-label1"><a href="javascript:void(0)">Blogs</a></li>
-						<li><a asp-controller="Blog" asp-action="Create" class="slide-item">Crear</a></li>
-						<li><a asp-controller="Blog" asp-action="Create" class="slide-item">Visualizar</a></li>
 						<li class="sub-slide">
 							<a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="#">
 								<span class="sub-side-menu__label">Categorias</span><i class="sub-angle fa fa-angle-right"></i>
 							</a>
 							<ul class="sub-slide-menu">
-								<li><a asp-controller="Blog" asp-action="AddCategory" class="sub-slide-item">Crear</a></li>
-								<li><a class="sub-slide-item" href="#">Visualizar</a></li>
+								<li><a asp-controller="Categoria" asp-action="AddCategory" class="sub-slide-item">Crear</a></li>
+								<li><a asp-controller="Categoria" asp-action="Get" class="sub-slide-item">Visualizar</a></li>
 							</ul>
 						</li>
+						<li class="side-menu-label1"><a href="javascript:void(0)">Blogs</a></li>
+						<li><a asp-controller="Blog" asp-action="Create" class="slide-item">Crear un Blog</a></li>
 					</ul>
 				</li>
 			</ul>

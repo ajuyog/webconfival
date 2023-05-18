@@ -1,39 +1,38 @@
 ﻿function CrearCategoria() {
     var nombreCorregido = CorregirNombre();
     var valid = Valid();
+    var count = 0;
     if (valid == 0) {
-        var existente = validarExistente(nombreCorregido);
-        if (existente >= 1) {
-            $("#invalid-nombre-categoria-existe").css("display", "block");
-        }
-        //if (existente == 0) {
-        //    $("#invalid-nombre-categoria-existe").css("display", "none");
-        //    GuardarCategoria(nombreCorregido);
-        //}
+        $.ajax({
+            type: "GET",
+            url: '/Blog/ConsultarCategorias',
+            success: function (result) {
+                console.log(result);
+                $.each(result, function (element, index) {
+                    if (index.nombre == nombreCorregido) {
+                        count = count + 1;
+                        $("#invalid-nombre-categoria-existe").css("display", "block");
+                        return false
+                    }
+                })
+                if (count == 0) {
+                    $("#invalid-nombre-categoria-existe").css("display", "none");
+                    GuardarCategoria(nombreCorregido);
+                    $("#form-categoria").addClass("hide-info");
+                    $("#categoria-guardada").removeClass("hide-info");
+                }
+            }
+        });
     }
 };
 
-function validarExistente(nombre) {
-    var count = 0;
-    $.ajax({
-        type: "GET",
-        url: '/Blog/ConsultarCategorias',
-        success: function (result) {
-            console.log(result);
-            $.each(result, function (element, index) {
-                if (index.nombre == nombre) {
-                    count = count + 1;
-                }
-            })
-        }
-    });
-    return count;
-};
 
-function GuardarCategoria(nombre){
+
+function GuardarCategoria(nombreCorregido){
     $.ajax({
         type: "GET",
         url: '/Blog/SaveCategoria',
+        data: { nombre: nombreCorregido },
         success: function (result) {
             if (result == true) {
                 console.log("se guardo");
@@ -59,6 +58,10 @@ function Valid() {
         $("#invalid-nombre-categoria").css("display", "none");
     }
     return count;
+};
+
+function restartCategoria() {
+    location.reload(true);
 }
 
 

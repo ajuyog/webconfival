@@ -18,7 +18,7 @@
 <!-- PAGE-HEADER END -->
 <!-- row -->
 <div class="row">
-	<div class="col-lg-12 col-md-12">
+	<div class="col-lg-12 col-md-12" id="form-categoria">
 		<div class="card">
 			<div class="card-header border-bottom">
 				<h3 class="card-title">Crear</h3>
@@ -34,6 +34,24 @@
 					</div>
 					<div class="col-md-2">
 						<button class="btn btn-primary btn-block" onclick="CrearCategoria()">Crear</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div id="categoria-guardada" class="hide-info">
+		<div class="card">
+			<div class="card-body">
+				<div class="alert alert-default pad-text" role="alert">
+					<span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>
+					<span class="alert-inner--text"><strong>Tu categoria,</strong> fue creada con exito !!!</span>
+					<div class="row">
+						<div class="col-12">
+							<a href="#PublicarBlog" class="btn btn-success" onclick="restartCategoria()" style="margin-top:20px;">Quiero crear otra Categoria !!</a>
+						</div>
 					</div>
 				</div>
 			</div>

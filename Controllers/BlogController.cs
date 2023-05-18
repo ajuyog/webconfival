@@ -313,17 +313,7 @@ public class BlogController : Controller
 		}
 	}
 
-	/// <summary>
-	/// Devuelve las vista para crear una categoria
-	/// </summary>
-	/// <returns></returns>
-	[Authorize]
-	[HttpGet]
-	public IActionResult AddCategory()
-	{
-		var model = new CategoriaDTO() { };
-		return View(model);
-	}
+	
 
 	[Authorize]
 	[HttpGet]

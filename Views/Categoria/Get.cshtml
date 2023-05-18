@@ -1,0 +1,74 @@
+﻿@model List<confinancia.Models.CategoriaDTO>
+@{
+    Layout = "_Layout3";
+}
+<!-- PAGE-HEADER -->
+<div class="page-header">
+	<div>
+		<h1 class="page-title">Listado de Categorias</h1>
+	</div>
+	<div class="ms-auto pageheader-btn">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0);">Blogs</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Categoria</li>
+			<li class="breadcrumb-item active" aria-current="page">Visualizar</li>
+		</ol>
+	</div>
+</div>
+<!-- PAGE-HEADER END -->
+<!-- ROW-1 OPEN -->
+<div class="row">
+	<div class="col-xl-12 col-md-12">
+		<div class="card cart">
+			<div class="card-header border-bottom">
+				<h3 class="card-title">Todas las categorias</h3>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table table-bordered border-bottom text-nowrap">
+						<thead>
+							<tr class="border-top">
+								<th class="w-15">Id</th>
+								<th class="w-5">Nombre</th>
+								<th class="w-10">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach(var item in Model)
+							{
+								<tr>
+									<td>
+										<span class="badge bg-primary">@item.Id</span>
+									</td>
+									<td>
+										@item.Nombre
+									</td>
+									<td>
+										<a class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar"><i class="fe fe-refresh-ccw"></i></a>
+										<a class="btn btn-danger-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Eliminar"><i class="fe fe-trash fs-13"></i> </a>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+
+
+
+				<div class="float-end">
+					<ul class="pagination ">
+						<li class="page-item page-prev disabled">
+							<a class="page-link" href="#" tabindex="-1">Prev</a>
+						</li>
+						<li class="page-item active"><a class="page-link" href="#">1</a></li>
+						<li class="page-item"><a class="page-link" href="#">2</a></li>
+						<li class="page-item page-next">
+							<a class="page-link" href="#">Next</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ROW-1 CLOSED -->
