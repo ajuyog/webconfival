@@ -18,8 +18,6 @@
                 if (count == 0) {
                     $("#invalid-nombre-categoria-existe").css("display", "none");
                     GuardarCategoria(nombreCorregido);
-                    $("#form-categoria").addClass("hide-info");
-                    $("#categoria-guardada").removeClass("hide-info");
                 }
             }
         });
@@ -28,13 +26,14 @@
 function GuardarCategoria(nombreCorregido){
     $.ajax({
         type: "GET",
-        url: '/Blog/SaveCategoria',
+        url: '/Categoria/SaveCategoria',
         data: { nombre: nombreCorregido },
         success: function (result) {
             if (result == true) {
-                console.log("se guardo");
+                $("#form-categoria").addClass("hide-info");
+                $("#categoria-guardada").removeClass("hide-info");
             } else {
-                console.log("fallo");
+                $("#api-error").modal('show');
             }
         }
     });
@@ -50,6 +49,7 @@ function Valid() {
     var count = 0;
     if (nombre.length == 0) {
         $("#invalid-nombre-categoria").css("display", "block");
+        $("#invalid-nombre-categoria-existe").css("display", "none");
         count = count + 1
     } else {
         $("#invalid-nombre-categoria").css("display", "none");
@@ -58,6 +58,50 @@ function Valid() {
 };
 function restartCategoria() {
     location.reload(true);
+};
+function EditarCategoria() {
+    var nombreCorregido = CorregirNombre();
+    var valid = Valid();
+    var count = 0;
+    if (valid == 0) {
+        $.ajax({
+            type: "GET",
+            url: '/Blog/ConsultarCategorias',
+            success: function (result) {
+                console.log(result);
+                $.each(result, function (element, index) {
+                    if (index.nombre == nombreCorregido) {
+                        count = count + 1;
+                        $("#invalid-nombre-categoria-existe").css("display", "block");
+                        $("#invalid-nombre-categoria").css("display", "none");
+                        return false
+                    }
+                })
+                if (count == 0) {
+                    $("#invalid-nombre-categoria-existe").css("display", "none");
+                    EditarCategoriaDB(nombreCorregido);
+                    
+                }
+            }
+        });
+    }
+};
+function EditarCategoriaDB(nombreCorregido) {
+    var idCategoria = $("#id-categoria").val();
+    $.ajax({
+        type: "GET",
+        url: '/Categoria/EditCategoryDB',
+        data: { nombre: nombreCorregido, id: idCategoria},
+        success: function (result) {
+            if (result == true) {
+                $("#form-categoria").addClass("hide-info");
+                $("#categoria-guardada").removeClass("hide-info");
+            } else {
+                $("#api-error").modal('show');
+            }
+        }
+    });
 }
+
 
 

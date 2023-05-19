@@ -184,11 +184,11 @@ public class BlogController : Controller
 	/// <param name="id"></param>
 	/// <returns></returns>
     [HttpGet]
-    public async Task<BlogsCategoriaDTO> ConsultarPorCategoria(int id)
+    public async Task<List<BlogBetaDTO>> ConsultarTopTres(int id)
     {
 		var parametro = id.ToString();
 		var client = new HttpClient();
-		var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/categoria/" + parametro);
+		var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/blog/filtro?categoriaId=" + parametro);
 		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
 		var content = new StringContent(string.Empty);
 		content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -197,14 +197,13 @@ public class BlogController : Controller
 		if (response.IsSuccessStatusCode)
 		{
 			var responseStream = await response.Content.ReadAsStringAsync();
-			var lstBlogs = JsonConvert.DeserializeObject<BlogsCategoriaDTO>(responseStream);
-			lstBlogs.Blogs = lstBlogs.Blogs.Take(3).ToList();
+			var lstBlogs = JsonConvert.DeserializeObject<List<BlogBetaDTO>>(responseStream);
 			return lstBlogs;
 		}
 		else
 		{
-			var x = new BlogsCategoriaDTO();
-			return x;
+			var lstEmpy = new List<BlogBetaDTO>();
+			return lstEmpy;
 		}
     }
 
@@ -314,30 +313,5 @@ public class BlogController : Controller
 	}
 
 	
-
-	[Authorize]
-	[HttpGet]
-	public async Task<bool> SaveCategoria(string nombre) {
-		var obj = new CategoriaDTO()
-		{
-			Id = 0,
-			Nombre = nombre
-		};
-		var json = JsonConvert.SerializeObject(obj);
-		var client = new HttpClient();
-		var request = new HttpRequestMessage(HttpMethod.Post, "https://apileadconfival.azurewebsites.net/api/categoria");
-		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-		var content = new StringContent(json, null, "application/json");
-		request.Content = content;
-		var response = await client.SendAsync(request);
-		if (response.IsSuccessStatusCode)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
 
 }
