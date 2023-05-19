@@ -1,17 +1,16 @@
-﻿@model List<confinancia.Models.CategoriaDTO>
+﻿@model List<confinancia.Models.ComentariosDTO>
 @{
     Layout = "_Layout3";
 }
 <!-- PAGE-HEADER -->
 <div class="page-header">
 	<div>
-		<h1 class="page-title">Listado de Categorias</h1>
+		<h1 class="page-title">Listado de Comentarios</h1>
 	</div>
 	<div class="ms-auto pageheader-btn">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0);">Blogs</a></li>
-			<li class="breadcrumb-item active" aria-current="page">Categoria</li>
-			<li class="breadcrumb-item active" aria-current="page">Visualizar</li>
+			<li class="breadcrumb-item active" aria-current="page">Gestionar comentarios</li>
 		</ol>
 	</div>
 </div>
@@ -21,7 +20,7 @@
 	<div class="col-xl-12 col-md-12">
 		<div class="card cart">
 			<div class="card-header border-bottom">
-				<h3 class="card-title">Todas las categorias</h3>
+				<h3 class="card-title">Comentarios sin aprobar</h3>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
@@ -29,23 +28,34 @@
 						<thead>
 							<tr class="border-top">
 								<th class="w-15">Id</th>
-								<th class="w-5">Nombre</th>
+								<th class="w-5">Comentario</th>
+								<th class="w-5">Fecha publicación</th>
+								<th class="w-5">Revisado</th>
+								<th class="w-5">Tipo comentario</th>
 								<th class="w-10">Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach(var item in Model)
+							@foreach (var item in Model)
 							{
 								<tr>
 									<td>
 										<span class="badge bg-primary">@item.Id</span>
 									</td>
 									<td>
-										@item.Nombre
+										@item.Comentario
 									</td>
 									<td>
-										<a asp-action="EditCategory" asp-route-id="@item.Id" class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar"><i class="fe fe-refresh-ccw"></i></a>
-										<a class="btn btn-danger-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Eliminar"><i class="fe fe-trash fs-13"></i> </a>
+										@item.FechaPublicacion.ToString()
+									</td>
+									<td>
+										<span class="badge bg-danger">@(item.Revisado == false ? "Sin revisar" : "")</span>
+									</td>
+									<td>
+										@(item.Id == item.ComentarioId ? "Principal" : "Respuesta")
+									</td>
+									<td>
+										<a class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar"><i class="fe fe-refresh-ccw"></i></a>
 									</td>
 								</tr>
 							}

@@ -73,7 +73,7 @@ public class BlogController : Controller
 						Descripcion = "Esta es una descripción del autor desconocido 2"
 					},
                     FechaPublicacion = DateTime.Now,
-                    Contenido = "Este es un comentario",
+                    Comentario = "Este es un comentario",
                     SubComentarios = new List<SubComentarioDTO>
                     {
                         new SubComentarioDTO()
@@ -140,7 +140,7 @@ public class BlogController : Controller
 						Descripcion = "Esta es una descripción del autor desconocido 5"
 					},
                     FechaPublicacion = DateTime.Now,
-                    Contenido = "Este es un comentario",
+                    Comentario = "Este es un comentario",
                     SubComentarios = new List<SubComentarioDTO>()
 				}
 			},

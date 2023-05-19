@@ -5,7 +5,6 @@ namespace confinancia.Models
 	{
         public int Id { get; set; } 
         public string Titulo { get; set; } 
-        public string ImgBlog { get; set; } 
         public string Contenido { get; set; } 
         public string IntroUno { get; set; }
         public bool Estado { get; set; } 

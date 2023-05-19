@@ -27,7 +27,6 @@ public class LandingPageController : Controller
 			{
 				Id = 1,
 				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				ImgBlog = "/assets/images/photos/blogmain2.jpg",
 				Autor = new AutorDTO()
 				{
 					Id= 1,
@@ -72,7 +71,7 @@ public class LandingPageController : Controller
 							Descripcion = "Esta es una descripción del autor desconocido 2"
 						},
 						FechaPublicacion = DateTime.Now,
-						Contenido = "Este es un comentario",
+						Comentario = "Este es un comentario",
 						SubComentarios = new List<SubComentarioDTO>
 						{
 							new SubComentarioDTO()
@@ -139,16 +138,28 @@ public class LandingPageController : Controller
 							Descripcion = "Esta es una descripción del autor desconocido 5"
 						},
 						FechaPublicacion = DateTime.Now,
-						Contenido = "Este es un comentario",
+						Comentario = "Este es un comentario",
 						SubComentarios = new List<SubComentarioDTO>()
 					}
 				},
+				Galeria = new List<ImagenesDTO>()
+				{
+					new ImagenesDTO()
+					{
+						Id = 1,
+						URLImagen = "/assets/images/photos/blogmain2.jpg",
+					},
+					new ImagenesDTO()
+					{
+						Id = 2,
+						URLImagen = "/assets/images/photos/blogmain2.jpg",
+					}
+				}
 			},
 			new BlogDTO()
 			{
 				Id = 2,
 				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				ImgBlog = "/assets/images/photos/blogmain2.jpg",
 				Autor = new AutorDTO()
 				{
 					Id= 1,
@@ -193,7 +204,7 @@ public class LandingPageController : Controller
 							Descripcion = "Esta es una descripción del autor desconocido 2"
 						},
 						FechaPublicacion = DateTime.Now,
-						Contenido = "Este es un comentario",
+						Comentario = "Este es un comentario",
 						SubComentarios = new List<SubComentarioDTO>
 						{
 							new SubComentarioDTO()
@@ -260,16 +271,28 @@ public class LandingPageController : Controller
 							Descripcion = "Esta es una descripción del autor desconocido 5"
 						},
 						FechaPublicacion = DateTime.Now,
-						Contenido = "Este es un comentario",
+						Comentario = "Este es un comentario",
 						SubComentarios = new List<SubComentarioDTO>()
 					}
 				},
+				Galeria = new List<ImagenesDTO>()
+				{
+					new ImagenesDTO()
+					{
+						Id = 1,
+						URLImagen = "/assets/images/photos/blogmain2.jpg",
+					},
+					new ImagenesDTO()
+					{
+						Id = 2,
+						URLImagen = "/assets/images/photos/blogmain2.jpg",
+					}
+				}
 			},
 			new BlogDTO()
 			{
 				Id = 3,
 				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				ImgBlog = "/assets/images/photos/blogmain2.jpg",
 				Autor = new AutorDTO()
 				{
 					Id= 1,
@@ -314,7 +337,7 @@ public class LandingPageController : Controller
 							Descripcion = "Esta es una descripción del autor desconocido 2"
 						},
 						FechaPublicacion = DateTime.Now,
-						Contenido = "Este es un comentario",
+						Comentario = "Este es un comentario",
 						SubComentarios = new List<SubComentarioDTO>
 						{
 							new SubComentarioDTO()
@@ -381,10 +404,23 @@ public class LandingPageController : Controller
 							Descripcion = "Esta es una descripción del autor desconocido 5"
 						},
 						FechaPublicacion = DateTime.Now,
-						Contenido = "Este es un comentario",
+						Comentario = "Este es un comentario",
 						SubComentarios = new List<SubComentarioDTO>()
 					}
 				},
+				Galeria = new List<ImagenesDTO>()
+				{
+					new ImagenesDTO()
+					{
+						Id = 1,
+						URLImagen = "/assets/images/photos/blogmain2.jpg",
+					},
+					new ImagenesDTO()
+					{
+						Id = 2,
+						URLImagen = "/assets/images/photos/blogmain2.jpg",
+					}
+				}
 			}
 		};
         return View(lstBlogsPorCategoria);

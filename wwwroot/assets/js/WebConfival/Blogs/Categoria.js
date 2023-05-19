@@ -1,6 +1,6 @@
 ﻿function CrearCategoria() {
-    var nombreCorregido = CorregirNombre();
-    var valid = Valid();
+    var nombreCorregido = CorregirNombreCategoria();
+    var valid = ValidCategoria();
     var count = 0;
     if (valid == 0) {
         $.ajax({
@@ -38,13 +38,13 @@ function GuardarCategoria(nombreCorregido){
         }
     });
 };
-function CorregirNombre() {
+function CorregirNombreCategoria() {
     var nombre = $("#nombre-categoria").val();
     var primeraLetra = nombre.substring(0, 1).toUpperCase();
     var nombreSinPrimeraLetra = nombre.substring(1).toLowerCase();
     return primeraLetra + nombreSinPrimeraLetra;
 };
-function Valid() {
+function ValidCategoria() {
     var nombre = $("#nombre-categoria").val();
     var count = 0;
     if (nombre.length == 0) {
@@ -60,8 +60,8 @@ function restartCategoria() {
     location.reload(true);
 };
 function EditarCategoria() {
-    var nombreCorregido = CorregirNombre();
-    var valid = Valid();
+    var nombreCorregido = CorregirNombreCategoria();
+    var valid = ValidCategoria();
     var count = 0;
     if (valid == 0) {
         $.ajax({
