@@ -9,6 +9,10 @@ namespace confinancia.Controllers
 {
 	public class ComentariosController : Controller
 	{
+		/// <summary>
+		/// Devuelve la vista con el listado de comentarios
+		/// </summary>
+		/// <returns></returns>
 		[Authorize]
 		[HttpGet]
 		public async Task<IActionResult> Get()
@@ -32,5 +36,36 @@ namespace confinancia.Controllers
 				return View( model);
 			}
 		}
+
+		[Authorize]
+		[HttpGet]
+		public IActionResult Editar(int id)
+		{
+			var model = new ComentariosDTO()
+			{
+				Id = 1,
+				Autor = new AutorDTO()
+				{
+					Id = 1,
+					Correo = "correo@hotmail.com",
+					ImagenAutor = new ImagenesDTO()
+					{
+						URLImagen = "/assets/images/photos/11.jpg",
+					},
+					Nombre = "Autor desconocido 25"
+				},
+				BlogId = new BlogDTO()
+				{
+					Id = 1,
+					Titulo = "Un blog por defecto"
+				},
+				Comentario = "Un comentario realizado al blog por defecto",
+				Activo = false,
+				FechaPublicacion = DateTime.Now,
+
+			};
+			return PartialView("~/Views/Comentarios/_Editar.cshtml", model);
+		}
+
 	}
 }

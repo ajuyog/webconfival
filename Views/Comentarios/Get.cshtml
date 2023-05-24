@@ -30,7 +30,7 @@
 								<th class="w-15">Id</th>
 								<th class="w-5">Comentario</th>
 								<th class="w-5">Fecha publicación</th>
-								<th class="w-5">Revisado</th>
+								<th class="w-5">Estado</th>
 								<th class="w-5">Tipo comentario</th>
 								<th class="w-10">Action</th>
 							</tr>
@@ -55,7 +55,7 @@
 										@(item.Id == item.ComentarioId ? "Principal" : "Respuesta")
 									</td>
 									<td>
-										<a class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar"><i class="fe fe-refresh-ccw"></i></a>
+										<a class="btn btn-primary-light btn-square br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar" onclick="EditarComentario(@item.Id)"><i class="fe fe-refresh-ccw"></i></a>
 									</td>
 								</tr>
 							}
@@ -79,3 +79,8 @@
 	</div>
 </div>
 <!-- ROW-1 CLOSED -->
+
+
+
+<div id="model-detalles"></div>
+

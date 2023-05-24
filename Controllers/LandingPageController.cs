@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using confinancia.Models;
+using confinancia.Models.JsonDTO;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -10,13 +11,15 @@ namespace noa.Controllers;
 public class LandingPageController : Controller
 {
 
-    private readonly ILogger<LandingPageController> _logger;
-    public LandingPageController(ILogger<LandingPageController> logger)
-    {
-        _logger = logger;
-    }
+	#region CONSTRUCTOR
+	private readonly IConfiguration _configuration;
+	public LandingPageController(IConfiguration configuration)
+	{
+		_configuration = configuration;
+	}
+	#endregion
 
-    [Route("/")]
+	[Route("/")]
     [HttpGet]
     public IActionResult Index()
     {
@@ -436,12 +439,38 @@ public class LandingPageController : Controller
 	{
 		var props = new AuthenticationProperties();
 		props.RedirectUri = "/LandingPage/SignInSuccess";
-
 		return Challenge(props);
 	}
-	public IActionResult SignInSuccess()
+	public async Task<IActionResult> SignInSuccess()
 	{
-		return RedirectToAction("Index", "Home");
+		var mail = User.Identities.First().Claims.LastOrDefault().Value;
+		var obj = new CuentasLoginDTO()
+		{
+			Id = _configuration.GetSection("Variables:IdLogin").Value,
+			Email = mail,
+			password = "123456789"
+		};
+		var json = JsonConvert.SerializeObject(obj);
+		var client = new HttpClient();
+		var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/cuentas/inicioSesion?secret=" + _configuration.GetSection("Variables:Secret").Value);
+		var content = new StringContent(json, null, "application/json");
+		request.Content = content;
+		var response = await client.SendAsync(request);
+		if (response.IsSuccessStatusCode)
+		{
+			var responseStream = await response.Content.ReadAsStringAsync();
+			var tokenSuccess = JsonConvert.DeserializeObject<TokenValuezDTO>(responseStream);
+			CookieOptions options = new CookieOptions()
+			{
+				Expires = DateTime.Now.AddDays(1)
+			};
+			Response.Cookies.Append(_configuration.GetSection("Variables:Cookie").Value, tokenSuccess.Token, options);
+			return RedirectToAction("Index", "Home");
+		}
+		else
+		{
+			return RedirectToAction("Index", "LandingPage");
+		}
 	}
 	public IActionResult SignOut(string signOutType)
 	{

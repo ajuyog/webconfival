@@ -68,10 +68,6 @@ function AgregarBotonesTresTextArea() {
         seccionBotones.addClass("hide-info");
     }
 };
-
-
-
-
 function AgregarBotonesCuatro() {
     var subtitulo = $("#subtitulo-cuatro-blog").val();
     var parrafo = $("#parrafo-cuatro-blog").val();
@@ -125,6 +121,7 @@ $("#titulo-blog").on("keyup", function () {
     div.append('<h2>' + titulo + '</h2><br>');
     AgregarBotones();
 });
+
 $("#imagen-blog").on("change", function () {
     $("#img-onchange").removeClass("hide-info");
     readURL(this);
