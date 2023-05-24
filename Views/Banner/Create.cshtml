@@ -14,7 +14,8 @@
 	</div>
 </div>
 
-<div class="row">
+<div id="form-banner-principal">
+	<div class="row">
 	<div class="col-lg-12 col-md-12">
 		<div class="card">
 			<div class="card-header border-bottom">
@@ -22,45 +23,64 @@
 			</div>
 			<div class="card-body">
 				<p class="text-muted">Diligencia los campos a continuacion y procede a crear un nuevo Banner</p>
-					<div class="row">
-						<div class="col-md-6 mb-3">
-							<label class="form-label">Nombre del banner</label>
-							<input class="form-control" placeholder="Nombre" type="text" id="banner-nombre">
-						</div>
-						<div class="col-md-6 mb-3">
-							<label class="form-label">Url de redirecionamiento</label>
-							<input class="form-control" placeholder="href" type="text" id="url-banner">
-						</div>
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<label class="form-label">Nombre del banner</label>
+						<input class="form-control" placeholder="Nombre" type="text" id="banner-nombre">
+						<div class="invalid-feedback" id="invalid-banner-nombre">Debes agregar un nombre al Banner principal</div>
 					</div>
-					<div class="row">
-						<div class="col-md-12 mb-3">
-							<div class="form-group">
-								<label class="form-label">Banner</label>
-								<div class="col-sm-12 col-md-12">
-									<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="file-banner" />
-								</div>
-								<div class="invalid-feedback" id="invalid-imagen-blog-principal">Debes agregar una imagen</div>
+					<div class="col-md-6 mb-3">
+						<label class="form-label">Url de redirecionamiento</label>
+						<input class="form-control" placeholder="href" type="text" id="url-banner">
+						<div class="invalid-feedback" id="invalid-url-banner">Debes agregar una Url de redirecionamiento al Banner principal</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 mb-3">
+						<div class="form-group">
+							<label class="form-label">Banner</label>
+							<div class="col-sm-12 col-md-12">
+								<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="file-banner" />
 							</div>
+							<div class="invalid-feedback" id="invalid-file-banner">Debes agregar una imagen al Banner principal</div>
 						</div>
 					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+						<button class="btn btn-primary btn-block" onclick="SaveBanner()">Crear</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+<div class="row">
+	<div id="banner-success" class="hide-info">
+		<div class="card">
+			<div class="card-body">
+				<div class="alert alert-default pad-text" role="alert">
+					<span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>
+					<span class="alert-inner--text"><strong>El banner principal, </strong> Ha sido actualizado correctamente</span>
 					<div class="row">
-						<div class="col-md-2">
-							<button class="btn btn-primary btn-block" onclick="SaveBanner()">Crear</button>
+						<div class="col-12">
+							<a asp-action="Index" asp-controller="Home" class="btn btn-success" style="margin-top:20px;">Volver al Inicio !!</a>
 						</div>
 					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
+
 @section scripts {
-
 	<script src="~/assets/js/WebConfival/Banners/Banner.js"></script>
-
 
 	<!--Internal Fileuploads js-->
 	<script src="~/assets/plugins/fileuploads/js/fileupload.js"></script>
 	<script src="~/assets/plugins/fileuploads/js/file-upload.js"></script>
-
-
 }
