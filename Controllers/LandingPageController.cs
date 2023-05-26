@@ -430,8 +430,9 @@ public class LandingPageController : Controller
     }
 
 	[HttpGet]
-	public IActionResult ServicioLanding()
+	public IActionResult ServicioLanding(string seccion)
 	{
+		ViewBag.Seccion = seccion;
 		return View();
 	}
 

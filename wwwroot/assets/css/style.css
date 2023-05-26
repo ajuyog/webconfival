@@ -607,7 +607,7 @@ body {
 }
 
 .footer-confival {
-    background-color: #08618F;
+    background-color: #2c2f3e;
     box-shadow: none;
 }
 
@@ -629,6 +629,11 @@ body {
     border-bottom: 1px solid #eaedf1;
 }
 
+.section-banner {
+    padding: 0 15px 20px;
+    background-position: center center;
+    background-size: cover;
+}
 
 /*-------------------------------------------------------------*/
 .margin-tabs-li {
@@ -19666,8 +19671,8 @@ a.chip:hover {
 .statistics-info .counter-icon {
     margin-bottom: 1rem;
     display: inline-flex;
-    width: 7rem;
-    height: 7rem;
+    width: 6.4rem;
+    height: 6.4rem;
     padding: 1.3rem 1.4rem;
     border-radius: 50%;
     text-align: center;
@@ -26585,7 +26590,7 @@ img {
 }
 
 .landing-page .top-footer a {
-    color: white;
+    color: rgb(255, 255, 255, 0.5);
     line-height: 2;
 }
 
@@ -26595,7 +26600,7 @@ img {
 }
 
 .landing-page .top-footer p {
-    color: white;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .landing-page .top-footer h6 {
@@ -27166,7 +27171,7 @@ img {
 body .buy-now {
     position: fixed;
     right: 20px;
-    top: 92px;
+    top: 120px;
     width: 190px;
     height: 40px;
     display: flex;

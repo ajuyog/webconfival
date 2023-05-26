@@ -1,6 +1,10 @@
-﻿function SaveBanner() {
+﻿function SaveBannerStorage() {
     var valid = ValidBanner();
-        if (valid == 0) {
+    if (valid == 0) {
+        // Loader //
+        $("#form-banner-principal").addClass("hide-info");
+        $("#loader-confival").removeClass("hide-info");
+        // Loader FIN //
         var nombre = $("#banner-nombre").val();
         var url = $("#url-banner").val();
         var file = $("#file-banner").get(0).files[0];
@@ -10,21 +14,47 @@
         form.append("URL", url);
         $.ajax({
             type: "POST",
-            url: '/Banner/Save',
+            url: '/Banner/SaveStorage',
             data: form,
             cache: false,
             contentType: false,//stop jquery auto convert form type to default x-www-form-urlencoded
             processData: false,
             success: function (result) {
-                if (result == true) {
-                    $("#banner-success").css("display", "block");
-                    $("#form-banner-principal").css("display", "none");
+                if (result.length > 0) {
+                    SaveBannerDB(result);
+                } else {
+                    $("#form-banner-principal").removeClass("hide-info");
+                    $("#loader-confival").addClass("hide-info");
+                    $("#api-error").modal('show');
                 }
+            },
+            error: function () {
+                $("#api-error").modal('show');
             }
         });
     }
-}
+};
+function SaveBannerDB(parameter) {
+    $.ajax({
+        type: "GET",
+        url: '/Banner/SaveDB',
+        data: { urlStorage: parameter },
+        success: function (result) {
+            if (result == true) {
+                $("#loader-confival").addClass("hide-info");
+                $("#banner-success").removeClass("hide-info");
+            } else {
+                $("#form-banner-principal").removeClass("hide-info");
+                $("#loader-confival").addClass("hide-info");
+                $("#api-error").modal('show');
+            }
+        },
+        error: function () {
+            $("#api-error").modal('show');
+        }
+    });
 
+}
 function ValidBanner() {
     var count = 0;
     var nombre = $("#banner-nombre").val();

@@ -63,6 +63,9 @@ function showOTPCorreo() {
                     restart();
                     $("#api-error").modal('show');
                 }
+            }, error: function () {
+                restart();
+                $("#api-error").modal('show');
             }
         });
     }
@@ -130,7 +133,6 @@ function showCelular() {
     var number5 = $("#numero-cinco").val();
     var number6 = $("#numero-seis").val();
     var OTP = number1 + number2 + number3 + number4 + number5 + number6;
-    var mail = $("#mail").val();
     $.ajax({
         type: "GET",
         url: '/Oportunidad/GetOTPMail',
@@ -144,17 +146,10 @@ function showCelular() {
                 $("#confirmacion-mail").removeClass("hide-info");
                 $("#start-mail").addClass("hide-info");
                 $("#validacion-dos").removeClass("hide-info");
-                notificacionCorreo(mail);
             } else {
                 $("#invalid-otp-mail").css("display", "block");
             }
         }
-    });
-};
-function notificacionCorreo(data) {
-    notif({
-        msg: "Validacion correcta " + data,
-        type: "success"
     });
 };
 function restart() {
@@ -293,8 +288,6 @@ function validarNumero() {
     }
     // -- CONSUMIR API REGISTRADURIA -- //
     if (numeroDocumento.length > 0 && tipoDocumento > 0) {
-        var numeroDocumento = $("#documento").val();
-        
         $("#segundo-intento").addClass("hide-info");
         $("#documento").addClass("disable-writing");
         $("#tipo-documento").prop('disabled', 'disabled');
@@ -304,7 +297,7 @@ function validarNumero() {
             url: '/Oportunidad/RegistraduriaCol',
             data: { documento: numeroDocumento },
             success: function (result) {
-                if (result == 1032437606) {
+                if (result.numeroDocumento > 0) {
                     $("#confirmar-documento").removeClass("hide-info");
                     $("#nombres").val("");
                     $("#primer-apellido").val("");
@@ -322,6 +315,9 @@ function validarNumero() {
                     $("#segundo-intento").addClass("hide-info");
                     $("#confirmar-lead").removeClass("hide-info");
                 }
+            },
+            error: function () {
+                $("#api-error").modal('show');
             }
         });
     }
@@ -364,8 +360,8 @@ function saveLead() {
     }
     // -- 2 valido los datos "Input" VS datos "Verifica" -- //
     if (nombresInput.length > 0 && primerApellidoInput.length > 0 && segundoApellidoInput.length > 0) {
-        if (nombresVerifica.toLowerCase() == nombresInput.trim().toLowerCase() &&
-            primerApellidoVerifica.toLowerCase() == primerApellidoInput.trim().toLowerCase() &&
+        if (nombresVerifica.toLowerCase() == nombresInput.trim().toLowerCase() ||
+            primerApellidoVerifica.toLowerCase() == primerApellidoInput.trim().toLowerCase() ||
             segundoApellidoVerifica.toLowerCase() == segundoApellidoInput.trim().toLowerCase()) {
             $("#validacion-cuatro").removeClass("hide-info");
             $("#documento-hide").addClass("hide-info");
