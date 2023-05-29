@@ -24,59 +24,69 @@ namespace confinancia.Controllers
 			return View();
 		}
 
-		//[HttpGet]
-		//public async Task<bool> SendMail(string correo)
-		//{
-		//	var obj = new SendOTP() { Valor = correo };
-		//	var json = JsonConvert.SerializeObject(obj);
-		//	var client = new HttpClient();
-		//	var request = new HttpRequestMessage(HttpMethod.Post, "https://apileadconfival.azurewebsites.net/api/otp/");
-		//	request.Headers.Add("Cache-Control", "no-cache");
-		//	request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-		//	var content = new StringContent(json, null, "application/json");
-		//	request.Content = content;
-		//	var response = await client.SendAsync(request);
-		//	if (response.IsSuccessStatusCode)
-		//	{
-		//		return true;
-		//	}
-		//	else
-		//	{
-		//		return false;
-		//	}
-		//}
-
 		[HttpGet]
-		public bool SendMail(string correo)
+		public async Task<bool> SendMail(string correo)
 		{
-			return true;
+			var token = GetToken();
+			if (token.Result == "")
+			{
+				return false;
+			}
+			if(token.Result.Length == 177)
+			{
+				var client = new HttpClient();
+				var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/otp/sendmail?correoDestino=" + correo + "&caducidadSg=180");
+				request.Headers.Add("Authorization", "Bearer " + token.Result);
+				var response = await client.SendAsync(request);
+				if (response.IsSuccessStatusCode)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			return false;
 		}
 
 		//[HttpGet]
-		//public async Task<bool> GetOTPMail(string codigo)
+		//public bool SendMail(string correo)
 		//{
-		//	var client = new HttpClient();
-		//	var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/otp?otp=" + codigo);
-		//	request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-		//	var content = new StringContent(string.Empty);
-		//	content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-		//	request.Content = content;
-		//	var response = await client.SendAsync(request);
-		//	if (response.IsSuccessStatusCode)
-		//	{
-		//		return true;
-		//	}
-		//	else
-		//	{
-		//		return false;
-		//	}
+		//	return true;
 		//}
 
 		[HttpGet]
-		public bool GetOTPMail(string codigo)
+		public async Task<bool> GetOTPMail(string codigo, string correo)
 		{
-			return true;
+			var token = GetToken();
+			if (token.Result == "")
+			{
+				return false;
+			}
+			if (token.Result.Length == 177)
+			{
+				var client = new HttpClient();
+				var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/otp/validatemailotp?llave=" + codigo + "&entrada=" + correo);
+				request.Headers.Add("Authorization", "Bearer " + token.Result);
+				var response = await client.SendAsync(request);
+				if (response.IsSuccessStatusCode)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			return false;
 		}
+
+		//[HttpGet]
+		//public bool GetOTPMail(string codigo)
+		//{
+		//	return true;
+		//}
 
 		[HttpGet]
 		public int SendMessage(string numero)

@@ -133,10 +133,11 @@ function showCelular() {
     var number5 = $("#numero-cinco").val();
     var number6 = $("#numero-seis").val();
     var OTP = number1 + number2 + number3 + number4 + number5 + number6;
+    var mail = $("#mail").val();
     $.ajax({
         type: "GET",
         url: '/Oportunidad/GetOTPMail',
-        data: { codigo: OTP },
+        data: { codigo: OTP, correo: mail },
         success: function (result) {
             if (result == true) {
                 $("#celular-hide").removeClass("hide-info");
