@@ -1,11 +1,9 @@
-﻿//$(document).ready(function () {
-//    $(".slide.slick-slide.slick-current.slick-active").eq("3").css("width", "100%");
-//});
-
-//$(function () {
-//    $("#uncheckedPrimarySwitch").val("off");
-//});
-
+﻿$(function () {
+    var seccion = $("#cotizar-contact").get(0).innerHTML;
+    if (seccion == "Contact") {
+        window.location.hash = '#' + seccion;
+    }
+});
 
 function widthConfival() {
     $(".slick-slide").css("width", "100%");

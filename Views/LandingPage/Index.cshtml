@@ -5,9 +5,6 @@
 
 @{
 	Layout = "_Layoutlandingpage";
-	var modelI1 = new IndicadoresDTO();
-	modelI1.Title = "Experiencia de más de 10 años en sentencias";
-	modelI1.Paragraph = "Conoce por qué somos los mejores en Venta de Sentencias y Activos Alternativos";
 }
             
  <!--app-content open-->
@@ -1141,7 +1138,7 @@
 						</div>
 					</div>
 					<div>
-						<partial name="~/Views/Shared/_Indicadores.cshtml" model="modelI1" />
+						<partial name="~/Views/Shared/_Indicadores.cshtml" />
 					</div>
 					<!-- ROW-3 OPEN -->
 					<div class="row">
@@ -1310,6 +1307,8 @@
 			</div>
 			<!-- BLOG - Fin -->
 
+			<div id="cotizar-contact">@ViewBag.Seccion</div>
+
 			<!-- FOOTERS -->
 			<div id="footer-support" style="padding-top:100px;">
 				<div class="demo-screen-skin bg-primary">
@@ -1454,7 +1453,7 @@
 
 @section scripts {
 		<!-- UTILIDAD -->
-		<script src="../assets/js/WebConfival/Utilidad/utilidad.js"></script>
+		<script src="~/assets/js/WebConfival/Utilidad/utilidad.js"></script>
 
 		<!-- FORM OPORTUNIDAD JS -->
 		<script src="~/assets/js/WebConfival/LandingPage/form-oportunidad.js"></script>
