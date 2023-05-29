@@ -72,7 +72,7 @@ function showOTPCorreo() {
 };
 function activeTimer() {
     $('#timer-countercallback').countdown({
-        from: 120,
+        from: 180,
         to: 0,
         timerEnd: function () {
             this.animate({ 'opacity': .5 }, 500).css({ 'text-decoration': 'line-through' });
@@ -189,7 +189,7 @@ function showOTPCelular() {
 };
 function activeTimer2() {
     $('#timer-countercallback2').countdown({
-        from: 10,
+        from: 180,
         to: 0,
         timerEnd: function () {
             this.animate({ 'opacity': .5 }, 500).css({ 'text-decoration': 'line-through' });

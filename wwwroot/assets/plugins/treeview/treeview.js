@@ -1,8 +1,8 @@
 $.fn.extend({
     treed: function (o) {
       
-      var openedClass = 'si si-minus';
-      var closedClass = 'si si-plus';
+      var openedClass = 'fe fe-chevron-down';
+      var closedClass = 'fe fe-chevron-right';
       
       if (typeof o != 'undefined'){
         if (typeof o.openedClass != 'undefined'){

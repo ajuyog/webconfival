@@ -68982,7 +68982,7 @@ div.dtr-bs-modal table.table tr:first-child td {
     color: #495057;
     position: relative;
     border: 1px solid #eaedf1;
-    margin: 10px 0;
+    margin: 1px 0;
     border-radius: 5px;
     line-height: 30px;
 }
@@ -68993,7 +68993,7 @@ div.dtr-bs-modal table.table tr:first-child td {
     font-size: 16px;
     /* padding-top: 10px; */
     line-height: 1;
-    color: #77bc21;
+    color: #0088CC;
 }
 
 .tree ul li:before {
@@ -69047,11 +69047,11 @@ div.dtr-bs-modal table.table tr:first-child td {
 }
 
 .tree li.branch {
-    background: #f9fbfd;
+    background: white;
 }
 
 .tree li.branch li {
-    background: #fff;
+    background: rgba(0, 136, 203, 0.1);
 }
 
 .tree ul:before {
