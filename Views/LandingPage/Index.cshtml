@@ -1,10 +1,13 @@
 @using System.Collections.Generic;
 @using confinancia.Models;
+@using confinancia.Models.LoaderDTO;
 @inject HttpClient Client;
 @model List<confinancia.Models.BlogDTO>
 
 @{
 	Layout = "_Layoutlandingpage";
+	var loaderUno = new LoaderDTO() { Seccion = 1 };
+	var loaderDos = new LoaderDTO() { Seccion = 2 };
 }
             
  <!--app-content open-->
@@ -833,6 +836,7 @@
 																						</div>
 																					</div>
 																				</div>
+																				<partial name="~/Views/Shared/_LoaderOportunidad.cshtml" model="loaderUno" />
 
 																				<!-- INPUT Numero Celular -->
 																				<div class="hide-info" id="celular-hide">
@@ -886,31 +890,46 @@
 																						</div>
 																					</div>
 																				</div>
-																			
+																				<partial name="~/Views/Shared/_LoaderOportunidad.cshtml" model="loaderDos" />
+
 																				<!-- INPUT Documento Identidad -->
 																				<div class="hide-info pad-text" id="documento-hide">
 																					<div class="row">
 																						<div class="hide-info" id="segundo-intento">
-																							<p>Ingrese nuevamente su tipo de documento y su numero de documento sin espacios, sin puntos u otros caracteres</p>
+																							<p style="color:#d12c47;">La informacion suministrada no coincide, por favor verifica nuevamente.</p>
 																						</div>
 																						<div class="col-lg-6 col-md-6 col-sm-12">
 																							<div class="form-group">
 																								<label class="form-label">Tipo de Documento</label>
 																								<select class="form-control select2 form-select" id="tipo-documento">
 																									<option value="0">Seleccione..</option>
-																									<option value="1">CC - Cedula de ciudadania</option>
-																									<option value="2">CE - Cedula de extranjeria</option>
-																									<option value="3">TI - Tarjeta de identidad</option>
-																									<option value="4">NIT</option>
+																									<option value="CC">CC - Cedula de ciudadania</option>
+																									<option value="CE">CE - Cedula de extranjeria</option>
 																								</select>
 																								<div class="invalid-feedback pad-text" id="invalid-tipo-documento">Seleccione un tipo de documento</div>
-
 																							</div>
 																						</div>
 																						<div class="col-lg-6 col-md-6 col-sm-12" id="numero-documento">
-																							<div class="form-group margin-form-without-label">
+																							<div class="form-group">
+																								<label class="form-label">No. de documento</label>
 																								<input class="form-control" type="text" required="" placeholder="Numero de documento" name="documento" id="documento">
 																								<div class="invalid-feedback pad-text" id="invalid-documento">Ingrese un numero de documento valido</div>
+																							</div>
+																						</div>
+																					</div>
+																					<div class="row">
+																						<div class="col-lg-12 col-md-12 col-sm-12" id="nombre-lead">
+																							<div class="form-group">
+																								<label class="form-label">Nombre completo</label>
+																								<input class="form-control" type="text" placeholder="nombres completos" id="nombre-completo-lead">
+																								<div class="invalid-feedback pad-text" id="invalid-nombre-completo-lead">El campo 'Nombre completo' es requerido</div>
+																							</div>
+																						</div>
+																						<div class="col-lg-12 col-md-12 col-sm-12" id="apellido-lead">
+																							<div class="form-group">
+																								<label class="form-label">Apellidos</label>
+																								<input class="form-control" type="text" placeholder="Apellidos" id="apellidos-lead">
+																								<div class="invalid-feedback pad-text" id="invalid-apellidos-lead">El campo 'Apellidos' es requerido</div>
 																							</div>
 																						</div>
 																					</div>
@@ -919,118 +938,30 @@
 																					</div>
 																				</div>
 
-																				<!-- FORMULARIO DOCUMENTO EXISTENTE -->
+																				<!-- INFORMACION DOCUMENTO EXISTENTE -->
 																				<div class="hide-info" id="confirmar-documento">
 																					<div class="row">
 																						<div class="card">
-																							<div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;">
-																								<div class="card-title" style="font-size: 0.9rem;">Confirma tu informacion a continuación</div>
+																							<div class="card-header" style="padding: 0; padding-bottom: 15px;">
+																								<div class="card-title margin-auto" style="font-size: 0.9rem;">Hemos confirmado tu identidad</div>
 																							</div>
 																							<div class="card-body" style="padding: 0;">
 																								<div class="row">
-																									<div class="col-lg-12 col-md-12 col-sm-12">
-																										<div class="form-group">
-																											<label class="form-label">Nombre(s) completo(s)</label>
-																											<input type="text" class="form-control mb-4" id="nombres">
-																											<div class="invalid-feedback pad-text" id="invalid-nombres">El campo Nombre(s) completo(s) es obligatorio</div>
-																										</div>
-																									</div>
-																								</div>
-																								<div class="row pad-text">
-																									<div class="col-lg-6 col-md-6 col-sm-12">
-																										<div class="form-group">
-																											<label class="form-label">Primer Apellido</label>
-																											<input type="text" class="form-control mb-4" id="primer-apellido">
-																											<div class="invalid-feedback pad-text" id="invalid-primer-apellido">El campo Segundo Apellido es obligatorio</div>
-																										</div>
-																									</div>
-																									<div class="col-lg-6 col-md-6 col-sm-12">
-																										<div class="form-group">
-																											<label class="form-label">Segundo Apellido</label>
-																											<input type="text" class="form-control mb-4" id="segundo-apellido">
-																											<div class="invalid-feedback pad-text" id="invalid-segundo-apellido">El campo Primer Apellido es obligatorio</div>
+																									<div class="d-flex flex-wrap align-items-center">
+																										<div class="margin-auto">
+																											<h3 id="full-name" style="text-align: center;"></h3>
+																											<h4 id="document-full-name" class="text-muted mb-2"></h4>
 																										</div>
 																									</div>
 																								</div>
 																							</div>
-																							<div class="margin-auto" id="btn-confirmar-datos">
-																								<div class="row pad-text">
-																									<div class="col-12 pad-text" id="confirmar-identidad">
-																										<a href="#Contact" class="btn btn-primary" onclick="saveLead()">Confirmar Datos</a>
+																							<div class="row" style="padding-top:20px;">
+																								<div class="col-lg-12 col-md-12 col-sm-12">
+																									<div id="btn-confirmar-datos" style="text-align:center;">
+																										<a href="#Contact" class="btn btn-success" onclick="saveLead()"><i class="fe fe-check me-2"></i> Confirmar</a>
+																										<a href="#Contact" class="btn btn-info" onclick="Cancel()"><i class="fe fe-x me-2"></i>Cancelar</a>
 																									</div>
 																								</div>
-																							</div>
-																							<div class="margin-auto hide-info" id="btn-volver-intentar">
-																								<div class="row pad-text">
-																									<div class="col-12 pad-text" id="confirmar-identidad">
-																										<a href="#Contact" class="btn btn-primary" onclick="saveLead()">Volver a intentar</a>
-																									</div>
-																								</div>
-																							</div>
-																							<div id="alerta-verifica-error-text" class="hide-info pad-text">
-																								<div class="alert alert-danger alert-dismissible fade show" role="alert">
-																									<i class="fa fa-frown-o me-2" aria-hidden="true"></i>Al parecer alguno de los campos de 'Nombre(s) completo(s)' o 'Apellidos' no concuerdan con tu numero de documento, verificalos y vuelve a intentar
-																								</div>
-																							</div>
-																							<div id="alerta-verifica-error-btn" class="hide-info">
-																								<div class="alert alert-danger alert-dismissible fade show" role="alert">
-																									<i class="fa fa-frown-o me-2 pad-text" aria-hidden="true"></i>Si, es el caso corrige tu numero de documento
-																									<a href="#Contact" class="btn btn-danger" onclick="restart3()">Quiero corregir mi documento !!</a>
-																								</div>
-																							</div>
-																						</div>
-																					</div>
-																				</div>
-
-																				<!-- FORMULARIO DOCUMENTO NO EXISTENTE -->
-																				<div class="hide-info" id="confirmar-lead">
-																					<div class="row">
-																						<div class="alert alert-primary" role="alert">
-																							<span class="alert-inner--icon me-2"><i class="fe fe-bell"></i></span>
-																							<span class="alert-inner--text"><strong>No tenemos información tuya !</strong> ¿ Tu documento de identicación esta bien digitado ?</span>
-																						</div>
-																						<div class="row">
-																							<div class="col-lg-3 col-md-3 col-sm-12 pad-text" id="confirmar-identidad">
-																								<a href="#Contact" class="btn btn-primary" onclick="crearLead()">Si, esta bien !!</a>
-																							</div>
-																							<div class="col-lg-3 offset-lg-6 col-md-3 offset-md-6 col-sm-12" id="no-soy-yo">
-																								<a href="#Contact" class="btn btn-danger" onclick="restart3()">No, no lo esta !!</a>
-																							</div>
-																						</div>
-																					</div>
-																				</div>
-																				<div class="hide-info" id="crear-lead">
-																					<div class="row">
-																						<div class="card">
-																							<div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;">
-																								<div class="card-title" style="font-size: 0.9rem;">Ingresa tu informacion personal a continuación</div>
-																							</div>
-																							<div class="card-body" style="padding: 0;">
-																								<div class="row">
-																									<div class="col-lg-12 col-md-12 col-sm-12">
-																										<div class="form-group">
-																											<input type="text" class="form-control" placeholder="Nombre(s) completo(s)" id="nombres-new">
-																											<div class="invalid-feedback pad-text" id="invalid-nombres-new">El campo 'Nombre' es obligatorio</div>
-																										</div>
-																									</div>
-																								</div>
-																								<div class="row">
-																									<div class="col-lg-6 col-md-6 col-sm-12">
-																										<div class="form-group">
-																											<input type="text" class="form-control" placeholder="Primer Apellido" id="primer-apellido-new">
-																											<div class="invalid-feedback pad-text" id="invalid-primer-apellido-new">El campo 'Primer Apellido' es obligatorio</div>
-																										</div>
-																									</div>
-																									<div class="col-lg-6 col-md-6 col-sm-12">
-																										<div class="form-group">
-																											<input type="text" class="form-control" placeholder="Segundo Apellido" id="segundo-apellido-new">
-																											<div class="invalid-feedback pad-text" id="invalid-segundo-apellido-new">El campo 'Segundo Apellido' es obligatorio</div>
-																										</div>
-																									</div>
-																								</div>
-																							</div>
-																							<div id="btn-validar-documento">
-																								<a href="#Contact" class="btn btn-primary" onclick="saveLeadNew()">Confirmar Datos</a>
 																							</div>
 																						</div>
 																					</div>
@@ -1348,6 +1279,8 @@
 				</div>
 			</div>
 			<partial name="~/Views/Shared/_Footer1.cshtml" />
+
+			
 
 			<!-- MODAL INICIO -->
 			<div class="modal fade" id="politica-tratamiento">

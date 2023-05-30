@@ -13,6 +13,7 @@
     var nombresVerifica = "";
     var primerApellidoVerifica = "";
     var segundoApellidoVerifica = "";
+    var intentos = 0;
     $("#uncheckedPrimarySwitch-politica").val("on");
 });
 
@@ -43,6 +44,11 @@ function showOTPCorreo() {
         $("#invalid-politica").css("display", "none");
     }
     if (validMail.test(mail) == true && politica == "true") {
+        // lOADER
+        $("#loader1").removeClass("hide-info");
+        $("#email-hide").addClass("hide-info");
+
+        // FRONT
         $("#btn-validar-celular").removeClass("hide-info");
         $("#btn-validar-correo").addClass("hide-info");
         $("#politica-hide").addClass("hide-info");
@@ -52,18 +58,33 @@ function showOTPCorreo() {
         $("#uncheckedPrimarySwitch-politica").val("false");
         $.ajax({
             type: "GET",
-            url: '/Oportunidad/SendMail',
-            data: { correo: mail },
+            url: '/Oportunidad/SendOTP',
+            data: { entrada: mail },
             success: function (result) {
                 if (result == true) {
+                     // lOADER
+                    $("#loader1").addClass("hide-info");
+                    $("#email-hide").removeClass("hide-info");
+
+                    // FRONT
                     $("#correo-otp").removeClass("hide-info");
                     $("#put-timer").append('<div><div class="card"><div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;"><h5 class="card-title" style="font-size: 0.9rem;"><span><i class="fa fa-send" style="color:#0088CC; font-size:25px;"></i></span> Hemos enviado un codigo OTP a tu correo electronico, ingresalo en el siguiente campo antes de que la cuenta regresiva se acabe.</h5></div><div class="card-body" style="padding: 0;"><div class="example bg-primary-transparent border-primary text-primary" style="padding:1rem;"><div class="d-sm-flex"><span class="mb-sm-0 mb-3"><i class="fs-30 fe fe-clock"></i></span><div class="ms-sm-5 mb-sm-0 mb-3"><span id="timer-countercallback" class="h3"></span><h5 class="mb-0 mt-1" id="verifica-correo">Verifica tu correo electronico!!!</h5></div><span class="h1 text-center ms-auto mb-0 mb-sm-0 mb-3 "></span></div></div></div></div></div>')
                     activeTimer();
                 } else {
+                    // lOADER
+                    $("#loader1").addClass("hide-info");
+                    $("#email-hide").removeClass("hide-info");
+
+                    // FRONT
                     restart();
                     $("#api-error").modal('show');
                 }
             }, error: function () {
+                // lOADER
+                $("#loader1").addClass("hide-info");
+                $("#email-hide").removeClass("hide-info");
+
+                // FRONT
                 restart();
                 $("#api-error").modal('show');
             }
@@ -110,8 +131,8 @@ function resendMail() {
         $("#mail").addClass("disable-writing");
         $.ajax({
             type: "GET",
-            url: '/Oportunidad/SendMail',
-            data: { correo: mail },
+            url: '/Oportunidad/SendOTP',
+            data: { entrada: mail },
             success: function (result) {
                 if (result == true) {
                     $("#correo-otp").removeClass("hide-info");
@@ -126,6 +147,11 @@ function resendMail() {
     }
 };  
 function showCelular() {
+    // lOADER
+    $("#loader1").removeClass("hide-info");
+    $("#correo-otp").addClass("hide-info");
+    $("#put-timer").addClass("hide-info");
+
     var number1 = $("#numero-uno").val();
     var number2 = $("#numero-dos").val();
     var number3 = $("#numero-tres").val();
@@ -136,10 +162,16 @@ function showCelular() {
     var mail = $("#mail").val();
     $.ajax({
         type: "GET",
-        url: '/Oportunidad/GetOTPMail',
-        data: { codigo: OTP, correo: mail },
+        url: '/Oportunidad/ValidOTP',
+        data: { llave: OTP, entrada: mail },
         success: function (result) {
             if (result == true) {
+                // lOADER
+                $("#loader1").addClass("hide-info");
+                $("#correo-otp").removeClass("hide-info");
+                $("#put-timer").removeClass("hide-info");
+
+                // FRONT
                 $("#celular-hide").removeClass("hide-info");
                 $("#otp-mail").css("pointer-events", "none");
                 $("#invalid-otp-mail").css("display", "none");
@@ -148,8 +180,23 @@ function showCelular() {
                 $("#start-mail").addClass("hide-info");
                 $("#validacion-dos").removeClass("hide-info");
             } else {
+                // lOADER
+                $("#loader1").addClass("hide-info");
+                $("#correo-otp").removeClass("hide-info");
+                $("#put-timer").removeClass("hide-info");
+
+                // FRONT
                 $("#invalid-otp-mail").css("display", "block");
             }
+        },
+        error: function () {
+            // lOADER
+            $("#loader1").addClass("hide-info");
+            $("#correo-otp").removeClass("hide-info");
+            $("#put-timer").removeClass("hide-info");
+
+            // FRONT
+            $("#api-error").modal('show');
         }
     });
 };
@@ -172,18 +219,41 @@ function showOTPCelular() {
     if (validLength.test(celular) == false || validNDC.test(celular) == false) {
         $("#invalid-celular").css("display", "block");
     } else {
+        // LOADER
+        $("#loader2").removeClass("hide-info");
+
+
         $("#validacion-dos").addClass("hide-info");
         $("#invalid-celular").css("display", "none");
         $("#btn-validar-celular").addClass("hide-info");
         $("#celular").addClass("disable-writing");
         $.ajax({
             type: "GET",
-            url: '/Oportunidad/SendMessage',
-            data: { numero: celular },
-            success: function () {
-                $("#mensaje-otp").removeClass("hide-info");
-                $("#put-timer2").append('<div class="col-xl-12 col-sm-12 col-xs-12"><div class="card"><div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;"><h5 class="card-title" style="font-size: 0.9rem;"><span><i class="fa fa-send" style="color:#0088CC; font-size:25px;"></i></span>Hemos enviado un codigo OTP a tu numero celular, ingresalo en el siguiente campo antes de que la cuenta regresiva se acabe.</h5></div><div class="card-body" style="padding: 0;"><div class="example bg-primary-transparent border-primary text-primary" style="padding:1rem;"><div class="d-sm-flex"><span class="mb-sm-0 mb-3"><i class="fs-30 fe fe-clock"></i></span><div class="ms-sm-5 mb-sm-0 mb-3"><span id="timer-countercallback2" class="h3"></span><h5 class="mb-0 mt-1" id="verificar-celular">Verifica tu numero celular!!!</h5></div><span class="h1 text-center ms-auto mb-0 mb-sm-0 mb-3 "></span></div></div></div></div></div>')
-                activeTimer2();
+            url: '/Oportunidad/SendOTP',
+            data: { entrada: celular },
+            success: function (result) {
+                if (result == true) {
+                    // LOADER
+                    $("#loader2").addClass("hide-info");
+
+                    // FRONT
+                    $("#mensaje-otp").removeClass("hide-info");
+                    $("#put-timer2").append('<div class="col-xl-12 col-sm-12 col-xs-12"><div class="card"><div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;"><h5 class="card-title" style="font-size: 0.9rem;"><span><i class="fa fa-send" style="color:#0088CC; font-size:25px;"></i></span>Hemos enviado un codigo OTP a tu numero celular, ingresalo en el siguiente campo antes de que la cuenta regresiva se acabe.</h5></div><div class="card-body" style="padding: 0;"><div class="example bg-primary-transparent border-primary text-primary" style="padding:1rem;"><div class="d-sm-flex"><span class="mb-sm-0 mb-3"><i class="fs-30 fe fe-clock"></i></span><div class="ms-sm-5 mb-sm-0 mb-3"><span id="timer-countercallback2" class="h3"></span><h5 class="mb-0 mt-1" id="verificar-celular">Verifica tu numero celular!!!</h5></div><span class="h1 text-center ms-auto mb-0 mb-sm-0 mb-3 "></span></div></div></div></div></div>')
+                    activeTimer2();
+                } else {
+                    // LOADER
+                    $("#loader2").addClass("hide-info");
+
+                    // FRONT
+                    $("#api-error").modal('show');
+                }
+            },
+            error: function () {
+                // LOADER
+                $("#loader2").addClass("hide-info");
+
+                // FRONT
+                $("#api-error").modal('show');
             }
         });
     }
@@ -253,10 +323,10 @@ function showDatosPersonales() {
     var celular = $("#celular").val();
     $.ajax({
         type: "GET",
-        url: '/Oportunidad/GetOTPCelular',
-        data: { numero: celular },
+        url: '/Oportunidad/ValidOTP',
+        data: { llave: OTP, entrada: celular },
         success: function (result) {
-            if (result == OTP) {
+            if (result == true) {
                 $("#invalid-otp-celular").css("display", "none");
                 $("#celular-hide").addClass("hide-info");
                 $("#confirmacion-celular").removeClass("hide-info");
@@ -264,7 +334,6 @@ function showDatosPersonales() {
                 $("#progres-33").addClass("hide-info");
                 $("#progres-66").removeClass("hide-info");
                 $("#documento-hide").removeClass("hide-info");
-                notificacionCorreo(celular);
             } else {
                 $("#invalid-otp-celular").css("display", "block");
             }
@@ -273,7 +342,9 @@ function showDatosPersonales() {
 };
 function validarNumero() {
     var numeroDocumento = $("#documento").val();
-    var tipoDocumento = $("#tipo-documento").val();
+    var tipoDocumentoFront = $("#tipo-documento").val();
+    var nombres = $("#nombre-completo-lead").val();
+    var apellidos = $("#apellidos-lead").val();
 
     // -- CONTROL DE INVALID FEEDBACK -- //
     if (numeroDocumento.length == 0) {
@@ -281,40 +352,63 @@ function validarNumero() {
     } else {
         $("#invalid-documento").css("display", "none");
     }
-    if (tipoDocumento <= 0) {
+    if (tipoDocumentoFront <= 0) {
         $("#invalid-tipo-documento").css("display", "block");
     }
-    if(tipoDocumento > 0) {
+    if (tipoDocumentoFront > 0) {
         $("#invalid-tipo-documento").css("display", "none");
     }
+    if (nombres.length == 0) {
+        $("#invalid-nombre-completo-lead").css("display", "block");
+    } else {
+        $("#invalid-nombre-completo-lead").css("display", "none");
+    }
+    if (apellidos.length == 0) {
+        $("#invalid-apellidos-lead").css("display", "block");
+    } else {
+        $("#invalid-apellidos-lead").css("display", "none");
+    }
+
     // -- CONSUMIR API REGISTRADURIA -- //
-    if (numeroDocumento.length > 0 && tipoDocumento > 0) {
-        $("#segundo-intento").addClass("hide-info");
+    if (numeroDocumento.length > 0 && tipoDocumentoFront.length > 0 && nombres.length > 0 && apellidos.length > 0) {
         $("#documento").addClass("disable-writing");
+        $("#nombre-completo-lead").addClass("disable-writing");
+        $("#apellidos-lead").addClass("disable-writing");
         $("#tipo-documento").prop('disabled', 'disabled');
         $("#btn-validar-documento").addClass("hide-info");
         $.ajax({
             type: "GET",
             url: '/Oportunidad/RegistraduriaCol',
-            data: { documento: numeroDocumento },
+            data: { documento: numeroDocumento, nombre: nombres, apellido: apellidos, tipoDocumento: tipoDocumentoFront },
             success: function (result) {
-                if (result.numeroDocumento > 0) {
+                if (result.id != 0) {
+                    //FRONT
                     $("#confirmar-documento").removeClass("hide-info");
-                    $("#nombres").val("");
-                    $("#primer-apellido").val("");
-                    $("#segundo-apellido").val("");
                     $("#validacion-tres").addClass("hide-info");
-                    nombresVerifica = "Steeven";
-                    primerApellidoVerifica = "Morales";
-                    segundoApellidoVerifica = "Medina";
-                    $("#btn-volver-intentar").addClass("hide-info");
-                    $("#btn-confirmar-datos").removeClass("hide-info");
-                    $("#alerta-verifica-error-text").addClass("hide-info");
                     $("#alerta-verifica-error-btn").addClass("hide-info");
+                    $("#documento-hide").addClass("hide-info");
+
+                    //Result.fullname
+                    $("#full-name").get(0).innerHTML = result.nombreCompleto;
+                    $("#document-full-name").get(0).innerHTML = result.tipoDocumento + ": " + result.numeroDocumento;
                 } else {
                     $("#validacion-tres").addClass("hide-info");
-                    $("#segundo-intento").addClass("hide-info");
-                    $("#confirmar-lead").removeClass("hide-info");
+                    //Limpio el formulario
+                    $("#documento").removeClass("disable-writing");
+                    $("#documento").val("");
+
+                    $("#tipo-documento").prop('disabled', false);
+                    $("#tipo-documento").val("0");
+                    $("#select2-tipo-documento-container").text("Seleccione..");
+
+                    $("#nombre-completo-lead").val("");
+                    $("#nombre-completo-lead").removeClass("disable-writing");
+
+                    $("#apellidos-lead").val("");
+                    $("#apellidos-lead").removeClass("disable-writing");
+
+                    $("#segundo-intento").removeClass("hide-info");
+                    $("#btn-validar-documento").removeClass("hide-info");
                 }
             },
             error: function () {
@@ -323,115 +417,25 @@ function validarNumero() {
         });
     }
 };
-function crearLead() {
-    $("#confirmar-lead").addClass("hide-info");
-    $("#crear-lead").removeClass("hide-info");
-};
-function restart3() {
-    $("#confirmar-documento").addClass("hide-info");
-    $("#documento").removeClass("disable-writing");
-    $("#documento").val("");
-    $("#tipo-documento").prop('disabled', false);
-    $("#tipo-documento").val("0");
-    $("#select2-tipo-documento-container").text("Seleccione..")
-    $("#btn-validar-documento").removeClass("hide-info");
-    $("#segundo-intento").removeClass("hide-info");
-    $("#confirmar-lead").addClass("hide-info");
-
+function Cancel() {
+    location.reload();
 };
 function saveLead() {
-    // -- 1 valido el formulario -- //
-    var nombresInput = $("#nombres").val();
-    var primerApellidoInput = $("#primer-apellido").val();
-    var segundoApellidoInput = $("#segundo-apellido").val();
-    if (nombresInput.length == 0) {
-        $("#invalid-nombres").css("display", "block");
-    } else {
-        $("#invalid-nombres").css("display", "none");
-    }
-    if (primerApellidoInput.length == 0) {
-        $("#invalid-primer-apellido").css("display", "block");
-    } else {
-        $("#invalid-primer-apellido").css("display", "none");
-    }
-    if (segundoApellidoInput.length == 0) {
-        $("#invalid-segundo-apellido").css("display", "block");
-    } else {
-        $("#invalid-segundo-apellido").css("display", "none");
-    }
-    // -- 2 valido los datos "Input" VS datos "Verifica" -- //
-    if (nombresInput.length > 0 && primerApellidoInput.length > 0 && segundoApellidoInput.length > 0) {
-        if (nombresVerifica.toLowerCase() == nombresInput.trim().toLowerCase() ||
-            primerApellidoVerifica.toLowerCase() == primerApellidoInput.trim().toLowerCase() ||
-            segundoApellidoVerifica.toLowerCase() == segundoApellidoInput.trim().toLowerCase()) {
-            $("#validacion-cuatro").removeClass("hide-info");
-            $("#documento-hide").addClass("hide-info");
-            $("#confirmar-documento").addClass("hide-info");
-            $("#oportunidad-hide").removeClass("hide-info");
-            $("#crear-lead").addClass("hide-info");
+    $("#validacion-cuatro").removeClass("hide-info");
+    $("#documento-hide").addClass("hide-info");
+    $("#confirmar-documento").addClass("hide-info");
+    $("#oportunidad-hide").removeClass("hide-info");
 
-            // -- UPDATE PROGRESS BAR -- //
-            $("#progres-66").addClass("hide-info");
-            $("#progres-100").removeClass("hide-info");
-            $("#confirmacion-celular").addClass("hide-info");
-            $("#confirmacion-celular-iz").addClass("hide-info");
-            $("#icon-info-oportunidad").removeClass("hide-info");
-        } else {
-            $("#alerta-verifica-error-text").removeClass("hide-info");
-            $("#alerta-verifica-error-btn").removeClass("hide-info");
-            $("#btn-confirmar-datos").addClass("hide-info");
-            $("#btn-volver-intentar").removeClass("hide-info");
-        }
-    }
+    // -- UPDATE PROGRESS BAR -- //
+    $("#progres-66").addClass("hide-info");
+    $("#progres-100").removeClass("hide-info");
+    $("#confirmacion-celular").addClass("hide-info");
+    $("#confirmacion-celular-iz").addClass("hide-info");
+    $("#icon-info-oportunidad").removeClass("hide-info");
 };
-function saveLeadNew() {
-
-    var nombres = $("#nombres-new").val();
-    var pApellido = $("#primer-apellido-new").val();
-    var sApellido = $("#segundo-apellido-new").val();
-
-    // -- CONTROL DE INVALID FEEDBACK -- //
-    if (nombres.length == 0) {
-        $("#invalid-nombres-new").css("display", "block");
-    } else {
-        $("#invalid-nombres-new").css("display", "none");
-
-    }
-    if (pApellido.length == 0) {
-        $("#invalid-primer-apellido-new").css("display", "block");
-    } else {
-        $("#invalid-primer-apellido-new").css("display", "none");
-
-    }
-    if (sApellido.length == 0) {
-        $("#invalid-segundo-apellido-new").css("display", "block");
-    } else {
-        $("#invalid-segundo-apellido-new").css("display", "none");
-
-    }
-    // -- CREO AL USUARIO QUE NO ESTA EN REGISTRADURIACOL Y LO ENVIO AL FORMULARIO OPORTUNIDAD -- //
-
-    if (nombres.length > 0 && pApellido.length > 0 && sApellido.length > 0 ) {
-        // Usar API que me registre a esta nueva persona puesto que no esta en registraduriaCol
-        $("#validacion-cuatro").removeClass("hide-info");
-        $("#documento-hide").addClass("hide-info");
-        $("#confirmar-documento").addClass("hide-info");
-        $("#oportunidad-hide").removeClass("hide-info");
-        $("#crear-lead").addClass("hide-info");
-
-        // -- UPDATE PROGRESS BAR -- //
-        $("#progres-66").addClass("hide-info");
-        $("#progres-100").removeClass("hide-info");
-        $("#confirmacion-celular").addClass("hide-info");
-        $("#confirmacion-celular-iz").addClass("hide-info");
-        $("#icon-info-oportunidad").removeClass("hide-info");
-
-    }
 
 
 
-
-}
 
 
 

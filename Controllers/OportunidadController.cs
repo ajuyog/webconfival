@@ -2,10 +2,12 @@
 using confinancia.Models.JsonDTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace confinancia.Controllers
 {
@@ -25,40 +27,11 @@ namespace confinancia.Controllers
 		}
 
 		[HttpGet]
-		public async Task<bool> SendMail(string correo)
+		public async Task<bool> SendOTP(string entrada)
 		{
-			var token = GetToken();
-			if (token.Result == "")
-			{
-				return false;
-			}
-			if(token.Result.Length == 177)
-			{
-				var client = new HttpClient();
-				var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/otp/sendmail?correoDestino=" + correo + "&caducidadSg=180");
-				request.Headers.Add("Authorization", "Bearer " + token.Result);
-				var response = await client.SendAsync(request);
-				if (response.IsSuccessStatusCode)
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-			return false;
-		}
+			var pattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+			Regex validMail = new Regex(pattern);
 
-		//[HttpGet]
-		//public bool SendMail(string correo)
-		//{
-		//	return true;
-		//}
-
-		[HttpGet]
-		public async Task<bool> GetOTPMail(string codigo, string correo)
-		{
 			var token = GetToken();
 			if (token.Result == "")
 			{
@@ -67,8 +40,17 @@ namespace confinancia.Controllers
 			if (token.Result.Length == 177)
 			{
 				var client = new HttpClient();
-				var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/otp/validatemailotp?llave=" + codigo + "&entrada=" + correo);
+				var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/otp/enviar?longitud=" + _configuration.GetSection("OTP:Longitud").Value + "&caducidadSg=" + _configuration.GetSection("OTP:Caducidad").Value);
 				request.Headers.Add("Authorization", "Bearer " + token.Result);
+				var obj = new EnvioOTPDTO()
+				{
+					FuenteOTPId = validMail.IsMatch(entrada) == true ? Convert.ToInt32(_configuration.GetSection("OTP:FuenteOTPMail").Value) : Convert.ToInt32(_configuration.GetSection("OTP:FuenteOTPSMS").Value),
+					EmpresaId = Convert.ToInt32(_configuration.GetSection("OTP:EmpresaId").Value),
+					Entrada = validMail.IsMatch(entrada) == true ? entrada : "57" + entrada,
+				};
+				var json = JsonConvert.SerializeObject(obj);
+				var content = new StringContent(json, null, "application/json");
+				request.Content = content;
 				var response = await client.SendAsync(request);
 				if (response.IsSuccessStatusCode)
 				{
@@ -83,53 +65,87 @@ namespace confinancia.Controllers
 		}
 
 		//[HttpGet]
-		//public bool GetOTPMail(string codigo)
+		//public bool SendOTP(string entrada)
 		//{
 		//	return true;
 		//}
 
 		[HttpGet]
-		public int SendMessage(string numero)
+		public async Task<bool> ValidOTP(string llave, string entrada)
 		{
-			var codigo = 123456;
-			return codigo;
+			var pattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+			Regex validMail = new Regex(pattern);
+			var token = GetToken();
+			if (token.Result == "")
+			{
+				return false;
+			}
+			if (token.Result.Length == 177)
+			{
+				var client = new HttpClient();
+				var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/otp/validatemailotp");
+				request.Headers.Add("Authorization", "Bearer " + token.Result );
+				var obj = new ValidatOTPDTO()
+				{
+					FuenteOTPId = validMail.IsMatch(entrada) == true ? Convert.ToInt32(_configuration.GetSection("OTP:FuenteOTPMail").Value) : Convert.ToInt32(_configuration.GetSection("OTP:FuenteOTPSMS").Value),
+					EmpresaId = Convert.ToInt32(_configuration.GetSection("OTP:EmpresaId").Value),
+					Entrada = validMail.IsMatch(entrada) == true ? entrada : "57" + entrada,
+					Llave = llave
+				};
+				var json = JsonConvert.SerializeObject(obj);
+				var content = new StringContent(json, null, "application/json");
+				request.Content = content;
+				var response = await client.SendAsync(request);
+				if (response.IsSuccessStatusCode)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			return false;
 		}
 
-		[HttpGet]
-		public int GetOTPCelular(string numero)
-		{
-			var codigo = 123456;
-			return codigo;
-		}
+		//[HttpGet]
+		//public bool ValidOTP(string llave, string entrada)
+		//{
+		//	return true;
+		//}
 
 		[HttpGet]
-		public async Task<VerificaResultDTO> RegistraduriaCol(string documento)
+		public async Task<ResultVerificaDTO> RegistraduriaCol(string documento, string nombre, string apellido, string tipoDocumento)
 		{
-			/// -- Obtengo el tken de login -- //
+			var error = new ResultVerificaDTO();
 			var token = GetToken();
 			if(token.Result == "") 
 			{
-				return new VerificaResultDTO() { NumeroDocumento = "" };
+				return error;
 			}
-			else
+			if (token.Result.Length == 177)
 			{
 				var client = new HttpClient();
-				var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/verifik/" + documento);
-				request.Headers.Add("Authorization", "Bearer " + token.Result);
+				var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/verifik?idNumber=" + documento + "&fNombres=" + nombre + "&fApellidos=" + apellido + "&tipoDocumento=" + tipoDocumento);
+				request.Headers.Add("Authorization", "Bearer " + token.Result );
 				var response = await client.SendAsync(request);
 				if (response.IsSuccessStatusCode)
 				{
 					var responseStream = await response.Content.ReadAsStringAsync();
-					var result = JsonConvert.DeserializeObject<VerificaResultDTO>(responseStream);
+					var result = JsonConvert.DeserializeObject<ResultVerificaDTO>(responseStream);
 					return result;
 				}
 				else
 				{
-					var empty = new VerificaResultDTO();
-					return empty;
+					var responseStreamElse = await response.Content.ReadAsStringAsync();
+					var objError = new ResultVerificaDTO()
+					{
+						Error = responseStreamElse
+					};
+					return objError;
 				}
 			}
-
+			return error;
 		}
 
 
