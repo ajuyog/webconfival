@@ -635,6 +635,19 @@ body {
     background-size: cover;
 }
 
+.ml-confival{
+    margin-left: 10px;
+}
+
+.mr-confival {
+    margin-right: 10px;
+}
+
+.text-alert {
+    text-align: center;
+    color: #d12c47;
+}
+
 /*-------------------------------------------------------------*/
 .margin-tabs-li {
     margin: auto;
