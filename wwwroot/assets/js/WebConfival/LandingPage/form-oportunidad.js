@@ -29,7 +29,7 @@ function politica() {
 };
 
 // --- VALIDACION DE CORREO ELECTRONICO CON OTP --- //
-function showOTPCorreo() {
+function showOTPCorreo()     {
     var mail = $("#mail").val();
     var validMail = new RegExp(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/);
     var politica = $("#uncheckedPrimarySwitch-politica").val();
@@ -62,7 +62,7 @@ function showOTPCorreo() {
             data: { entrada: mail },
             success: function (result) {
                 if (result == true) {
-                     // lOADER
+                    // lOADER
                     $("#loader1").addClass("hide-info");
                     $("#email-hide").removeClass("hide-info");
 
@@ -79,7 +79,8 @@ function showOTPCorreo() {
                     restart();
                     $("#api-error").modal('show');
                 }
-            }, error: function () {
+            },
+            error: function () {
                 // lOADER
                 $("#loader1").addClass("hide-info");
                 $("#email-hide").removeClass("hide-info");
@@ -146,7 +147,7 @@ function resendMail() {
         });
     }
 };  
-function showCelular() {
+function ShowDocumento() {
     // lOADER
     $("#loader1").removeClass("hide-info");
     $("#correo-otp").addClass("hide-info");
@@ -172,7 +173,8 @@ function showCelular() {
                 $("#put-timer").removeClass("hide-info");
 
                 // FRONT
-                $("#celular-hide").removeClass("hide-info");
+                /*$("#confirmacion-correo-status").addClass("hide-info");*/
+                $("#documento-hide").removeClass("hide-info");
                 $("#otp-mail").css("pointer-events", "none");
                 $("#invalid-otp-mail").css("display", "none");
                 $("#email-hide").addClass("hide-info");
@@ -211,6 +213,101 @@ function restart() {
     $("#uncheckedPrimarySwitch-politica").prop('checked', false);
 };
 
+// --- VALIDACION DE DOCUMENTO DE IDENTIDAD --- //
+function ValidarDocumento() {
+    var numeroDocumento = $("#documento").val();
+    var tipoDocumentoFront = $("#tipo-documento").val();
+    var nombres = $("#nombre-completo-lead").val();
+    var apellidos = $("#apellidos-lead").val();
+
+    // -- CONTROL DE INVALID FEEDBACK -- //
+    if (numeroDocumento.length == 0) {
+        $("#invalid-documento").css("display", "block");
+    } else {
+        $("#invalid-documento").css("display", "none");
+    }
+    if (tipoDocumentoFront <= 0) {
+        $("#invalid-tipo-documento").css("display", "block");
+    }
+    if (tipoDocumentoFront > 0) {
+        $("#invalid-tipo-documento").css("display", "none");
+    }
+    if (nombres.length == 0) {
+        $("#invalid-nombre-completo-lead").css("display", "block");
+    } else {
+        $("#invalid-nombre-completo-lead").css("display", "none");
+    }
+    if (apellidos.length == 0) {
+        $("#invalid-apellidos-lead").css("display", "block");
+    } else {
+        $("#invalid-apellidos-lead").css("display", "none");
+    }
+
+    // -- CONSUMIR API REGISTRADURIA -- //
+    if (numeroDocumento.length > 0 && tipoDocumentoFront.length > 0 && nombres.length > 0 && apellidos.length > 0) {
+        $("#documento").addClass("disable-writing");
+        $("#nombre-completo-lead").addClass("disable-writing");
+        $("#apellidos-lead").addClass("disable-writing");
+        $("#tipo-documento").prop('disabled', 'disabled');
+        $("#btn-validar-documento").addClass("hide-info");
+        $.ajax({
+            type: "GET",
+            url: '/Oportunidad/RegistraduriaCol',
+            data: { documento: numeroDocumento, nombre: nombres, apellido: apellidos, tipoDocumento: tipoDocumentoFront },
+            success: function (result) {
+                if (result.id != 0) {
+                    //FRONT
+                    $("#confirmar-documento").removeClass("hide-info");
+                    $("#documento-hide").addClass("hide-info");
+                    $("#validacion-dos").addClass("hide-info");
+
+                    //Result.fullname
+                    $("#full-name").get(0).innerHTML = result.nombreCompleto;
+                    $("#document-full-name").get(0).innerHTML = result.tipoDocumento + ": " + result.numeroDocumento;
+                } else {
+                    /*$("#validacion-tres").addClass("hide-info");*/
+                    //Limpio el formulario
+                    $("#documento").removeClass("disable-writing");
+                    $("#documento").val("");
+
+                    $("#tipo-documento").prop('disabled', false);
+                    $("#tipo-documento").val("0");
+                    $("#select2-tipo-documento-container").text("Seleccione..");
+
+                    $("#nombre-completo-lead").val("");
+                    $("#nombre-completo-lead").removeClass("disable-writing");
+
+                    $("#apellidos-lead").val("");
+                    $("#apellidos-lead").removeClass("disable-writing");
+
+                    $("#segundo-intento").removeClass("hide-info");
+                    $("#btn-validar-documento").removeClass("hide-info");
+                }
+            },
+            error: function () {
+                $("#api-error").modal('show');
+            }
+        });
+    }
+};
+function Cancel() {
+    location.reload();
+};
+function ShowCelular() {
+
+    $("#validacion-cuatro").removeClass("hide-info");
+    $("#documento-hide").addClass("hide-info");
+    $("#confirmar-documento").addClass("hide-info");
+    $("#celular-hide").removeClass("hide-info");
+
+    // -- UPDATE PROGRESS BAR -- //
+    $("#progres-66").removeClass("hide-info");
+    $("#progres-33").addClass("hide-info");
+    $("#confirmacion-documento-status").removeClass("hide-info");
+    $("#confirmacion-correo-status").removeClass("hide-info");
+    
+};
+
 // --- VALIDACION DE CELULAR DE CONTACTO CON OTP --- //
 function showOTPCelular() {
     var celular = $("#celular").val();
@@ -240,6 +337,7 @@ function showOTPCelular() {
                     $("#mensaje-otp").removeClass("hide-info");
                     $("#put-timer2").append('<div class="col-xl-12 col-sm-12 col-xs-12"><div class="card"><div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;"><h5 class="card-title" style="font-size: 0.9rem;"><span><i class="fa fa-send" style="color:#0088CC; font-size:25px;"></i></span>Hemos enviado un codigo OTP a tu numero celular, ingresalo en el siguiente campo antes de que la cuenta regresiva se acabe.</h5></div><div class="card-body" style="padding: 0;"><div class="example bg-primary-transparent border-primary text-primary" style="padding:1rem;"><div class="d-sm-flex"><span class="mb-sm-0 mb-3"><i class="fs-30 fe fe-clock"></i></span><div class="ms-sm-5 mb-sm-0 mb-3"><span id="timer-countercallback2" class="h3"></span><h5 class="mb-0 mt-1" id="verificar-celular">Verifica tu numero celular!!!</h5></div><span class="h1 text-center ms-auto mb-0 mb-sm-0 mb-3 "></span></div></div></div></div></div>')
                     activeTimer2();
+                    $("#validacion-cuatro").addClass("hide-info");
                 } else {
                     // LOADER
                     $("#loader2").addClass("hide-info");
@@ -310,9 +408,7 @@ function restart2() {
     $("#uncheckedPrimarySwitch-politica").prop('checked', false);
 
 };
-
-// --- VALIDACION DE DOCUMENTO DE IDENTIDAD --- //
-function showDatosPersonales() {
+function ShowOportunidad() {
     var number1 = $("#numero-uno-m").val();
     var number2 = $("#numero-dos-m").val();
     var number3 = $("#numero-tres-m").val();
@@ -331,108 +427,28 @@ function showDatosPersonales() {
                 $("#celular-hide").addClass("hide-info");
                 $("#confirmacion-celular").removeClass("hide-info");
                 $("#validacion-tres").removeClass("hide-info");
+                $("#validacion-cuatro").addClass("hide-info");
+                $("#oportunidad-hide").removeClass("hide-info");
+
+
+                // PROGRES BAR
                 $("#progres-33").addClass("hide-info");
-                $("#progres-66").removeClass("hide-info");
-                $("#documento-hide").removeClass("hide-info");
+                $("#progres-66").addClass("hide-info");
+                $("#progres-100").removeClass("hide-info");
+                $("#icon-info-oportunidad").removeClass("hide-info");
+                $("#confirmacion-correo-status").addClass("hide-info");
+                $("#confirmacion-documento-status").addClass("hide-info");
             } else {
                 $("#invalid-otp-celular").css("display", "block");
             }
+        },
+        error: function () {
+            // FRONT
+            $("#api-error").modal('show');
         }
     });
 };
-function validarNumero() {
-    var numeroDocumento = $("#documento").val();
-    var tipoDocumentoFront = $("#tipo-documento").val();
-    var nombres = $("#nombre-completo-lead").val();
-    var apellidos = $("#apellidos-lead").val();
 
-    // -- CONTROL DE INVALID FEEDBACK -- //
-    if (numeroDocumento.length == 0) {
-        $("#invalid-documento").css("display", "block");
-    } else {
-        $("#invalid-documento").css("display", "none");
-    }
-    if (tipoDocumentoFront <= 0) {
-        $("#invalid-tipo-documento").css("display", "block");
-    }
-    if (tipoDocumentoFront > 0) {
-        $("#invalid-tipo-documento").css("display", "none");
-    }
-    if (nombres.length == 0) {
-        $("#invalid-nombre-completo-lead").css("display", "block");
-    } else {
-        $("#invalid-nombre-completo-lead").css("display", "none");
-    }
-    if (apellidos.length == 0) {
-        $("#invalid-apellidos-lead").css("display", "block");
-    } else {
-        $("#invalid-apellidos-lead").css("display", "none");
-    }
-
-    // -- CONSUMIR API REGISTRADURIA -- //
-    if (numeroDocumento.length > 0 && tipoDocumentoFront.length > 0 && nombres.length > 0 && apellidos.length > 0) {
-        $("#documento").addClass("disable-writing");
-        $("#nombre-completo-lead").addClass("disable-writing");
-        $("#apellidos-lead").addClass("disable-writing");
-        $("#tipo-documento").prop('disabled', 'disabled');
-        $("#btn-validar-documento").addClass("hide-info");
-        $.ajax({
-            type: "GET",
-            url: '/Oportunidad/RegistraduriaCol',
-            data: { documento: numeroDocumento, nombre: nombres, apellido: apellidos, tipoDocumento: tipoDocumentoFront },
-            success: function (result) {
-                if (result.id != 0) {
-                    //FRONT
-                    $("#confirmar-documento").removeClass("hide-info");
-                    $("#validacion-tres").addClass("hide-info");
-                    $("#alerta-verifica-error-btn").addClass("hide-info");
-                    $("#documento-hide").addClass("hide-info");
-
-                    //Result.fullname
-                    $("#full-name").get(0).innerHTML = result.nombreCompleto;
-                    $("#document-full-name").get(0).innerHTML = result.tipoDocumento + ": " + result.numeroDocumento;
-                } else {
-                    $("#validacion-tres").addClass("hide-info");
-                    //Limpio el formulario
-                    $("#documento").removeClass("disable-writing");
-                    $("#documento").val("");
-
-                    $("#tipo-documento").prop('disabled', false);
-                    $("#tipo-documento").val("0");
-                    $("#select2-tipo-documento-container").text("Seleccione..");
-
-                    $("#nombre-completo-lead").val("");
-                    $("#nombre-completo-lead").removeClass("disable-writing");
-
-                    $("#apellidos-lead").val("");
-                    $("#apellidos-lead").removeClass("disable-writing");
-
-                    $("#segundo-intento").removeClass("hide-info");
-                    $("#btn-validar-documento").removeClass("hide-info");
-                }
-            },
-            error: function () {
-                $("#api-error").modal('show');
-            }
-        });
-    }
-};
-function Cancel() {
-    location.reload();
-};
-function saveLead() {
-    $("#validacion-cuatro").removeClass("hide-info");
-    $("#documento-hide").addClass("hide-info");
-    $("#confirmar-documento").addClass("hide-info");
-    $("#oportunidad-hide").removeClass("hide-info");
-
-    // -- UPDATE PROGRESS BAR -- //
-    $("#progres-66").addClass("hide-info");
-    $("#progres-100").removeClass("hide-info");
-    $("#confirmacion-celular").addClass("hide-info");
-    $("#confirmacion-celular-iz").addClass("hide-info");
-    $("#icon-info-oportunidad").removeClass("hide-info");
-};
 
 
 
