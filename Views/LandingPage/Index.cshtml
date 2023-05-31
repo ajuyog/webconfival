@@ -8,6 +8,8 @@
 	Layout = "_Layoutlandingpage";
 	var loaderUno = new LoaderDTO() { Seccion = 1 };
 	var loaderDos = new LoaderDTO() { Seccion = 2 };
+    var loadertres = new LoaderDTO() { Seccion = 3 };
+
     }
 
     <!--app-content open-->
@@ -883,6 +885,7 @@
                                                                                             <a href="#Contact" class="btn btn-primary" onclick="ValidarDocumento()">Validar documento</a>
                                                                                         </div>
                                                                                     </div>
+                                                                                    <partial name="~/Views/Shared/_LoaderOportunidad.cshtml" model="loadertres" />
 
                                                                                     <!-- INFORMACION DOCUMENTO EXISTENTE -->
                                                                                     <div class="hide-info" id="confirmar-documento">

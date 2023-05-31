@@ -143,6 +143,11 @@ function resendMail() {
                     restart();
                     $("#api-error").modal('show');
                 }
+            },
+            error: function () {
+                // FRONT
+                restart();
+                $("#api-error").modal('show');
             }
         });
     }
@@ -173,7 +178,6 @@ function ShowDocumento() {
                 $("#put-timer").removeClass("hide-info");
 
                 // FRONT
-                /*$("#confirmacion-correo-status").addClass("hide-info");*/
                 $("#documento-hide").removeClass("hide-info");
                 $("#otp-mail").css("pointer-events", "none");
                 $("#invalid-otp-mail").css("display", "none");
@@ -245,6 +249,12 @@ function ValidarDocumento() {
 
     // -- CONSUMIR API REGISTRADURIA -- //
     if (numeroDocumento.length > 0 && tipoDocumentoFront.length > 0 && nombres.length > 0 && apellidos.length > 0) {
+        // lOADER
+        $("#loader3").removeClass("hide-info");
+        $("#documento-hide").addClass("hide-info");
+        $("#validacion-dos").addClass("hide-info");
+
+        // FRONT
         $("#documento").addClass("disable-writing");
         $("#nombre-completo-lead").addClass("disable-writing");
         $("#apellidos-lead").addClass("disable-writing");
@@ -256,17 +266,22 @@ function ValidarDocumento() {
             data: { documento: numeroDocumento, nombre: nombres, apellido: apellidos, tipoDocumento: tipoDocumentoFront },
             success: function (result) {
                 if (result.id != 0) {
+                    // LOADER
+                    $("#loader3").addClass("hide-info");
+
                     //FRONT
                     $("#confirmar-documento").removeClass("hide-info");
                     $("#documento-hide").addClass("hide-info");
-                    $("#validacion-dos").addClass("hide-info");
 
                     //Result.fullname
                     $("#full-name").get(0).innerHTML = result.nombreCompleto;
                     $("#document-full-name").get(0).innerHTML = result.tipoDocumento + ": " + result.numeroDocumento;
                 } else {
-                    /*$("#validacion-tres").addClass("hide-info");*/
-                    //Limpio el formulario
+                    // LOADER
+                    $("#loader3").addClass("hide-info");
+                    $("#documento-hide").removeClass("hide-info");
+
+                    // FRONT -- Limpio el formulario
                     $("#documento").removeClass("disable-writing");
                     $("#documento").val("");
 
@@ -285,6 +300,11 @@ function ValidarDocumento() {
                 }
             },
             error: function () {
+                // LOADER
+                $("#loader3").addClass("hide-info");
+                $("#documento-hide").removeClass("hide-info");
+
+                // FRONT
                 $("#api-error").modal('show');
             }
         });
@@ -318,7 +338,7 @@ function showOTPCelular() {
     } else {
         // LOADER
         $("#loader2").removeClass("hide-info");
-
+        $("#validacion-cuatro").addClass("hide-info");
 
         $("#validacion-dos").addClass("hide-info");
         $("#invalid-celular").css("display", "none");
@@ -337,10 +357,10 @@ function showOTPCelular() {
                     $("#mensaje-otp").removeClass("hide-info");
                     $("#put-timer2").append('<div class="col-xl-12 col-sm-12 col-xs-12"><div class="card"><div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;"><h5 class="card-title" style="font-size: 0.9rem;"><span><i class="fa fa-send" style="color:#0088CC; font-size:25px;"></i></span>Hemos enviado un codigo OTP a tu numero celular, ingresalo en el siguiente campo antes de que la cuenta regresiva se acabe.</h5></div><div class="card-body" style="padding: 0;"><div class="example bg-primary-transparent border-primary text-primary" style="padding:1rem;"><div class="d-sm-flex"><span class="mb-sm-0 mb-3"><i class="fs-30 fe fe-clock"></i></span><div class="ms-sm-5 mb-sm-0 mb-3"><span id="timer-countercallback2" class="h3"></span><h5 class="mb-0 mt-1" id="verificar-celular">Verifica tu numero celular!!!</h5></div><span class="h1 text-center ms-auto mb-0 mb-sm-0 mb-3 "></span></div></div></div></div></div>')
                     activeTimer2();
-                    $("#validacion-cuatro").addClass("hide-info");
                 } else {
                     // LOADER
                     $("#loader2").addClass("hide-info");
+                    $("#validacion-cuatro").removeClass("hide-info");
 
                     // FRONT
                     $("#api-error").modal('show');
@@ -409,6 +429,10 @@ function restart2() {
 
 };
 function ShowOportunidad() {
+    // LOADER
+    $("#loader2").removeClass("hide-info");
+    $("#celular-hide").addClass("hide-info");
+
     var number1 = $("#numero-uno-m").val();
     var number2 = $("#numero-dos-m").val();
     var number3 = $("#numero-tres-m").val();
@@ -423,6 +447,10 @@ function ShowOportunidad() {
         data: { llave: OTP, entrada: celular },
         success: function (result) {
             if (result == true) {
+                // LOADER
+                $("#loader2").addClass("hide-info");
+
+                // FRONT
                 $("#invalid-otp-celular").css("display", "none");
                 $("#celular-hide").addClass("hide-info");
                 $("#confirmacion-celular").removeClass("hide-info");
@@ -439,10 +467,17 @@ function ShowOportunidad() {
                 $("#confirmacion-correo-status").addClass("hide-info");
                 $("#confirmacion-documento-status").addClass("hide-info");
             } else {
+                // LOADER
+                $("#loader2").addClass("hide-info");
+
+                // FRONT
                 $("#invalid-otp-celular").css("display", "block");
             }
         },
         error: function () {
+            // LOADER
+            $("#loader2").addClass("hide-info");
+
             // FRONT
             $("#api-error").modal('show');
         }
