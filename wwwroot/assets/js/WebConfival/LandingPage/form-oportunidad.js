@@ -10,10 +10,6 @@
             }
         }
     });
-    var nombresVerifica = "";
-    var primerApellidoVerifica = "";
-    var segundoApellidoVerifica = "";
-    var intentos = 0;
     $("#uncheckedPrimarySwitch-politica").val("on");
 });
 
@@ -31,65 +27,21 @@ function politica() {
 // --- VALIDACION DE CORREO ELECTRONICO CON OTP --- //
 function showOTPCorreo()     {
     var mail = $("#mail").val();
-    var validMail = new RegExp(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/);
+    var validacion = MailRegex(mail);
     var politica = $("#uncheckedPrimarySwitch-politica").val();
-    if (validMail.test(mail) == false) {
-        $("#invalid-mail").css("display", "block");
-    } else {
-        $("#invalid-mail").css("display", "none");
-    }
     if (politica == "on" || politica == "false") {
         $("#invalid-politica").css("display", "block");
     } else {
         $("#invalid-politica").css("display", "none");
     }
-    if (validMail.test(mail) == true && politica == "true") {
+    if (validacion == 0 && politica == "true") {
         // lOADER
         $("#loader1").removeClass("hide-info");
         $("#email-hide").addClass("hide-info");
 
         // FRONT
-        $("#btn-validar-celular").removeClass("hide-info");
-        $("#btn-validar-correo").addClass("hide-info");
-        $("#politica-hide").addClass("hide-info");
-        $("#invalid-mail").css("display", "none");
-        $("#invalid-politica").css("display", "none");
-        $("#mail").addClass("disable-writing");
         $("#uncheckedPrimarySwitch-politica").val("false");
-        $.ajax({
-            type: "GET",
-            url: '/Oportunidad/SendOTP',
-            data: { entrada: mail },
-            success: function (result) {
-                if (result == true) {
-                    // lOADER
-                    $("#loader1").addClass("hide-info");
-                    $("#email-hide").removeClass("hide-info");
-
-                    // FRONT
-                    $("#correo-otp").removeClass("hide-info");
-                    $("#put-timer").append('<div><div class="card"><div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;"><h5 class="card-title" style="font-size: 0.9rem;"><span><i class="fa fa-send" style="color:#0088CC; font-size:25px;"></i></span> Hemos enviado un codigo OTP a tu correo electronico, ingresalo en el siguiente campo antes de que la cuenta regresiva se acabe.</h5></div><div class="card-body" style="padding: 0;"><div class="example bg-primary-transparent border-primary text-primary" style="padding:1rem;"><div class="d-sm-flex"><span class="mb-sm-0 mb-3"><i class="fs-30 fe fe-clock"></i></span><div class="ms-sm-5 mb-sm-0 mb-3"><span id="timer-countercallback" class="h3"></span><h5 class="mb-0 mt-1" id="verifica-correo">Verifica tu correo electronico!!!</h5></div><span class="h1 text-center ms-auto mb-0 mb-sm-0 mb-3 "></span></div></div></div></div></div>')
-                    activeTimer();
-                } else {
-                    // lOADER
-                    $("#loader1").addClass("hide-info");
-                    $("#email-hide").removeClass("hide-info");
-
-                    // FRONT
-                    restart();
-                    $("#api-error").modal('show');
-                }
-            },
-            error: function () {
-                // lOADER
-                $("#loader1").addClass("hide-info");
-                $("#email-hide").removeClass("hide-info");
-
-                // FRONT
-                restart();
-                $("#api-error").modal('show');
-            }
-        });
+        ResendMailAPI(mail);
     }
 };
 function activeTimer() {
@@ -112,44 +64,19 @@ function activeTimer() {
         }
     });
 };
-function resendMail() {
-    var mail = $("#mail").val();
+function ResendMail() {
+    // lOADER
+    $("#loader1").removeClass("hide-info");
+    $("#email-hide").addClass("hide-info");
+
+    // FRONT
     $("#new-otp-mail").addClass("hide-info");
     $("#mesage-resend").addClass("hide-info");
     $("#put-timer").children("div").remove();
-    var validMail = new RegExp(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/);
-    if (validMail.test(mail) == false) {
-        $("#invalid-mail").css("display", "block");
-    } else {
-        $("#invalid-mail").css("display", "none");
-    }
-    if (validMail.test(mail) == true) {
-        $("#btn-validar-celular").removeClass("hide-info");
-        $("#btn-validar-correo").addClass("hide-info");
-        $("#politica-hide").addClass("hide-info");
-        $("#invalid-mail").css("display", "none");
-        $("#invalid-politica").css("display", "none");
-        $("#mail").addClass("disable-writing");
-        $.ajax({
-            type: "GET",
-            url: '/Oportunidad/SendOTP',
-            data: { entrada: mail },
-            success: function (result) {
-                if (result == true) {
-                    $("#correo-otp").removeClass("hide-info");
-                    $("#put-timer").append('<div><div class="card"><div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;"><h5 class="card-title" style="font-size: 0.9rem;">Hemos enviado un codigo OTP a tu correo electronico, ingresalo en el siguiente campo antes de que la cuenta regresiva se acabe.</h5></div><div class="card-body" style="padding: 0;"><div class="example bg-primary-transparent border-primary text-primary" style="padding:1rem;"><div class="d-sm-flex"><span class="mb-sm-0 mb-3"><i class="fs-30 fe fe-clock"></i></span><div class="ms-sm-5 mb-sm-0 mb-3"><span id="timer-countercallback" class="h3"></span><h5 class="mb-0 mt-1" id="verifica-correo">Verifica tu correo electronico!!!</h5></div><span class="h1 text-center ms-auto mb-0 mb-sm-0 mb-3 "></span></div></div></div></div></div>')
-                    activeTimer();
-                } else {
-                    restart();
-                    $("#api-error").modal('show');
-                }
-            },
-            error: function () {
-                // FRONT
-                restart();
-                $("#api-error").modal('show');
-            }
-        });
+    var mail = $("#mail").val();
+    var validacion = MailRegex(mail);
+    if (validacion == 0) {
+        ResendMailAPI(mail);
     }
 };  
 function ShowDocumento() {
@@ -171,7 +98,7 @@ function ShowDocumento() {
         url: '/Oportunidad/ValidOTP',
         data: { llave: OTP, entrada: mail },
         success: function (result) {
-            if (result == true) {
+            if (result == "success") {
                 // lOADER
                 $("#loader1").addClass("hide-info");
                 $("#correo-otp").removeClass("hide-info");
@@ -186,6 +113,7 @@ function ShowDocumento() {
                 $("#start-mail").addClass("hide-info");
                 $("#validacion-dos").removeClass("hide-info");
             } else {
+                console.log(result);
                 // lOADER
                 $("#loader1").addClass("hide-info");
                 $("#correo-otp").removeClass("hide-info");
@@ -193,6 +121,8 @@ function ShowDocumento() {
 
                 // FRONT
                 $("#invalid-otp-mail").css("display", "block");
+                $("#invalid-otp-mail").get(0).innerHTML = result;
+
             }
         },
         error: function () {
@@ -202,19 +132,9 @@ function ShowDocumento() {
             $("#put-timer").removeClass("hide-info");
 
             // FRONT
-            $("#api-error").modal('show');
+            $("#api-error-form-oportunidad").modal('show');
         }
     });
-};
-function restart() {
-    $("#btn-validar-correo").removeClass("hide-info");
-    $("#mail").removeClass("disable-writing");
-    $("#mail").val("");
-    $("#put-timer").children("div").remove();
-    $("#new-otp-mail").addClass("hide-info");
-    $("#mesage-resend").addClass("hide-info");
-    $("#politica-hide").removeClass("hide-info");
-    $("#uncheckedPrimarySwitch-politica").prop('checked', false);
 };
 
 // --- VALIDACION DE DOCUMENTO DE IDENTIDAD --- //
@@ -247,7 +167,7 @@ function ValidarDocumento() {
         $("#invalid-apellidos-lead").css("display", "none");
     }
 
-    // -- CONSUMIR API REGISTRADURIA -- //
+    // -- CONSUMO API REGISTRADURIA -- //
     if (numeroDocumento.length > 0 && tipoDocumentoFront.length > 0 && nombres.length > 0 && apellidos.length > 0) {
         // lOADER
         $("#loader3").removeClass("hide-info");
@@ -295,6 +215,7 @@ function ValidarDocumento() {
                     $("#apellidos-lead").val("");
                     $("#apellidos-lead").removeClass("disable-writing");
 
+                    $("#mensaje-error-verifica").get(0).innerHTML = result.error;
                     $("#segundo-intento").removeClass("hide-info");
                     $("#btn-validar-documento").removeClass("hide-info");
                 }
@@ -305,7 +226,7 @@ function ValidarDocumento() {
                 $("#documento-hide").removeClass("hide-info");
 
                 // FRONT
-                $("#api-error").modal('show');
+                $("#api-error-form-oportunidad").modal('show');
             }
         });
     }
@@ -363,7 +284,7 @@ function showOTPCelular() {
                     $("#validacion-cuatro").removeClass("hide-info");
 
                     // FRONT
-                    $("#api-error").modal('show');
+                    $("#api-error-form-oportunidad").modal('show');
                 }
             },
             error: function () {
@@ -371,7 +292,7 @@ function showOTPCelular() {
                 $("#loader2").addClass("hide-info");
 
                 // FRONT
-                $("#api-error").modal('show');
+                $("#api-error-form-oportunidad").modal('show');
             }
         });
     }
@@ -402,32 +323,6 @@ function resendMesage() {
     $("#put-timer2").children("div").remove();
     showOTPCelular();
 };
-function restart2() {
-    // -- Limpio el input de celular -- //
-    $("#celular-hide").addClass("hide-info");
-    $("#celular").removeClass("disable-writing");
-    $("#celular").val("");
-    $("#put-timer2").children("div").remove();
-    $("#mesage-resend-celular").addClass("hide-info");
-    $("#new-otp-celular").addClass("hide-info");
-
-    // -- Limpio el panel de validaciones -- //
-    $("#start-mail").removeClass("hide-info");
-    $("#validacion-dos").addClass("hide-info");
-
-    // -- Limpio el input de correo -- //
-    $("#email-hide").removeClass("hide-info");
-    $("#put-timer").children("div").remove();
-    $("#mail").removeClass("disable-writing");
-    $("#mail").val("");
-    $("#mesage-resend").addClass("hide-info");
-    $("#new-otp-mail").addClass("hide-info");
-    $("#btn-validar-correo").removeClass("hide-info");
-    $("#confirmacion-mail").addClass("hide-info");
-    $("#politica-hide").removeClass("hide-info");
-    $("#uncheckedPrimarySwitch-politica").prop('checked', false);
-
-};
 function ShowOportunidad() {
     // LOADER
     $("#loader2").removeClass("hide-info");
@@ -446,7 +341,7 @@ function ShowOportunidad() {
         url: '/Oportunidad/ValidOTP',
         data: { llave: OTP, entrada: celular },
         success: function (result) {
-            if (result == true) {
+            if (result == "success") {
                 // LOADER
                 $("#loader2").addClass("hide-info");
 
@@ -469,9 +364,11 @@ function ShowOportunidad() {
             } else {
                 // LOADER
                 $("#loader2").addClass("hide-info");
+                $("#celular-hide").removeClass("hide-info");
 
                 // FRONT
                 $("#invalid-otp-celular").css("display", "block");
+                $("#invalid-otp-celular").get(0).innerHTML = result;
             }
         },
         error: function () {
@@ -479,16 +376,66 @@ function ShowOportunidad() {
             $("#loader2").addClass("hide-info");
 
             // FRONT
-            $("#api-error").modal('show');
+            $("#api-error-form-oportunidad").modal('show');
         }
     });
 };
 
+// --- UTILIDAD --- //
+function MailRegex(data) {
+    var count = 0;
+    var validMail = new RegExp(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/);
+    if (validMail.test(data) == false) {
+        $("#invalid-mail").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-mail").css("display", "none");
+        count = 0;
+    }
+    return count;
 
 
+};
+function ResendMailAPI(data) {
 
+    // FRONT
+    $("#btn-validar-celular").removeClass("hide-info");
+    $("#btn-validar-correo").addClass("hide-info");
+    $("#politica-hide").addClass("hide-info");
+    $("#invalid-mail").css("display", "none");
+    $("#invalid-politica").css("display", "none");
+    $("#mail").addClass("disable-writing");
+    $.ajax({
+        type: "GET",
+        url: '/Oportunidad/SendOTP',
+        data: { entrada: data },
+        success: function (result) {
+            if (result == true) {
+                // lOADER
+                $("#loader1").addClass("hide-info");
+                $("#email-hide").removeClass("hide-info");
 
+                // FRONT
+                $("#correo-otp").removeClass("hide-info");
+                $("#put-timer").append('<div><div class="card"><div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;"><h5 class="card-title" style="font-size: 0.9rem;"><span><i class="fa fa-send" style="color:#0088CC; font-size:25px;"></i></span> Hemos enviado un codigo OTP a tu correo electronico, ingresalo en el siguiente campo antes de que la cuenta regresiva se acabe.</h5></div><div class="card-body" style="padding: 0;"><div class="example bg-primary-transparent border-primary text-primary" style="padding:1rem;"><div class="d-sm-flex"><span class="mb-sm-0 mb-3"><i class="fs-30 fe fe-clock"></i></span><div class="ms-sm-5 mb-sm-0 mb-3"><span id="timer-countercallback" class="h3"></span><h5 class="mb-0 mt-1" id="verifica-correo">Verifica tu correo electronico!!!</h5></div><span class="h1 text-center ms-auto mb-0 mb-sm-0 mb-3 "></span></div></div></div></div></div>')
+                activeTimer();
+            } else {
+                // lOADER
+                $("#loader1").addClass("hide-info");
+                $("#email-hide").removeClass("hide-info");
 
+                // FRONT
+                $("#api-error-form-oportunidad").modal('show');
+            }
+        },
+        error: function () {
+            // lOADER
+            $("#loader1").addClass("hide-info");
+            $("#email-hide").removeClass("hide-info");
 
+            // FRONT
+            $("#api-error-form-oportunidad").modal('show');
+        }
+    });
 
-
+}
