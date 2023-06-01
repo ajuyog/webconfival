@@ -648,6 +648,31 @@ body {
     color: #d12c47;
 }
 
+.statistics-info .counter-icon-form-opotunidad {
+    margin-bottom: 1rem;
+    display: inline-flex;
+    width: 4.4rem;
+    height: 4.4rem;
+    padding: 1.3rem 1.4rem;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.text-center-icon{
+    text-align:start;
+}
+
+@media (max-width: 580px) {
+    .text-center-icon {
+        text-align: center;
+    }
+}
+
+.statistics-info .counter-icon-form-opotunidad i {
+    font-size: 1.2rem;
+    margin:auto;
+}
+
 /*-------------------------------------------------------------*/
 .margin-tabs-li {
     margin: auto;

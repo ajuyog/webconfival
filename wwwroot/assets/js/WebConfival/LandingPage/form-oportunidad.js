@@ -319,7 +319,7 @@ function activeTimer2() {
         }
     });
 };
-function resendMesage() {
+function ResendMesage() {
     $("#new-otp-celular").addClass("hide-info");
     $("#mesage-resend-celular").addClass("hide-info");
     $("#put-timer2").children("div").remove();
@@ -441,3 +441,16 @@ function ResendMailAPI(data) {
     });
 
 }
+
+// --- CONTADOR --- //
+$('#intentos-sms').click(function () {
+    var count = $('#intentos-sms-count')
+    if (count.get(0).innerHTML == "1") {
+
+        $("#celular-hide").addClass("hide-info");
+        $("#intentos-sms-superados").removeClass("hide-info");
+
+    } else {
+        $('#intentos-sms-count').html(function (i, val) { return val * 1 + 1 });
+    }
+});
