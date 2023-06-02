@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using confinancia.Models;
 using confinancia.Models.JsonDTO;
+using confinancia.Services.Token;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -14,20 +15,156 @@ public class LandingPageController : Controller
 
 	#region CONSTRUCTOR
 	private readonly IConfiguration _configuration;
-	public LandingPageController(IConfiguration configuration)
+    //private readonly IGetToken _getToken;
+    //private readonly GetToken _token;
+
+    public LandingPageController(IConfiguration configuration/*, IGetToken getToken, GetToken token*/)
 	{
 		_configuration = configuration;
-	}
+        //_getToken = getToken;
+        //_token = token;
+    }
 	#endregion
 
-	[Route("/")]
 	[HttpGet]
-    public IActionResult Index()
+	public async Task<List<DropDownListDTO>> CorporacionId(int id)
+	{
+        var token = GetToken();
+        if (token.Result == "")
+        {
+            return new List<DropDownListDTO>();
+        }
+		if (token.Result.Length == 177)
+		{
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/corporacion/" + id + "?Pagina=1&RegistrosPorPagina=100");
+            request.Headers.Add("Authorization", "Bearer " + token.Result);
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStream);
+                return result;
+            }
+            else
+            {
+                return new List<DropDownListDTO>();
+            }
+        }
+        return new List<DropDownListDTO>();
+    }
+
+    /// <summary>
+    /// Devuelve la vista de Inicio 
+    /// </summary>
+    /// <returns></returns>
+    [Route("/")]
+	[HttpGet]
+    public async Task<IActionResult> Index()
     {
 		ViewBag.Seccion = "prueba";
+
+        var token = GetToken();
+		if (token.Result == "")
+		{
+			return NotFound();
+		}
+		if (token.Result.Length == 177)
+		{
+			var client = new HttpClient();
+
+            #region DropDown Regimen
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/regimen?Pagina=1&RegistrosPorPagina=10");
+			request.Headers.Add("Authorization", "Bearer " + token.Result);
+			var response = await client.SendAsync(request);
+			if (response.IsSuccessStatusCode)
+			{
+				var responseStream = await response.Content.ReadAsStringAsync();
+				var result = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStream);
+				ViewBag.LstRegimen = result;
+			}
+			else
+			{
+                ViewBag.LstRegimen = new List<DropDownListDTO>();
+            }
+            #endregion
+
+            #region DropDown Tipo Providencia
+            var requestProvidencia = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/tipoProvidencia?Pagina=1&RegistrosPorPagina=20");
+            requestProvidencia.Headers.Add("Authorization", "Bearer " + token.Result);
+            var responseProvidencia = await client.SendAsync(requestProvidencia);
+            if (responseProvidencia.IsSuccessStatusCode)
+            {
+                var responseStream = await responseProvidencia.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStream);
+                ViewBag.LstProvidencia = result;
+            }
+            else
+            {
+                ViewBag.LstProvidencia = new List<DropDownListDTO>();
+            }
+            #endregion
+
+            #region DropDown Tipo Corporacion
+            var requestCorporacion = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/corporacion/tipoCorporacion?Pagina=1&RegistrosPorPagina=10");
+            requestCorporacion.Headers.Add("Authorization", "Bearer " + token.Result);
+            var responseCorporacion = await client.SendAsync(requestCorporacion);
+            if (responseCorporacion.IsSuccessStatusCode)
+            {
+                var responseStream = await responseCorporacion.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<List<TipoCorporacionDTO>>(responseStream);
+                ViewBag.LstCorporacion = result;
+            }
+            else
+            {
+                ViewBag.LstCorporacion = new List<TipoCorporacionDTO>();
+            }
+            #endregion
+
+            #region DropDown Medio de Control
+            var requestMedioControl = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/medioControl?Pagina=1&RegistrosPorPagina=20");
+            requestMedioControl.Headers.Add("Authorization", "Bearer " + token.Result);
+            var responseMedioControl = await client.SendAsync(requestMedioControl);
+            if (responseMedioControl.IsSuccessStatusCode)
+            {
+                var responseStream = await responseMedioControl.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStream);
+                ViewBag.LstMedioControl = result;
+            }
+            else
+            {
+                ViewBag.LstMedioControl = new List<DropDownListDTO>();
+            }
+            #endregion
+
+            #region DropDown Entidad pagaduria
+            var requestEntidad = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/entidadpagaduria");
+            requestEntidad.Headers.Add("Authorization", "Bearer " + token.Result);
+            var responseEndidad = await client.SendAsync(requestEntidad);
+            if (responseEndidad.IsSuccessStatusCode)
+            {
+                var responseStream = await responseEndidad.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStream);
+                ViewBag.LstEntidad = result;
+            }
+            else
+            {
+                ViewBag.LstEntidad = new List<DropDownListDTO>();
+            }
+
+
+            #endregion
+
+
+        }
         return View();
     }
 
+	/// <summary>
+	/// Devuelve la vista de servicios
+	/// </summary>
+	/// <param name="seccion"></param>
+	/// <returns></returns>
 	[HttpGet]
 	public IActionResult ServicioLanding(string seccion)
 	{
@@ -35,415 +172,22 @@ public class LandingPageController : Controller
 		return View();
 	}
 
+	/// <summary>
+	/// Devuelve la vista de inicio con redirecion al formulario de Cotizar
+	/// </summary>
+	/// <param name="seccion"></param>
+	/// <returns></returns>
 	[HttpGet]
 	public IActionResult Cotizar(string seccion)
 	{
 		ViewBag.Seccion = seccion;
-		var model = new List<BlogDTO>()
-		{
-			new BlogDTO()
-			{
-				Id = 1,
-				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				Autor = new AutorDTO()
-				{
-					Id= 1,
-					ImagenAutor = new ImagenesDTO()
-					{
-						Id = 6,
-						URLImagen = "/assets/images/photos/11.jpg",
-						Alt = "altPruebas seis",
-						Descripcion = "Descripcion prueba seis",
-						Titulo = "Titulo de la image seis"
-					},
-					Nombre = "Autor Desconocido 1",
-					Descripcion = "Esta es una descripción del autor desconocido 1"
-				} ,
-				FechaPublicacion = DateTime.Now,
-				Categorias = new List<CategoriaDTO>()
-				{
-					new CategoriaDTO(){ Id = 1, Nombre = "Economia"},
-					new CategoriaDTO(){ Id = 2, Nombre = "Sentencias"},
-					new CategoriaDTO(){ Id = 3, Nombre = "Indicadores economicos"},
-					new CategoriaDTO(){ Id = 4, Nombre = "Juridicos"}
-				},
-				Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-				IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-				Comentarios = new List<ComentariosDTO>()
-				{
-					new ComentariosDTO()
-					{
-						Id = 1,
-						Autor = new AutorDTO()
-						{
-							Id= 2,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 7,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas siete",
-								Descripcion = "Descripcion prueba siete",
-								Titulo = "Titulo de la image siete"
-							},
-							Nombre = "Autor Desconocido 2",
-							Descripcion = "Esta es una descripción del autor desconocido 2"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>
-						{
-							new SubComentarioDTO()
-							{
-								Id = 1,
-								SubComentario = 20,
-								Autor = new AutorDTO()
-								{
-									Id= 3,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 7,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas siete",
-										Descripcion = "Descripcion prueba siete",
-										Titulo = "Titulo de la image siete"
-									},
-									Nombre = "Autor Desconocido 2",
-									Descripcion = "Esta es una descripción del autor desconocido 3"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un SubComentario"
-							},
-							new SubComentarioDTO()
-							{
-								Id = 2,
-								SubComentario = 21,
-								Autor = new AutorDTO()
-								{
-									Id= 4,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 8,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas ocho",
-										Descripcion = "Descripcion prueba ocho",
-										Titulo = "Titulo de la image ocho"
-									},
-									Nombre = "Autor Desconocido 4",
-									Descripcion = "Esta es una descripción del autor desconocido 4"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un segundo SubComentario"
-							}
-						}
-					},
-					new ComentariosDTO()
-					{
-						Id = 2,
-						Autor = new AutorDTO()
-						{
-							Id= 5,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 9,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas nueve",
-								Descripcion = "Descripcion prueba nueve",
-								Titulo = "Titulo de la image nueve"
-							},
-							Nombre = "Autor Desconocido 5",
-							Descripcion = "Esta es una descripción del autor desconocido 5"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>()
-					}
-				},
-				Galeria = new List<ImagenesDTO>()
-				{
-					new ImagenesDTO()
-					{
-						Id = 1,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					},
-					new ImagenesDTO()
-					{
-						Id = 2,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					}
-				}
-			},
-			new BlogDTO()
-			{
-				Id = 2,
-				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				Autor = new AutorDTO()
-				{
-					Id= 1,
-					ImagenAutor = new ImagenesDTO()
-					{
-						Id = 10,
-						URLImagen = "/assets/images/photos/11.jpg",
-						Alt = "altPruebas diez",
-						Descripcion = "Descripcion prueba diez",
-						Titulo = "Titulo de la image diez"
-					},
-					Nombre = "Autor Desconocido 1",
-					Descripcion = "Esta es una descripción del autor desconocido 1"
-				} ,
-				FechaPublicacion = DateTime.Now,
-				Categorias = new List<CategoriaDTO>()
-				{
-					new CategoriaDTO(){ Id = 1, Nombre = "Economia"},
-					new CategoriaDTO(){ Id = 2, Nombre = "Sentencias"},
-					new CategoriaDTO(){ Id = 3, Nombre = "Indicadores economicos"},
-					new CategoriaDTO(){ Id = 4, Nombre = "Juridicos"}
-				},
-				Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-				IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-				Comentarios = new List<ComentariosDTO>()
-				{
-					new ComentariosDTO()
-					{
-						Id = 1,
-						Autor = new AutorDTO()
-						{
-							Id= 2,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 11,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas once",
-								Descripcion = "Descripcion prueba once",
-								Titulo = "Titulo de la image once"
-							},
-							Nombre = "Autor Desconocido 2",
-							Descripcion = "Esta es una descripción del autor desconocido 2"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>
-						{
-							new SubComentarioDTO()
-							{
-								Id = 1,
-								SubComentario = 20,
-								Autor = new AutorDTO()
-								{
-									Id= 3,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 12,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas doce",
-										Descripcion = "Descripcion prueba doce",
-										Titulo = "Titulo de la image doce"
-									},
-									Nombre = "Autor Desconocido 2",
-									Descripcion = "Esta es una descripción del autor desconocido 3"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un SubComentario"
-							},
-							new SubComentarioDTO()
-							{
-								Id = 2,
-								SubComentario = 21,
-								Autor = new AutorDTO()
-								{
-									Id= 4,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 12,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas doce",
-										Descripcion = "Descripcion prueba doce",
-										Titulo = "Titulo de la image doce"
-									},
-									Nombre = "Autor Desconocido 4",
-									Descripcion = "Esta es una descripción del autor desconocido 4"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un segundo SubComentario"
-							}
-						}
-					},
-					new ComentariosDTO()
-					{
-						Id = 2,
-						Autor = new AutorDTO()
-						{
-							Id= 5,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 13,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas trece",
-								Descripcion = "Descripcion prueba trece",
-								Titulo = "Titulo de la image trece"
-							},
-							Nombre = "Autor Desconocido 5",
-							Descripcion = "Esta es una descripción del autor desconocido 5"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>()
-					}
-				},
-				Galeria = new List<ImagenesDTO>()
-				{
-					new ImagenesDTO()
-					{
-						Id = 1,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					},
-					new ImagenesDTO()
-					{
-						Id = 2,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					}
-				}
-			},
-			new BlogDTO()
-			{
-				Id = 3,
-				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				Autor = new AutorDTO()
-				{
-					Id= 1,
-					ImagenAutor = new ImagenesDTO()
-					{
-						Id = 14,
-						URLImagen = "/assets/images/photos/11.jpg",
-						Alt = "altPruebas catorce",
-						Descripcion = "Descripcion prueba catorce",
-						Titulo = "Titulo de la image catorce"
-					},
-					Nombre = "Autor Desconocido 1",
-					Descripcion = "Esta es una descripción del autor desconocido 1"
-				} ,
-				FechaPublicacion = DateTime.Now,
-				Categorias = new List<CategoriaDTO>()
-				{
-					new CategoriaDTO(){ Id = 1, Nombre = "Economia"},
-					new CategoriaDTO(){ Id = 2, Nombre = "Sentencias"},
-					new CategoriaDTO(){ Id = 3, Nombre = "Indicadores economicos"},
-					new CategoriaDTO(){ Id = 4, Nombre = "Juridicos"}
-				},
-				Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-				IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-				Comentarios = new List<ComentariosDTO>()
-				{
-					new ComentariosDTO()
-					{
-						Id = 1,
-						Autor = new AutorDTO()
-						{
-							Id= 2,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 15,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas quince",
-								Descripcion = "Descripcion prueba quince",
-								Titulo = "Titulo de la image quince"
-							},
-							Nombre = "Autor Desconocido 2",
-							Descripcion = "Esta es una descripción del autor desconocido 2"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>
-						{
-							new SubComentarioDTO()
-							{
-								Id = 1,
-								SubComentario = 20,
-								Autor = new AutorDTO()
-								{
-									Id= 3,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 2",
-									Descripcion = "Esta es una descripción del autor desconocido 3"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un SubComentario"
-							},
-							new SubComentarioDTO()
-							{
-								Id = 2,
-								SubComentario = 21,
-								Autor = new AutorDTO()
-								{
-									Id= 4,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 4",
-									Descripcion = "Esta es una descripción del autor desconocido 4"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un segundo SubComentario"
-							}
-						}
-					},
-					new ComentariosDTO()
-					{
-						Id = 2,
-						Autor = new AutorDTO()
-						{
-							Id= 5,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 16,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas dieciseis",
-								Descripcion = "Descripcion prueba dieciseis",
-								Titulo = "Titulo de la image dieciseis"
-							},
-							Nombre = "Autor Desconocido 5",
-							Descripcion = "Esta es una descripción del autor desconocido 5"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>()
-					}
-				},
-				Galeria = new List<ImagenesDTO>()
-				{
-					new ImagenesDTO()
-					{
-						Id = 1,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					},
-					new ImagenesDTO()
-					{
-						Id = 2,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					}
-				}
-			}
-		};
-		return View("~/Views/LandingPage/Index.cshtml", model);
+		return View("~/Views/LandingPage/Index.cshtml");
 	}
 
+	/// <summary>
+	/// Devuelve la vista sysAdmin
+	/// </summary>
+	/// <returns></returns>
 	public IActionResult SignIn()
 	{
 		var props = new AuthenticationProperties();
@@ -481,6 +225,12 @@ public class LandingPageController : Controller
 			return RedirectToAction("Index", "LandingPage");
 		}
 	}
+
+	/// <summary>
+	/// Desloguea al usuario y devuelve la vista de inicio
+	/// </summary>
+	/// <param name="signOutType"></param>
+	/// <returns></returns>
 	public IActionResult SignOut(string signOutType)
 	{
 		if (signOutType == "app")
@@ -493,6 +243,35 @@ public class LandingPageController : Controller
 		}
 		return RedirectToAction("Index");
 	}
+
+
+    [HttpGet]
+    public async Task<string> GetToken()
+    {
+        var obj = new LoginTokenDTO()
+        {
+            Id = _configuration.GetSection("Variables:IdLogin").Value,
+            Email = _configuration.GetSection("Variables:Email").Value,
+            Password = _configuration.GetSection("Variables:Password").Value,
+        };
+        var json = JsonConvert.SerializeObject(obj);
+        var client = new HttpClient();
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/cuentas/inicioSesion?secret=" + _configuration.GetSection("Variables:Secret").Value);
+        var content = new StringContent(json, null, "application/json");
+        request.Content = content;
+        var response = await client.SendAsync(request);
+        if (response.IsSuccessStatusCode)
+        {
+            var responseStream = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<TokenValuezDTO>(responseStream);
+            return result.Token;
+        }
+        else
+        {
+            var empty = "";
+            return empty;
+        }
+    }
 
 
 }

@@ -178,5 +178,19 @@ namespace confinancia.Controllers
 			}
 		}
 
+		[HttpGet]
+		public string GetAttempts(string valor)
+		{
+			var x = valor == "SMS" ? _configuration.GetSection("Intentos:SMS").Value : valor == "Verifik" ? _configuration.GetSection("Intentos:Verifik").Value : "";
+			return x;
+        }
+
+		[HttpGet]
+		public async Task<IActionResult> SaveForm()
+		{
+			var HOLA = 8;
+			return View();
+		}
+
 	}
 }

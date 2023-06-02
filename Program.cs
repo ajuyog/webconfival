@@ -1,3 +1,4 @@
+using confinancia.Services.Token;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
 using static System.Net.WebRequestMethods;
@@ -16,6 +17,8 @@ builder.Services.AddAuthentication(options =>
 	o.AuthorizationEndpoint = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize";
 	o.TokenEndpoint = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/token";
 });
+
+//builder.Services.AddScoped<IGetToken, GetToken>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
