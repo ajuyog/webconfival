@@ -410,7 +410,30 @@ function ShowOportunidad() {
 function LeadOportunidad() {
     var validacion = ValidarLeadOportunidad();
     if (validacion == 0) {
-        console.log("lo logre");
+        const formElement = document.querySelector("form");
+        var formData = new FormData(formElement);
+        $.ajax({
+            url: "Oportunidad/SaveForm",
+            type: 'POST',
+            data: formData,
+            success: function (data) {
+                console.log(data);
+                if (data) {
+                    $("#success-leadOportunidad").modal("show");
+                    window.location.reload();
+                } else {
+                    notif({
+                        msg: 'Algo malo ha pasado, vuelve a intentar',
+                        type: "danger",
+                        multiline: true,
+                        position: "center"
+                    });
+                }
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
     }
 }
 

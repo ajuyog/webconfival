@@ -985,153 +985,155 @@
                                                                             <partial name="~/Views/Shared/_LoaderOportunidad.cshtml" model="loaderDos" />
 
 
-                                                                            <!-- INPUT Oportunidad Seccion 1  -->
-                                                                            <div class="hide-info" id="oportunidad-hide">
-                                                                                <div>
-                                                                                    <input type="hidden" id="correo-ok" />
-                                                                                    <input type="hidden" id="tp-documento-ok" />
-                                                                                    <input type="hidden" id="no-documento-ok" />
-                                                                                    <input type="hidden" id="nombres-ok" />
-                                                                                    <input type="hidden" id="apellidos-ok" />
-                                                                                    <input type="hidden" id="fNacimiento-ok" />
-                                                                                    <input type="hidden" id="fExpedicion-ok" />
-                                                                                    <input type="hidden" id="no-contacto-ok" />
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                        <label class="form-label">Demandante</label>
-                                                                                        <input class="form-control" type="text" id="demandante">
-                                                                                        <div class="invalid-feedback" id="invalid-feedback-demandante">El campo 'Demandante' es requerido</div>
+                                                                            <!-- <INPUT Oportunidad Seccion 1  -->
+                                                                            <form id="formLeadOportunidad" name="formLeadOportunidad" method="post" enctype="multipart/form-data">
+                                                                                <div class="hide-info" id="oportunidad-hide">
+                                                                                    <div>
+                                                                                        <input type="hidden" id="correo-ok" name="correo-ok" />
+                                                                                        <input type="hidden" id="tp-documento-ok" name="tp-documento-ok" />
+                                                                                        <input type="hidden" id="no-documento-ok" name="no-documento-ok" />
+                                                                                        <input type="hidden" id="nombres-ok"  name="nombres-ok" />
+                                                                                        <input type="hidden" id="apellidos-ok" name="apellidos-ok" />
+                                                                                        <input type="hidden" id="fNacimiento-ok" name="fNacimiento-ok" />
+                                                                                        <input type="hidden" id="fExpedicion-ok"  name="fExpedicion-ok" />
+                                                                                        <input type="hidden" id="no-contacto-ok" name="no-contacto-ok" />
                                                                                     </div>
-                                                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                        <div class="form-group">
-                                                                                            <label class="form-label">Fecha de Ejecutoria</label>
-                                                                                            <input class="form-control" type="date" placeholder="Fecha de Ejecutoria" id="f-ejecutoria">
-                                                                                            <div class="invalid-feedback" id="invalid-f-ejecutoria">El campo 'Fecha de Ejecutoria' es requerido</div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            <label class="form-label">Demandante</label>
+                                                                                            <input class="form-control" type="text" id="demandante" name="demandante">
+                                                                                            <div class="invalid-feedback" id="invalid-feedback-demandante">El campo 'Demandante' es requerido</div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Fecha de Ejecutoria</label>
+                                                                                                <input class="form-control" type="date" placeholder="Fecha de Ejecutoria" id="f-ejecutoria" name="f-ejecutoria">
+                                                                                                <div class="invalid-feedback" id="invalid-f-ejecutoria">El campo 'Fecha de Ejecutoria' es requerido</div>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                        <div class="form-group">
-                                                                                            <label class="form-label">Tipo de Fallo</label>
-                                                                                            <select class="form-select" id="fallo">
-                                                                                                <option selected disabled value="">Seleccione..</option>
-                                                                                                @foreach (var item in ViewBag.LstProvidencia)
-                                                                                                {
-                                                                                                    <option value="@item.Id">@item.Nombre</option>
-                                                                                                }
-                                                                                            </select>
-                                                                                            <div class="invalid-feedback" id="invalid-feedback-tipo-fallo">Seleccione un tipo de fallo.</div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Tipo de Fallo</label>
+                                                                                                <select class="form-select" id="fallo" name="fallo">
+                                                                                                    <option selected disabled value="">Seleccione..</option>
+                                                                                                    @foreach (var item in ViewBag.LstProvidencia)
+                                                                                                    {
+                                                                                                        <option value="@item.Id">@item.Nombre</option>
+                                                                                                    }
+                                                                                                </select>
+                                                                                                <div class="invalid-feedback" id="invalid-feedback-tipo-fallo">Seleccione un tipo de fallo.</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Tipo Regimen</label>
+                                                                                                <select class="form-select" id="tipo-regimen"  name="tipo-regimen" >
+                                                                                                    <option selected disabled value="">Seleccione..</option>
+                                                                                                    @foreach (var item in ViewBag.LstRegimen)
+                                                                                                    {
+                                                                                                        <option value="@item.Id">@item.Nombre</option>
+                                                                                                    }
+                                                                                                </select>
+                                                                                                <div class="invalid-feedback" id="invalid-feedback-tipo-regimen">Seleccione un tipo regimen.</div>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                        <div class="form-group">
-                                                                                            <label class="form-label">Tipo Regimen</label>
-                                                                                            <select class="form-select" id="tipo-regimen" >
-                                                                                                <option selected disabled value="">Seleccione..</option>
-                                                                                                @foreach (var item in ViewBag.LstRegimen)
-                                                                                                {
-                                                                                                    <option value="@item.Id">@item.Nombre</option>
-                                                                                                }
-                                                                                            </select>
-                                                                                            <div class="invalid-feedback" id="invalid-feedback-tipo-regimen">Seleccione un tipo regimen.</div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Medio de control</label>
+                                                                                                <select class="form-select" id="medio-control"  name="medio-control">
+                                                                                                    <option selected disabled value="">Seleccione..</option>
+                                                                                                    @foreach (var item in ViewBag.LstMedioControl)
+                                                                                                    {
+                                                                                                        <option value="@item.Id">@item.Nombre</option>
+                                                                                                    }
+                                                                                                </select>
+                                                                                                <div class="invalid-feedback" id="invalid-feedback-medio-control">Seleccione un medio de control.</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Entidad</label>
+                                                                                                <select class="form-select" id="entidad-pagaduria" name="entidad-pagaduria">
+                                                                                                    <option selected disabled value="">Seleccione..</option>
+                                                                                                    @foreach (var item in ViewBag.LstEntidad)
+                                                                                                    {
+                                                                                                        <option value="@item.Id">@item.Nombre</option>
+                                                                                                    }
+                                                                                                </select>
+                                                                                                <div class="invalid-feedback" id="invalid-feedback-entidad-pagaduria">Seleccione una entidad.</div>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                        <div class="form-group">
-                                                                                            <label class="form-label">Medio de control</label>
-                                                                                            <select class="form-select" id="medio-control">
-                                                                                                <option selected disabled value="">Seleccione..</option>
-                                                                                                @foreach (var item in ViewBag.LstMedioControl)
-                                                                                                {
-                                                                                                    <option value="@item.Id">@item.Nombre</option>
-                                                                                                }
-                                                                                            </select>
-                                                                                            <div class="invalid-feedback" id="invalid-feedback-medio-control">Seleccione un medio de control.</div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Tipo de Corporacion</label>
+                                                                                                <select class="form-select" id="tipo-corporacion">
+                                                                                                    <option selected disabled value="">Seleccione..</option>
+                                                                                                    @foreach (var item in ViewBag.LstCorporacion)
+                                                                                                    {
+                                                                                                        <option value="@item.Id">@item.Nombre</option>
+                                                                                                    }
+                                                                                                </select>
+                                                                                                <div class="invalid-feedback" id="invalid-feedback-tipo-corporacion">Seleccione un tipo de corporacion.</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Corporacion</label>
+                                                                                                <select class="form-select" id="corporacion" name="corporacion">
+                                                                                                    <option selected disabled value="">Seleccione..</option>
+                                                                                                </select>
+                                                                                                <div class="invalid-feedback" id="invalid-feedback-corporacion">Seleccione una corporacion.</div>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                        <div class="form-group">
-                                                                                            <label class="form-label">Entidad</label>
-                                                                                            <select class="form-select" id="entidad-pagaduria">
-                                                                                                <option selected disabled value="">Seleccione..</option>
-                                                                                                @foreach (var item in ViewBag.LstEntidad)
-                                                                                                {
-                                                                                                    <option value="@item.Id">@item.Nombre</option>
-                                                                                                }
-                                                                                            </select>
-                                                                                            <div class="invalid-feedback" id="invalid-feedback-entidad-pagaduria">Seleccione una entidad.</div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            <label class="form-label" >Cuenta de cobro</label>
+                                                                                            <input class="form-control" type="text" id="cuenta-cobro-user" name="cuenta-cobro-user">
+                                                                                        </div>
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            <label class="form-label">Numero de radicado</label>
+                                                                                            <input class="form-control" type="text" id="numero-radicado-user" name="numero-radicado-user">
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                        <div class="form-group">
-                                                                                            <label class="form-label">Tipo de Corporacion</label>
-                                                                                            <select class="form-select" id="tipo-corporacion">
-                                                                                                <option selected disabled value="">Seleccione..</option>
-                                                                                                @foreach (var item in ViewBag.LstCorporacion)
-                                                                                                {
-                                                                                                    <option value="@item.Id">@item.Nombre</option>
-                                                                                                }
-                                                                                            </select>
-                                                                                            <div class="invalid-feedback" id="invalid-feedback-tipo-corporacion">Seleccione un tipo de corporacion.</div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Cargar documento primera instancia <span style="font-style:italic; font-size:12px;"> (opcional)</span></label>
+                                                                                                <input type="file" class="dropify" data-height="200" id="primera-instancia-file" name="primera-instancia-file" />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Cargar documento segunda instancia <span style="font-style:italic; font-size:12px;"> (opcional)</span></label>
+                                                                                                <input type="file" class="dropify" data-height="200" id="segunda-instancia-file" name="segunda-instancia-file" />
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                        <div class="form-group">
-                                                                                            <label class="form-label">Corporacion</label>
-                                                                                            <select class="form-select" id="corporacion">
-                                                                                                <option selected disabled value="">Seleccione..</option>
-                                                                                            </select>
-                                                                                            <div class="invalid-feedback" id="invalid-feedback-corporacion">Seleccione una corporacion.</div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                        <label class="form-label" >Cuenta de cobro</label>
-                                                                                        <input class="form-control" type="text" id="cuenta-cobro-user">
-                                                                                    </div>
-                                                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                        <label class="form-label">Numero de radicado</label>
-                                                                                        <input class="form-control" type="text" id="numero-radicado-user">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                        <div class="form-group">
-                                                                                            <label class="form-label">Cargar documento primera instancia <span style="font-style:italic; font-size:12px;"> (opcional)</span></label>
-                                                                                            <input type="file" class="dropify" data-height="200" id="primera-instancia-file" />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                        <div class="form-group">
-                                                                                            <label class="form-label">Cargar documento segunda instancia <span style="font-style:italic; font-size:12px;"> (opcional)</span></label>
-                                                                                            <input type="file" class="dropify" data-height="200" id="segunda-instancia-file" />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
                                                                                     
 
-                                                                                <div id="btn-validar-celular">
-                                                                                    <a href="#Contact" class="btn btn-primary" onclick="LeadOportunidad()">Quiero que me contacten</a>
-                                                                                </div>
+                                                                                    <div id="btn-validar-celular">
+                                                                                        <a href="#Contact" class="btn btn-primary" onclick="LeadOportunidad()">Quiero que me contacten</a>
+                                                                                    </div>
 
-                                                                                <!-- Intentos value -->
-                                                                                <div class="hide-info">
-                                                                                    <p>Intentos: </p>
-                                                                                    <div id="intentos-sms-count">0</div>
-                                                                                </div>
-                                                                                <div class="hide-info">
-                                                                                    <p>Intentos: </p>
-                                                                                    <div id="intentos-verifik-count">0</div>
-                                                                                </div>
+                                                                                    <!-- Intentos value -->
+                                                                                    <div class="hide-info">
+                                                                                        <p>Intentos: </p>
+                                                                                        <div id="intentos-sms-count">0</div>
+                                                                                    </div>
+                                                                                    <div class="hide-info">
+                                                                                        <p>Intentos: </p>
+                                                                                        <div id="intentos-verifik-count">0</div>
+                                                                                    </div>
 
-                                                                            </div>
+                                                                                </div>
+                                                                            </form>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1345,6 +1347,18 @@
                         <i class="ion-wrench fs-65 text-primary lh-1 mb-5 d-inline-block"></i>
                         <h4 class="text-success tx-semibold">Estamos trabajando para solucionar!</h4>
                         <p class="text-muted">Nuestro sistema esta presentando cambios, intentalo de nuevo mas tarde.</p><button class="btn btn-success pd-x-25" onclick="Cancel()">Continuar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="success-leadOportunidad">
+            <div class="modal-dialog modal-dialog-centered text-center " role="document">
+                <div class="modal-content tx-size-sm">
+                    <div class="modal-body text-center p-4">
+                        <i class="ion-checkmark  fs-65 text-primary lh-1 mb-5 d-inline-block"></i>
+                        <h4 class="text-success tx-semibold">Exitoso!</h4>
+                        <p class="text-muted">El ingreso de tu operación ha sido exitoso. Pronto nos estaremos comunicando.</p><button class="btn btn-success pd-x-25" onclick="Cancel()">Continuar</button>
                     </div>
                 </div>
             </div>

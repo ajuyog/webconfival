@@ -185,11 +185,72 @@ namespace confinancia.Controllers
 			return x;
         }
 
-		[HttpGet]
-		public async Task<IActionResult> SaveForm()
+		[HttpPost]
+		public async Task<bool> SaveForm()
 		{
-			var HOLA = 8;
-			return View();
+			var token = GetToken();
+			PersonaDTO objP = new PersonaDTO();
+			objP.nombres= HttpContext.Request.Form["nombres-ok"];
+			objP.apellidos= HttpContext.Request.Form["apellidos-ok"];
+			objP.codSecundario1= HttpContext.Request.Form["no-documento-ok"];
+			objP.correoElectronico= HttpContext.Request.Form["correo-ok"];
+			objP.numeroContacto= HttpContext.Request.Form["no-contacto-ok"];
+			objP.fechaNacimiento= DateTime.Parse(HttpContext.Request.Form["fNacimiento-ok"]);
+			objP.fechaExpedicion= DateTime.Parse(HttpContext.Request.Form["fExpedicion-ok"]);
+			objP.tipoDocumento= HttpContext.Request.Form["tp-documento-ok"];
+			objP.politicaTratamientoDatos = true;
+			objP.estado = true;
+
+			OportunidadDTO objO = new OportunidadDTO();
+			objO.tipoProvidenciaId = Convert.ToInt16(HttpContext.Request.Form["fallo"]);
+			objO.medioControlId = Convert.ToInt16(HttpContext.Request.Form["medio-control"]);
+			objO.regimenId = Convert.ToInt16(HttpContext.Request.Form["tipo-regimen"]);
+			objO.corporacionId = Convert.ToInt16(HttpContext.Request.Form["corporacion"]);
+			objO.entidadPagaduriaId = Convert.ToInt16(HttpContext.Request.Form["entidad-pagaduria"]);
+			objO.fechaEjecutoria = DateTime.Parse(HttpContext.Request.Form["f-ejecutoria"]);
+			objO.numeroRadicado = HttpContext.Request.Form["numero-radicado-user"];
+			objO.cuentaCobro = HttpContext.Request.Form["cuenta-cobro-user"];
+			objO.demandante = HttpContext.Request.Form["demandante"];
+
+			var archivoC = HttpContext.Request.Form.Files;
+
+			var scId = 0;
+			var ok = false;
+			//httpClient.DefaultRequestHeaders.Add("Content-Type", "application/json");
+			var httpClient = new HttpClient();
+
+			httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Result);
+			var response = await httpClient.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadPersona", objP);
+			if (response.IsSuccessStatusCode)
+			{
+				// return Content("response1" + response);
+				var responseStream = await response.Content.ReadAsStringAsync();
+				var objPN = JsonConvert.DeserializeObject<PersonaDTO>(responseStream);
+				objO.leadPersonaId = objPN.id;
+				var response2 = await httpClient.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadOportunidad", objO);
+				//return Content("response2" + response2);
+
+				if (response2.IsSuccessStatusCode)
+				{
+					var responseStream3 = await response2.Content.ReadAsStringAsync();
+					var objSC = JsonConvert.DeserializeObject<OportunidadDTO>(responseStream3);
+					//scId = (int) objSC.id;
+					ok = true;
+					// return Content("response3" + responseStream3);
+				}
+				else
+				{
+					var responseStream5 = await response2.Content.ReadAsStringAsync();
+					ok = false;
+
+				}
+			}
+			else
+			{
+				var responseStream2 = await response.Content.ReadAsStringAsync();
+				ok = false;
+			}
+			return ok;
 		}
 
 	}
