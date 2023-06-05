@@ -419,6 +419,7 @@ function LeadOportunidad() {
             success: function (data) {
                 console.log(data);
                 if (data) {
+                    //OPEN MODAL SUCCES
                     $("#success-leadOportunidad").modal("show");
                     window.location.reload();
                 } else {
