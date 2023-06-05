@@ -4,7 +4,7 @@
 	{
         public int Id { get; set; }
         public string Correo { get; set; }
-        public string Img { get; set; }
+        public ImagenesDTO ImagenAutor { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
     }

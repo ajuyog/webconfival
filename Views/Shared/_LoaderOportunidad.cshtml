@@ -1,0 +1,21 @@
+﻿@model confinancia.Models.LoaderDTO.LoaderDTO
+@{
+	var id = "loader" + Model.Seccion.ToString();
+}
+<div id="@id" class="hide-info">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<div class="dimmer active">
+					<div class="spinner2">
+						<div class="cube1"></div>
+						<div class="cube2"></div>
+					</div>
+				</div>
+				<p style="text-align: center;">
+					Estamos procesando su solicitud
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

@@ -26,11 +26,31 @@
 		<!--- FONT-ICONS CSS -->
 		<link href="~/assets/css/icons.css" rel="stylesheet" asp-append-version="true"/>
 
+		<!-- Google Tag Manager -->
+		<script>
+			(function (w, d, s, l, i) {
+				w[l] = w[l] || []; w[l].push({
+					'gtm.start':
+						new Date().getTime(), event: 'gtm.js'
+				}); var f = d.getElementsByTagName(s)[0],
+					j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+			})(window, document, 'script', 'dataLayer', 'GTM-5KZH48Z');
+		</script>
+		<!-- End Google Tag Manager -->
+
 		
 	</head>
 
 	<body class="ltr app horizontal landing-page">
-		<a href="#Contact" class="buy-now">Cotiza tu sentencia aqui</a>
+
+		<!-- Google Tag Manager (noscript) -->
+		<noscript>
+			<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KZH48Z"
+					height="0" width="0" style="display:none;visibility:hidden"></iframe>
+		</noscript>
+		<!-- End Google Tag Manager (noscript) -->
+
+		<a asp-action="Cotizar" asp-controller="LandingPage" asp-route-seccion="Contact" class="buy-now">Cotiza tu sentencia aqui</a>
 		
 
 		<!-- GLOBAL-LOADER -->
@@ -83,57 +103,12 @@
 		<script src="~/assets/landing/lib/owl-carousel/owl.carousel.js"></script>
 		<!-- INPUT MASK JS-->
 		
-		<script>
-				// SUBMIT Formulario solicitud credito
-			
-			$(document).ready(function () {
-				$('#btnSubmitSolicitud').on('click', function () {
-                    if (document.formSolicitudC.reportValidity()) {
-						$('#formSolicitudC').submit();
-					}
-				});
-				$('#modalPoliticas').on('click', function () {
-                    if (document.formSolicitudC.reportValidity()) {
-						$('#modaldemo8').modal("show");
-					}
-				});
-					
-					
-			});
-
-			function rangeMontoChanged(obj){
-				var number = parseInt(obj.value);
-                var iRange = document.getElementById("inputRange2");
-                iRange.value =  "$ "+ number.toLocaleString("es-CO");
-			}
-			function inputMontoKey(obj){
-				
-				var number = parseInt(obj.value);
-                var iRange = document.getElementById("Monto");                
-                if (number > 100000000){
-                    number = 100000000;
-				}
-				 if (number < 1000000){
-                    number = 1000000;
-				}
-				iRange.value = number
-				obj.value = "$ "+ number.toLocaleString("es-CO");
-			}
-			function inputMontoFocus(obj){
-				var number = parseInt(obj.value.substring(2).replaceAll(".",""));  
-                if (number > 100000000){
-                    number = 100000000;
-				}
-				 if (number < 1000000){
-                    number = 1000000;
-				}
-				obj.value = number;
-                //inputMontoKey(obj);
-			}
-		</script>
 		<!-- landing JS -->
 		<script src="~/assets/js/landing.js"></script>
 		<!-- CUSTOM JS -->
 		<script src="~/assets/js/custom.js"></script>
+
+	
+
 	</body>
 </html>

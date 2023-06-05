@@ -2,18 +2,15 @@
     var count = 0;
     $.ajax({
         type: "GET",
-        url: '/Blog/ConsultarPorCategoria',
+        url: '/Blog/ConsultarTopTres',
         data: { id: data },
         success: function ( result ) {
             var div = $("#blogs-categoria") 
             div.children("div").remove();
-            var name = result[0].categorias[0].nombre;
-            div.append('<div class="card-confival-blogs border-confival-blogs"><div class="card-header border-bottom"><h4 class="card-title header-family">Principales blogs de ' + name + '</h4></div><div class="card-body"><div class="item-list add-confival-dos"><ul class="list-group mb-0 add-confival"></ul></div></div></div>');
+            var name = result.nombre;
+            div.append('<div class="card-confival-blogs border"><div class="card-header border-bottom"><h4 class="card-title header-family">Principales blogs de la categoria: ' + 'pendiente nombre categoria' + '</h4></div><div class="card-body"><div class="item-list add-confival-dos"><ul class="list-group mb-0 add-confival"></ul></div></div></div>');
             $.each(result, function (element, index) {
-                if (result.length > count) {
-                    count = count + 1;
-                    $(".add-confival").append('<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0"><img src="' + index.imgBlog + '" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img"><div><span class="d-block text-muted">' + index.categorias[0].nombre + '</span><a href="#" class="text-dark text-16 font-weight-semibold">' + index.titulo + '</a><small class="d-block text-gray">2 day ago</small></div></li>')
-                }
+                $(".add-confival").append('<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0"><img src="~/assets/images/photos/blogmain2.jpg" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img"><div><span class="d-block text-muted">' + 'pendiente nombre categoria' + '</span><a href="#" class="text-dark text-16 font-weight-semibold">' + index.titulo + '</a><small class="d-block text-gray">2 day ago</small></div></li>')
             })
         }
     });
@@ -36,12 +33,18 @@ function AgregarBotonesDos() {
     if (subtitulo.length != 0 && segundoParrafo.length != 0) {
         seccionBotonoesDos.removeClass("hide-info");
     }
+    if (subtitulo.length == 0 || segundoParrafo.length == 0) {
+        seccionBotonoesDos.addClass("hide-info");
+    }
 };
 function AgregarBotonesDosTextArea() {
     var segundoParrafoTextArea = $("#segundo-parrafo-textarea").val();
     var seccionBotonoesDos = $("#seccion-btn-publicar-dos");
     if (segundoParrafoTextArea.length != 0) {
         seccionBotonoesDos.removeClass("hide-info");
+    }
+    if (segundoParrafoTextArea.length == 0) {
+        seccionBotonoesDos.addClass("hide-info");
     }
 };
 function AgregarBotonesTres() {
@@ -51,12 +54,18 @@ function AgregarBotonesTres() {
     if (subtitulo.length != 0 && parrafo != 0) {
         seccionBotonesTres.removeClass("hide-info");
     }
+    if (subtitulo.length == 0 || parrafo == 0) {
+        seccionBotonesTres.addClass("hide-info");
+    }
 };
 function AgregarBotonesTresTextArea() {
     var parrafo = $("#parrafo-tres-textarea").val();
     var seccionBotones = $("#seccion-btn-publicar-tres");
     if (parrafo.length != 0) {
         seccionBotones.removeClass("hide-info");
+    }
+    if (parrafo.length == 0) {
+        seccionBotones.addClass("hide-info");
     }
 };
 function AgregarBotonesCuatro() {
@@ -66,12 +75,18 @@ function AgregarBotonesCuatro() {
     if (subtitulo.length != 0 && parrafo.length != 0) {
         botones.removeClass("hide-info");
     }
+    if (subtitulo.length == 0 || parrafo.length == 0) {
+        botones.addClass("hide-info");
+    }
 };
 function AgregarBotonesCuatroTextArea() {
     var parrafo = $("#parrafo-cuatro-textarea").val();
     var botones = $("#seccion-btn-publicar-cuatro");
     if (parrafo.length != 0) {
         botones.removeClass("hide-info");
+    }
+    if (parrafo.length == 0) {
+        botones.addClass("hide-info");
     }
 };
 function IniciarGaleria() {
@@ -81,12 +96,19 @@ function IniciarGaleria() {
     if (subtitulo.length != 0 && parrafo.length != 0) {
         boton.removeClass("hide-info");
     }
+    if (subtitulo.length == 0 || parrafo.length == 0) {
+        boton.addClass("hide-info");
+    }
+    
 };
 function IniciarGaleriaTextArea() {
     var parrafo = $("#parrafo-cinco-textarea").val();
     var botones = $("#seccion-btn-publicar-cinco");
     if (parrafo.length != 0) {
         botones.removeClass("hide-info");
+    }
+    if (parrafo.length == 0) {
+        botones.addClass("hide-info");
     }
 };
 
@@ -99,6 +121,7 @@ $("#titulo-blog").on("keyup", function () {
     div.append('<h2>' + titulo + '</h2><br>');
     AgregarBotones();
 });
+
 $("#imagen-blog").on("change", function () {
     $("#img-onchange").removeClass("hide-info");
     readURL(this);
@@ -108,7 +131,23 @@ function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $('#blah').attr('src', e.target.result);
+            var dinamico = "";
+            if (input.id == "imagen-blog") {
+                dinamico = $('#blah');
+            }
+            if (input.id == "imagen-g-uno") {
+                dinamico = $('#blah-dos');
+            }
+            if (input.id == "imagen-g-dos") {
+                dinamico = $('#blah-tres');
+            }
+            if (input.id == "imagen-g-tres") {
+                dinamico = $('#blah-cuatro');
+            }
+            if (input.id == "imagen-g-cuatro") {
+                dinamico = $('#blah-cinco');
+            }
+            dinamico.attr('src', e.target.result);
         }
         reader.readAsDataURL(input.files[0]);
     }
@@ -249,15 +288,119 @@ $("#parrafo-cinco-textarea").on("keyup", function () {
     IniciarGaleriaTextArea();
 });
 
+/// --- seccion 6 --- ///
+$("#imagen-g-uno").on("change", function () {
+    var file = $("#imagen-g-uno").get(0).files;
+    var imagenUno = $("#seccion-btn-imagen-uno-g");
+    if (file.length > 0) {
+        imagenUno.removeClass("hide-info");
+    } 
+});
+
+/// --- seccion 7 --- ///
+$("#imagen-g-dos").on("change", function () {
+    var file = $("#imagen-g-dos").get(0).files;
+    var imagenDos = $("#seccion-btn-imagen-dos-g");
+    if (file.length > 0) {
+        imagenDos.removeClass("hide-info");
+    }
+});
+
+/// --- seccion 8 --- ///
+$("#imagen-g-tres").on("change", function () {
+    var file = $("#imagen-g-tres").get(0).files;
+    var imagenTres = $("#seccion-btn-imagen-tres-g");
+    if (file.length > 0) {
+        imagenTres.removeClass("hide-info");
+    }
+});
+
+/// --- seccion 9 --- ///
+$("#imagen-g-cuatro").on("change", function () {
+    var file = $("#imagen-g-cuatro").get(0).files;
+    var imagenCuatro = $("#seccion-btn-imagen-cuatro-g");
+    if (file.length > 0) {
+        imagenCuatro.removeClass("hide-info");
+    }
+});
+
+/// --- seccion 10 --- ///
+$("#categorias-principal").on("change", function () {
+    var cartegoriaPrincipal = $("#categorias-principal").val();
+    if (cartegoriaPrincipal.length > 0) {
+        $("#seccion-btn-finalizar").removeClass("hide-info");
+        var idCategoria = $("#categorias-principal").val();
+        var lstCategorias = $("#lst-categorias").children();
+        $.ajax({
+            type: "GET",
+            url: '/Blog/ConsultarCategorias',
+            success: function (result) {
+                $.each(result, function (element, index) {
+                    if (index.id == parseInt(idCategoria)) {
+                        result.splice(index.id - 1, 1);
+                        return false;
+                    }
+                })
+                console.log(result);
+                lstCategorias.remove();
+                $("#lst-categorias").append('<option disabled value="">Seleccione..</option>')
+                $.each(result, function (element, index) {
+                    $("#lst-categorias").append('<option value="' + index.id + '">' + index.nombre + '</option>')
+
+                });
+            }
+        });
+    }
+    if (cartegoriaPrincipal.length == 0) {
+        $("#seccion-btn-finalizar").addClass("hide-info");
+    }
+})
+$("#imagen-g-uno").on("change", function () {
+    $("#onchange-ig-uno").removeClass("hide-info");
+    readURL(this);
+});
+$("#imagen-g-dos").on("change", function () {
+    $("#onchange-ig-dos").removeClass("hide-info");
+    readURL(this);
+});
+$("#imagen-g-tres").on("change", function () {
+    $("#onchange-ig-tres").removeClass("hide-info");
+    readURL(this);
+});
+$("#imagen-g-cuatro").on("change", function () {
+    $("#onchange-ig-cuatro").removeClass("hide-info");
+    readURL(this);
+});
+
 // --- BOTONES FINALIZAR --- //
 function Publicar() {
-    var visualizador = $("#visualizar-blog-principal");
-    var visualizadorConfirmar = $("#visualizar-blog-confirmar");
-    var visualizadorCampos = $("#visualizador-campos");
+    var tituloJQ = $("#contenido-blog-visualizar").children("h2").html();
+    var contenidoJQ = $("#contenido-blog-visualizar-parrafo").html() + $("#contenido-blog-visualizar-subtitulo-dos").html() + $("#contenido-blog-visualizar-parrafo-dos").html() + $("#contenido-blog-visualizar-subtitulo-tres").html() + $("#contenido-blog-visualizar-parrafo-tres").html() + $("#contenido-blog-visualizar-subtitulo-cuatro").html() + $("#contenido-blog-visualizar-parrafo-cuatro").html() + $("#contenido-blog-visualizar-subtitulo-quinto").html() + $("#contenido-blog-visualizar-parrafo-quinto").html();
+    var lstCategoriasJQ = $("#lst-categorias").val();
+    var categoriaPrincipal = $("#categorias-principal").val();
+    var array = JSON.stringify(lstCategoriasJQ);
+    $.ajax({
+        type: "GET",
+        url: '/Blog/CreateBlog',
+        data: { titulo: tituloJQ, contenido: contenidoJQ, lstCategorias: array, categoria: categoriaPrincipal },
+        success: function (result) {
+            if (result == true) {
+                var visualizador = $("#visualizar-blog-principal");
+                var visualizadorConfirmar = $("#visualizar-blog-confirmar");
+                var visualizadorCampos = $("#visualizador-campos");
 
-    visualizador.addClass("hide-info");
-    visualizadorCampos.addClass("hide-info");
-    visualizadorConfirmar.removeClass("hide-info");
+                visualizador.addClass("hide-info");
+                visualizadorCampos.addClass("hide-info");
+                visualizadorConfirmar.removeClass("hide-info");
+            } else {
+                $("#api-error").modal('show');
+                //restartBlog();
+            }
+        }
+    });
+
+
+    
 };
 function restartBlog() {
     location.reload(true);
@@ -278,18 +421,26 @@ function AddSubtitulo() {
     var seccionBotones = $("#seccion-btn-publicar");
     var seccionUno = $("#seccion-uno-publicar");
 
-    seccionBotones.addClass("hide-info");
-    seccionUno.addClass("hide-info");
-    seccionDos.removeClass("hide-info");
+    var validacion = validarFormulario1();
+
+    if (validacion == 0) {
+        seccionBotones.addClass("hide-info");
+        seccionUno.addClass("hide-info");
+        seccionDos.removeClass("hide-info");
+    }
 };
 function AddParrafo() {
     var seccionDos = $("#seccion-dos-publicar-textarea");
     var seccionBotones = $("#seccion-btn-publicar");
     var seccionUno = $("#seccion-uno-publicar");
 
-    seccionUno.addClass("hide-info");
-    seccionBotones.addClass("hide-info");
-    seccionDos.removeClass("hide-info");
+    var validacion = validarFormulario1();
+
+    if (validacion == 0) {
+        seccionUno.addClass("hide-info");
+        seccionBotones.addClass("hide-info");
+        seccionDos.removeClass("hide-info");
+    }
 };
 function AddSubtituloTres() {
     var seccionTres = $("#seccion-tres-publicar");
@@ -363,4 +514,144 @@ function AddParrafoQuinto() {
     $("#seccion-tres-publicar").addClass("hide-info");
     $("#seccion-publicar-cuatro-textarea").addClass("hide-info");
     $("#seccion-cuatro-publicar").addClass("hide-info");
+};
+function AddGallery() {
+    var galeria = $("#seccion-galeria-uno");
+    var botones = $("#seccion-btn-publicar-cinco");
+    var parrafoCinco = $("#seccion-cinco-publicar");
+    var parrafoCincoTexArea = $("#seccion-publicar-cinco-textarea")
+
+    galeria.removeClass("hide-info");
+    botones.addClass("hide-info");
+    parrafoCinco.addClass("hide-info");
+    parrafoCincoTexArea.addClass("hide-info");
+
+};
+function AddGallery2() {
+    var imagenAnterior = $("#imagen-g-uno").get(0).files;
+    if (imagenAnterior.length == 0) {
+        $("#invalid-imagen-g-uno").css("display", "block");
+    } else {
+        var galeria = $("#seccion-galeria-dos");
+        var botones = $("#seccion-btn-imagen-uno-g");
+        var seccionImagenAnterior = $("#seccion-galeria-uno");
+
+        galeria.removeClass("hide-info");
+        botones.addClass("hide-info");
+        seccionImagenAnterior.addClass("hide-info");
+    }
+};
+function AddGallery3() {
+    var imagenAnterior = $("#imagen-g-dos").get(0).files;
+    if (imagenAnterior.length == 0) {
+        $("#invalid-imagen-g-dos").css("display", "block");
+    } else {
+        var galeria = $("#seccion-galeria-tres");
+        var botones = $("#seccion-btn-imagen-dos-g");
+        var seccionImagenAnterior = $("#seccion-galeria-dos");
+
+        galeria.removeClass("hide-info");
+        botones.addClass("hide-info");
+        seccionImagenAnterior.addClass("hide-info");
+    }
+};
+function AddGallery4() {
+    var imagenAnterior = $("#imagen-g-tres").get(0).files;
+    if (imagenAnterior.length == 0) {
+        $("#invalid-imagen-g-tres").css("display", "block");
+    } else {
+        var galeria = $("#seccion-galeria-cuatro");
+        var botones = $("#seccion-btn-imagen-tres-g");
+        var seccionImagenAnterior = $("#seccion-galeria-tres");
+
+        galeria.removeClass("hide-info");
+        botones.addClass("hide-info");
+        seccionImagenAnterior.addClass("hide-info");
+    }
+};
+function AddGallery5() {
+    var imagenAnterior = $("#imagen-g-cuatro").get(0).files;
+    if (imagenAnterior.length == 0) {
+        $("#invalid-imagen-g-cuatro").css("display", "block");
+    } else {
+        var categorias = $("#seccion-categorias");
+        var botones = $("#seccion-btn-imagen-cuatro-g");
+        var seccionImagenAnterior = $("#seccion-galeria-cuatro");
+
+        categorias.removeClass("hide-info");
+        botones.addClass("hide-info");
+        seccionImagenAnterior.addClass("hide-info");
+    }
+};
+function NextGallery() {
+    // Remove Secciones
+    $("#seccion-uno-publicar").addClass("hide-info");
+    $("#seccion-dos-publicar").addClass("hide-info");
+    $("#seccion-dos-publicar-textarea").addClass("hide-info");
+    $("#seccion-tres-publicar").addClass("hide-info");
+    $("#seccion-publicar-tres-textarea").addClass("hide-info");
+    $("#seccion-cuatro-publicar").addClass("hide-info");
+    $("#seccion-publicar-cuatro-textarea").addClass("hide-info");
+    $("#seccion-cinco-publicar").addClass("hide-info");
+    $("#seccion-publicar-cinco-textarea").addClass("hide-info");
+
+    // Remove btn Secciones
+    $("#seccion-btn-publicar").addClass("hide-info");
+    $("#seccion-btn-publicar-dos").addClass("hide-info");
+    $("#seccion-btn-publicar-tres").addClass("hide-info");
+    $("#seccion-btn-publicar-cuatro").addClass("hide-info");
+
+    // Mostrar seccion uno de galeria
+    $("#seccion-btn-publicar-cinco").removeClass("hide-info");
+
+};
+function NextCategoria() {
+    // Remove Secciones
+    $("#seccion-galeria-uno").addClass("hide-info");
+    $("#seccion-galeria-dos").addClass("hide-info");
+    $("#seccion-galeria-tres").addClass("hide-info");
+    $("#seccion-galeria-cuatro").addClass("hide-info");
+    $("#seccion-cinco-publicar").addClass("hide-info");
+    $("#seccion-publicar-cinco-textarea").addClass("hide-info");
+
+    // Remove btn Secciones
+    $("#seccion-btn-publicar-cinco").addClass("hide-info");
+    $("#seccion-btn-imagen-uno-g").addClass("hide-info");
+    $("#seccion-btn-imagen-dos-g").addClass("hide-info");
+    $("#seccion-btn-imagen-tres-g").addClass("hide-info");
+
+    // Mostrar seccion categoria
+    $("#seccion-categorias").removeClass("hide-info");
+
+
+
+
+};
+function validarFormulario1() {
+    var count = 0;
+    var imagenPrincipal = $("#imagen-blog").get(0).files;
+    var titulo = $("#titulo-blog").val();
+    var parrafo = $("#primer-parrafo").val();
+    if (imagenPrincipal.length == 0) {
+        $("#invalid-imagen-blog-principal").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-imagen-blog-principal").css("display", "none");
+    }
+    if (titulo.length == 0) {
+        $("#invalid-titulo-blog").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-titulo-blog").css("display", "none");
+    }
+    if (parrafo.length == 0) {
+        $("#invalid-primer-parrafo").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-primer-parrafo").css("display", "none");
+    }
+    if (imagenPrincipal.length > 0 && titulo.length > 0 && parrafo.length > 0) {
+        count = 0;
+    }
+    return count;
 }

@@ -1,0 +1,260 @@
+﻿@model List<confinancia.Models.BlogDTO>
+@{
+	Layout = "_Layoutlandingpage";
+}
+
+<div class="row" style="padding-top:125px; margin-bottom:80px;">
+	<div class="col-xl-8 col-lg-7 col-md-12">
+		<!-- card blog principal -->
+		<div class="card">
+			<div class="card-header border-bottom">
+				<h3 class="card-title">Blog principal</h3>
+			</div>
+			<div class="card-body bg-white">
+				<div class="row">
+					<div class="ps-relative p-1 bg-light br-5">
+						<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@Model[0].Id" >
+							<img src="@Model[0].Galeria[0].URLImagen" alt="@Model[0].Galeria[0].Alt" title="@Model[0].Titulo" class="card custom-card background-image-blog img1 mb-0">
+							<span class="badge rounded-pill bg-primary-gradient blog-label label1">@Model[0].Categorias[0].Nombre</span>
+						</a>
+					</div>
+					<div class="card-body">
+						<a href="#" class="text-dark blog-title">@Model[0].Titulo</a>
+						<p class="mb-0 text-muted mt-4">@Model[0].Contenido.Substring(0, Convert.ToInt32(Model[0].Contenido.Length * 0.25))</p>
+						<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@Model[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
+					</div>
+					<div class="card-footer ">
+						<div class="d-sm-flex align-items-center">
+							<div class="avatar-list indicators">
+								<a class="avatar avatar-md rounded-circle">
+									<img src="@Model[0].Autor.ImagenAutor.URLImagen" class="rounded-circle">
+								</a>
+							</div>
+							<h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">@Model[0].Autor.Nombre</h6>
+							<div class="d-sm-flex ms-sm-auto">
+								<a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model[0].FechaPublicacion.ToShortDateString()</div></a>
+								<a class="me-0 d-flex"><span class="fe fe-message-square text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@(Model[0].Comentarios.Count() == 1 ? " Comentario" : " Comentarios")</div></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- card recientes -->
+		<div class="card">
+			<div class="card-header border-bottom">
+				<h3 class="card-title">Lo mas reciente</h3>
+			</div>
+			<div class="card-body bg-white">
+				<div class="row">
+					<div class="col-xl-6 col-md-12 my-2 p-xl-max-0">
+						<div class="card overflow-hidden box-shadow mb-0 main-blog">
+							<div class="ps-relative p-1 bg-light br-5">
+								<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@Model[1].Id">
+									<img src="@Model[1].Galeria[0].URLImagen" alt="@Model[1].Galeria[0].Alt" title="@Model[1].Titulo" class="background-image-blog img2 mb-0">
+									<span class="badge rounded-pill bg-info-gradient blog-label label2">@Model[1].Categorias[0].Nombre</span>
+								</a>
+							</div>
+							<div class="card-body p-0 border border-top-0 br-br-5 br-bl-5 mb-2 mb-lg-0">
+								<div class="p-5 border-bottom">
+									<a href="#" class="text-dark blog-title">@Model[1].Titulo</a>
+									<p class="mb-0 text-muted mt-4">@Model[1].Contenido.Substring(0, Convert.ToInt32(Model[1].Contenido.Length * 0.25)) </p>
+								</div>
+								<div class="d-sm-flex p-5 align-items-center">
+									<div class="avatar-list indicators">
+										<a href="javascript:void(0)" class="avatar avatar-md rounded-circle">
+											<img src="@Model[1].Autor.ImagenAutor.URLImagen" class="rounded-circle">
+										</a>
+									</div>
+									<h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">@Model[1].Autor.Nombre</h6>
+									<div class="d-sm-flex ms-sm-auto">
+										<a href="#" class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model[1].FechaPublicacion.ToShortDateString()</div></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-6 col-md-12">
+						@foreach(var item in Model.Skip(2).Take(6))
+						{
+							<div class="row mb-5">
+								<div class="col-xl-4 col-md-4 col-sm-4 pe-sm-0 p-sm-max-0">
+									<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@item.Id">
+										<img src="@item.Galeria[0].URLImagen" alt="@item.Galeria[0].Alt" title="@item.Titulo" class="wp-100 editorpick-suggestion-img h-100">
+									</a>
+								</div>
+								<div class="col-xl-8 col-md-8 col-sm-8 editorpicks-suggestions border p-2 br-sm-max-0">
+									<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@item.Id" class="text-dark mb-4 blog-title">@item.Titulo</a>
+									<div class="d-md-flex mt-0">
+										<a class="d-flex"><span class="fe fe-user text-muted me-2 text-17"></span><div class="mt-0 mt-0  font-weight-semibold text-muted">@item.Autor.Nombre</div></a>
+										<div class="d-flex ms-auto">
+											<a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0  font-weight-semibold text-muted">@item.FechaPublicacion.ToShortDateString()</div></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xl-4 col-lg-5 col-md-12">
+		<!--card-->
+		<div class="card overflow-hidden">
+			<div class="card-header border-bottom">
+				<h3 class="card-title">Categorias</h3>
+			</div>
+			<div class="card-body p-0">
+
+
+				<ul id="tree1">
+					<li>
+						<a href="#">Sentencias</a>
+						<ul>
+							<li>Beneficios de vender tu sentencia</li>
+							<li>Beneficios de vender tu sentencia</li>
+							<li>Beneficios de vender tu sentencia</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Economia</a>
+						<ul>
+							<li>Valor de tu sentencia</li>
+							<li>Valor de tu sentencia</li>
+							<li>Valor de tu sentencia</li>
+							<li>Valor de tu sentencia</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Juridico</a>
+						<ul>
+							<li>Abogado: cuales son tus beneficios</li>
+							<li>Abogado: cuales son tus beneficios</li>
+							<li>Abogado: cuales son tus beneficios</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--card closed-->
+		<!--card-->
+		<div class="card">
+			<div class="card-header border-bottom">
+				<h3 class="card-title">Autores</h3>
+			</div>
+			<div class="card-body bg-white">
+				<ul class="list-group blog-autors">
+					<li class="list-group-item">
+						<a href="#" class="text-dark-light">
+							<div class="media mt-0 d-sm-flex d-block">
+								<img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/11.jpg" alt="Image description">
+								<div class="media-body d-sm-flex d-block">
+									<div class="d-flex align-items-center">
+										<div class="mt-1">
+											<h5 class="mb-1 text-dark-light">Allie Grater</h5>
+											<p class="mb-0 text-13 text-muted">User ID: #1234</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<span class="badge rounded-pill bg-danger-transparent text-danger float-end">12 hrs ago</span>
+						</a>
+					</li>
+					<li class="list-group-item">
+						<a href="#" class="text-dark-light">
+							<div class="media mt-0 d-sm-flex d-block">
+								<img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/7.jpg" alt="Image description">
+								<div class="media-body d-sm-flex d-block">
+									<div class="d-flex align-items-center">
+										<div class="mt-1">
+											<h5 class="mb-1 text-dark-light">Emilia Clarke</h5>
+											<p class="mb-0 text-13 text-muted">User ID: #1243</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<span class="badge rounded-pill bg-success-transparent text-success float-end">3 hrs ago</span>
+						</a>
+					</li>
+					<li class="list-group-item">
+						<a href="#" class="text-dark-light">
+							<div class="media mt-0 d-sm-flex d-block">
+								<img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/5.jpg" alt="Image description">
+								<div class="media-body d-sm-flex d-block">
+									<div class="d-flex align-items-center">
+										<div class="mt-1">
+											<h5 class="mb-1 text-dark-light">Jessica Stallin</h5>
+											<p class="mb-0 text-13 text-muted">User ID: #1432</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<span class="badge rounded-pill bg-danger-transparent text-danger float-end">11 hrs ago</span>
+						</a>
+					</li>
+					<li class="list-group-item">
+						<a href="#" class="text-dark-light">
+							<div class="media mt-0 d-sm-flex d-block">
+								<img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/8.jpg" alt="Image description">
+								<div class="media-body">
+									<div class="d-flex align-items-center">
+										<div class="mt-1">
+											<h5 class="mb-1 text-dark-light">Saira Olay</h5>
+											<p class="mb-0 text-13 text-muted">User ID: #3214</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<span class="badge rounded-pill bg-success-transparent text-success float-end">5 hrs ago</span>
+						</a>
+					</li>
+					<li class="list-group-item">
+						<a href="#" class="text-dark-light">
+							<div class="media mt-0 d-sm-flex d-block">
+								<img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/4.jpg" alt="Image description">
+								<div class="media-body">
+									<div class="d-flex align-items-center">
+										<div class="mt-1">
+											<h5 class="mb-1 text-dark-light">Sansa Taylor</h5>
+											<p class="mb-0 text-13 text-muted">User ID: #4321</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<span class="badge rounded-pill bg-success-transparent text-success float-end">4 hrs ago</span>
+						</a>
+					</li>
+					<li class="list-group-item border-bottom-0">
+						<a href="#" class="text-dark-light">
+							<div class="media mt-0 d-sm-flex d-block">
+								<img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/2.jpg" alt="Image description">
+								<div class="media-body">
+									<div class="d-flex align-items-center">
+										<div class="mt-1">
+											<h5 class="mb-1 text-dark-light">Jessi Jane</h5>
+											<p class="mb-0 text-13 text-muted">User ID: #3412</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<span class="badge rounded-pill bg-danger-transparent text-danger float-end">10 hrs ago</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--card closed-->
+
+	</div>
+	<!--col closed-->
+</div>
+
+<partial name="~/Views/Shared/_Footer1.cshtml" />
+
+@section scripts {
+	<!-- Internal Treeview js -->
+	<script src="../assets/plugins/treeview/treeview.js"></script>
+ }

@@ -1,16 +1,8 @@
-﻿@using confinancia.Models;
-@{
-    Layout = "_LayoutServicios";
-	var modelI1 = new IndicadoresDTO();
-	modelI1.Title = "Experiencia de más de 10 años en sentencias";
-	modelI1.Paragraph = "Conoce por qué somos los mejores en Venta de Sentencias y Activos Alternativos";
-
-	var modelI2 = new IndicadoresDTO();
-	modelI2.Title = "El Mejor Fondo de Inversión";
-	modelI2.Paragraph = "Conoce por qué somos los mejores en Activos Alternativos";
+﻿@{
+	Layout = "_Layoutlandingpage";
 }
 
-<div class="section pb-5 bg-white" style="padding-bottom:50px;" id="compra-sentencias">
+<div class="section pb-5 bg-white" style="padding-bottom:50px; padding-top:125px;" id="compra-sentencias">
 	<div class="container px-5 px-md-0">
 		<div class="row text-center">
 			<div class="col-lg-12 ps-3">
@@ -659,8 +651,7 @@
 	</div>
 </div>
 
-
-<div class="section pb-5 bg-white" style="padding-bottom:50px;" id="activos-inmobiliarios">
+<div class="section pb-5 bg-white" style="padding-bottom:50px; padding-top:125px;" id="activos-inmobiliarios">
 	<div class="container px-5 px-md-0">
 		<div class="row text-center">
 			<div class="col-lg-12 ps-3">
@@ -814,7 +805,7 @@
 	</div>
 </div>
 
-<div class="section pb-5 bg-white" style="padding-bottom:50px;" id="negocios-especiales">
+<div class="section pb-5 bg-white" style="padding-bottom:50px; padding-top:125px;" id="negocios-especiales">
 	<div class="container px-5 px-md-0">
 		<div class="row text-center">
 			<div class="col-lg-12 ps-3">
@@ -1095,5 +1086,12 @@
 	</div>
 </div>
 
+<div id="view-bag-value" class="hide-info">@ViewBag.Seccion</div>
+
 <!-- FOOTERS -->
 <partial name="~/Views/Shared/_Footer1.cshtml" />
+
+
+@section scripts {
+	<script src="~/assets/js/WebConfival/Servicios/Servicios.js"></script>
+}
