@@ -18,7 +18,7 @@ builder.Services.AddAuthentication(options =>
 	o.TokenEndpoint = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/token";
 });
 
-//builder.Services.AddScoped<IGetToken, GetToken>();
+builder.Services.AddTransient<IGetToken, GetToken>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

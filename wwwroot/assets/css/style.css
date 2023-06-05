@@ -673,6 +673,19 @@ body {
     margin:auto;
 }
 
+.policy {
+    /*margin: 15px;*/
+    background-color: white
+}
+
+.landing-page .card-policy {
+    background-color: white;
+    box-shadow: none;
+}
+
+.justify-policy{
+    text-align: justify;
+}
 /*-------------------------------------------------------------*/
 .margin-tabs-li {
     margin: auto;

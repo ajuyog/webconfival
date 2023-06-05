@@ -48,7 +48,7 @@ function showOTPCorreo()     {
 };
 function activeTimer() {
     $('#timer-countercallback').countdown({
-        from: 20,
+        from: 180,
         to: 0,
         timerEnd: function () {
             this.animate({ 'opacity': .5 }, 500).css({ 'text-decoration': 'line-through' });
@@ -215,7 +215,6 @@ function ValidarDocumento() {
                     $("#fExpedicion-ok").val(fExpedicion.toString());
 
                 } else {
-                    $("#intentos-sms-msg").get(0).innerHTML = "Haz alcanzado el maximo de intentos permitidos para verificar tu documento de identidad"
                     $('#intentos-verifik-count').html(function (i, val) { return val * 1 + 1 });
                     if (parseInt($('#intentos-verifik-count').get(0).innerHTML) >= 2) {
                         // LOADER
@@ -224,6 +223,7 @@ function ValidarDocumento() {
 
                         $("#documento-hide").addClass("hide-info");
                         $("#intentos-verifik-superados").removeClass("hide-info");
+                        $("[id=intentos-sms-msg]").addClass("hide-info");
 
                     } else {
                         // LOADER
@@ -322,7 +322,7 @@ function showOTPCelular() {
 };
 function activeTimer2() {
     $('#timer-countercallback2').countdown({
-        from: 30,
+        from: 180,
         to: 0,
         timerEnd: function () {
             this.animate({ 'opacity': .5 }, 500).css({ 'text-decoration': 'line-through' });
@@ -417,7 +417,6 @@ function LeadOportunidad() {
             type: 'POST',
             data: formData,
             success: function (data) {
-                console.log(data);
                 if (data) {
                     //OPEN MODAL SUCCES
                     $("#success-leadOportunidad").modal("show");
@@ -593,7 +592,7 @@ $('#intentos-sms').click(function () {
     if (count.get(0).innerHTML == "1") {
         $("#celular-hide").addClass("hide-info");
         $("#intentos-sms-superados").removeClass("hide-info");
-        $("#intentos-sms-msg").get(0).innerHTML = "Haz alcanzado el maximo de intentos permitidos para solicitar un SMS"
+        $("[id=intentos-verifik-msg]").addClass("hide-info");
     } else {
         $('#intentos-sms-count').html(function (i, val) { return val * 1 + 1 });
     }

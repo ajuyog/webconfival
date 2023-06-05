@@ -15,30 +15,28 @@ public class LandingPageController : Controller
 
 	#region CONSTRUCTOR
 	private readonly IConfiguration _configuration;
-    //private readonly IGetToken _getToken;
-    //private readonly GetToken _token;
+    private readonly IGetToken _getToken;
 
-    public LandingPageController(IConfiguration configuration/*, IGetToken getToken, GetToken token*/)
+    public LandingPageController(IConfiguration configuration, IGetToken getToken)
 	{
 		_configuration = configuration;
-        //_getToken = getToken;
-        //_token = token;
+        _getToken = getToken;
     }
 	#endregion
 
 	[HttpGet]
 	public async Task<List<DropDownListDTO>> CorporacionId(int id)
 	{
-        var token = GetToken();
-        if (token.Result == "")
+        var token = await _getToken.GetTokenV();
+        if (token == "")
         {
             return new List<DropDownListDTO>();
         }
-		if (token.Result.Length == 177)
+		if (token.Length == 177)
 		{
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/corporacion/" + id + "?Pagina=1&RegistrosPorPagina=100");
-            request.Headers.Add("Authorization", "Bearer " + token.Result);
+            request.Headers.Add("Authorization", "Bearer " + token);
             var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
@@ -62,20 +60,18 @@ public class LandingPageController : Controller
 	[HttpGet]
     public async Task<IActionResult> Index()
     {
-		ViewBag.Seccion = "prueba";
-
-        var token = GetToken();
-		if (token.Result == "")
+        var token = await _getToken.GetTokenV();
+		if (token == "")
 		{
 			return NotFound();
 		}
-		if (token.Result.Length == 177)
+		if (token.Length == 177)
 		{
 			var client = new HttpClient();
 
             #region DropDown Regimen
             var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/regimen?Pagina=1&RegistrosPorPagina=10");
-			request.Headers.Add("Authorization", "Bearer " + token.Result);
+			request.Headers.Add("Authorization", "Bearer " + token);
 			var response = await client.SendAsync(request);
 			if (response.IsSuccessStatusCode)
 			{
@@ -91,7 +87,7 @@ public class LandingPageController : Controller
 
             #region DropDown Tipo Providencia
             var requestProvidencia = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/tipoProvidencia?Pagina=1&RegistrosPorPagina=20");
-            requestProvidencia.Headers.Add("Authorization", "Bearer " + token.Result);
+            requestProvidencia.Headers.Add("Authorization", "Bearer " + token);
             var responseProvidencia = await client.SendAsync(requestProvidencia);
             if (responseProvidencia.IsSuccessStatusCode)
             {
@@ -107,7 +103,7 @@ public class LandingPageController : Controller
 
             #region DropDown Tipo Corporacion
             var requestCorporacion = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/corporacion/tipoCorporacion?Pagina=1&RegistrosPorPagina=10");
-            requestCorporacion.Headers.Add("Authorization", "Bearer " + token.Result);
+            requestCorporacion.Headers.Add("Authorization", "Bearer " + token);
             var responseCorporacion = await client.SendAsync(requestCorporacion);
             if (responseCorporacion.IsSuccessStatusCode)
             {
@@ -123,7 +119,7 @@ public class LandingPageController : Controller
 
             #region DropDown Medio de Control
             var requestMedioControl = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/medioControl?Pagina=1&RegistrosPorPagina=20");
-            requestMedioControl.Headers.Add("Authorization", "Bearer " + token.Result);
+            requestMedioControl.Headers.Add("Authorization", "Bearer " + token);
             var responseMedioControl = await client.SendAsync(requestMedioControl);
             if (responseMedioControl.IsSuccessStatusCode)
             {
@@ -139,7 +135,7 @@ public class LandingPageController : Controller
 
             #region DropDown Entidad pagaduria
             var requestEntidad = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/entidadpagaduria");
-            requestEntidad.Headers.Add("Authorization", "Bearer " + token.Result);
+            requestEntidad.Headers.Add("Authorization", "Bearer " + token);
             var responseEndidad = await client.SendAsync(requestEntidad);
             if (responseEndidad.IsSuccessStatusCode)
             {
@@ -172,23 +168,30 @@ public class LandingPageController : Controller
 		return View();
 	}
 
-	/// <summary>
-	/// Devuelve la vista de inicio con redirecion al formulario de Cotizar
+    /// <summary>
+	/// Devuelve la vista de Politica de datos
 	/// </summary>
 	/// <param name="seccion"></param>
 	/// <returns></returns>
 	[HttpGet]
-	public IActionResult Cotizar(string seccion)
-	{
-		ViewBag.Seccion = seccion;
-		return View("~/Views/LandingPage/Index.cshtml");
-	}
+    public IActionResult DataPolicy()
+    {
+        return View();
+    }
 
-	/// <summary>
-	/// Devuelve la vista sysAdmin
-	/// </summary>
-	/// <returns></returns>
-	public IActionResult SignIn()
+
+
+    /// <summary>
+    /// Devuelve la vista de inicio con redirecion al formulario de Cotizar
+    /// </summary>
+    /// <param name="seccion"></param>
+    /// <returns></returns>
+
+    /// <summary>
+    /// Devuelve la vista sysAdmin
+    /// </summary>
+    /// <returns></returns>
+    public IActionResult SignIn()
 	{
 		var props = new AuthenticationProperties();
 		props.RedirectUri = "/LandingPage/SignInSuccess";
@@ -243,35 +246,4 @@ public class LandingPageController : Controller
 		}
 		return RedirectToAction("Index");
 	}
-
-
-    [HttpGet]
-    public async Task<string> GetToken()
-    {
-        var obj = new LoginTokenDTO()
-        {
-            Id = _configuration.GetSection("Variables:IdLogin").Value,
-            Email = _configuration.GetSection("Variables:Email").Value,
-            Password = _configuration.GetSection("Variables:Password").Value,
-        };
-        var json = JsonConvert.SerializeObject(obj);
-        var client = new HttpClient();
-        var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/cuentas/inicioSesion?secret=" + _configuration.GetSection("Variables:Secret").Value);
-        var content = new StringContent(json, null, "application/json");
-        request.Content = content;
-        var response = await client.SendAsync(request);
-        if (response.IsSuccessStatusCode)
-        {
-            var responseStream = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<TokenValuezDTO>(responseStream);
-            return result.Token;
-        }
-        else
-        {
-            var empty = "";
-            return empty;
-        }
-    }
-
-
 }

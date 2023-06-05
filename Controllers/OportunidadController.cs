@@ -1,5 +1,6 @@
 ﻿using confinancia.Models;
 using confinancia.Models.JsonDTO;
+using confinancia.Services.Token;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileSystemGlobbing.Internal;
@@ -15,10 +16,13 @@ namespace confinancia.Controllers
 	{
 		#region CONSTRUCTOR
 		private readonly IConfiguration _configuration;
-		public OportunidadController(IConfiguration configuration)
+        private readonly IGetToken _getToken;
+
+        public OportunidadController(IConfiguration configuration, IGetToken getToken)
 		{
 			_configuration = configuration;
-		}
+            _getToken = getToken;
+        }
 		#endregion
 
 		public IActionResult Index()
@@ -102,8 +106,8 @@ namespace confinancia.Controllers
 		//		}
 		//		else
 		//		{
-		//                  var responseStream = await response.Content.ReadAsStringAsync();
-		//                  return responseStream;
+		//			var responseStream = await response.Content.ReadAsStringAsync();
+		//			return responseStream;
 		//		}
 		//	}
 		//	return "error";
@@ -119,16 +123,16 @@ namespace confinancia.Controllers
 		public async Task<ResultVerificaDTO> RegistraduriaCol(string documento, string nombre, string apellido, string tipoDocumento)
 		{
 			var error = new ResultVerificaDTO();
-			var token = GetToken();
-			if(token.Result == "") 
+			var token = await _getToken.GetTokenV();
+			if(token == "") 
 			{
 				return error;
 			}
-			if (token.Result.Length == 177)
+			if (token.Length == 177)
 			{
 				var client = new HttpClient();
 				var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/verifik?idNumber=" + documento + "&fNombres=" + nombre + "&fApellidos=" + apellido + "&tipoDocumento=" + tipoDocumento);
-				request.Headers.Add("Authorization", "Bearer " + token.Result );
+				request.Headers.Add("Authorization", "Bearer " + token );
 				var response = await client.SendAsync(request);
 				if (response.IsSuccessStatusCode)
 				{
@@ -149,35 +153,6 @@ namespace confinancia.Controllers
 			return error;
 		}
 
-
-		[HttpGet]
-		public async Task<string> GetToken()
-		{
-			var obj = new LoginTokenDTO()
-			{
-				Id = _configuration.GetSection("Variables:IdLogin").Value,
-				Email = _configuration.GetSection("Variables:Email").Value,
-				Password = _configuration.GetSection("Variables:Password").Value,
-			};
-			var json = JsonConvert.SerializeObject(obj);
-			var client = new HttpClient();
-			var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/cuentas/inicioSesion?secret=" + _configuration.GetSection("Variables:Secret").Value);
-			var content = new StringContent(json, null, "application/json");
-			request.Content = content;
-			var response = await client.SendAsync(request);
-			if (response.IsSuccessStatusCode)
-			{
-				var responseStream = await response.Content.ReadAsStringAsync();
-				var result = JsonConvert.DeserializeObject<TokenValuezDTO>(responseStream);
-				return result.Token;
-			}
-			else
-			{
-				var empty = "";
-				return empty;
-			}
-		}
-
 		[HttpGet]
 		public string GetAttempts(string valor)
 		{
@@ -188,15 +163,16 @@ namespace confinancia.Controllers
 		[HttpPost]
 		public async Task<bool> SaveForm()
 		{
-			var token = GetToken();
-			PersonaDTO objP = new PersonaDTO();
+			var token = await _getToken.GetTokenV();
+
+            PersonaDTO objP = new PersonaDTO();
 			objP.nombres= HttpContext.Request.Form["nombres-ok"];
 			objP.apellidos= HttpContext.Request.Form["apellidos-ok"];
 			objP.codSecundario1= HttpContext.Request.Form["no-documento-ok"];
 			objP.correoElectronico= HttpContext.Request.Form["correo-ok"];
 			objP.numeroContacto= HttpContext.Request.Form["no-contacto-ok"];
-			objP.fechaNacimiento= DateTime.Parse(HttpContext.Request.Form["fNacimiento-ok"]);
-			objP.fechaExpedicion= DateTime.Parse(HttpContext.Request.Form["fExpedicion-ok"]);
+			objP.fechaNacimiento= HttpContext.Request.Form["fNacimiento-ok"] == "" ? new DateTime(1900, 1, 1) : DateTime.Parse(HttpContext.Request.Form["fNacimiento-ok"]);
+			objP.fechaExpedicion= HttpContext.Request.Form["fExpedicion-ok"] == "" ? new DateTime(1900, 1, 1) : DateTime.Parse(HttpContext.Request.Form["fExpedicion-ok"]);
 			objP.tipoDocumento= HttpContext.Request.Form["tp-documento-ok"];
 			objP.politicaTratamientoDatos = true;
 			objP.estado = true;
@@ -207,7 +183,7 @@ namespace confinancia.Controllers
 			objO.regimenId = Convert.ToInt16(HttpContext.Request.Form["tipo-regimen"]);
 			objO.corporacionId = Convert.ToInt16(HttpContext.Request.Form["corporacion"]);
 			objO.entidadPagaduriaId = Convert.ToInt16(HttpContext.Request.Form["entidad-pagaduria"]);
-			objO.fechaEjecutoria = DateTime.Parse(HttpContext.Request.Form["f-ejecutoria"]);
+			objO.fechaEjecutoria = HttpContext.Request.Form["f-ejecutoria"] == "" ? DateTime.ParseExact("1900-01-01 14:00:00,531", "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture): DateTime.Parse(HttpContext.Request.Form["f-ejecutoria"]);
 			objO.numeroRadicado = HttpContext.Request.Form["numero-radicado-user"];
 			objO.cuentaCobro = HttpContext.Request.Form["cuenta-cobro-user"];
 			objO.demandante = HttpContext.Request.Form["demandante"];
@@ -219,7 +195,7 @@ namespace confinancia.Controllers
 			//httpClient.DefaultRequestHeaders.Add("Content-Type", "application/json");
 			var httpClient = new HttpClient();
 
-			httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Result);
+			httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 			var response = await httpClient.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadPersona", objP);
 			if (response.IsSuccessStatusCode)
 			{
@@ -242,7 +218,6 @@ namespace confinancia.Controllers
 				{
 					var responseStream5 = await response2.Content.ReadAsStringAsync();
 					ok = false;
-
 				}
 			}
 			else

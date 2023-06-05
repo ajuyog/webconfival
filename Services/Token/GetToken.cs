@@ -4,7 +4,13 @@ using Newtonsoft.Json;
 
 namespace confinancia.Services.Token
 {
-    public class GetToken
+
+    public interface IGetToken
+    {
+        Task<string> GetTokenV();
+    }
+
+    public class GetToken: IGetToken
     {
         #region CONSTRUCTOR
         private readonly IConfiguration _configuration;
