@@ -179,14 +179,6 @@ public class LandingPageController : Controller
         return View();
     }
 
-
-
-    /// <summary>
-    /// Devuelve la vista de inicio con redirecion al formulario de Cotizar
-    /// </summary>
-    /// <param name="seccion"></param>
-    /// <returns></returns>
-
     /// <summary>
     /// Devuelve la vista sysAdmin
     /// </summary>

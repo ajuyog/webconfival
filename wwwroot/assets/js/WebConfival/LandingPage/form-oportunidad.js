@@ -410,33 +410,9 @@ function ShowOportunidad() {
 function LeadOportunidad() {
     var validacion = ValidarLeadOportunidad();
     if (validacion == 0) {
-        const formElement = document.querySelector("form");
-        var formData = new FormData(formElement);
-        $.ajax({
-            url: "Oportunidad/SaveForm",
-            type: 'POST',
-            data: formData,
-            success: function (data) {
-                if (data) {
-                    //OPEN MODAL SUCCES
-                    $("#success-leadOportunidad").modal("show");
-                    window.location.reload();
-                } else {
-                    notif({
-                        msg: 'Algo malo ha pasado, vuelve a intentar',
-                        type: "danger",
-                        multiline: true,
-                        position: "center"
-                    });
-                }
-            },
-            cache: false,
-            contentType: false,
-            processData: false
-        });
+        $("#politica-tratamiento").modal('show');
     }
 }
-
 function ValidarLeadOportunidad() {
     var count = 0;
     var tipoFallo = $("#fallo").val();
@@ -490,6 +466,33 @@ function ValidarLeadOportunidad() {
     return count;
 }
 
+function Lead() {
+    $("#politica-tratamiento").modal('hide');
+    const formElement = document.querySelector("form");
+    var formData = new FormData(formElement);
+    $.ajax({
+        url: "Oportunidad/SaveForm",
+        type: 'POST',
+        data: formData,
+        success: function (data) {
+            if (data) {
+                //OPEN MODAL SUCCES
+                $("#success-leadOportunidad").modal("show");
+                window.location.reload();
+            } else {
+                notif({
+                    msg: 'Algo malo ha pasado, vuelve a intentar',
+                    type: "danger",
+                    multiline: true,
+                    position: "center"
+                });
+            }
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+}
 
 
 // --- UTILIDAD --- //
