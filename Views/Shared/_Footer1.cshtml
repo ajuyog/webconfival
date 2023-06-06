@@ -5,7 +5,7 @@
 				<div class="row">
 					<div class="col-lg-5 col-md-12">
 						<h6>Sobre nosotros</h6>
-						<p>Somos una empresa experta en la compra de sentencias judiciales en contra del Estado. Iniciamos nuestra operación en el año 2010 y hemos comprado sentencia por más de 150 Millones de dólares y hemos cerrado más de 2700 negocios con clientes satisfechos, lo que nos hace experto en el ámbito de compra de sentencias.</p>
+						<p class="justify-policy">Somos una empresa experta en la compra de sentencias judiciales en contra del Estado. Iniciamos nuestra operación en el año 2010 y hemos comprado sentencia por más de 150 Millones de dólares y hemos cerrado más de 2700 negocios con clientes satisfechos, lo que nos hace experto en el ámbito de compra de sentencias.</p>
 					</div>
 					<div class="col-lg-4 col-md-12">
 						<h6>Información de contacto</h6>
@@ -20,10 +20,12 @@
 					<div class="col-lg-2 col-md-12">
 						<h6>Paginas</h6>
 						<ul class="list-unstyled mb-5 mb-lg-0">
-							<li><a href="https://localhost:7191/">Inicio</a></li>
-							<li><a href="https://localhost:7191/#Servicios">Servicios</a></li>
-							<li><a href="https://localhost:7191/#Blog">Blogs</a></li>
-							<li><a href="https://localhost:7191/Contacto">Contacto</a></li>
+							<li><a asp-action="Index" asp-controller="LandingPage">Inicio</a></li>
+							<li><a href="/#Servicios">Servicios</a></li>
+							<li><a asp-action="Index" asp-controller="Blog">Blogs</a></li>
+							<li><a asp-action="Index" asp-controller="Contacto">Contacto</a></li>
+							<li><a asp-action="DataPolicy" asp-controller="LandingPage">Tratamiento de datos</a></li>
+
 						</ul>
 					</div>
 				</div>

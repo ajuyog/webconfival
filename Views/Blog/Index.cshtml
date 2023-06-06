@@ -20,7 +20,7 @@
 					</div>
 					<div class="card-body">
 						<a href="#" class="text-dark blog-title">@Model[0].Titulo</a>
-						<p class="mb-0 text-muted mt-4">@Model[0].Contenido.Substring(0, Convert.ToInt32(Model[0].Contenido.Length * 0.25))</p>
+						<p class="mb-0 text-muted mt-4 justify-policy">@Model[0].Contenido.Substring(0, Convert.ToInt32(Model[0].Contenido.Length * 0.25))</p>
 						<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@Model[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
 					</div>
 					<div class="card-footer ">

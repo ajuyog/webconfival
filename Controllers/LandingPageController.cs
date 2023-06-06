@@ -150,8 +150,6 @@ public class LandingPageController : Controller
 
 
             #endregion
-
-
         }
         return View();
     }
