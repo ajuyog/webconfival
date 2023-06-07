@@ -785,8 +785,8 @@
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="col-lg-10 col-md-12 margin-auto">
-@*                                                                                            <p>Autorizo el tratamiento de mis datos y acepto la <strong><a class="modal-effect" data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#politica-tratamiento">Política de Tratamiento de Datos Personales</a></strong></p>
-*@                                                                                            <p>Autorizo el tratamiento de mis datos y acepto la <strong><a asp-action="DataPolicy" target="_blank">Política de Tratamiento de Datos Personales</a></strong></p>
+                                                                                            @*                                                                                            <p>Autorizo el tratamiento de mis datos y acepto la <strong><a class="modal-effect" data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#politica-tratamiento">Política de Tratamiento de Datos Personales</a></strong></p>
+                                                                                            *@                                                                                            <p>Autorizo el tratamiento de mis datos y acepto la <strong><a asp-action="DataPolicy" target="_blank">Política de Tratamiento de Datos Personales</a></strong></p>
                                                                                         </div>
                                                                                         <div class="invalid-feedback pad-text" id="invalid-politica">Debes autorizar nuestra política de tratamiento de datos personales</div>
                                                                                     </div>
@@ -993,10 +993,10 @@
                                                                                         <input type="hidden" id="correo-ok" name="correo-ok" />
                                                                                         <input type="hidden" id="tp-documento-ok" name="tp-documento-ok" />
                                                                                         <input type="hidden" id="no-documento-ok" name="no-documento-ok" />
-                                                                                        <input type="hidden" id="nombres-ok"  name="nombres-ok" />
+                                                                                        <input type="hidden" id="nombres-ok" name="nombres-ok" />
                                                                                         <input type="hidden" id="apellidos-ok" name="apellidos-ok" />
                                                                                         <input type="hidden" id="fNacimiento-ok" name="fNacimiento-ok" />
-                                                                                        <input type="hidden" id="fExpedicion-ok"  name="fExpedicion-ok" />
+                                                                                        <input type="hidden" id="fExpedicion-ok" name="fExpedicion-ok" />
                                                                                         <input type="hidden" id="no-contacto-ok" name="no-contacto-ok" />
                                                                                     </div>
                                                                                     <div class="row">
@@ -1030,7 +1030,7 @@
                                                                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                                                                             <div class="form-group">
                                                                                                 <label class="form-label">Tipo Regimen</label>
-                                                                                                <select class="form-select" id="tipo-regimen"  name="tipo-regimen" >
+                                                                                                <select class="form-select" id="tipo-regimen" name="tipo-regimen">
                                                                                                     <option selected disabled value="">Seleccione..</option>
                                                                                                     @foreach (var item in ViewBag.LstRegimen)
                                                                                                     {
@@ -1045,7 +1045,7 @@
                                                                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                                                                             <div class="form-group">
                                                                                                 <label class="form-label">Medio de control</label>
-                                                                                                <select class="form-select" id="medio-control"  name="medio-control">
+                                                                                                <select class="form-select" id="medio-control" name="medio-control">
                                                                                                     <option selected disabled value="">Seleccione..</option>
                                                                                                     @foreach (var item in ViewBag.LstMedioControl)
                                                                                                     {
@@ -1095,7 +1095,7 @@
                                                                                     </div>
                                                                                     <div class="row">
                                                                                         <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                            <label class="form-label" >Cuenta de cobro</label>
+                                                                                            <label class="form-label">Cuenta de cobro</label>
                                                                                             <input class="form-control" type="text" id="cuenta-cobro-user" name="cuenta-cobro-user">
                                                                                         </div>
                                                                                         <div class="col-lg-6 col-md-6 col-sm-12">
@@ -1117,7 +1117,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    
+
 
                                                                                     <div id="btn-validar-celular">
                                                                                         <a href="#Contact" class="btn btn-primary" onclick="LeadOportunidad()">Quiero que me contacten</a>
@@ -1213,7 +1213,6 @@
             </div>
         </div>
         <!-- Servicios - FIN-->
-
         <!-- FOOTERS -->
         <div id="footer-support" style="padding-top:100px;">
             <div class="demo-screen-skin bg-primary">
@@ -1369,9 +1368,6 @@
 
 
 @section scripts {
-    <!-- UTILIDAD -->
-    <script src="~/assets/js/WebConfival/Utilidad/utilidad.js"></script>
-
     <!-- FORM OPORTUNIDAD JS -->
     <script src="~/assets/js/WebConfival/LandingPage/form-oportunidad.js"></script>
 
@@ -1407,8 +1403,8 @@
     <script src="~/assets/plugins/select2/select2.full.min.js"></script>
 
     <!-- BOOTSTRAP MAX-LENGTH JS -->
-    @*		<script src="~/assets/plugins/bootstrap-maxlength/dist/bootstrap-maxlength.min.js"></script>
-    *@
+    @*<script src="~/assets/plugins/bootstrap-maxlength/dist/bootstrap-maxlength.min.js"></script>*@
+
     <!--Internal Fileuploads js-->
     <script src="~/assets/plugins/fileuploads/js/fileupload.js"></script>
     <script src="~/assets/plugins/fileuploads/js/file-upload.js"></script>

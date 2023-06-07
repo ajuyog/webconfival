@@ -16,13 +16,13 @@ namespace confinancia.Controllers
 	{
 		#region CONSTRUCTOR
 		private readonly IConfiguration _configuration;
-        private readonly IGetToken _getToken;
+		private readonly IGetToken _getToken;
 
-        public OportunidadController(IConfiguration configuration, IGetToken getToken)
+		public OportunidadController(IConfiguration configuration, IGetToken getToken)
 		{
 			_configuration = configuration;
-            _getToken = getToken;
-        }
+			_getToken = getToken;
+		}
 		#endregion
 
 		public IActionResult Index()
@@ -124,7 +124,7 @@ namespace confinancia.Controllers
 		{
 			var error = new ResultVerificaDTO();
 			var token = await _getToken.GetTokenV();
-			if(token == "") 
+			if (token == "")
 			{
 				return error;
 			}
@@ -132,7 +132,7 @@ namespace confinancia.Controllers
 			{
 				var client = new HttpClient();
 				var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/verifik?idNumber=" + documento + "&fNombres=" + nombre + "&fApellidos=" + apellido + "&tipoDocumento=" + tipoDocumento);
-				request.Headers.Add("Authorization", "Bearer " + token );
+				request.Headers.Add("Authorization", "Bearer " + token);
 				var response = await client.SendAsync(request);
 				if (response.IsSuccessStatusCode)
 				{
@@ -156,39 +156,42 @@ namespace confinancia.Controllers
 		[HttpGet]
 		public string GetAttempts(string valor)
 		{
-			var x = valor == "SMS" ? _configuration.GetSection("Intentos:SMS").Value : valor == "Verifik" ? _configuration.GetSection("Intentos:Verifik").Value : "";
-			return x;
-        }
+			return valor == "SMS" ? _configuration.GetSection("Intentos:SMS").Value : valor == "Verifik" ? _configuration.GetSection("Intentos:Verifik").Value : "";
+		}
 
 		[HttpPost]
 		public async Task<bool> SaveForm()
 		{
 			var token = await _getToken.GetTokenV();
 
-            PersonaDTO objP = new PersonaDTO();
-			objP.nombres= HttpContext.Request.Form["nombres-ok"];
-			objP.apellidos= HttpContext.Request.Form["apellidos-ok"];
-			objP.codSecundario1= HttpContext.Request.Form["no-documento-ok"];
-			objP.correoElectronico= HttpContext.Request.Form["correo-ok"];
-			objP.numeroContacto= HttpContext.Request.Form["no-contacto-ok"];
-			objP.fechaNacimiento= HttpContext.Request.Form["fNacimiento-ok"] == "" ? new DateTime(1900, 1, 1) : DateTime.Parse(HttpContext.Request.Form["fNacimiento-ok"]);
-			objP.fechaExpedicion= HttpContext.Request.Form["fExpedicion-ok"] == "" ? new DateTime(1900, 1, 1) : DateTime.Parse(HttpContext.Request.Form["fExpedicion-ok"]);
-			objP.tipoDocumento= HttpContext.Request.Form["tp-documento-ok"];
-			objP.politicaTratamientoDatos = true;
-			objP.estado = true;
+			var form = await HttpContext.Request.ReadFormAsync();
+			var persona = new PersonaDTO()
+			{
+				nombres = form["nombres-ok"],
+				apellidos = form["apellidos-ok"],
+				codSecundario1 = form["no-documento-ok"],
+				correoElectronico = form["correo-ok"],
+				numeroContacto = form["no-contacto-ok"],
+				fechaNacimiento = form["fNacimiento-ok"] == "" ? new DateTime(1900, 1, 1) : DateTime.Parse(HttpContext.Request.Form["fNacimiento-ok"]),
+				fechaExpedicion = form["fExpedicion-ok"] == "" ? new DateTime(1900, 1, 1) : DateTime.Parse(HttpContext.Request.Form["fExpedicion-ok"]),
+				tipoDocumento = form["tp-documento-ok"],
+				politicaTratamientoDatos = true,
+				estado = true
+			};
+			var leadOportunidad = new OportunidadDTO()
+			{
+				tipoProvidenciaId = Convert.ToInt32(form["fallo"]),
+				medioControlId = Convert.ToInt32(form["medio-control"]),
+				regimenId = Convert.ToInt32(form["tipo-regimen"]),
+				corporacionId = Convert.ToInt32(form["corporacion"]),
+				entidadPagaduriaId = Convert.ToInt32(form["entidad-pagaduria"]),
+				fechaEjecutoria = form["f-ejecutoria"] == "" ? DateTime.ParseExact("1900-01-01 14:00:00,531", "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture) : DateTime.Parse(form["f-ejecutoria"]),
+				numeroRadicado = form["numero-radicado-user"],
+				cuentaCobro = form["cuenta-cobro-user"],
+				demandante = form["demandante"]
 
-			OportunidadDTO objO = new OportunidadDTO();
-			objO.tipoProvidenciaId = Convert.ToInt16(HttpContext.Request.Form["fallo"]);
-			objO.medioControlId = Convert.ToInt16(HttpContext.Request.Form["medio-control"]);
-			objO.regimenId = Convert.ToInt16(HttpContext.Request.Form["tipo-regimen"]);
-			objO.corporacionId = Convert.ToInt16(HttpContext.Request.Form["corporacion"]);
-			objO.entidadPagaduriaId = Convert.ToInt16(HttpContext.Request.Form["entidad-pagaduria"]);
-			objO.fechaEjecutoria = HttpContext.Request.Form["f-ejecutoria"] == "" ? DateTime.ParseExact("1900-01-01 14:00:00,531", "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture): DateTime.Parse(HttpContext.Request.Form["f-ejecutoria"]);
-			objO.numeroRadicado = HttpContext.Request.Form["numero-radicado-user"];
-			objO.cuentaCobro = HttpContext.Request.Form["cuenta-cobro-user"];
-			objO.demandante = HttpContext.Request.Form["demandante"];
-
-			var archivoC = HttpContext.Request.Form.Files;
+			};
+			var archivoC = form.Files;
 
 			var scId = 0;
 			var ok = false;
@@ -196,14 +199,14 @@ namespace confinancia.Controllers
 			var httpClient = new HttpClient();
 
 			httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-			var response = await httpClient.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadPersona", objP);
+			var response = await httpClient.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadPersona", persona);
 			if (response.IsSuccessStatusCode)
 			{
 				// return Content("response1" + response);
 				var responseStream = await response.Content.ReadAsStringAsync();
 				var objPN = JsonConvert.DeserializeObject<PersonaDTO>(responseStream);
-				objO.leadPersonaId = objPN.id;
-				var response2 = await httpClient.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadOportunidad", objO);
+				leadOportunidad.leadPersonaId = objPN.id;
+				var response2 = await httpClient.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadOportunidad", leadOportunidad);
 				//return Content("response2" + response2);
 
 				if (response2.IsSuccessStatusCode)

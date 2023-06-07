@@ -25,37 +25,6 @@ public class LandingPageController : Controller
 	#endregion
 
 	[HttpGet]
-	public async Task<List<DropDownListDTO>> CorporacionId(int id)
-	{
-        var token = await _getToken.GetTokenV();
-        if (token == "")
-        {
-            return new List<DropDownListDTO>();
-        }
-		if (token.Length == 177)
-		{
-            var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/corporacion/" + id + "?Pagina=1&RegistrosPorPagina=100");
-            request.Headers.Add("Authorization", "Bearer " + token);
-            var response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseStream = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStream);
-                return result;
-            }
-            else
-            {
-                return new List<DropDownListDTO>();
-            }
-        }
-        return new List<DropDownListDTO>();
-    }
-
-    /// <summary>
-    /// Devuelve la vista de Inicio 
-    /// </summary>
-    /// <returns></returns>
     [Route("/")]
 	[HttpGet]
     public async Task<IActionResult> Index()
@@ -154,11 +123,33 @@ public class LandingPageController : Controller
         return View();
     }
 
-	/// <summary>
-	/// Devuelve la vista de servicios
-	/// </summary>
-	/// <param name="seccion"></param>
-	/// <returns></returns>
+	public async Task<List<DropDownListDTO>> CorporacionId(int id)
+	{
+        var token = await _getToken.GetTokenV();
+        if (token == "")
+        {
+            return new List<DropDownListDTO>();
+        }
+		if (token.Length == 177)
+		{
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/corporacion/" + id + "?Pagina=1&RegistrosPorPagina=100");
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStream);
+                return result;
+            }
+            else
+            {
+                return new List<DropDownListDTO>();
+            }
+        }
+        return new List<DropDownListDTO>();
+    }
+
 	[HttpGet]
 	public IActionResult ServicioLanding(string seccion)
 	{
@@ -166,21 +157,12 @@ public class LandingPageController : Controller
 		return View();
 	}
 
-    /// <summary>
-	/// Devuelve la vista de Politica de datos
-	/// </summary>
-	/// <param name="seccion"></param>
-	/// <returns></returns>
 	[HttpGet]
     public IActionResult DataPolicy()
     {
         return View();
     }
 
-    /// <summary>
-    /// Devuelve la vista sysAdmin
-    /// </summary>
-    /// <returns></returns>
     public IActionResult SignIn()
 	{
 		var props = new AuthenticationProperties();
@@ -219,11 +201,6 @@ public class LandingPageController : Controller
 		}
 	}
 
-	/// <summary>
-	/// Desloguea al usuario y devuelve la vista de inicio
-	/// </summary>
-	/// <param name="signOutType"></param>
-	/// <returns></returns>
 	public IActionResult SignOut(string signOutType)
 	{
 		if (signOutType == "app")

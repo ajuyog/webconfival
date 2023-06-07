@@ -97,53 +97,53 @@ $(function (e) {
 	});
 
 	//bootstrap maxlength
-	$('input#defaultconfig').maxlength({
-		alwaysShow: true,
-		warningClass: "badge badge-xs bg-warning",
-		limitReachedClass: "badge badge-xs bg-primary"
-	});
-	$('input#thresholdConfig').maxlength({
-		threshold: 20,
-		warningClass: "badge badge-xs bg-warning",
-		limitReachedClass: "badge badge-xs bg-primary"
-	});
-	$('input#alloptions').maxlength({
-		alwaysShow: true,
-		threshold: 10,
-		separator: ' of ',
-		preText: 'You have ',
-		postText: ' chars remaining.',
-		validate: true,
-		warningClass: "badge badge-xs bg-warning",
-		limitReachedClass: "badge badge-xs bg-primary"
-	});
-	$('textarea#textarea').maxlength({
-		alwaysShow: true,
-		warningClass: "badge badge-xs bg-warning",
-		limitReachedClass: "badge badge-xs bg-primary"
-	});
-	$('input#place-top-left').maxlength({
-		alwaysShow: true,
-		placement: 'top-left',
-		warningClass: "badge badge-xs bg-warning",
-		limitReachedClass: "badge badge-xs bg-primary"
-	});
-	$('input#place-top-right').maxlength({
-		alwaysShow: true,
-		placement: 'top-right',
-		warningClass: "badge badge-xs bg-warning",
-		limitReachedClass: "badge badge-xs bg-primary"
-	});
-	$('input#place-bottom-left').maxlength({
-		alwaysShow: true,
-		placement: 'bottom-left',
-		warningClass: "badge badge-xs bg-warning",
-		limitReachedClass: "badge badge-xs bg-primary"
-	});
-	$('input#place-bottom-right').maxlength({
-		alwaysShow: true,
-		placement: 'bottom-right',
-		warningClass: "badge badge-xs bg-warning",
-		limitReachedClass: "badge badge-xs bg-primary"
-	});
+	//$('input#defaultconfig').maxlength({
+	//	alwaysShow: true,
+	//	warningClass: "badge badge-xs bg-warning",
+	//	limitReachedClass: "badge badge-xs bg-primary"
+	//});
+	//$('input#thresholdConfig').maxlength({
+	//	threshold: 20,
+	//	warningClass: "badge badge-xs bg-warning",
+	//	limitReachedClass: "badge badge-xs bg-primary"
+	//});
+	//$('input#alloptions').maxlength({
+	//	alwaysShow: true,
+	//	threshold: 10,
+	//	separator: ' of ',
+	//	preText: 'You have ',
+	//	postText: ' chars remaining.',
+	//	validate: true,
+	//	warningClass: "badge badge-xs bg-warning",
+	//	limitReachedClass: "badge badge-xs bg-primary"
+	//});
+	//$('textarea#textarea').maxlength({
+	//	alwaysShow: true,
+	//	warningClass: "badge badge-xs bg-warning",
+	//	limitReachedClass: "badge badge-xs bg-primary"
+	//});
+	//$('input#place-top-left').maxlength({
+	//	alwaysShow: true,
+	//	placement: 'top-left',
+	//	warningClass: "badge badge-xs bg-warning",
+	//	limitReachedClass: "badge badge-xs bg-primary"
+	//});
+	//$('input#place-top-right').maxlength({
+	//	alwaysShow: true,
+	//	placement: 'top-right',
+	//	warningClass: "badge badge-xs bg-warning",
+	//	limitReachedClass: "badge badge-xs bg-primary"
+	//});
+	//$('input#place-bottom-left').maxlength({
+	//	alwaysShow: true,
+	//	placement: 'bottom-left',
+	//	warningClass: "badge badge-xs bg-warning",
+	//	limitReachedClass: "badge badge-xs bg-primary"
+	//});
+	//$('input#place-bottom-right').maxlength({
+	//	alwaysShow: true,
+	//	placement: 'bottom-right',
+	//	warningClass: "badge badge-xs bg-warning",
+	//	limitReachedClass: "badge badge-xs bg-primary"
+	//});
 });

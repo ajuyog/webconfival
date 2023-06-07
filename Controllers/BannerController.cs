@@ -54,7 +54,9 @@ namespace confinancia.Controllers
 				form.Add(contentPDF, "UrlSoporte", obj.Name);
 			}
 			client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-			var response = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/repositorioArchivo?Agrupacion1=" + _configuration.GetSection("LandingPage:BannerInicio:A1").Value + "&Agrupacion2=" + _configuration.GetSection("LandingPage:BannerInicio:A2").Value + "&Agrupacion3=" + _configuration.GetSection("LandingPage:BannerInicio:A3").Value + "&Agrupacion4=" + _configuration.GetSection("LandingPage:BannerInicio:A4").Value + "&Agrupacion5=" + _configuration.GetSection("LandingPage:BannerInicio:A5").Value, form);
+			//var response = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/repositorioArchivo?Agrupacion1=" + _configuration.GetSection("LandingPage:BannerInicio:A1").Value + "&Agrupacion2=" + _configuration.GetSection("LandingPage:BannerInicio:A2").Value + "&Agrupacion3=" + _configuration.GetSection("LandingPage:BannerInicio:A3").Value + "&Agrupacion4=" + _configuration.GetSection("LandingPage:BannerInicio:A4").Value + "&Agrupacion5=" + _configuration.GetSection("LandingPage:BannerInicio:A5").Value, form);
+			var response = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/repositorioArchivo?Agrupacion1=" + _configuration.GetSection("LandingPage:Blog:A1").Value + "&Agrupacion2=" + _configuration.GetSection("LandingPage:Blog:A2").Value + "&Agrupacion3=" + _configuration.GetSection("LandingPage:Blog:A3").Value + "&Agrupacion4=" + _configuration.GetSection("LandingPage:Blog:A4").Value + "&Agrupacion5=" + _configuration.GetSection("LandingPage:Blog:A5").Value, form);
+
 			if (response.IsSuccessStatusCode)
 			{
 				var responseStream = await response.Content.ReadAsStringAsync();

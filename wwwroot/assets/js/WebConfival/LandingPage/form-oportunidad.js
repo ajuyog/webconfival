@@ -1,5 +1,6 @@
 ﻿var nombres = "";
-
+var intentosSMS = "";
+var intentosV = 0;
 $(document).ready(function () {
     // --- INPUTS OTP CORREO --- //
     $(".inputs").keyup(function () {
@@ -13,6 +14,9 @@ $(document).ready(function () {
         }
     });
     $("#uncheckedPrimarySwitch-politica").val("on");
+    GetAttempts("SMS");
+    GetAttempts("Verifik");
+
 });
 
 // --- VALIDACION DE POLITICA TRATAMIENTO DE DATOS --- //
@@ -48,7 +52,7 @@ function showOTPCorreo()     {
 };
 function activeTimer() {
     $('#timer-countercallback').countdown({
-        from: 180,
+        from: 30,
         to: 0,
         timerEnd: function () {
             this.animate({ 'opacity': .5 }, 500).css({ 'text-decoration': 'line-through' });
@@ -216,7 +220,7 @@ function ValidarDocumento() {
 
                 } else {
                     $('#intentos-verifik-count').html(function (i, val) { return val * 1 + 1 });
-                    if (parseInt($('#intentos-verifik-count').get(0).innerHTML) >= 2) {
+                    if (parseInt($('#intentos-verifik-count').get(0).innerHTML) >= intentosV) {
                         // LOADER
                         $("#loader3").addClass("hide-info");
                         $("#documento-hide").removeClass("hide-info");
@@ -322,7 +326,7 @@ function showOTPCelular() {
 };
 function activeTimer2() {
     $('#timer-countercallback2').countdown({
-        from: 180,
+        from: 30,
         to: 0,
         timerEnd: function () {
             this.animate({ 'opacity': .5 }, 500).css({ 'text-decoration': 'line-through' });
@@ -465,7 +469,6 @@ function ValidarLeadOportunidad() {
     }
     return count;
 }
-
 function Lead() {
     $("#politica-tratamiento").modal('hide');
     const formElement = document.querySelector("form");
@@ -493,7 +496,6 @@ function Lead() {
         processData: false
     });
 }
-
 
 // --- UTILIDAD --- //
 function MailRegex(data) {
@@ -564,7 +566,21 @@ function CleanDocumento(data) {
     $("#segundo-intento").removeClass("hide-info");
     $("#btn-validar-documento").removeClass("hide-info");
 }
-
+function GetAttempts(data) {
+    $.ajax({
+        type: "GET",
+        url: '/Oportunidad/GetAttempts',
+        data: { valor: data },
+        success: function (result) {
+            if (data == "SMS") {
+                intentosSMS = result;
+            }
+            if (data == "Verifik") {
+                intentosV = parseInt(result);
+            }
+        }
+    });
+}
 $("#tipo-corporacion").on("change", function () {
     var select = $("#corporacion");
     var idCorporacion = $("#tipo-corporacion").val();
@@ -591,8 +607,7 @@ $("#tipo-corporacion").on("change", function () {
 // --- CONTADOR SMS --- //
 $('#intentos-sms').click(function () {
     var count = $('#intentos-sms-count');
-    /*var intentos = GetAttempts("SMS");*/
-    if (count.get(0).innerHTML == "1") {
+    if (count.get(0).innerHTML == intentosSMS) {
         $("#celular-hide").addClass("hide-info");
         $("#intentos-sms-superados").removeClass("hide-info");
         $("[id=intentos-verifik-msg]").addClass("hide-info");
