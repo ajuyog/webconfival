@@ -29,7 +29,8 @@ public class LandingPageController : Controller
 	[HttpGet]
     public async Task<IActionResult> Index()
     {
-        var token = await _getToken.GetTokenV();
+
+		var token = await _getToken.GetTokenV();
 		if (token == "")
 		{
 			return NotFound();

@@ -686,6 +686,17 @@ body {
 .justify-policy{
     text-align: justify;
 }
+
+.user-mail{
+    text-align: end;
+}
+
+@media (max-width: 990px) {
+    .user-mail {
+        text-align: start;
+    }
+}
+
 /*-------------------------------------------------------------*/
 .margin-tabs-li {
     margin: auto;
