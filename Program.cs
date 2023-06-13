@@ -12,10 +12,10 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = MicrosoftAccountDefaults.AuthenticationScheme;
 }).AddCookie().AddMicrosoftAccount(o =>
 {
-	o.ClientId = "57f0978d-23bc-4172-ae60-d548461c018d";
-	o.ClientSecret = "PMg8Q~~v5L5tXpeasGljOnNIcCZbdmIRZ5_sUazM";
-	o.AuthorizationEndpoint = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize";
-	o.TokenEndpoint = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/token";
+	o.ClientId = builder.Configuration.GetValue<string>("Azure:ClientId");
+	o.ClientSecret = builder.Configuration.GetValue<string>("Azure:ClientSecret");
+    o.AuthorizationEndpoint = "https://login.microsoftonline.com/" + builder.Configuration.GetValue<string>("Azure:TenantId") + "/oauth2/v2.0/authorize";
+	o.TokenEndpoint = "https://login.microsoftonline.com/" + builder.Configuration.GetValue<string>("Azure:TenantId") + "/oauth2/v2.0/token";
 });
 
 builder.Services.AddTransient<IGetToken, GetToken>();
