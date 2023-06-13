@@ -7,8 +7,8 @@ namespace confinancia.Services.Token
 
     public interface IGetToken
     {
-        Task<string> GetTokenMGraph(string code);
-        Task<string> GetTokenV();
+		Task<string> GetTokenMGraph(string code, string redirect);
+		Task<string> GetTokenV();
     }
 
     public class GetToken: IGetToken
@@ -50,18 +50,18 @@ namespace confinancia.Services.Token
         }
 
         [HttpGet]
-        public async Task<string> GetTokenMGraph(string code)
+        public async Task<string> GetTokenMGraph(string code, string redirect)
         {
             var Http = new HttpClient();
             string tokenGraph = "";
             TokenGraphDTO TG = new TokenGraphDTO();
 
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/token ");
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/token ");
             var collection = new List<KeyValuePair<string, string>>();
             collection.Add(new("client_id", _configuration.GetSection("Azure:ClientId").Value));
             collection.Add(new("scope", "user.read"));
             collection.Add(new("code", code));
-            collection.Add(new("redirect_uri", "https://localhost:7191/Graph/GetOutlook"));
+            collection.Add(new("redirect_uri", "https://localhost:7191/" + redirect));
             collection.Add(new("grant_type", "authorization_code"));
             collection.Add(new("client_secret", _configuration.GetSection("Azure:ClientSecret").Value));
             var content = new FormUrlEncodedContent(collection);

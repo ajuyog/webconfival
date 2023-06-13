@@ -1,4 +1,66 @@
-﻿@{
+﻿@model confinancia.Models.Graph.MeGraphDTO
+@{
     Layout = "_Layout3";
 }
-<p>prueba</p>
+<!-- Row -->
+
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
+				<div class="row align-items-center">
+					<div class="col-lg-12 col-md-12 col-xl-6">
+						<div class="d-flex flex-wrap align-items-center">
+							<div class="profile-img-main rounded">
+								<img src=@ViewBag.ImageData alt="img" class="m-0 p-1 rounded hrem-6">
+							</div>
+							<div class="ms-4">
+								<h2 class="header-family pad-text"><strong>@Model.GivenName</strong>, Revisa tus correos mas recientes</h2>
+								<h4>@Model.JobTitle</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row row-sm">
+	<div class="col-lg-12">
+		<div class="card custom-card">
+			<div class="card-header border-bottom">
+				<h3 class="card-title">Striped Rows</h3>
+			</div>
+			<div class="card-body">
+				<p class="text-muted">Add zebra-striping to any table row.</p>
+				<div class="table-responsive">
+					<table class="table border text-nowrap text-md-nowrap table-striped">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th>Position</th>
+								<th>Salary</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>Kevin Powell</td>
+								<td>Business Development Associator</td>
+								<td>$50,300</td>
+							</tr>
+							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- End Row -->
+
