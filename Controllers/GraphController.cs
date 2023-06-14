@@ -28,15 +28,16 @@ namespace confinancia.Controllers
 		public async Task<IActionResult> Getoutlook([FromForm] IFormCollection value)
 		{
 			string code = value.First().Value;
+			var skip = (Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 0 : (Convert.ToInt32(value.ElementAt(1).Value) - 1) * 10);
 			string redirect = "Graph/GetOutlook";
 			string accesToken = await _getToken.GetTokenMGraph(code, redirect);
 			ViewBag.ImageData = await ImgProfile(accesToken);
 			var model = await GetMeGraph(accesToken);
-
+			
+            var client = new HttpClient();
 			var modelDos = new MessagesGraphDTO();
 
-            var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/Users/" + model.Id + "/messages");
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/Users/" + model.Id + "/messages?$skip=" + skip.ToString() + "&count=true");
             request.Headers.Add("Authorization", "Bearer " + accesToken);
             var content = new StringContent(string.Empty);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -48,8 +49,13 @@ namespace confinancia.Controllers
                 modelDos = JsonConvert.DeserializeObject<MessagesGraphDTO>(responseStream);
                 modelDos.GivenName = model.GivenName;
                 modelDos.JobTitle = model.JobTitle;
+				var array = responseStream.Split(",");
+				modelDos.Count = Convert.ToInt32(array[1].ToString().Substring(15));
+				modelDos.Paginas = (int)Math.Ceiling((double)modelDos.Count / 10);
+				modelDos.BaseUrl = "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/authorize?client_id=" + _configuration.GetSection("Azure:ClientId").Value + "&response_type=code&redirect_uri=https://localhost:7191/Graph/GetOutlook&response_mode=form_post&scope=user.read&state=";
+				modelDos.PaginaActual = Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 1 : Convert.ToInt32(value.ElementAt(1).Value);
 
-            }
+			}
             return View(modelDos);
 		}
 

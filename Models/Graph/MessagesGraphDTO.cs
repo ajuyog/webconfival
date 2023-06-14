@@ -1,8 +1,15 @@
-﻿namespace confinancia.Models.Graph
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace confinancia.Models.Graph
 {
     public class MessagesGraphDTO: MeGraphDTO
     {
         public List<ObjMessage> value { get; set; }
+        public int Count { get; set; }
+        public int Paginas { get; set; }
+        public int PaginaActual { get; set; }
+        public string BaseUrl { get; set; }
     }
 
     public class ObjMessage
@@ -12,7 +19,6 @@
         public string BodyPreview { get; set; }
         public Body Body { get; set; }
         public Sender Sender { get; set; }
-        //public ToRecipients ToRecipients { get; set; }
 
     }
     public class Body
