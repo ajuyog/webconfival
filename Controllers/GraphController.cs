@@ -1,21 +1,27 @@
-﻿using confinancia.Models;
+﻿using Azure.Identity;
+using confinancia.Models;
 using confinancia.Models.Graph;
 using confinancia.Models.JsonDTO;
 using confinancia.Services.Token;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Graph;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Reflection;
+using Tavis.UriTemplates;
 
 namespace confinancia.Controllers
 {
 	public class GraphController : Controller
 	{
 		private readonly IGetToken _getToken;
+        private readonly IConfiguration _configuration;
 
-		public GraphController(IGetToken getToken)
+        public GraphController(IGetToken getToken, IConfiguration configuration)
 		{
 			_getToken = getToken;
-		}
+            _configuration = configuration;
+        }
 
 
 		[Consumes("application/x-www-form-urlencoded")]
@@ -26,7 +32,25 @@ namespace confinancia.Controllers
 			string accesToken = await _getToken.GetTokenMGraph(code, redirect);
 			ViewBag.ImageData = await ImgProfile(accesToken);
 			var model = await GetMeGraph(accesToken);
-			return View(model);
+
+			var modelDos = new MessagesGraphDTO();
+
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/Users/" + model.Id + "/messages");
+            request.Headers.Add("Authorization", "Bearer " + accesToken);
+            var content = new StringContent(string.Empty);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            request.Content = content;
+            var response = await client.SendAsync(request);
+			if(response.IsSuccessStatusCode)
+			{
+				var responseStream = await response.Content.ReadAsStringAsync();
+                modelDos = JsonConvert.DeserializeObject<MessagesGraphDTO>(responseStream);
+                modelDos.GivenName = model.GivenName;
+                modelDos.JobTitle = model.JobTitle;
+
+            }
+            return View(modelDos);
 		}
 
 		[Consumes("application/x-www-form-urlencoded")]

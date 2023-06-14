@@ -1,4 +1,4 @@
-﻿@model confinancia.Models.Graph.MeGraphDTO
+﻿@model confinancia.Models.Graph.MessagesGraphDTO
 @{
     Layout = "_Layout3";
 }
@@ -6,61 +6,90 @@
 
 
 <div class="row">
-	<div class="col-lg-12">
-		<div class="card">
-			<div class="card-body">
-				<div class="row align-items-center">
-					<div class="col-lg-12 col-md-12 col-xl-6">
-						<div class="d-flex flex-wrap align-items-center">
-							<div class="profile-img-main rounded">
-								<img src=@ViewBag.ImageData alt="img" class="m-0 p-1 rounded hrem-6">
-							</div>
-							<div class="ms-4">
-								<h2 class="header-family pad-text"><strong>@Model.GivenName</strong>, Revisa tus correos mas recientes</h2>
-								<h4>@Model.JobTitle</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-lg-12 col-md-12 col-xl-6">
+                        <div class="d-flex flex-wrap align-items-center">
+                            <div class="profile-img-main rounded">
+                                <img src=@ViewBag.ImageData alt="img" class="m-0 p-1 rounded hrem-6">
+                            </div>
+                            <div class="ms-4">
+                                <h2 class="header-family pad-text"><strong>@Model.GivenName</strong>, Revisa tus correos mas recientes</h2>
+                                <h4>@Model.JobTitle</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 <div class="row row-sm">
-	<div class="col-lg-12">
-		<div class="card custom-card">
-			<div class="card-header border-bottom">
-				<h3 class="card-title">Striped Rows</h3>
-			</div>
-			<div class="card-body">
-				<p class="text-muted">Add zebra-striping to any table row.</p>
-				<div class="table-responsive">
-					<table class="table border text-nowrap text-md-nowrap table-striped">
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>Name</th>
-								<th>Position</th>
-								<th>Salary</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>Kevin Powell</td>
-								<td>Business Development Associator</td>
-								<td>$50,300</td>
-							</tr>
-							
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="col-lg-12">
+        <div class="card custom-card">
+            @*<div class="card-header border-bottom">
+            <h3 class="card-title">Striped Rows</h3>
+            </div>*@
+            <div class="card-body">
+                @*<p class="text-muted">Add zebra-striping to any table row.</p>*@
+                <div class="table-responsive">
+                    <table class="table border text-nowrap text-md-nowrap table-striped">
+                        <thead>
+                            <tr>
+                                <th>Fecha de envio</th>
+                                <th>Asunto</th>
+                                <th>Enviado por</th>
+                                <th>Visualizar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.value)
+                            {
+                                <tr>
+                                    <td>@item.ReceivedDateTime</td>
+                                    <td>@item.Subject</td>
+                                    <td>@item.Sender.EmailAddress.Address</td>
+                                    <td>
+                                        <a class="btn btn-primary-light btn-square br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Ver correo" onclick="DetalleCorreo(`@item.Body.Content.ToString()`)"><i class="fe fe-refresh-ccw"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- End Row -->
 
+
+<div class="modal fade" id="DetalleCorreo" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header" id="header">
+            </div>
+            <div class="modal-body">
+               <div id="body">
+
+               </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+    <script src="~/assets/js/WebConfival/OutlookGraph/Outlook.js"></script>
+
+}
+
+<!-- End Row -->
