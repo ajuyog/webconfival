@@ -33,7 +33,12 @@ namespace confinancia.Controllers
 			var skip = (Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 0 : (Convert.ToInt32(value.ElementAt(1).Value) - 1) * 10);
 			string redirect = "Graph/GetOutlook";
 			string accesToken = await _getToken.GetTokenMGraph(code, redirect);
-			ViewBag.ImageData = await ImgProfile(accesToken);
+			if(accesToken.Contains("administrador del sistema"))
+            {
+				var mensaje = accesToken;
+                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+            }
+            ViewBag.ImageData = await ImgProfile(accesToken);
 			var model = await GetMeGraph(accesToken);
 			
             var client = new HttpClient();

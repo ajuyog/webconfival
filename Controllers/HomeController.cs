@@ -7,8 +7,9 @@ namespace confinancia.Controllers
 	public class HomeController : Controller
 	{
 		[Authorize]
-		public IActionResult Index()
+		public IActionResult Index(string mensaje = null)
 		{
+			if(mensaje != null) { ViewData["ErrorTokenGraph"] = mensaje; }
 			var model = new UserDTO()
 			{
 				Nombre = User.Identities.First().Claims.ElementAtOrDefault(2).Value,

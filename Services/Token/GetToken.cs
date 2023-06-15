@@ -72,6 +72,15 @@ namespace confinancia.Services.Token
                 tokenGraph = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 TG = JsonConvert.DeserializeObject<TokenGraphDTO>(tokenGraph);
             }
+            else
+            {
+                var array = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                if (array.Contains("error_description"))
+                {
+                    return "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
+                }
+                return "Ocurrio un error, comuniquese con el administrador del sistema";
+            }
             return TG.access_token;
         }
     }
