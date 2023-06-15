@@ -697,6 +697,19 @@ body {
     }
 }
 
+.text-pagination-left::before {
+    content: attr(data-letras);
+}
+
+@media (max-width: 1245px) {
+    .text-pagination-left::before {
+        content: attr(data-icono);
+    }
+}
+
+
+
+
 /*-------------------------------------------------------------*/
 .margin-tabs-li {
     margin: auto;
