@@ -10,6 +10,7 @@ namespace confinancia.Models.Graph
         public int Paginas { get; set; }
         public int PaginaActual { get; set; }
         public string BaseUrl { get; set; }
+        public string MensajeBienvenida { get; set; }
     }
 
     public class ObjMessage

@@ -7,6 +7,7 @@ using confinancia.Services.Token;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Graph;
 using Newtonsoft.Json;
+using System.Globalization;
 using System.Net.Http.Headers;
 using System.Reflection;
 using Tavis.UriTemplates;
@@ -15,17 +16,17 @@ namespace confinancia.Controllers
 {
 	public class GraphController : Controller
 	{
-		private readonly IGetToken _getToken;
+        #region CONSTRUCTOR
+        private readonly IGetToken _getToken;
         private readonly IConfiguration _configuration;
-
         public GraphController(IGetToken getToken, IConfiguration configuration)
 		{
 			_getToken = getToken;
             _configuration = configuration;
         }
+        #endregion
 
-
-		[Consumes("application/x-www-form-urlencoded")]
+        [Consumes("application/x-www-form-urlencoded")]
 		public async Task<IActionResult> Getoutlook([FromForm] IFormCollection value)
 		{
 			string code = value.First().Value;
@@ -55,11 +56,12 @@ namespace confinancia.Controllers
 				modelDos.Paginas = (int)Math.Ceiling((double)modelDos.Count / 10);
 				modelDos.BaseUrl = "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/authorize?client_id=" + _configuration.GetSection("Azure:ClientId").Value + "&response_type=code&redirect_uri=https://localhost:7191/Graph/GetOutlook&response_mode=form_post&scope=user.read&state=";
 				modelDos.PaginaActual = Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 1 : Convert.ToInt32(value.ElementAt(1).Value);
+				modelDos.MensajeBienvenida = ", Revisa tus correos mas recientes.";
+                modelDos.value.ForEach(x => x.ReceivedDateTime = x.ReceivedDateTime.Substring(0, x.ReceivedDateTime.Length - 4).Replace("T", " ").Trim());
 
-			}
+            }
             return View(modelDos);
 		}
-
 
 		[Consumes("application/x-www-form-urlencoded")]
 		public async Task<IActionResult> GetoutlookSent([FromForm] IFormCollection value)
@@ -91,12 +93,11 @@ namespace confinancia.Controllers
 				modelDos.Paginas = (int)Math.Ceiling((double)modelDos.Count / 10);
 				modelDos.BaseUrl = "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/authorize?client_id=" + _configuration.GetSection("Azure:ClientId").Value + "&response_type=code&redirect_uri=https://localhost:7191/Graph/GetoutlookSent&response_mode=form_post&scope=user.read&state=";
 				modelDos.PaginaActual = Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 1 : Convert.ToInt32(value.ElementAt(1).Value);
-
-			}
-			return View(modelDos);
+                modelDos.MensajeBienvenida = ", Revisa tus correos enviados más recientes.";
+				modelDos.value.ForEach(x => x.ReceivedDateTime = x.ReceivedDateTime.Substring(0, x.ReceivedDateTime.Length - 4).Replace("T", " ").Trim());
+            }
+            return View(modelDos);
 		}
-
-
 
 		[Consumes("application/x-www-form-urlencoded")]
 		public async Task<IActionResult> GetTeams([FromForm] IFormCollection value)

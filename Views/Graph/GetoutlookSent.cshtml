@@ -1,11 +1,6 @@
 ﻿@model confinancia.Models.Graph.MessagesGraphDTO
 @{
     Layout = "_Layout3";
-    var anterior = (Model.PaginaActual - 1).ToString();
-    var siguiente = (Model.PaginaActual + 1).ToString();
-    var botonAnterior = Model.PaginaActual > 1;
-    var botonSiguiente = Model.PaginaActual < Model.Paginas;
-    var radio = 2;
 }
 <div class="page-header">
     <div>
@@ -19,68 +14,13 @@
     </div>
 </div>
 
-
 <div class="row">
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-lg-12 col-md-12 col-xl-12">
-                        <div class="d-flex flex-wrap align-items-center">
-                            <div class="profile-img-main rounded">
-                                <img src=@ViewBag.ImageData alt="img" class="m-0 p-1 rounded hrem-6">
-                            </div>
-                            <div class="ms-4">
-                                <h2 class="header-family pad-text"><strong>@Model.GivenName</strong>, Revisa tus correos enviados más recientes</h2>
-                                <h4>@Model.JobTitle</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <partial name="~/Views/Shared/Graph/_BienvenidaGraph.cshtml" />
 </div>
-
 
 <div class="row">
     <div class="col-md-12 col-lg-4 col-xl-3">
-        <div class="card">
-            <div class="card-body">
-                <ul class="nav1 nav-column flex-column br-7">
-                    <li class="nav-item1 mt-0">
-                        <a class="nav-link thumb " href="https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize?client_id=57f0978d-23bc-4172-ae60-d548461c018d&response_type=code&redirect_uri=https://localhost:7191/Graph/GetOutlook&response_mode=form_post&scope=user.read&state=0">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-inner-icn" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M19.5,4h-15C3.119812,4.0012817,2.0012817,5.119812,2,6.5v11c0.0012817,1.380188,1.119812,2.4987183,2.5,2.5h15c1.380188-0.0012817,2.4987183-1.119812,2.5-2.5v-11C21.9987183,5.119812,20.880188,4.0012817,19.5,4z M21,17.5c-0.0009155,0.828064-0.671936,1.4990845-1.5,1.5h-15c-0.828064-0.0009155-1.4990845-0.671936-1.5-1.5V8.0913696l8.7392578,5.3353882c0.0080566,0.0048828,0.0184326,0.0030518,0.0266724,0.0075073C11.836731,13.4725952,11.9138184,13.500061,12,13.5c0.0905762,0.000061,0.1763306-0.0263672,0.2519531-0.0707397c0.0026855-0.0015869,0.0061646-0.0008545,0.0087891-0.0025024L21,8.0913696V17.5z M21,6.9194946l-0.2387695,0.145752c-0.0070801,0.0038452-0.0150146,0.0037842-0.0219727,0.0079956l-8.7313843,5.3359985L12,12.4140625l-0.0078735-0.0048218L3.2607422,7.0732422C3.2603149,7.072998,3.2598877,7.0727539,3.2594604,7.0724487c-0.006958-0.0042114-0.0149536-0.0041504-0.0220337-0.0079956L3,6.9194946V6.5C3.0009155,5.671936,3.671936,5.0009155,4.5,5h15c0.828064,0.0009155,1.4990845,0.671936,1.5,1.5V6.9194946z" /></svg>
-                            Bandeja de entrada
-                        </a>
-                    </li>
-                    <li class="nav-item1">
-                        <a class="nav-link thumb active" href="@string.Format(Model.BaseUrl + "{0}", 0)">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-inner-icn" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M16.6474609,7.3417969c0.093689,0.0939331,0.2208862,0.1466675,0.3535156,0.1464844c0.1326294,0.0001221,0.2598877-0.0526123,0.3535156-0.1464844l4.5-4.5c0.1904907-0.194397,0.1904907-0.5055542,0-0.6999512c-0.1932983-0.1971436-0.5098267-0.2003174-0.7070312-0.0070801L17.0009766,6.28125l-2.1464844-2.1464233c-0.0023804-0.0024414-0.0047607-0.0048218-0.0072021-0.0072021c-0.1972046-0.1932373-0.5137329-0.1900635-0.7069702,0.0072021c-0.1932373,0.1972046-0.1900635,0.5137329,0.0071411,0.7069702L16.6474609,7.3417969z M21.5078125,6.9736328c-0.276123,0-0.5,0.223877-0.5,0.5v10c-0.0009155,0.828064-0.671936,1.4990845-1.5,1.5h-15c-0.828064-0.0009155-1.4990845-0.671936-1.5-1.5v-11c0.0002441-0.2310181,0.0570068-0.4471436,0.1503906-0.6425781l7.0859375,7.0859375c0.4643555,0.4656372,1.0953369,0.7268066,1.7529297,0.7255859c0.6781006-0.0012207,1.3276978-0.2729492,1.8046875-0.7548828l1.7196655-1.7207031c0.1904907-0.194397,0.1904907-0.5054321,0-0.6998291c-0.1932373-0.1972046-0.5097656-0.2004395-0.7070312-0.0072021l-1.75,1.75c-0.5841675,0.5820923-1.5290527,0.5820923-2.1132812,0L3.8651733,5.1240234C4.0606079,5.0305786,4.2767944,4.973877,4.5078125,4.9736328h7c0.276123,0,0.5-0.223877,0.5-0.5s-0.223877-0.5-0.5-0.5h-7c-1.380188,0.0012817-2.4987183,1.119812-2.5,2.5v11c0.0012817,1.380188,1.119812,2.4987183,2.5,2.5h15c1.380188-0.0012817,2.4987183-1.119812,2.5-2.5v-10C22.0078125,7.1975098,21.7839355,6.9736328,21.5078125,6.9736328z" /></svg>
-                            Elementos enviados
-                        </a>
-                    </li>
-                    <li class="nav-item1">
-                        <a class="nav-link thumb" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-inner-icn" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M21.7319336,15.1376953c-0.0018921-0.0333252-0.0109253-0.0648193-0.0196533-0.0977173c-0.0087891-0.0328369-0.0167847-0.0644531-0.0317383-0.0942383c-0.0046387-0.0092773-0.0043945-0.0195923-0.0096436-0.0287476L15.5126953,4.25C15.4235229,4.0953369,15.258606,4.000061,15.0800781,4H8.9208984C8.833252,4.000061,8.7471924,4.0231934,8.6712646,4.0670166C8.5995483,4.1083984,8.5473633,4.1674805,8.5056152,4.2327271C8.5006104,4.239502,8.492981,4.2429199,8.4882812,4.25L2.3291016,14.9169922c-0.0898438,0.154541-0.0898438,0.345459,0,0.5L5.4091797,20.75c0.0072021,0.0125122,0.0214233,0.0179443,0.0296021,0.0296631c0.0339355,0.0488281,0.0745239,0.0894775,0.1233521,0.1234741c0.0183716,0.0127563,0.0338135,0.026062,0.0537109,0.0362549C5.6845093,20.9749756,5.7591553,20.999939,5.8417969,21h12.3173828c0.1785278-0.000061,0.3434448-0.0953369,0.4326172-0.25l3.0791016-5.3330078c0.0070801-0.0122681,0.0048828-0.0276489,0.0108643-0.0404663c0.0253296-0.053894,0.0402832-0.109314,0.0452881-0.1686401c0.0012207-0.0140991,0.0108643-0.0262451,0.0108643-0.0404663C21.737915,15.1568604,21.7325439,15.1480713,21.7319336,15.1376953z M14.7910156,5l5.5810547,9.6669922h-5.0029297L9.7871094,5H14.7910156z M14.2144165,14.6669922H9.7861938l2.2139282-3.8348389L14.2144165,14.6669922z M3.3388672,15.1669922L8.9208984,5.5l2.5019531,4.3330078L5.8417969,19.5L3.3388672,15.1669922z M17.8701172,20H6.7080078l2.5020142-4.3330078h11.1621094L17.8701172,20z" /></svg>
-                            Google Drive
-                        </a>
-                    </li>
-                    <li class="nav-item1">
-                        <a class="nav-link thumb" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-inner-icn" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M21.0859375,10.8789062l-8.7324219-8.7324219C12.2597656,2.0526733,12.1326294,2,12,2H2.5C2.4998169,2,2.4996338,2,2.4993896,2C2.2234497,2.0001831,1.9998169,2.223999,2,2.5V12c0,0.1326294,0.0526733,0.2597656,0.1464844,0.3535156l8.7324219,8.7323608C11.44104,21.6488647,12.2044067,21.9644775,13,21.9628906c0.7955933,0.0015869,1.55896-0.3140259,2.1210938-0.8769531l5.9648438-5.9648438C22.2558594,13.9490356,22.2558594,12.0509644,21.0859375,10.8789062z M20.3789062,14.4140625l-5.9648438,5.9649048c-0.7816772,0.7792358-2.0464478,0.7792358-2.828125,0L3,11.7930298V3h8.7930298l8.5858765,8.5859985C21.1582031,12.3676147,21.1582031,13.6324463,20.3789062,14.4140625z M7.5,6C6.6715698,6,6,6.6715698,6,7.5S6.6715698,9,7.5,9C8.328064,8.9990845,8.9990845,8.328064,9,7.5C9,6.6715698,8.3284302,6,7.5,6z M7.5,8C7.223877,8,7,7.776123,7,7.5S7.223877,7,7.5,7C7.7759399,7.0005493,7.9994507,7.2240601,8,7.5C8,7.776123,7.776123,8,7.5,8z" /></svg>
-                            Tags
-                        </a>
-                    </li>
-                    <li class="nav-item1">
-                        <a class="nav-link thumb" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-inner-icn" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M17,9V7c0-2.7614136-2.2385864-5-5-5S7,4.2385864,7,7v2c-1.6561279,0.0018311-2.9981689,1.3438721-3,3v7c0.0018311,1.6561279,1.3438721,2.9981689,3,3h10c1.6561279-0.0018311,2.9981689-1.3438721,3-3v-7C19.9981689,10.3438721,18.6561279,9.0018311,17,9z M8,7c0-2.2091675,1.7908325-4,4-4s4,1.7908325,4,4v2H8V7z M19,19c-0.0014038,1.1040039-0.8959961,1.9985962-2,2H7c-1.1040039-0.0014038-1.9985962-0.8959961-2-2v-7c0.0014038-1.1040039,0.8959961-1.9985962,2-2h0.5h9h0.0006104H17c1.1040039,0.0014038,1.9985962,0.8959961,2,2V19z" /></svg>
-                            Trash Bin
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <partial name="~/Views/Shared/Graph/_NavegacionOutlook.cshtml" />
     </div>
     <div class="col-md-12 col-lg-8 col-xl-9">
         <div class="card">
@@ -89,118 +29,26 @@
                     <div class="mail-option">
                         <div class="row">
                             <div class="col-md-12 col-lg-7 col-xl-7">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-inner-icn" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M19.5,4h-15C3.119812,4.0012817,2.0012817,5.119812,2,6.5v11c0.0012817,1.380188,1.119812,2.4987183,2.5,2.5h15c1.380188-0.0012817,2.4987183-1.119812,2.5-2.5v-11C21.9987183,5.119812,20.880188,4.0012817,19.5,4z M21,17.5c-0.0009155,0.828064-0.671936,1.4990845-1.5,1.5h-15c-0.828064-0.0009155-1.4990845-0.671936-1.5-1.5V8.0913696l8.7392578,5.3353882c0.0080566,0.0048828,0.0184326,0.0030518,0.0266724,0.0075073C11.836731,13.4725952,11.9138184,13.500061,12,13.5c0.0905762,0.000061,0.1763306-0.0263672,0.2519531-0.0707397c0.0026855-0.0015869,0.0061646-0.0008545,0.0087891-0.0025024L21,8.0913696V17.5z M21,6.9194946l-0.2387695,0.145752c-0.0070801,0.0038452-0.0150146,0.0037842-0.0219727,0.0079956l-8.7313843,5.3359985L12,12.4140625l-0.0078735-0.0048218L3.2607422,7.0732422C3.2603149,7.072998,3.2598877,7.0727539,3.2594604,7.0724487c-0.006958-0.0042114-0.0149536-0.0041504-0.0220337-0.0079956L3,6.9194946V6.5C3.0009155,5.671936,3.671936,5.0009155,4.5,5h15c0.828064,0.0009155,1.4990845,0.671936,1.5,1.5V6.9194946z" /></svg>
-                                <h3>Elementos enviados</h3>
+                                <h3 class="header-family">Elementos enviados</h3>
                             </div>
                             <div class="col-md-12 col-lg-5 col-xl-5">
                                 <ul class="unstyled inbox-pagination">
-                                    <li><span>1-50 of 234</span></li>
+                                    <li><span>Mostrando del registro @((Model.PaginaActual * 10) - 9) al @(Model.PaginaActual * 10 > Model.Count ? Model.Count : Model.PaginaActual * 10) de @Model.Count</span></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
-                    <div class="table-responsive">
-                        <table class="table table-inbox table-hover text-nowrap mb-0">
-                            <tbody>
-                                @foreach (var item in Model.value)
-                                {
-                                    <tr onclick="DetalleCorreo(`@item.Body.Content.ToString()`, `@item.Subject`)">
-                                        <td class="view-message dont-show fw-semibold">@item.Sender.EmailAddress.Address</td>
-                                        <td class="view-message">@item.Subject</td>
-                                        <td class="view-message fw-semibold">@item.ReceivedDateTime</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-
+                    <partial name="~/Views/Shared/Graph/_CorreosOutlook.cshtml" />
                     <div class="col-sm-12 col-md-12 table-responsive" style="margin-top: 10px;">
-                        <ul class="pagination mb-4">
-
-                            <li class="page-item @(botonAnterior ? null : "disabled")">
-
-                                @if (botonAnterior)
-                                {
-                                    <a class="page-link" href="@string.Format(Model.BaseUrl + "{0}", 0)">  <span class="text-pagination-left" data-letras="Primero" data-icono="<<"></span></a>
-                                }
-                                else
-                                {
-                                    <span class="page-link text-pagination-left" data-letras="Primero" data-icono="<<"></span>
-                                }
-                            </li>
-                            <li class="page-item @(botonAnterior ? null : "disabled")">
-                                @if (botonAnterior)
-                                {
-                                    <a class="page-link" href="@Model.BaseUrl@anterior">    <span class="text-pagination-left" data-letras="Anterior" data-icono="<"></span>  </a>
-                                }
-                                else
-                                {
-                                    <span class="page-link text-pagination-left" data-letras="Anterior" data-icono="<"></span>
-                                }
-                            </li>
-                            @for (var pagina = 1; pagina <= Model.Paginas; pagina++)
-                            {
-                                if (pagina >= Model.PaginaActual - radio && pagina <= Model.PaginaActual + radio)
-                                {
-                                    <li class="page-item @(pagina == Model.PaginaActual ? "active" : null)">
-                                        <a class="page-link" href="@Model.BaseUrl@pagina.ToString()">@pagina</a>
-                                    </li>
-                                }
-                            }
-                            <li class="page-item @(botonSiguiente ? null : "disabled")">
-                                @if (botonSiguiente)
-                                {
-                                    <a class="page-link" href="@Model.BaseUrl@siguiente">  <span class="text-pagination-left" data-letras="Siguiente" data-icono=">"></span></a>
-                                }
-                                else
-                                {
-                                    <span class="page-link text-pagination-left" data-letras="Siguiente" data-icono=">"></span>
-                                }
-                            </li>
-                            <li class="page-item @(botonSiguiente ? null : "disabled")">
-
-                                @if (botonSiguiente)
-                                {
-                                    <a class="page-link" href="@string.Format(Model.BaseUrl + "{0}", (int)Math.Ceiling((double)Model.Count / 10))">  <span class="text-pagination-left" data-letras="Ultimo" data-icono=">>"></span></a>
-                                }
-                                else
-                                {
-                                    <span class="page-link text-pagination-left" data-letras="Ultimo" data-icono=">>"></span>
-                                }
-                            </li>
-                        </ul>
+                        <partial name="~/Views/Shared/_Paginador.cshtml" />
                     </div>
-
                 </div>
-            </div>
-        </div>
-
-
-    </div>
-</div>
-
-
-
-
-
-
-<div class="modal fade" id="DetalleCorreo" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header" id="header-mail">
-            </div>
-            <div class="modal-body">
-                <div id="body-mail">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
+<partial name="~/Views/Shared/Graph/_DetalleCorreo.cshtml" />
 
 
 @section scripts {
