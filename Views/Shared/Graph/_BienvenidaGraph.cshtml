@@ -8,7 +8,7 @@
                             <img src=@ViewBag.ImageData alt="img" class="m-0 p-1 rounded hrem-6">
                         </div>
                         <div class="ms-4">
-                            <h2 class="header-family pad-text"><strong>@Model.GivenName</strong>@Model.MensajeBienvenida</h2>
+                            <h2 class="header-family pad-text"><strong>@Model.GivenName</strong>@(Model.Folder == "Bandeja de entrada" ? ", Revisa tu bandeja de entrada" : Model.Folder == "Elementos enviados" ? ", Revisa tus correos enviados" : Model.Folder == "Settings" ? ", Revisa las configuraciones de tu cuenta" : Model.Folder == "Carpeta Automatizacion" ? ", Revisa todos los correos de automatizacion" : "")</h2>
                             <h4>@Model.JobTitle</h4>
                         </div>
                     </div>
