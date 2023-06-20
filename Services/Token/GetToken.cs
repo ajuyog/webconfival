@@ -75,9 +75,13 @@ namespace confinancia.Services.Token
             else
             {
                 var array = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                if (array.Contains("error_description"))
+                if (array.Contains("AADSTS65001"))
+				{
+					return "AADSTS65001";
+				}
+				if (array.Contains("AADSTS54005"))
                 {
-                    return "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
+                    return "AADSTS54005";
                 }
                 return "Ocurrio un error, comuniquese con el administrador del sistema";
             }

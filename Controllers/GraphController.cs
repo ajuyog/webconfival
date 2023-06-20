@@ -36,14 +36,25 @@ namespace confinancia.Controllers
         [Consumes("application/x-www-form-urlencoded")]
 		public async Task<IActionResult> Getoutlook([FromForm] IFormCollection value)
 		{
+			if (value.Count == 0)
+			{
+				var referesh = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize?client_id=57f0978d-23bc-4172-ae60-d548461c018d&response_type=code&redirect_uri=https://localhost:7191/Graph/GetOutlook&response_mode=form_post&scope=user.read&state=0";
+				return Redirect(referesh);
+			}
 			string code = value.First().Value;
 			var skip = (Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 0 : (Convert.ToInt32(value.ElementAt(1).Value) - 1) * 10);
 			string redirect = "Graph/GetOutlook";
 			string accesToken = await _getToken.GetTokenMGraph(code, redirect);
-			if(accesToken.Contains("administrador del sistema"))
+			var mensaje = "";
+            if(accesToken == "AADSTS54005") 
             {
-				var mensaje = accesToken;
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+                mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
+				return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+			}
+			if (accesToken == "AADSTS65001")
+            {
+				mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
+				return RedirectToAction("Index", "Home", routeValues: new { mensaje });
             }
             ViewBag.ImageData = await ImgProfile(accesToken);
 			var modelMe = await GetMeGraph(accesToken);
@@ -79,10 +90,26 @@ namespace confinancia.Controllers
         [Consumes("application/x-www-form-urlencoded")]
 		public async Task<IActionResult> GetoutlookSent([FromForm] IFormCollection value)
 		{
+			if (value.Count == 0)
+			{
+				var referesh = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize?client_id=57f0978d-23bc-4172-ae60-d548461c018d&response_type=code&redirect_uri=https://localhost:7191/Graph/GetoutlookSent&response_mode=form_post&scope=user.read&state=0";
+				return Redirect(referesh);
+			}
 			string code = value.First().Value;
 			var skip = (Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 0 : (Convert.ToInt32(value.ElementAt(1).Value) - 1) * 10);
 			string redirect = "Graph/GetoutlookSent";
 			string accesToken = await _getToken.GetTokenMGraph(code, redirect);
+			var mensaje = "";
+			if (accesToken == "AADSTS54005")
+			{
+				mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
+				return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+			}
+			if (accesToken == "AADSTS65001")
+			{
+				mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
+				return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+			}
 			ViewBag.ImageData = await ImgProfile(accesToken);
 			var modelMe = await GetMeGraph(accesToken);
 			var client = new HttpClient();
@@ -109,54 +136,36 @@ namespace confinancia.Controllers
 		}
         #endregion
 
-        #region teams en desarrollo
-        [Consumes("application/x-www-form-urlencoded")]
-		public async Task<IActionResult> GetTeams([FromForm] IFormCollection value)
-		{
-			string code = value.First().Value;
-			string redirect = "Graph/GetTeams";
-			string accesToken = await _getToken.GetTokenMGraph(code, redirect);
-			var model = await GetMeGraph(accesToken);
-			ViewBag.ImageData = await ImgProfile(accesToken);
-			return View(model);
-		}
-        #endregion
-
-        #region Settings
-        [Consumes("application/x-www-form-urlencoded")]
-		public async Task<IActionResult> Settings([FromForm] IFormCollection value)
-		{
-            string code = value.First().Value;
-            string redirect = "Graph/Settings";
-            string accesToken = await _getToken.GetTokenMGraph(code, redirect);
-            if (accesToken.Contains("administrador del sistema"))
-            {
-                var mensaje = accesToken;
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
-            }
-            ViewBag.ImageData = await ImgProfile(accesToken);
-            var modelMe = await GetMeGraph(accesToken);
-			var modelSettings = _mapper.Map<SettingsGraphDTO>(modelMe);
-			modelSettings.Folder = "Settings";
-            ViewBag.Token = accesToken.ToString();
-            return View(modelSettings);
-		}
-        #endregion
-
         #region Carpeta automatizacion
         [Consumes("application/x-www-form-urlencoded")]
 		public async Task<IActionResult> GetoutlookCarpetaAutomatizacion([FromForm] IFormCollection value)
 		{
+            if (value.Count == 0)
+            {
+                var referesh = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize?client_id=57f0978d-23bc-4172-ae60-d548461c018d&response_type=code&redirect_uri=https://localhost:7191/Graph/GetoutlookCarpetaAutomatizacion&response_mode=form_post&scope=user.read&state=0";
+                return Redirect(referesh);
+			}
             string code = value.First().Value;
             var skip = (Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 0 : (Convert.ToInt32(value.ElementAt(1).Value) - 1) * 10);
             string redirect = "Graph/GetoutlookCarpetaAutomatizacion";
             string accesToken = await _getToken.GetTokenMGraph(code, redirect);
-            ViewBag.ImageData = await ImgProfile(accesToken);
+			var mensaje = "";
+			if (accesToken == "AADSTS54005")
+			{
+				mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
+				return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+			}
+			if (accesToken == "AADSTS65001")
+			{
+				mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
+				return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+			}
+			ViewBag.ImageData = await ImgProfile(accesToken);
             var modelMe = await GetMeGraph(accesToken);
             var client = new HttpClient();
             var modelOutlook = new MessagesGraphDTO();
             var folderId = await GetFolferId(modelMe.Id, accesToken, "AutomatizacionConfival");
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/Users/" + modelMe.Id + "/mailFolders/" + folderId + "/messages?$skip=" + skip + "&count=true");
+			var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/Users/" + modelMe.Id + "/mailFolders/" + folderId + "/messages?$skip=" + skip + "&count=true");
             request.Headers.Add("Authorization", "Bearer " + accesToken);
             var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
@@ -176,6 +185,58 @@ namespace confinancia.Controllers
             return View(modelOutlook);
         }
         #endregion
+
+        #region teams en desarrollo
+        [Consumes("application/x-www-form-urlencoded")]
+		public async Task<IActionResult> GetTeams([FromForm] IFormCollection value)
+		{
+			string code = value.First().Value;
+			string redirect = "Graph/GetTeams";
+			string accesToken = await _getToken.GetTokenMGraph(code, redirect);
+			var mensaje = "";
+			if (accesToken == "AADSTS54005")
+			{
+				mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
+				return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+			}
+			if (accesToken == "AADSTS65001")
+			{
+				mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
+				return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+			}
+			var model = await GetMeGraph(accesToken);
+			ViewBag.ImageData = await ImgProfile(accesToken);
+			return View(model);
+		}
+        #endregion
+
+        #region Settings
+        [Consumes("application/x-www-form-urlencoded")]
+		public async Task<IActionResult> Settings([FromForm] IFormCollection value)
+		{
+            string code = value.First().Value;
+            string redirect = "Graph/Settings";
+            string accesToken = await _getToken.GetTokenMGraph(code, redirect);
+			var mensaje = "";
+			if (accesToken == "AADSTS54005")
+			{
+				mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
+				return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+			}
+			if (accesToken == "AADSTS65001")
+			{
+				mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
+				return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+			}
+            ViewBag.ImageData = await ImgProfile(accesToken);
+            var modelMe = await GetMeGraph(accesToken);
+			var modelSettings = _mapper.Map<SettingsGraphDTO>(modelMe);
+			modelSettings.Folder = "Settings";
+            ViewBag.Token = accesToken.ToString();
+            return View(modelSettings);
+		}
+        #endregion
+
 
 
         [HttpGet]
