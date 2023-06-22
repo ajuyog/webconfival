@@ -24,7 +24,6 @@ public class LandingPageController : Controller
     }
 	#endregion
 
-	[HttpGet]
     [Route("/")]
 	[HttpGet]
     public async Task<IActionResult> Index()

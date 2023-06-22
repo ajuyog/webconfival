@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Azure;
+using Azure.Core;
 using Azure.Identity;
 using confinancia.Models;
 using confinancia.Models.Graph;
@@ -204,14 +205,55 @@ namespace confinancia.Controllers
 				mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
 				return RedirectToAction("Index", "Home", routeValues: new { mensaje });
 			}
-			var model = await GetMeGraph(accesToken);
+			var modelMe = await GetMeGraph(accesToken);
 			ViewBag.ImageData = await ImgProfile(accesToken);
-			return View(model);
+			var modelCalendar = new CalendarGraphDTO();
+			modelCalendar.GivenName = modelMe.GivenName;
+			modelCalendar.JobTitle = modelMe.JobTitle;
+			modelCalendar.Folder = "Calendar";
+			ViewBag.hToken = accesToken;
+			return View(modelCalendar);
 		}
-        #endregion
+		#endregion
 
-        #region Settings
-        [Consumes("application/x-www-form-urlencoded")]
+
+		#region GetEventosCalendar
+		public async Task<JsonResult> GetEventosCalendar(string token)
+		{
+			var prueba = token;
+			var modelCalendar = new CalendarGraphDTO();
+			var client = new HttpClient();
+			var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me/events?$select=subject,body,bodyPreview,organizer,attendees,start,end,location&$skip=0");
+			request.Headers.Add("Authorization", "Bearer " + token);
+			var response = await client.SendAsync(request);
+			if (response.IsSuccessStatusCode)
+			{
+				var responseStream = await response.Content.ReadAsStringAsync();
+				modelCalendar = JsonConvert.DeserializeObject<CalendarGraphDTO>(responseStream);
+				var jsonEventosCalendar = modelCalendar.Value.Select(x => new EventoCalendarioDTO()
+				{
+					Title = x.Subject.ToString(),
+					Start = x.Start.DateTime,
+					End = x.End.DateTime,
+					Color = null
+				});
+				return Json(jsonEventosCalendar);
+			}
+			var jsonEventosCalendarEmpty = modelCalendar.Value.Select(x => new EventoCalendarioDTO()
+			{
+				Title = x.Subject.ToString(),
+				Start = x.Start.DateTime,
+				End = x.End.DateTime,
+				Color = null
+
+			});
+			return Json(jsonEventosCalendarEmpty);
+		}
+		#endregion
+
+
+		#region Settings
+		[Consumes("application/x-www-form-urlencoded")]
 		public async Task<IActionResult> Settings([FromForm] IFormCollection value)
 		{
             string code = value.First().Value;

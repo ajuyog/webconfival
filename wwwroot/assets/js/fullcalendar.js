@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 	var calendarEl = document.getElementById('calendar2');
+	var token = $("#json-eventos").val();
 
 	var calendar = new FullCalendar.Calendar(calendarEl, {
 		headerToolbar: {
@@ -46,53 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		},
 		editable: true,
 		dayMaxEvents: true, // allow "more" link when too many events
-		events: [{
-			title: 'Business Lunch',
-			start: '2021-10-03T13:00:00',
-			constraint: 'businessHours'
-		}, {
-			title: 'Meeting',
-			start: '2021-10-13T11:00:00',
-			constraint: 'availableForMeeting', // defined below
-			color: '#38cab3'
-		}, {
-			title: 'Conference',
-			start: '2021-10-18',
-			end: '2021-10-20',
-			color: '#f74f75'
-		}, {
-			title: 'Party',
-			start: '2021-11-29T20:00:00',
-			color: '#ffbd5a'
-		},
-		// areas where "Meeting" must be dropped
-		{
-			id: 'availableForMeeting',
-			start: '2021-10-11T10:00:00',
-			end: '2021-10-11T16:00:00',
-			rendering: 'background',
-			color: '#f34343'
-		}, {
-			id: 'availableForMeeting',
-			start: '2021-10-13T10:00:00',
-			end: '2021-10-13T16:00:00',
-			rendering: '#4ec2f0'
-		}, {
-			title: 'Jyo birthday',
-			id: 'Jyo birthday',
-			start: '2021-12-19T10:00:00',
-			end: '2021-12-19T16:00:00',
-			rendering: '#4ec2f0'
-		}, {
-			title: 'Chandu birthday',
-			id: 'Jyo birthday',
-			start: '2021-11-30T10:00:00',
-			end: '2021-11-30T16:00:00',
-			rendering: '#4ec2f0'
-		},
-		]
+		events: '/Graph/GetEventosCalendar?token=' + token
 	});
-
+	$("#json-eventos").val(" ");
 	calendar.render();
 });
 

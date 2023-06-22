@@ -59,7 +59,7 @@ namespace confinancia.Services.Token
             var request = new HttpRequestMessage(HttpMethod.Get, "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/token ");
             var collection = new List<KeyValuePair<string, string>>();
             collection.Add(new("client_id", _configuration.GetSection("Azure:ClientId").Value));
-            collection.Add(new("scope", "user.read mail.read"));
+            collection.Add(new("scope", "User.Read Mail.Read Calendars.Read"));
             collection.Add(new("code", code));
             collection.Add(new("redirect_uri", "https://localhost:7191/" + redirect));
             collection.Add(new("grant_type", "authorization_code"));
