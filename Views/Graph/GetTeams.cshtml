@@ -118,7 +118,7 @@
 </div>
 
 <div class="modal fade" id="modalEvents" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-fullscreen" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 90%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Detalle de tus eventos</h5>
@@ -127,23 +127,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row row-sm">
-                    <div class="main-chat-body flex-2" id="ChatBody">
-                        <div class="table-responsive">
-                            <table class="table border text-nowrap text-md-nowrap table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Asunto</th>
-                                        <th>Contenido</th>
-                                        <th>Fecha Inicio</th>
-                                        <th>Fecha Fin</th>
-                                        <th>Lugar</th>
-                                        <th>Organizado por</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="body-modalEvents">
-                                </tbody>
-                            </table>
+                <div class="row row-sm" id="body-modalEvents">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                         </div>
                     </div>
                 </div>

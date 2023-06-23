@@ -69,8 +69,9 @@ async function EventByDate(data) {
 	$("#body-modalEvents").children().remove();
 
 	$.each(json, function (element, index) {
-		$("#body-modalEvents").append("<tr><td>" + index.subject + "</td><td>" + index.body.content + "</td><td>" + index.start.dateTime + "</td><td>" + index.end.dateTime + "</td><td>" + index.location.displayName + "</td><td>" + index.organizer.emailAddress.name + "</td></tr>");
+		$("#body-modalEvents").append('<div class="col-lg-4 col-md-6 col-sm-12" style="margin:auto;">    <div class="card"><div class="card-body"><h5 class="card-title"><i class="fa fa-briefcase" style="color: #0088CC; margin-right: 2px;"></i>   ' + index.subject + '</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fa fa-map-marker" style="color: #0088CC; margin-right: 15px;"></i>' + index.location.displayName + '</h6><p class="card-text"><i class="fa fa-clock-o" style="color: #0088CC; margin-right: 13px;"></i>' + index.start.dateTime + '</p><p class="card-text"><i class="fa fa-clock-o" style="color: #0088CC; margin-right: 13px;"></i>' + index.end.dateTime + '</p><p class="card-text"><i class="fa fa-user" style="color: #0088CC; margin-right: 13px;"></i>' + index.organizer.emailAddress.name + '</p> <div>' + index.body.content + '</div> </div></div></div>');
 	})
+	$('span[style*="white-space:nowrap"]').remove();
 	detalleEventos.show();
 	console.log(json);
 }
