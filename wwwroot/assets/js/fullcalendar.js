@@ -28,22 +28,26 @@ document.addEventListener('DOMContentLoaded', function () {
 		selectable: true,
 		selectMirror: true,
 		droppable: true, // this allows things to be dropped onto the calendar
-		select: function (arg) {
-			var title = prompt('Event Title:');
-			if (title) {
-				calendar.addEvent({
-					title: title,
-					start: arg.start,
-					end: arg.end,
-					allDay: arg.allDay
-				})
-			}
-			calendar.unselect()
+		select: async function (arg) {
+			//var title = prompt('Event Title:');
+			//if (title) {
+			//	calendar.addEvent({
+			//		title: title,
+			//		start: arg.start,
+			//		end: arg.end,
+			//		allDay: arg.allDay
+			//	})
+			//}
+			//calendar.unselect()
+
+			await EventByDate(arg.startStr);
+
 		},
 		eventClick: function (arg) {
-			if (confirm('Are you sure you want to delete this event?')) {
-				arg.event.remove()
-			}
+			//if (confirm('Are you sure you want to delete this event?')) {
+			//	arg.event.remove()
+			//}
+			console.log(arg);
 		},
 		editable: true,
 		dayMaxEvents: true, // allow "more" link when too many events
@@ -52,6 +56,24 @@ document.addEventListener('DOMContentLoaded', function () {
 	$("#json-eventos").val(" ");
 	calendar.render();
 });
+
+async function EventByDate(data) {
+	const response = await fetch(`/Graph/GetEventByDateTime?date=${data}`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/Json'
+		}
+	});
+	const json = await response.json();
+	const detalleEventos = new bootstrap.Modal(document.getElementById('modalEvents'));
+	$("#body-modalEvents").children().remove();
+
+	$.each(json, function (element, index) {
+		$("#body-modalEvents").append("<tr><td>" + index.subject + "</td><td>" + index.body.content + "</td><td>" + index.start.dateTime + "</td><td>" + index.end.dateTime + "</td><td>" + index.location.displayName + "</td><td>" + index.organizer.emailAddress.name + "</td></tr>");
+	})
+	detalleEventos.show();
+	console.log(json);
+}
 
 
 //List FullCalendar

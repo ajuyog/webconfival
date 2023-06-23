@@ -206,12 +206,19 @@ namespace confinancia.Controllers
 				return RedirectToAction("Index", "Home", routeValues: new { mensaje });
 			}
 			var modelMe = await GetMeGraph(accesToken);
-			ViewBag.ImageData = await ImgProfile(accesToken);
 			var modelCalendar = new CalendarGraphDTO();
 			modelCalendar.GivenName = modelMe.GivenName;
 			modelCalendar.JobTitle = modelMe.JobTitle;
 			modelCalendar.Folder = "Calendar";
+			ViewBag.ImageData = await ImgProfile(accesToken);
 			ViewBag.hToken = accesToken;
+
+			CookieOptions options = new CookieOptions()
+			{
+				Expires = DateTime.Now.AddHours(1)
+			};
+			Response.Cookies.Append(_configuration.GetSection("CalendarGraph:Name").Value, accesToken, options);
+
 			return View(modelCalendar);
 		}
 		#endregion
@@ -249,7 +256,32 @@ namespace confinancia.Controllers
 			});
 			return Json(jsonEventosCalendarEmpty);
 		}
+
+		public async Task<JsonResult> GetEventByDateTime(DateTime date)
+		{
+			var fechaInicio = date.ToString("o").Substring(0,16);
+			var fechaFin = fechaInicio.Replace("00:00", "23:59");
+			var result = new CalendarGraphDTO();
+			var token = Request.Cookies[_configuration.GetSection("CalendarGraph:Name").Value];
+			var client = new HttpClient();
+			var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me/events?$filter=start/dateTime ge '" + fechaInicio + "' and end/dateTime le '" + fechaFin + "'");
+			request.Headers.Add("Authorization", "Bearer " + token);
+			var response = await client.SendAsync(request);
+			if (response.IsSuccessStatusCode)
+			{
+				var responseStream = await response.Content.ReadAsStringAsync();
+				result = JsonConvert.DeserializeObject<CalendarGraphDTO>(responseStream);
+				return Json(result.Value);
+			}
+			return Json(null);
+
+
+		}
+
+
 		#endregion
+
+
 
 
 		#region Settings
