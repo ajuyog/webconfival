@@ -17,7 +17,6 @@ public class LandingPageController : Controller
 	#region CONSTRUCTOR
 	private readonly IConfiguration _configuration;
     private readonly IGetToken _getToken;
-
     public LandingPageController(IConfiguration configuration, IGetToken getToken)
 	{
 		_configuration = configuration;
@@ -133,7 +132,7 @@ public class LandingPageController : Controller
             }
             else
             {
-                ViewBag.BannerSuperior = "~/assets/images/landing/Banner.png";
+                ViewBag.BannerSuperior = "https://storageaccountisaac.blob.core.windows.net/apivaluezdocumental/1/2/bannerprincipal/2/1/0/acc366a7-1d50-4576-b783-89217db748e9";
             }
 
             #endregion
@@ -141,7 +140,8 @@ public class LandingPageController : Controller
         return View();
     }
 
-	public async Task<List<DropDownListDTO>> CorporacionId(int id)
+    [HttpGet]
+    public async Task<List<DropDownListDTO>> CorporacionId(int id)
 	{
         var token = await _getToken.GetTokenV();
         if (token == "")
@@ -181,6 +181,7 @@ public class LandingPageController : Controller
         return View();
     }
 
+    [HttpGet]
     public IActionResult SignIn()
 	{
 		var props = new AuthenticationProperties();
@@ -206,11 +207,6 @@ public class LandingPageController : Controller
 		{
 			var responseStream = await response.Content.ReadAsStringAsync();
 			var tokenSuccess = JsonConvert.DeserializeObject<TokenValuezDTO>(responseStream);
-			CookieOptions options = new CookieOptions()
-			{
-				Expires = DateTime.Now.AddHours(1)
-			};
-			Response.Cookies.Append(_configuration.GetSection("Variables:Cookie").Value, tokenSuccess.Token, options);
 			return RedirectToAction("Index", "Home");
 		}
 		else
@@ -219,7 +215,8 @@ public class LandingPageController : Controller
 		}
 	}
 
-	public IActionResult SignOut(string signOutType)
+    [HttpGet]
+    public IActionResult SignOut(string signOutType)
 	{
 		if (signOutType == "app")
 		{

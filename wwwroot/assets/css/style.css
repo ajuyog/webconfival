@@ -299,11 +299,37 @@ body {
     }
 }
 
-.h-carousel-c{
+.responsive-css-banner-principal{
+    height: 292px;
+    width:1873px;
+}
+
+@media (max-width:1024px) {
+    .responsive-css-banner-principal {
+        height: 242px;
+        width: 1552px;
+    }
+}
+
+@media (max-width:768px) {
+    .responsive-css-banner-principal {
+        height: 192px;
+        width: 1231px;
+    }
+}
+
+@media (max-width:560px) {
+    .responsive-css-banner-principal {
+        height: 142px;
+        width: 910px;
+    }
+}
+
+
+.h-carousel-c {
     height: 500px;
     width: 888px;
     margin: auto;
-    
 }
 
 @media (max-width:1024px) {

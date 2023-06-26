@@ -223,7 +223,6 @@ namespace confinancia.Controllers
 		}
 		#endregion
 
-
 		#region GetEventosCalendar
 		public async Task<JsonResult> GetEventosCalendar(string token)
 		{
@@ -256,7 +255,6 @@ namespace confinancia.Controllers
 			});
 			return Json(jsonEventosCalendarEmpty);
 		}
-
 		public async Task<JsonResult> GetEventByDateTime(DateTime date)
 		{
 			var fechaInicio = date.ToString("o").Substring(0,16);
@@ -277,12 +275,7 @@ namespace confinancia.Controllers
 
 
 		}
-
-
 		#endregion
-
-
-
 
 		#region Settings
 		[Consumes("application/x-www-form-urlencoded")]
@@ -310,8 +303,6 @@ namespace confinancia.Controllers
             return View(modelSettings);
 		}
         #endregion
-
-
 
         [HttpGet]
         public async Task<bool> RequestPermissions(string usuario, string mail, List<string> permisos, string mensaje, string hToken)

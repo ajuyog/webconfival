@@ -1,5 +1,6 @@
 ﻿using confinancia.Models;
 using confinancia.Models.JsonDTO;
+using confinancia.Services.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -16,10 +17,13 @@ namespace confinancia.Controllers
 	{
 		#region CONSTRUCTOR
 		private readonly IConfiguration _configuration;
-		public BannerController(IConfiguration configuration)
+        private readonly IGetToken _getToken;
+
+        public BannerController(IConfiguration configuration, IGetToken getToken)
 		{
 			_configuration = configuration;
-		}
+            _getToken = getToken;
+        }
 		#endregion
 
 		[Authorize]
@@ -41,7 +45,7 @@ namespace confinancia.Controllers
 		[HttpPost]
 		public async Task<bool> SaveStorage(IFormFile obj)
 		{
-			var token = Request.Cookies[_configuration.GetSection("Variables:Cookie").Value];
+            var token = await _getToken.GetTokenV();
 			var client = new HttpClient();
 			MultipartFormDataContent form = new MultipartFormDataContent();
 			form.Add(new StringContent("0"), "codArchivo");

@@ -8,9 +8,6 @@
         var hidenToken = $("#hiden-token").val();
         var array = JSON.stringify(lstPermisos);
         
-
-
-
         $.ajax({
             type: "GET",
             url: '/Graph/RequestPermissions',
