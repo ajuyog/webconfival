@@ -5,6 +5,7 @@ using confinancia.Services.Token;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Tavis.UriTemplates;
 using static System.Collections.Specialized.BitVector32;
 
 
@@ -117,6 +118,23 @@ public class LandingPageController : Controller
                 ViewBag.LstEntidad = new List<DropDownListDTO>();
             }
 
+
+            #endregion
+
+            #region Banner Principal
+            var requestBannerSuperior = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/archivo");
+            requestBannerSuperior.Headers.Add("Authorization", "Bearer " + token);
+            var responseBannerSuperior = await client.SendAsync(requestBannerSuperior);
+            if (responseBannerSuperior.IsSuccessStatusCode)
+            {
+                var responseStream = await responseBannerSuperior.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<List<BannerDTO>>(responseStream);
+                ViewBag.BannerSuperior = result.LastOrDefault().Url;
+            }
+            else
+            {
+                ViewBag.BannerSuperior = "~/assets/images/landing/Banner.png";
+            }
 
             #endregion
         }

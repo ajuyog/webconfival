@@ -193,7 +193,7 @@ namespace confinancia.Controllers
 			};
 			var archivoC = form.Files;
 
-			var scId = 0;
+			var LeadoportunidadId = 0;
 			var ok = false;
 			//httpClient.DefaultRequestHeaders.Add("Content-Type", "application/json");
 			var httpClient = new HttpClient();
@@ -202,21 +202,30 @@ namespace confinancia.Controllers
 			var response = await httpClient.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadPersona", persona);
 			if (response.IsSuccessStatusCode)
 			{
-				// return Content("response1" + response);
 				var responseStream = await response.Content.ReadAsStringAsync();
-				var objPN = JsonConvert.DeserializeObject<PersonaDTO>(responseStream);
-				leadOportunidad.leadPersonaId = objPN.id;
+				var lead = JsonConvert.DeserializeObject<PersonaDTO>(responseStream);
+				leadOportunidad.leadPersonaId = lead.id;
 				var response2 = await httpClient.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadOportunidad", leadOportunidad);
-				//return Content("response2" + response2);
-
 				if (response2.IsSuccessStatusCode)
 				{
 					var responseStream3 = await response2.Content.ReadAsStringAsync();
-					var objSC = JsonConvert.DeserializeObject<OportunidadDTO>(responseStream3);
-					//scId = (int) objSC.id;
-					ok = true;
-					// return Content("response3" + responseStream3);
-				}
+					var resultLead = JsonConvert.DeserializeObject<OportunidadDTO>(responseStream3);
+                    LeadoportunidadId = (int)resultLead.id;
+                    //if(LeadoportunidadId > 0)
+                    //{
+                    //	var 
+
+
+
+
+                    //	ok = true;
+
+                    //}
+                    ok = true;
+
+
+
+                }
 				else
 				{
 					var responseStream5 = await response2.Content.ReadAsStringAsync();

@@ -20,8 +20,11 @@
             contentType: false,//stop jquery auto convert form type to default x-www-form-urlencoded
             processData: false,
             success: function (result) {
-                if (result.length > 0) {
-                    SaveBannerDB(result);
+                if (result == true) {
+                    // Loader //
+                    $("#loader-confival").addClass("hide-info");
+                    $("#banner-success").removeClass("hide-info");
+
                 } else {
                     $("#form-banner-principal").removeClass("hide-info");
                     $("#loader-confival").addClass("hide-info");
@@ -29,32 +32,14 @@
                 }
             },
             error: function () {
+                $("#loader-confival").addClass("hide-info");
+                $("#form-banner-principal").removeClass("hide-info");
                 $("#api-error").modal('show');
             }
         });
     }
 };
-function SaveBannerDB(parameter) {
-    $.ajax({
-        type: "GET",
-        url: '/Banner/SaveDB',
-        data: { urlStorage: parameter },
-        success: function (result) {
-            if (result == true) {
-                $("#loader-confival").addClass("hide-info");
-                $("#banner-success").removeClass("hide-info");
-            } else {
-                $("#form-banner-principal").removeClass("hide-info");
-                $("#loader-confival").addClass("hide-info");
-                $("#api-error").modal('show');
-            }
-        },
-        error: function () {
-            $("#api-error").modal('show');
-        }
-    });
 
-}
 function ValidBanner() {
     var count = 0;
     var nombre = $("#banner-nombre").val();
