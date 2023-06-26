@@ -39,7 +39,7 @@ namespace confinancia.Controllers
 		{
 			if (value.Count == 0)
 			{
-				var referesh = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize?client_id=57f0978d-23bc-4172-ae60-d548461c018d&response_type=code&redirect_uri=https://localhost:7191/Graph/GetOutlook&response_mode=form_post&scope=user.read&state=0";
+				var referesh = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize?client_id=57f0978d-23bc-4172-ae60-d548461c018d&response_type=code&redirect_uri=" + _configuration.GetSection("LandingPage:RedirectGraph:https").Value + "Graph/GetOutlook&response_mode=form_post&scope=user.read&state=0";
 				return Redirect(referesh);
 			}
 			string code = value.First().Value;
@@ -77,7 +77,7 @@ namespace confinancia.Controllers
 				var array = responseStream.Split(",");
 				modelOutlook.Count = Convert.ToInt32(array[1].ToString().Substring(15));
 				modelOutlook.Paginas = (int)Math.Ceiling((double)modelOutlook.Count / 10);
-				modelOutlook.BaseUrl = "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/authorize?client_id=" + _configuration.GetSection("Azure:ClientId").Value + "&response_type=code&redirect_uri=https://localhost:7191/Graph/GetOutlook&response_mode=form_post&scope=user.read&state=";
+				modelOutlook.BaseUrl = "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/authorize?client_id=" + _configuration.GetSection("Azure:ClientId").Value + "&response_type=code&redirect_uri=" + _configuration.GetSection("LandingPage:RedirectGraph:https").Value + "Graph/GetOutlook&response_mode=form_post&scope=user.read&state=";
 				modelOutlook.PaginaActual = Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 1 : Convert.ToInt32(value.ElementAt(1).Value);
 				modelOutlook.Folder = "Bandeja de entrada";
                 modelOutlook.value.ForEach(x => x.ReceivedDateTime = x.ReceivedDateTime.Substring(0, x.ReceivedDateTime.Length - 4).Replace("T", " ").Trim());
@@ -93,7 +93,7 @@ namespace confinancia.Controllers
 		{
 			if (value.Count == 0)
 			{
-				var referesh = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize?client_id=57f0978d-23bc-4172-ae60-d548461c018d&response_type=code&redirect_uri=https://localhost:7191/Graph/GetoutlookSent&response_mode=form_post&scope=user.read&state=0";
+				var referesh = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize?client_id=57f0978d-23bc-4172-ae60-d548461c018d&response_type=code&redirect_uri=" + _configuration.GetSection("LandingPage:RedirectGraph:https").Value + "Graph/GetoutlookSent&response_mode=form_post&scope=user.read&state=0";
 				return Redirect(referesh);
 			}
 			string code = value.First().Value;
@@ -128,7 +128,7 @@ namespace confinancia.Controllers
 				var array = responseStream.Split(",");
 				modelOutlook.Count = Convert.ToInt32(array[1].ToString().Substring(15));
 				modelOutlook.Paginas = (int)Math.Ceiling((double)modelOutlook.Count / 10);
-				modelOutlook.BaseUrl = "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/authorize?client_id=" + _configuration.GetSection("Azure:ClientId").Value + "&response_type=code&redirect_uri=https://localhost:7191/Graph/GetoutlookSent&response_mode=form_post&scope=user.read&state=";
+				modelOutlook.BaseUrl = "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/authorize?client_id=" + _configuration.GetSection("Azure:ClientId").Value + "&response_type=code&redirect_uri=" + _configuration.GetSection("LandingPage:RedirectGraph:https").Value + "Graph/GetoutlookSent&response_mode=form_post&scope=user.read&state=";
 				modelOutlook.PaginaActual = Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 1 : Convert.ToInt32(value.ElementAt(1).Value);
                 modelOutlook.Folder = "Elementos enviados";
 				modelOutlook.value.ForEach(x => x.ReceivedDateTime = x.ReceivedDateTime.Substring(0, x.ReceivedDateTime.Length - 4).Replace("T", " ").Trim());
@@ -143,7 +143,7 @@ namespace confinancia.Controllers
 		{
             if (value.Count == 0)
             {
-                var referesh = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize?client_id=57f0978d-23bc-4172-ae60-d548461c018d&response_type=code&redirect_uri=https://localhost:7191/Graph/GetoutlookCarpetaAutomatizacion&response_mode=form_post&scope=user.read&state=0";
+                var referesh = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize?client_id=57f0978d-23bc-4172-ae60-d548461c018d&response_type=code&redirect_uri=" + _configuration.GetSection("LandingPage:RedirectGraph:https").Value + "Graph/GetoutlookCarpetaAutomatizacion&response_mode=form_post&scope=user.read&state=0";
                 return Redirect(referesh);
 			}
             string code = value.First().Value;
@@ -178,7 +178,7 @@ namespace confinancia.Controllers
                 var array = responseStream.Split(",");
                 modelOutlook.Count = Convert.ToInt32(array[1].ToString().Substring(15));
                 modelOutlook.Paginas = (int)Math.Ceiling((double)modelOutlook.Count / 10);
-                modelOutlook.BaseUrl = "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/authorize?client_id=" + _configuration.GetSection("Azure:ClientId").Value + "&response_type=code&redirect_uri=https://localhost:7191/Graph/GetoutlookCarpetaAutomatizacion&response_mode=form_post&scope=user.read&state=";
+                modelOutlook.BaseUrl = "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/authorize?client_id=" + _configuration.GetSection("Azure:ClientId").Value + "&response_type=code&redirect_uri=" + _configuration.GetSection("LandingPage:RedirectGraph:https").Value + "Graph/GetoutlookCarpetaAutomatizacion&response_mode=form_post&scope=user.read&state=";
                 modelOutlook.PaginaActual = Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 1 : Convert.ToInt32(value.ElementAt(1).Value);
                 modelOutlook.Folder = "Carpeta Automatizacion";
                 modelOutlook.value.ForEach(x => x.ReceivedDateTime = x.ReceivedDateTime.Substring(0, x.ReceivedDateTime.Length - 4).Replace("T", " ").Trim());
