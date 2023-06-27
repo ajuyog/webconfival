@@ -5,13 +5,12 @@
         var recipents = $("#UserMail").val();
         var lstPermisos = $("#permisos-solicitados").val();
         var comentario = $("#comentario-permisos").val();
-        var hidenToken = $("#hiden-token").val();
         var array = JSON.stringify(lstPermisos);
         
         $.ajax({
             type: "GET",
             url: '/Graph/RequestPermissions',
-            data: { usuario: usuarioNombre, mail: recipents, permisos: array, mensaje: comentario, hToken: hidenToken },
+            data: { usuario: usuarioNombre, mail: recipents, permisos: array, mensaje: comentario },
             success: function (result) {
                 if (result == true) {
                     $("#panel-permisos").children().remove();
@@ -27,7 +26,6 @@
         
     }
 };
-
 function ValidarFormulario() {
     var count = 0;
     var usuarioNombre = $("#userName").val();

@@ -6,6 +6,7 @@
             @foreach (var item in Model.value)
             {
                 <tr onclick="DetalleCorreo(`@item.Body.Content.ToString()`, `@item.Subject`)">
+                    <td class="inbox-small-cells"><i class="fa fa-toggle-right" style="color: #0088CC"></i></td>
                     <td class="view-message dont-show fw-semibold">@item.Sender.EmailAddress.Address</td>
                     <td class="view-message">@item.Subject</td>
                     <td class="view-message fw-semibold">@(DateTime.ParseExact(item.ReceivedDateTime, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture).AddHours(-5))</td>

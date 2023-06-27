@@ -11,6 +11,7 @@ namespace confinancia.Models.Graph
         public int PaginaActual { get; set; }
         public string BaseUrl { get; set; }
         public string Folder { get; set; }
+        public string Entorno { get; set; }
     }
 
     public class ObjMessage
