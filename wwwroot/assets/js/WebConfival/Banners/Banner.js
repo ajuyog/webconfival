@@ -14,7 +14,7 @@
         form.append("URL", url);
         $.ajax({
             type: "POST",
-            url: '/Banner/SaveStorage',
+            url: '/Banner/Upload',
             data: form,
             cache: false,
             contentType: false,//stop jquery auto convert form type to default x-www-form-urlencoded

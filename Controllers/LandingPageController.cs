@@ -28,7 +28,6 @@ public class LandingPageController : Controller
 	[HttpGet]
     public async Task<IActionResult> Index()
     {
-
 		var token = await _getToken.GetTokenV();
 		if (token == "")
 		{
@@ -121,9 +120,10 @@ public class LandingPageController : Controller
             #endregion
 
             #region Banner Principal
-            var requestBannerSuperior = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/archivo");
+            var requestBannerSuperior = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/archivo/empresaProyectoArchivoSubCategoria?EmpresaId=" + _configuration.GetSection("LandingPage:Banner:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:Banner:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:Banner:SubCategoriaSuperior:Agrupacion").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:Banner:SubCategoriaSuperior:Id").Value + "&OrigenId=0");
             requestBannerSuperior.Headers.Add("Authorization", "Bearer " + token);
             var responseBannerSuperior = await client.SendAsync(requestBannerSuperior);
+            
             if (responseBannerSuperior.IsSuccessStatusCode)
             {
                 var responseStream = await responseBannerSuperior.Content.ReadAsStringAsync();
@@ -215,7 +215,7 @@ public class LandingPageController : Controller
 		}
 	}
 
-    [HttpGet]
+    [HttpPost]
     public IActionResult SignOut(string signOutType)
 	{
 		if (signOutType == "app")

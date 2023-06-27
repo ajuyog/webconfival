@@ -43,7 +43,7 @@ namespace confinancia.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public async Task<bool> SaveStorage(IFormFile obj)
+		public async Task<bool> Upload(IFormFile obj)
 		{
             var token = await _getToken.GetTokenV();
 			var client = new HttpClient();
@@ -57,7 +57,7 @@ namespace confinancia.Controllers
 				form.Add(contentPDF, "UrlSoporte", obj.Name);
 			}
 			client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-			var response = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:Banner:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:Banner:Proyecto").Value + "&Agrupacion=BannerPrincipal&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:Banner:ArchivoCategoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:Banner:SubCategoriaSuperior").Value, form);
+			var response = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:Banner:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:Banner:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:Banner:SubCategoriaSuperior:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:Banner:ArchivoCategoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:Banner:SubCategoriaSuperior:Id").Value, form);
 			if (response.IsSuccessStatusCode)
 			{
 				return true;
