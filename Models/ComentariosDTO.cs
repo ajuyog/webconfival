@@ -10,6 +10,6 @@
         public BlogDTO BlogId { get; set; }
         public bool Revisado { get; set; }
         public int ComentarioId { get; set; }
-        public List<SubComentarioDTO> SubComentarios { get; set;}
+        //public List<SubComentarioDTO> SubComentarios { get; set;}
     }
 }

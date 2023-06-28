@@ -1,3 +1,4 @@
+@model List<confinancia.Models.JsonDTO.BannerDTO>
 @using System.Collections.Generic;
 @using confinancia.Models;
 
@@ -13,15 +14,22 @@
 		<div class="main-container">
 			<!-- Clients section-->
 			<div class="section-banner pb-5" style="padding-top:114px;">
-				<div class="px-5 px-md-0">
-					<div class="overflow-hidden">
-						<div class="row">
-							<div class="col-lg-12 text-left pos-relative overflow-hidden market-image text-center banner">
-								<a href="https://api.whatsapp.com/send?phone=573146699814&text=Hola%20me%20encuentro%20interesado%20" target="_blank">
-									<img alt="" class="logo-2" src="~/assets/images/landing/Banner.png">
-									<img alt="" class="logo" src="~/assets/images/landing/Banner-Movil-2.png">
-								</a>
-							</div>
+
+				<div class="col-12" style="padding-bottom: 20px;">
+					<div id="carousel-indicators5" class="carousel slide" data-bs-ride="carousel">
+						<ol class="carousel-indicators carousel-indicators5">
+							@foreach (var item in Model)
+							{
+								<li data-bs-target="#carousel-indicators5" data-bs-slide-to="@item.Posicion" class="@(item.Posicion == 0 ? "active" : null)"></li>
+							}
+						</ol>
+						<div class="carousel-inner">
+							@foreach (var item in Model)
+							{
+								<div class="carousel-item @(item.Posicion == 0 ? "active" : null)">
+									<img class="d-block w-100" alt="" src="@item.UrlSoporte" data-bs-holder-rendered="true">
+								</div>
+							}
 						</div>
 					</div>
 				</div>

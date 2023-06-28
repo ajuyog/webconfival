@@ -4,37 +4,25 @@
 <!-- PAGE-HEADER -->
 <div class="page-header">
 	<div>
-		<h1 class="page-title">Crear nuevo</h1>
+		<h1 class="page-title">Actualizar Banners</h1>
 	</div>
 	<div class="ms-auto pageheader-btn">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0);">Banners</a></li>
-			<li class="breadcrumb-item active" aria-current="page">Crear nuevo</li>
+			<li class="breadcrumb-item active" aria-current="page">Banner @ViewBag.Nombre</li>
 		</ol>
 	</div>
 </div>
 
-<div id="form-banner-principal">
+<div id="form-banner">
 	<div class="row">
 		<div class="col-lg-12 col-md-12">
 			<div class="card">
 				<div class="card-header border-bottom">
-					<h3 class="card-title">Banner Principal</h3>
+					<h3 class="card-title">Banner @ViewBag.Nombre @ViewBag.SubCategoria</h3>
 				</div>
 				<div class="card-body">
-					<p class="text-muted">Diligencia los campos a continuacion y procede a crear un nuevo Banner</p>
-					<div class="row">
-						<div class="col-md-6 mb-3">
-							<label class="form-label">Nombre del banner</label>
-							<input class="form-control" placeholder="Nombre" type="text" id="banner-nombre">
-							<div class="invalid-feedback" id="invalid-banner-nombre">Debes agregar un nombre al Banner principal</div>
-						</div>
-						<div class="col-md-6 mb-3">
-							<label class="form-label">Url de redirecionamiento</label>
-							<input class="form-control" placeholder="href" type="text" id="url-banner">
-							<div class="invalid-feedback" id="invalid-url-banner">Debes agregar una Url de redirecionamiento al Banner principal</div>
-						</div>
-					</div>
+					<p class="text-muted">Carga una nueva imagen al carrusel del banner</p>
 					<div class="row">
 						<div class="col-md-12 mb-3">
 							<div class="form-group">
@@ -42,13 +30,13 @@
 								<div class="col-sm-12 col-md-12">
 									<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="file-banner" />
 								</div>
-								<div class="invalid-feedback" id="invalid-file-banner">Debes agregar una imagen al Banner principal</div>
+								<div class="invalid-feedback" id="invalid-file-banner">Debes agregar una imagen al Banner</div>
 							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-2">
-							<button class="btn btn-primary btn-block" onclick="SaveBannerStorage()">Crear</button>
+							<button class="btn btn-primary btn-block" onclick="@ViewBag.Function">Crear</button>
 						</div>
 					</div>
 				</div>
@@ -68,7 +56,7 @@
 					</div> 
 				</div>
 				<p style="text-align: center;">
-					Estamos realizando el cambio del Banner principal
+					Estamos realizando el cambio del Banner
 				</p>
 			</div>
 		</div>
@@ -80,8 +68,7 @@
 		<div class="card">
 			<div class="card-body">
 				<div class="alert alert-default pad-text" role="alert">
-					@*<span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>*@
-					<span class="alert-inner--text"><strong>El banner principal, </strong> Ha sido actualizado correctamente</span>
+					<span class="alert-inner--text"><strong>El banner  , </strong> ha sido actualizado correctamente</span>
 					<div class="row">
 						<div class="col-12">
 							<a asp-action="Index" asp-controller="Home" class="btn btn-success" style="margin-top:20px;">Volver al Inicio !!</a>

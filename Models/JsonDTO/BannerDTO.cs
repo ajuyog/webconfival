@@ -2,7 +2,7 @@
 {
 	public class BannerDTO
 	{
-        public string Url { get; set; }
+        public string UrlSoporte { get; set; }
         public int Posicion { get; set; }
     }
 }

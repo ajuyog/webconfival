@@ -14,8 +14,8 @@
 				<div class="row">
 					<div class="ps-relative p-1 bg-light br-5">
 						<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@Model[0].Id" >
-							<img src="@Model[0].Galeria[0].URLImagen" alt="@Model[0].Galeria[0].Alt" title="@Model[0].Titulo" class="card custom-card background-image-blog img1 mb-0">
-							<span class="badge rounded-pill bg-primary-gradient blog-label label1">@Model[0].Categorias[0].Nombre</span>
+							<img src="~/assets/images/photos/blogmain2.jpg" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
+							<span class="badge rounded-pill bg-primary-gradient blog-label label1">@Model[0].Categoriass[0].Nombre</span>
 						</a>
 					</div>
 					<div class="card-body">
@@ -27,12 +27,12 @@
 						<div class="d-sm-flex align-items-center">
 							<div class="avatar-list indicators">
 								<a class="avatar avatar-md rounded-circle">
-									<img src="@Model[0].Autor.ImagenAutor.URLImagen" class="rounded-circle">
+									<img src="~/assets/images/photos/11.jpg" class="rounded-circle">
 								</a>
 							</div>
-							<h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">@Model[0].Autor.Nombre</h6>
+							<h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Autor desconocido</h6>
 							<div class="d-sm-flex ms-sm-auto">
-								<a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model[0].FechaPublicacion.ToShortDateString()</div></a>
+								<a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model[0].Publicacion.ToShortDateString()</div></a>
 								<a class="me-0 d-flex"><span class="fe fe-message-square text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@(Model[0].Comentarios.Count() == 1 ? " Comentario" : " Comentarios")</div></a>
 							</div>
 						</div>
@@ -52,8 +52,8 @@
 						<div class="card overflow-hidden box-shadow mb-0 main-blog">
 							<div class="ps-relative p-1 bg-light br-5">
 								<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@Model[1].Id">
-									<img src="@Model[1].Galeria[0].URLImagen" alt="@Model[1].Galeria[0].Alt" title="@Model[1].Titulo" class="background-image-blog img2 mb-0">
-									<span class="badge rounded-pill bg-info-gradient blog-label label2">@Model[1].Categorias[0].Nombre</span>
+									<img src="~/assets/images/photos/blogmain2.jpg" alt="" title="" class="background-image-blog img2 mb-0">
+									<span class="badge rounded-pill bg-info-gradient blog-label label2">@Model[1].Categoriass[0].Nombre</span>
 								</a>
 							</div>
 							<div class="card-body p-0 border border-top-0 br-br-5 br-bl-5 mb-2 mb-lg-0">
@@ -64,12 +64,12 @@
 								<div class="d-sm-flex p-5 align-items-center">
 									<div class="avatar-list indicators">
 										<a href="javascript:void(0)" class="avatar avatar-md rounded-circle">
-											<img src="@Model[1].Autor.ImagenAutor.URLImagen" class="rounded-circle">
+											<img src="~/assets/images/photos/11.jpg" class="rounded-circle">
 										</a>
 									</div>
-									<h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">@Model[1].Autor.Nombre</h6>
+									<h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Autor Desconocido</h6>
 									<div class="d-sm-flex ms-sm-auto">
-										<a href="#" class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model[1].FechaPublicacion.ToShortDateString()</div></a>
+										<a href="#" class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model[1].Publicacion.ToShortDateString()</div></a>
 									</div>
 								</div>
 							</div>
@@ -81,15 +81,15 @@
 							<div class="row mb-5">
 								<div class="col-xl-4 col-md-4 col-sm-4 pe-sm-0 p-sm-max-0">
 									<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@item.Id">
-										<img src="@item.Galeria[0].URLImagen" alt="@item.Galeria[0].Alt" title="@item.Titulo" class="wp-100 editorpick-suggestion-img h-100">
+										<img src="~/assets/images/photos/blogmain2.jpg" alt="" title="" class="wp-100 editorpick-suggestion-img h-100">
 									</a>
 								</div>
 								<div class="col-xl-8 col-md-8 col-sm-8 editorpicks-suggestions border p-2 br-sm-max-0">
 									<a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@item.Id" class="text-dark mb-4 blog-title">@item.Titulo</a>
 									<div class="d-md-flex mt-0">
-										<a class="d-flex"><span class="fe fe-user text-muted me-2 text-17"></span><div class="mt-0 mt-0  font-weight-semibold text-muted">@item.Autor.Nombre</div></a>
+										<a class="d-flex"><span class="fe fe-user text-muted me-2 text-17"></span><div class="mt-0 mt-0  font-weight-semibold text-muted">Autor desconocido</div></a>
 										<div class="d-flex ms-auto">
-											<a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0  font-weight-semibold text-muted">@item.FechaPublicacion.ToShortDateString()</div></a>
+											<a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0  font-weight-semibold text-muted">@item.Publicacion.ToShortDateString()</div></a>
 										</div>
 									</div>
 								</div>

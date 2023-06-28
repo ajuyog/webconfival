@@ -122,7 +122,7 @@ public class LandingPageController : Controller
             #endregion
 
             #region Banner Principal
-            var requestBannerSuperior = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/archivo/empresaProyectoArchivoSubCategoria?EmpresaId=" + _configuration.GetSection("LandingPage:Banner:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:Banner:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:Banner:SubCategoriaSuperior:Agrupacion").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:Banner:SubCategoriaSuperior:Id").Value + "&OrigenId=0");
+            var requestBannerSuperior = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/archivo/empresaProyectoArchivoSubCategoria?EmpresaId=" + _configuration.GetSection("LandingPage:BannerInicio:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:BannerInicio:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:BannerInicio:Agrupacion").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:BannerInicio:SubCategoria:Superior").Value + "&OrigenId=0");
             requestBannerSuperior.Headers.Add("Authorization", "Bearer " + token);
             var responseBannerSuperior = await client.SendAsync(requestBannerSuperior);
             if (responseBannerSuperior.IsSuccessStatusCode)
@@ -142,13 +142,13 @@ public class LandingPageController : Controller
                 var bannerDefault = new BannerDTO()
                 {
                     Posicion = 0,
-                    Url = "https://storageaccountisaac.blob.core.windows.net/apivaluezdocumental/1/2/bannerprincipal/2/1/0/acc366a7-1d50-4576-b783-89217db748e9"
+                    UrlSoporte = "https://storageaccountisaac.blob.core.windows.net/apivaluezdocumental/1/2/bannerprincipal/2/1/0/acc366a7-1d50-4576-b783-89217db748e9"
                 };
                 model.Add(bannerDefault);
             }
+            #endregion
         }
         return View(model);
-        #endregion
     }
 
     [HttpGet]

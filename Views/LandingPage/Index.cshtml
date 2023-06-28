@@ -64,18 +64,13 @@
                             <li data-bs-target="#carousel-indicators5" data-bs-slide-to="@item.Posicion" class="@(item.Posicion == 0 ? "active" : null)"></li>
                         }
                         </ol>
-                           
                         <div class="carousel-inner">
                             @foreach (var item in Model)
                             {
                                 <div class="carousel-item @(item.Posicion == 0 ? "active" : null)">
-                                    <img class="d-block w-100" alt="" src="@item.Url" data-bs-holder-rendered="true">
+                                    <img class="d-block w-100" alt="" src="@item.UrlSoporte" data-bs-holder-rendered="true">
                                 </div>
-                                
                             }
-
-
-                            
                         </div>
                     </div>
                 </div>
