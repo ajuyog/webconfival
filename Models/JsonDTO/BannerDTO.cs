@@ -2,8 +2,7 @@
 {
 	public class BannerDTO
 	{
-        public string Nombre { get; set; }
         public string Url { get; set; }
-		public IFormFile Archivos { get; set; }
-	}
+        public int Posicion { get; set; }
+    }
 }

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Reflection;
 using confinancia.Models;
 using confinancia.Models.JsonDTO;
 using confinancia.Services.Token;
@@ -14,41 +15,42 @@ namespace noa.Controllers;
 public class LandingPageController : Controller
 {
 
-	#region CONSTRUCTOR
-	private readonly IConfiguration _configuration;
+    #region CONSTRUCTOR
+    private readonly IConfiguration _configuration;
     private readonly IGetToken _getToken;
     public LandingPageController(IConfiguration configuration, IGetToken getToken)
-	{
-		_configuration = configuration;
+    {
+        _configuration = configuration;
         _getToken = getToken;
     }
-	#endregion
+    #endregion
 
     [Route("/")]
-	[HttpGet]
+    [HttpGet]
     public async Task<IActionResult> Index()
     {
-		var token = await _getToken.GetTokenV();
-		if (token == "")
-		{
-			return NotFound();
-		}
-		if (token.Length == 177)
-		{
-			var client = new HttpClient();
+        var model = new List<BannerDTO>();
+        var token = await _getToken.GetTokenV();
+        if (token == "")
+        {
+            return NotFound();
+        }
+        if (token.Length == 177)
+        {
+            var client = new HttpClient();
 
             #region DropDown Regimen
             var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/regimen?Pagina=1&RegistrosPorPagina=10");
-			request.Headers.Add("Authorization", "Bearer " + token);
-			var response = await client.SendAsync(request);
-			if (response.IsSuccessStatusCode)
-			{
-				var responseStream = await response.Content.ReadAsStringAsync();
-				var result = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStream);
-				ViewBag.LstRegimen = result;
-			}
-			else
-			{
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStream);
+                ViewBag.LstRegimen = result;
+            }
+            else
+            {
                 ViewBag.LstRegimen = new List<DropDownListDTO>();
             }
             #endregion
@@ -123,33 +125,42 @@ public class LandingPageController : Controller
             var requestBannerSuperior = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/archivo/empresaProyectoArchivoSubCategoria?EmpresaId=" + _configuration.GetSection("LandingPage:Banner:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:Banner:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:Banner:SubCategoriaSuperior:Agrupacion").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:Banner:SubCategoriaSuperior:Id").Value + "&OrigenId=0");
             requestBannerSuperior.Headers.Add("Authorization", "Bearer " + token);
             var responseBannerSuperior = await client.SendAsync(requestBannerSuperior);
-            
             if (responseBannerSuperior.IsSuccessStatusCode)
             {
+                var posicion = 0;
                 var responseStream = await responseBannerSuperior.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<List<BannerDTO>>(responseStream);
-                ViewBag.BannerSuperior = result.LastOrDefault().Url;
+                var lstBanners = JsonConvert.DeserializeObject<List<BannerDTO>>(responseStream);
+                foreach (var item in lstBanners)
+                {
+                    item.Posicion = posicion;
+                    posicion++;
+                }
+                model = lstBanners;
             }
             else
             {
-                ViewBag.BannerSuperior = "https://storageaccountisaac.blob.core.windows.net/apivaluezdocumental/1/2/bannerprincipal/2/1/0/acc366a7-1d50-4576-b783-89217db748e9";
+                var bannerDefault = new BannerDTO()
+                {
+                    Posicion = 0,
+                    Url = "https://storageaccountisaac.blob.core.windows.net/apivaluezdocumental/1/2/bannerprincipal/2/1/0/acc366a7-1d50-4576-b783-89217db748e9"
+                };
+                model.Add(bannerDefault);
             }
-
-            #endregion
         }
-        return View();
+        return View(model);
+        #endregion
     }
 
     [HttpGet]
     public async Task<List<DropDownListDTO>> CorporacionId(int id)
-	{
+    {
         var token = await _getToken.GetTokenV();
         if (token == "")
         {
             return new List<DropDownListDTO>();
         }
-		if (token.Length == 177)
-		{
+        if (token.Length == 177)
+        {
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/corporacion/" + id + "?Pagina=1&RegistrosPorPagina=100");
             request.Headers.Add("Authorization", "Bearer " + token);
@@ -168,14 +179,14 @@ public class LandingPageController : Controller
         return new List<DropDownListDTO>();
     }
 
-	[HttpGet]
-	public IActionResult ServicioLanding(string seccion)
-	{
-		ViewBag.Seccion = seccion;
-		return View();
-	}
+    [HttpGet]
+    public IActionResult ServicioLanding(string seccion)
+    {
+        ViewBag.Seccion = seccion;
+        return View();
+    }
 
-	[HttpGet]
+    [HttpGet]
     public IActionResult DataPolicy()
     {
         return View();
@@ -183,49 +194,49 @@ public class LandingPageController : Controller
 
     [HttpGet]
     public IActionResult SignIn()
-	{
-		var props = new AuthenticationProperties();
-		props.RedirectUri = "/LandingPage/SignInSuccess";
-		return Challenge(props);
-	}
-	public async Task<IActionResult> SignInSuccess()
-	{
-		var mail = User.Identities.First().Claims.LastOrDefault().Value;
-		var obj = new CuentasLoginDTO()
-		{
-			Id = _configuration.GetSection("Variables:IdLogin").Value,
-			Email = mail,
-			password = "123456789"
-		};
-		var json = JsonConvert.SerializeObject(obj);
-		var client = new HttpClient();
-		var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/cuentas/inicioSesion?secret=" + _configuration.GetSection("Variables:Secret").Value);
-		var content = new StringContent(json, null, "application/json");
-		request.Content = content;
-		var response = await client.SendAsync(request);
-		if (response.IsSuccessStatusCode)
-		{
-			var responseStream = await response.Content.ReadAsStringAsync();
-			var tokenSuccess = JsonConvert.DeserializeObject<TokenValuezDTO>(responseStream);
-			return RedirectToAction("Index", "Home");
-		}
-		else
-		{
-			return RedirectToAction("Index", "LandingPage");
-		}
-	}
+    {
+        var props = new AuthenticationProperties();
+        props.RedirectUri = "/LandingPage/SignInSuccess";
+        return Challenge(props);
+    }
+    public async Task<IActionResult> SignInSuccess()
+    {
+        var mail = User.Identities.First().Claims.LastOrDefault().Value;
+        var obj = new CuentasLoginDTO()
+        {
+            Id = _configuration.GetSection("Variables:IdLogin").Value,
+            Email = mail,
+            password = "123456789"
+        };
+        var json = JsonConvert.SerializeObject(obj);
+        var client = new HttpClient();
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/cuentas/inicioSesion?secret=" + _configuration.GetSection("Variables:Secret").Value);
+        var content = new StringContent(json, null, "application/json");
+        request.Content = content;
+        var response = await client.SendAsync(request);
+        if (response.IsSuccessStatusCode)
+        {
+            var responseStream = await response.Content.ReadAsStringAsync();
+            var tokenSuccess = JsonConvert.DeserializeObject<TokenValuezDTO>(responseStream);
+            return RedirectToAction("Index", "Home");
+        }
+        else
+        {
+            return RedirectToAction("Index", "LandingPage");
+        }
+    }
 
     [HttpPost]
     public IActionResult SignOut(string signOutType)
-	{
-		if (signOutType == "app")
-		{
-			HttpContext.SignOutAsync().Wait();
-		}
-		if (signOutType == "all")
-		{
-			return Redirect("https://login.microsoftonline.com/common/oauth2/v2.0/logout");
-		}
-		return RedirectToAction("Index");
-	}
+    {
+        if (signOutType == "app")
+        {
+            HttpContext.SignOutAsync().Wait();
+        }
+        if (signOutType == "all")
+        {
+            return Redirect("https://login.microsoftonline.com/common/oauth2/v2.0/logout");
+        }
+        return RedirectToAction("Index");
+    }
 }

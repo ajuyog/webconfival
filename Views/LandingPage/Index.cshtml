@@ -1,3 +1,4 @@
+@model List<confinancia.Models.JsonDTO.BannerDTO>
 @using System.Collections.Generic;
 @using confinancia.Models;
 @using confinancia.Models.LoaderDTO;
@@ -17,7 +18,9 @@
         <!-- CONTAINER -->
         <div class="main-container">
             <!-- Clients section-->
-           @* <div class="section-banner bg-white" style="padding-top:120px">
+
+            <!-- BANNER INICIAL NOA -->
+            @* <div class="section-banner bg-white" style="padding-top:120px">
                 <div class="px-5 px-md-0">
                     <div class="overflow-hidden">
                         <div class="row">
@@ -32,23 +35,51 @@
                 </div>
             </div>*@
 
-
-
-            <!-- Inicio -->
-            <div class="section bg-white" id="Inicio" style="padding-top:120px">
-                <div class="section bg-white" style="padding-top:20px">
-                    <div class="px-5 px-md-0">
-                        <div class="overflow-hidden">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <a href="https://api.whatsapp.com/send?phone=573146699814&text=Hola%20me%20encuentro%20interesado%20" target="_blank">
-                                        <img alt="" class="responsive-css-banner-principal" src="@ViewBag.BannerSuperior">
-                                    </a>
-                                </div>
+            <!-- BANNER MODIFICADO CSS -->
+            @*<div class="section bg-white" style="padding-top:20px">
+                <div class="px-5 px-md-0">
+                    <div class="overflow-hidden">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="https://api.whatsapp.com/send?phone=573146699814&text=Hola%20me%20encuentro%20interesado%20" target="_blank">
+                                    <img alt="" class="responsive-css-banner-principal" src="@ViewBag.BannerSuperior">
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>*@
+
+
+
+            <!-- Inicio -->
+            <div class="section bg-white" id="Inicio" style="padding-top:120px">
+                
+
+                <div class="col-12" style="padding-bottom: 20px;">
+                    <div id="carousel-indicators5" class="carousel slide" data-bs-ride="carousel">
+                        <ol class="carousel-indicators carousel-indicators5">
+                        @foreach (var item in Model)
+                        {
+                            <li data-bs-target="#carousel-indicators5" data-bs-slide-to="@item.Posicion" class="@(item.Posicion == 0 ? "active" : null)"></li>
+                        }
+                        </ol>
+                           
+                        <div class="carousel-inner">
+                            @foreach (var item in Model)
+                            {
+                                <div class="carousel-item @(item.Posicion == 0 ? "active" : null)">
+                                    <img class="d-block w-100" alt="" src="@item.Url" data-bs-holder-rendered="true">
+                                </div>
+                                
+                            }
+
+
+                            
+                        </div>
+                    </div>
+                </div>
+
 
                 <!-- Seccion 1 -- Qué hacemos en Confival? -->
                @* <div class="container px-5 px-md-0">
