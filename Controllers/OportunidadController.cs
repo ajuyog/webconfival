@@ -163,41 +163,38 @@ namespace confinancia.Controllers
 		public async Task<bool> SaveForm()
 		{
 			var token = await _getToken.GetTokenV();
-
-			var form = await HttpContext.Request.ReadFormAsync();
+			var formOportunidad = await HttpContext.Request.ReadFormAsync();
 			var persona = new PersonaDTO()
 			{
-				nombres = form["nombres-ok"],
-				apellidos = form["apellidos-ok"],
-				codSecundario1 = form["no-documento-ok"],
-				correoElectronico = form["correo-ok"],
-				numeroContacto = form["no-contacto-ok"],
-				fechaNacimiento = form["fNacimiento-ok"] == "" ? new DateTime(1900, 1, 1) : DateTime.Parse(HttpContext.Request.Form["fNacimiento-ok"]),
-				fechaExpedicion = form["fExpedicion-ok"] == "" ? new DateTime(1900, 1, 1) : DateTime.Parse(HttpContext.Request.Form["fExpedicion-ok"]),
-				tipoDocumento = form["tp-documento-ok"],
+				nombres = formOportunidad["nombres-ok"],
+				apellidos = formOportunidad["apellidos-ok"],
+				codSecundario1 = formOportunidad["no-documento-ok"],
+				correoElectronico = formOportunidad["correo-ok"],
+				numeroContacto = formOportunidad["no-contacto-ok"],
+				fechaNacimiento = formOportunidad["fNacimiento-ok"] == "" ? new DateTime(1900, 1, 1) : DateTime.Parse(HttpContext.Request.Form["fNacimiento-ok"]),
+				fechaExpedicion = formOportunidad["fExpedicion-ok"] == "" ? new DateTime(1900, 1, 1) : DateTime.Parse(HttpContext.Request.Form["fExpedicion-ok"]),
+				tipoDocumento = formOportunidad["tp-documento-ok"],
 				politicaTratamientoDatos = true,
 				estado = true
 			};
 			var leadOportunidad = new OportunidadDTO()
 			{
-				tipoProvidenciaId = Convert.ToInt32(form["fallo"]),
-				medioControlId = Convert.ToInt32(form["medio-control"]),
-				regimenId = Convert.ToInt32(form["tipo-regimen"]),
-				corporacionId = Convert.ToInt32(form["corporacion"]),
-				entidadPagaduriaId = Convert.ToInt32(form["entidad-pagaduria"]),
-				fechaEjecutoria = form["f-ejecutoria"] == "" ? DateTime.ParseExact("1900-01-01 14:00:00,531", "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture) : DateTime.Parse(form["f-ejecutoria"]),
-				numeroRadicado = form["numero-radicado-user"],
-				cuentaCobro = form["cuenta-cobro-user"],
-				demandante = form["demandante"]
+				tipoProvidenciaId = Convert.ToInt32(formOportunidad["fallo"]),
+				medioControlId = Convert.ToInt32(formOportunidad["medio-control"]),
+				regimenId = Convert.ToInt32(formOportunidad["tipo-regimen"]),
+				corporacionId = Convert.ToInt32(formOportunidad["corporacion"]),
+				entidadPagaduriaId = Convert.ToInt32(formOportunidad["entidad-pagaduria"]),
+				fechaEjecutoria = formOportunidad["f-ejecutoria"] == "" ? DateTime.ParseExact("1900-01-01 14:00:00,531", "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture) : DateTime.Parse(formOportunidad["f-ejecutoria"]),
+				numeroRadicado = formOportunidad["numero-radicado-user"],
+				cuentaCobro = formOportunidad["cuenta-cobro-user"],
+				demandante = formOportunidad["demandante"]
 
 			};
-			var archivoC = form.Files;
-
+			var primeraInstancia = formOportunidad.Files["primera-instancia-file"];
+			var segundaInstancia = formOportunidad.Files["segunda-instancia-file"];
 			var LeadoportunidadId = 0;
 			var ok = false;
-			//httpClient.DefaultRequestHeaders.Add("Content-Type", "application/json");
 			var httpClient = new HttpClient();
-
 			httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 			var response = await httpClient.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadPersona", persona);
 			if (response.IsSuccessStatusCode)
@@ -210,21 +207,57 @@ namespace confinancia.Controllers
 				{
 					var responseStream3 = await response2.Content.ReadAsStringAsync();
 					var resultLead = JsonConvert.DeserializeObject<OportunidadDTO>(responseStream3);
-                    LeadoportunidadId = (int)resultLead.id;
-                    //if(LeadoportunidadId > 0)
-                    //{
-                    //	var 
-
-
-
-
-                    //	ok = true;
-
-                    //}
-                    ok = true;
-
-
-
+					LeadoportunidadId = (int)resultLead.id;
+					if (LeadoportunidadId > 0)
+					{
+						if(primeraInstancia != null)
+						{
+							MultipartFormDataContent formDataPI = new MultipartFormDataContent();
+							formDataPI.Add(new StringContent(LeadoportunidadId.ToString()), "codArchivo");
+							Stream streamPDF = primeraInstancia.OpenReadStream();
+							if (streamPDF != null)
+							{
+								var contentPDF = new StreamContent(streamPDF);
+								contentPDF.Headers.ContentType = MediaTypeHeaderValue.Parse(primeraInstancia.ContentType);
+								formDataPI.Add(contentPDF, "UrlSoporte", primeraInstancia.Name);
+							}
+							httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+							var responseArchivoPI = await httpClient.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:CotizadorLead:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:CotizadorLead:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:SubCategoria:PrimeraInstancia").Value, formDataPI);
+							if (responseArchivoPI.IsSuccessStatusCode)
+							{
+								ok = true;
+							}
+							else
+							{
+								var responseStreamError = await response.Content.ReadAsStringAsync();
+								return false;
+							}
+						}
+						if(segundaInstancia != null)
+						{
+							MultipartFormDataContent formDataSI = new MultipartFormDataContent();
+							formDataSI.Add(new StringContent(LeadoportunidadId.ToString()), "codArchivo");
+							Stream streamPDF = segundaInstancia.OpenReadStream();
+							if (streamPDF != null)
+							{
+								var contentPDF = new StreamContent(streamPDF);
+								contentPDF.Headers.ContentType = MediaTypeHeaderValue.Parse(segundaInstancia.ContentType);
+								formDataSI.Add(contentPDF, "UrlSoporte", segundaInstancia.Name);
+							}
+							httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+							var responseArchivoSI = await httpClient.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:CotizadorLead:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:CotizadorLead:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:SubCategoria:SegundaInstancia").Value, formDataSI);
+							if (responseArchivoSI.IsSuccessStatusCode)
+							{
+								ok = true;
+							}
+							else
+							{
+								var responseStreamError = await response.Content.ReadAsStringAsync();
+								return false;
+							}
+						}
+					}
+					ok = true;
                 }
 				else
 				{
