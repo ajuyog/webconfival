@@ -97,21 +97,19 @@ public class BlogController : Controller
 	[HttpGet]
 	public async Task<IActionResult> Create()
 	{
-		var model = new List<CategoriaDTO>();
-		var client = new HttpClient();
-		var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/categoria/categorias");
-		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-		var content = new StringContent(string.Empty);
-		content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-		request.Content = content;
-		var response = await client.SendAsync(request);
-		if (response.IsSuccessStatusCode)
-		{
-			var responseStream = await response.Content.ReadAsStringAsync();
-			var lstCategorias = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
-			model = lstCategorias.ToList();
-		}
-		return View(model);
+        var model = new List<CategoriaDTO>();
+        var token = await _getToken.GetTokenV();
+        var client = new HttpClient();
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Categoria/categorias");
+        request.Headers.Add("Authorization", "Bearer " + token);
+        var response = await client.SendAsync(request);
+        if (response.IsSuccessStatusCode)
+        {
+            var responseStream = await response.Content.ReadAsStringAsync();
+            var lstCategorias = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
+            model = lstCategorias.ToList();
+        }
+        return View(model);
 	}
 
 	/// <summary>
@@ -120,50 +118,51 @@ public class BlogController : Controller
 	/// <returns></returns>
 	[Authorize]
 	[HttpGet]
-	public async Task<List<CategoriaDTO>> ConsultarCategorias()
+	public async Task<List<CategoriaDTO>> ConsultarCategorias(int id)
 	{
 		var list = new List<CategoriaDTO>();
-		var client = new HttpClient();
-		var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/categoria");
-		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-		var content = new StringContent(string.Empty);
-		content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-		request.Content = content;
-		var response = await client.SendAsync(request);
-		if (response.IsSuccessStatusCode)
-		{
-			var responseStream = await response.Content.ReadAsStringAsync();
-			var lstCategorias = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
-			return lstCategorias;
-		}
-		else
-		{
-			return list;
-		}
-	}
+        var token = await _getToken.GetTokenV();
+        var client = new HttpClient();
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Categoria/categorias");
+        request.Headers.Add("Authorization", "Bearer " + token);
+        var response = await client.SendAsync(request);
+        if (response.IsSuccessStatusCode)
+        {
+            var responseStream = await response.Content.ReadAsStringAsync();
+            var lstCategorias = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
+            list = lstCategorias.ToList();
+        }
+        return list;
+    }
 
-	/// <summary>
-	/// Permite crear un blog
-	/// </summary>
-	/// <param name="titulo"></param>
-	/// <param name="contenido"></param>
-	/// <param name="lstCategorias"></param>
-	/// <param name="categoria"></param>
-	/// <returns></returns>
-	[Authorize]
-	[HttpGet]
-	public async Task<bool> CreateBlog(string titulo, string contenido, List<string> lstCategorias, string categoria)
+    /// <summary>
+    /// Permite crear un blog
+    /// </summary>
+    /// <param name="titulo"></param>
+    /// <param name="contenido"></param>
+    /// <param name="lstCategorias"></param>
+    /// <param name="categoria"></param>
+    /// <returns></returns>
+    [Authorize]
+	[HttpPost]
+	public async Task<bool> Publicar(string titulo, IFormFile imagenPrincipal, string contenido, string categoria, List<string> lstCategorias, List<IFormFile> lstGaleria)
 	{
 		var array = lstCategorias.FirstOrDefault().Split(",");
-		var categoriaPrincipal = Convert.ToInt32(categoria.Replace('"', ' ').Trim());
+        var categoriaPrincipal = Convert.ToInt32(categoria.Replace('"', ' ').Trim());
 		int[] numeros = new int[1];
 		numeros[numeros.Length - 1] = categoriaPrincipal;
-		var obj = new BlogBetaDTO();
+		var obj = new BlogDTO();
 		if (lstCategorias[0] == "[]")
 		{
 			obj.Titulo = titulo;
 			obj.Contenido = contenido;
-			obj.CategoriaId = numeros;
+			obj.Estado = false;
+			obj.Publicacion = DateTime.Now;
+			obj.Categoriass = new List<CategoriaDTO>();
+            obj.Categoriass.Add(new CategoriaDTO() 
+			{ 
+				Id = Convert.ToInt32(categoria)
+			});
 		}
 		else
 		{
@@ -175,7 +174,15 @@ public class BlogController : Controller
 			}
 			obj.Titulo = titulo;
 			obj.Contenido = contenido;
-			obj.CategoriaId = numeros;
+            obj.Estado = false;
+            obj.Publicacion = DateTime.Now;
+            obj.Categoriass = new List<CategoriaDTO>();
+            var count = 0;
+            foreach (var item in numeros)
+            {
+				obj.Categoriass.Add(new CategoriaDTO() { Id = numeros[count] });
+				count++;
+            }
 		}
 		var json = JsonConvert.SerializeObject(obj);
 		var client = new HttpClient();

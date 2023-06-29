@@ -16,7 +16,7 @@ $(document).ready(function () {
     $("#uncheckedPrimarySwitch-politica").val("on");
     GetAttempts("SMS");
     GetAttempts("Verifik");
-
+    $("#numero-radicado-user").mask("99999 99 99 999 9999 99999 99");
 });
 
 // --- VALIDACION DE POLITICA TRATAMIENTO DE DATOS --- //
@@ -425,6 +425,8 @@ function ValidarLeadOportunidad() {
     var entidad = $("#entidad-pagaduria").val();
     var tipoCorporacion = $("#tipo-corporacion").val();
     var corporacion = $("#corporacion").val();
+    var numeroRadicado = $("#invalid-feedback-no-radicado").val();
+    var fechaEjecutoria = $("#f-ejecutoria").val();
 
     if (tipoFallo == null) {
         $("#invalid-feedback-tipo-fallo").css("display", "block");
@@ -467,6 +469,18 @@ function ValidarLeadOportunidad() {
     } else {
         $("#invalid-feedback-corporacion").css("display", "none");
     }
+    if (numeroRadicado.length != 23) {
+        $("#invalid-feedback-no-radicado").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-feedback-no-radicado").css("display", "none");
+    }
+    if (fechaEjecutoria.length == 0) {
+        $("#invalid-f-ejecutoria").css("display", "block");
+    } else {
+        $("#invalid-f-ejecutoria").css("display", "none");
+    }
+
     return count;
 }
 function Lead() {

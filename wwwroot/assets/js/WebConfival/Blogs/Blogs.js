@@ -1,5 +1,6 @@
 ﻿let parrafo = 1;
 let imgGallery = 1;
+let galeriaBlog = [];
 function AddTitulo() {
     $("#invalid-titulo-blog").css("display", "none");
     $("#invalid-imagen-blog-principal").css("display", "none");
@@ -34,7 +35,6 @@ function AddContenido() {
 
     if (parrafo > 1) {
         let contenidoB = document.getElementById("parrafo" + (parrafo - 1));
-        console.log(contenidoB);
 
         let cloneB = contenidoB.cloneNode(true);
         cloneB.id = "parrafo" + parrafo;
@@ -55,36 +55,38 @@ function AddContenido() {
         $("#subtitulo-blog").val("");
         $("#parrafo-general").val("");
     }
-
 }
-
 function ShowFormGallery() {
     $("#seccion-uno").addClass("hide-info");
     $("#seccion-galeria").removeClass("hide-info");
 }
-
 function addImgGallery() {
-    let contenidoGallery = $("#lightgallery");
+    let inputImg = $("#imagen-g");
+    let imagenB = inputImg[0].files
+    galeriaBlog.push(imagenB[0]);
+    console.log(galeriaBlog);
+    if (imagenB.length == 0) {
+        $("#invalid-imagen-g").css("display", "block")
+    } else {
+        $("#invalid-imagen-g").css("display", "none")
+        let contenidoGallery = $("#lightgallery");
+        if (imgGallery > 1) {
+            let contenidoB = document.getElementById("lightgalleryLi" + (imgGallery - 1));
+            let cloneB = contenidoB.cloneNode(true);
 
+            cloneB.id = "lightgalleryLi" + imgGallery;
+            contenidoGallery.append(cloneB);
 
-    if (imgGallery > 1) {
-        let contenidoB = document.getElementById("lightgalleryLi" + (imgGallery - 1));
-        let cloneB = contenidoB.cloneNode(true);
-
-        cloneB.id = "lightgalleryLi" + imgGallery;
-        contenidoGallery.append(cloneB);
-
-        let contenidoBJ = $("#lightgalleryLi" + imgGallery);
-        let imgNew = contenidoBJ.children().children();
-        imgNew.attr('id', "imgGalleryBlog" + imgGallery);
+            let contenidoBJ = $("#lightgalleryLi" + imgGallery);
+            let imgNew = contenidoBJ.children().children();
+            imgNew.attr('id', "imgGalleryBlog" + imgGallery);
+        }
+        var inputF = $("#imagen-g");
+        let imagenB = inputF[0];
+        readUrlGallery(imagenB, imgGallery);
+        imgGallery++;
     }
-
-    var inputF = $("#imagen-g");
-    let imagenB = inputF[0];
-    readUrlGallery(imagenB, imgGallery);
-    imgGallery++;
 }
-
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -98,7 +100,6 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
     }
 };
-
 function readUrlGallery(imagenB, id) {
     if (imagenB.files && imagenB.files[0]) {
         var reader = new FileReader();
@@ -110,7 +111,6 @@ function readUrlGallery(imagenB, id) {
         reader.readAsDataURL(imagenB.files[0]);
     }
 }
-
 function backContenido() {
     var seccionTitulo = $("#seccion-uno-publicar");
     let seccionContenido = $("#seccion-contenido");
@@ -120,17 +120,78 @@ function backContenido() {
     $("#seccion-uno").removeClass("hide-info");
     $("#seccion-galeria").addClass("hide-info");
 }
-
-function NextCategoria() {
+function NextGallery() {
     // Remove Secciones
     $("#seccion-uno").addClass("hide-info");
     $("#seccion-galeria").addClass("hide-info");
 
-
     // Mostrar seccion categoria
     $("#seccion-categorias").removeClass("hide-info");
-
-
-
-
 };
+
+function Publicar() {
+    let tituloBlog = $("#contenido-blog-visualizar").children("h2").get(0).outerHTML;
+    let imagenPrincipalBlog = $("#imagen-blog")[0].files[0];
+    let lstContenido = $("#contenido-blog").children();
+    let contenidoBlog = "";
+    $.each(lstContenido, function (element, index) {
+        contenidoBlog = contenidoBlog + index.innerHTML;
+    });
+    let categoriaPrincipal = $("#categorias-principal").val();
+    let arrayCategorias = $("#lst-categorias").val();
+    let subcategorias = JSON.stringify(arrayCategorias);
+    //let list = JSON.stringify({ 'lstGaleria': galeriaBlog });
+
+    var formData = new FormData();
+    formData.append('titulo', tituloBlog);
+    formData.append('imagenPrincipal', imagenPrincipalBlog);
+    formData.append('contenido', contenidoBlog);
+    formData.append('categoria', categoriaPrincipal);
+    formData.append('lstCategorias', subcategorias);
+    $.each(galeriaBlog, function (element, index) {
+        var dataTemporal = index;
+        formData.append('lstGaleria', dataTemporal)
+    });
+    $.ajax({    
+        type: "POST",
+        url: '/Blog/Publicar',
+        data: formData,
+        cache: false,
+        contentType: false,//stop jquery auto convert form type to default x-www-form-urlencoded
+        processData: false,
+        success: function () {
+            console.log("ok");
+        }
+    });
+
+}
+$("#categorias-principal").on("change", function () {
+    var cartegoriaPrincipal = $("#categorias-principal").val();
+    if (cartegoriaPrincipal.length > 0) {
+        $("#seccion-btn-finalizar").removeClass("hide-info");
+        var idCategoria = $("#categorias-principal").val();
+        var lstCategorias = $("#lst-categorias").children();
+        $.ajax({
+            type: "GET",
+            url: '/Blog/ConsultarCategorias',
+            data: { id: idCategoria },
+            success: function (result) {
+                $.each(result, function (element, index) {
+                    if (index.id == parseInt(idCategoria)) {
+                        result.splice(index.id - 1, 1);
+                        return false;
+                    }
+                })
+                lstCategorias.remove();
+                $("#lst-categorias").append('<option disabled value="">Seleccione..</option>')
+                $.each(result, function (element, index) {
+                    $("#lst-categorias").append('<option value="' + index.id + '">' + index.nombre + '</option>')
+                });
+            }
+        });
+    }
+    if (cartegoriaPrincipal.length == 0) {
+        $("#seccion-btn-finalizar").addClass("hide-info");
+    }
+})
+

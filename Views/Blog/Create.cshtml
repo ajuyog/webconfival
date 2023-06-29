@@ -36,7 +36,6 @@
 
 <div class="row">
     <div class="col-xl-4 col-sm-12 col-xs-12" id="visualizador-campos">
-        <!-- Seccion 1 -->
         <div id="seccion-uno">
             <div id="seccion-uno-publicar">
                 <div class="card">
@@ -49,20 +48,14 @@
                             <input class="form-control" type="text" placeholder="Titulo de tu blog" id="titulo-blog">
                         </div>
                         <div class="invalid-feedback" id="invalid-titulo-blog">Debes agregar un titulo para el blog</div>
-
-
                         <div class="form-group">
                             <label class="form-label">Imagen del Blog</label>
                             <div class="col-sm-12 col-md-12">
                                 <input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-blog" />
                             </div>
                             <div class="invalid-feedback" id="invalid-imagen-blog-principal">Debes agregar una imagen</div>
-
-
                         </div>
-
                         <a class="btn btn-success" onclick="AddTitulo()" style="margin-top:20px;">Añadir</a>
-
                     </div>
                 </div>
             </div>
@@ -76,19 +69,13 @@
                             <label class="form-label">Subtitulo</label>
                             <input class="form-control" type="text" placeholder="Subtitulo de tu blog" id="subtitulo-blog">
                         </div>
-
-
                         <div class="form-group">
                             <label class="form-label">Parrafo</label>
                             <textarea class="form-control mb-4" placeholder="Refacta el parrafo" rows="8" id="parrafo-general"></textarea>
                         </div>
-
-
                         <a href="#PublicarBlog" class="btn btn-success" onclick="AddContenido()" style="margin-top:20px;">Añadir</a>
-
                     </div>
                 </div>
-
             </div>
             <div class="card">
                 <div class="card-body">
@@ -99,7 +86,6 @@
                 </div>
             </div>
         </div>
-
         <div id="seccion-galeria" class="hide-info">
             <div class="card">
                 <div class="card-header-blogs">
@@ -109,7 +95,7 @@
                     <div class="form-group">
                         <label class="form-label">Imagen</label>
                         <div class="col-sm-12 col-md-12">
-                            <div class="dropify-wrapper" style="height: 212px;"><div class="dropify-message"><span class="file-icon"> <p>Drag and drop a file here or click</p></span><p class="dropify-error">Ooops, something wrong appended.</p></div><div class="dropify-loader"></div><div class="dropify-errors-container"><ul></ul></div><input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-g"><button type="button" class="dropify-clear">Remove</button><div class="dropify-preview"><span class="dropify-render"></span><div class="dropify-infos"><div class="dropify-infos-inner"><p class="dropify-filename"><span class="dropify-filename-inner"></span></p><p class="dropify-infos-message">Drag and drop or click to replace</p></div></div></div></div>
+                            <input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-g" />
                         </div>
                         <div class="invalid-feedback" id="invalid-imagen-g">Debes agregar una imagen</div>
                     </div>
@@ -131,9 +117,7 @@
                         <label class="form-label">Titulo</label>
                         <textarea class="form-control mb-4" placeholder="Titulo=' '" rows="3" id="titulo-ig"></textarea>
                     </div>
-
                     <a class="btn btn-success" onclick="addImgGallery()" style="margin-top:20px;">Añadir</a>
-
                 </div>
             </div>
             <div class="card">
@@ -146,28 +130,42 @@
                 </div>
             </div>
         </div>
-        <!-- Seccion 10 -->
         <div id="seccion-categorias" class="hide-info">
             <div class="card">
                 <div class="card-header-blogs">
                     <h4 class="mt-3 header-blog-publicar">Selecciona las categorias del Blog !!</h4>
                 </div>
                 <div class="card-body">
-
                     <div class="form-group">
                         <label class="form-label">Categoria principal</label>
-                        <select class="form-control select2 form-select select2-hidden-accessible" data-placeholder="Seleccione .." id="categorias-principal" tabindex="-1" aria-hidden="true">
-                        </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-categorias-principal-container"><span class="select2-selection__rendered" id="select2-categorias-principal-container"><span class="select2-selection__placeholder">Seleccione ..</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                        <select class="form-control select2 form-select" data-placeholder="Seleccione .." id="categorias-principal">
+                            <option label="Choose one"></option>
+                            @foreach (var item in Model)
+                            {
+                                <option value="@item.Id">@item.Nombre</option>
+                            }
+                        </select>
                     </div>
                     <div id="reload">
+                        <partial name="~/Views/Blog/_CategoriasSecundarias.cshtml" model="@Model" />
                     </div>
                 </div>
-
-
             </div>
         </div>
+        <div id="seccion-btn-finalizar" class="hide-info">
+            <div class="card">
+                <div class="card-header-blogs">
+                    <h4 class="mt-3 header-blog-publicar">Genial !!</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Agrega las categorias secundarias que consideres necesarias y procede a publicar</p>
+                    <p>
+                        <a href="#PublicarBlog" class="btn btn-primary" onclick="Publicar()" style="margin-top:20px;">Publicar !!</a>
+                    </p>
+                </div>
+            </div>
 
-
+        </div>
     </div>
     <div class="col-xl-8 col-sm-12 col-xs-12" id="visualizar-blog-principal">
         <div class="card">
@@ -180,29 +178,20 @@
                 <div class="main-chat-body flex-2 ps" id="ChatBody">
                     <div class="content-inner">
                         <div class="row justify-content-center text-center">
-
                             <!-- Seccion 1 -->
                             <div id="contenido-blog-visualizar"></div>
                             <div class="ps-relative p-1 bg-light br-5 hide-info" id="img-onchange">
                                 <img src="" alt="img" class="cover-image br-5 ms-auto me-auto wp-100" id="blah"><br>
                             </div>
-
-
                             <div id="contenido-blog" style="margin-top:20px;">
-
                                 <div id="parrafo1" class="hide-info"></div>
-
                             </div>
-
-
                         </div>
                     </div>
                     <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div>
                 </div>
             </div>
         </div>
-
-
         <div class="card">
             <div class="main-chat-header pt-3 d-block d-sm-flex">
                 <div class="margin-auto">
@@ -251,7 +240,7 @@
     <script src="~/assets/plugins/fileuploads/js/file-upload.js"></script>
 
     <!-- FORM ELEMENTADVANCED JS -->
-  @*  <script src="~/assets/js/formelementadvnced.js"></script>*@
+    <script src="~/assets/js/formelementadvnced.js"></script>
 
     <!--- TABS JS -->
     <script src="~/assets/plugins/tabs/jquery.multipurpose_tabcontent.js"></script>

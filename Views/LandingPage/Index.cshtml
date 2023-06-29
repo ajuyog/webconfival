@@ -56,7 +56,7 @@
             <div class="section bg-white" id="Inicio" style="padding-top:120px">
                 
 
-                <div class="col-12" style="padding-bottom: 20px;">
+                <div class="col-12 pos-relative overflow-hidden market-image">
                     <div id="carousel-indicators5" class="carousel slide" data-bs-ride="carousel">
                         <ol class="carousel-indicators carousel-indicators5">
                         @foreach (var item in Model)
@@ -1141,7 +1141,8 @@
                                                                                         </div>
                                                                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                                                                             <label class="form-label">Numero de radicado</label>
-                                                                                            <input class="form-control" type="text" id="numero-radicado-user" name="numero-radicado-user">
+                                                                                            <input class="form-control" type="text" placeholder="_____ __ __ ___ ____ _____ __" id="numero-radicado-user" name="numero-radicado-user">
+                                                                                            <div class="invalid-feedback" id="invalid-feedback-no-radicado">El numero de radicado debe tener 23 caracteres.</div>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="row">
@@ -1409,6 +1410,15 @@
 
 
 @section scripts {
+    <!-- INPUT MASK JS-->
+    <script src="~/assets/plugins/input-mask/jquery.mask.min.js"></script>
+
+    <!--Internal  jquery.maskedinput js -->
+    <script src="~/assets/plugins/jquery.maskedinput/jquery.maskedinput.js"></script>
+
+    <!-- FORM ELEMENTS JS -->
+    <script src="~/assets/js/form-layouts.js"></script>
+
     <!-- FORM OPORTUNIDAD JS -->
     <script src="~/assets/js/WebConfival/LandingPage/form-oportunidad.js"></script>
 
