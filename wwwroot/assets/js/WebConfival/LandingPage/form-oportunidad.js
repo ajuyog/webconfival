@@ -1,4 +1,6 @@
-﻿var nombres = "";
+﻿/*const { notify } = require("browser-sync");*/
+
+var nombres = "";
 var intentosSMS = "";
 var intentosV = 0;
 $(document).ready(function () {
@@ -416,7 +418,7 @@ function LeadOportunidad() {
     if (validacion == 0) {
         Lead();
     }
-}
+};
 function ValidarLeadOportunidad() {
     var count = 0;
     var tipoFallo = $("#fallo").val();
@@ -482,30 +484,28 @@ function ValidarLeadOportunidad() {
     }
 
     return count;
-}
+};
 function Lead() {
     const formElement = document.querySelector("form");
     var formData = new FormData(formElement);
+    $("#loader4").removeClass("hide-info");
+    $("#oportunidad-hide").addClass("hide-info");
+    $("#validacion-tres").addClass("hide-info");
     $.ajax({
         url: "Oportunidad/SaveForm",
         type: 'POST',
         data: formData,
         success: function (result) {
             if (result == "success") {
-                $("#oportunidad-hide").addClass("hide-info");
-                $("#validacion-tres").addClass("hide-info");
+                $("#loader4").addClass("hide-info");
                 $("#lead-oportunidad-exitoso").removeClass("hide-info");
             } else {
                 if (result == "existing") {
-                    $("#oportunidad-hide").addClass("hide-info");
-                    $("#validacion-tres").addClass("hide-info");
+                    $("#loader4").addClass("hide-info");
                     $("#oportunidad-existente").removeClass("hide-info");
-
-
-
-
                 } else {
                     if (result == "error") {
+                        $("#loader4").addClass("hide-info");
                         notif({
                             msg: 'Algo malo ha pasado, vuelve a intentar',
                             type: "danger",
@@ -520,7 +520,7 @@ function Lead() {
         contentType: false,
         processData: false
     });
-}
+};
 
 // --- UTILIDAD --- //
 function MailRegex(data) {
@@ -534,8 +534,6 @@ function MailRegex(data) {
         count = 0;
     }
     return count;
-
-
 };
 function ResendMailAPI(data) {
 
@@ -579,7 +577,7 @@ function ResendMailAPI(data) {
         }
     });
 
-}
+};
 function CleanDocumento(data) {
     $("#nombre-completo-lead").val("");
     $("#nombre-completo-lead").removeClass("disable-writing");
@@ -590,7 +588,7 @@ function CleanDocumento(data) {
     $("#mensaje-error-verifica").get(0).innerHTML = data;
     $("#segundo-intento").removeClass("hide-info");
     $("#btn-validar-documento").removeClass("hide-info");
-}
+};
 function GetAttempts(data) {
     $.ajax({
         type: "GET",
@@ -605,7 +603,7 @@ function GetAttempts(data) {
             }
         }
     });
-}
+};
 $("#tipo-corporacion").on("change", function () {
     var select = $("#corporacion");
     var idCorporacion = $("#tipo-corporacion").val();

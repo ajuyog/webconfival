@@ -1,4 +1,6 @@
+using confinancia.Services.Graph;
 using confinancia.Services.Token;
+using confinancia.Services.Utilidaddes;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
 using static System.Net.WebRequestMethods;
@@ -19,6 +21,10 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddTransient<IGetToken, GetToken>();
+builder.Services.AddTransient<ISendMail, SendMail>();
+builder.Services.AddTransient<IMail, Mail>();
+
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 // Add services to the container.

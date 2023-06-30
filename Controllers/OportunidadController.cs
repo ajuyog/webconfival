@@ -1,6 +1,8 @@
 ﻿using confinancia.Models;
 using confinancia.Models.JsonDTO;
+using confinancia.Services.Graph;
 using confinancia.Services.Token;
+using confinancia.Services.Utilidaddes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileSystemGlobbing.Internal;
@@ -17,12 +19,16 @@ namespace confinancia.Controllers
 		#region CONSTRUCTOR
 		private readonly IConfiguration _configuration;
 		private readonly IGetToken _getToken;
+        private readonly ISendMail _sendMail;
+        private readonly IMail _mail;
 
-		public OportunidadController(IConfiguration configuration, IGetToken getToken)
+        public OportunidadController(IConfiguration configuration, IGetToken getToken, ISendMail sendMail, IMail mail )
 		{
 			_configuration = configuration;
 			_getToken = getToken;
-		}
+            _sendMail = sendMail;
+            _mail = mail;
+        }
 		#endregion
 
 		public IActionResult Index()
@@ -190,7 +196,6 @@ namespace confinancia.Controllers
 				demandante = formOportunidad["demandante"]
 
 			};
-			leadOportunidad.numeroRadicado.Replace(" ", "");
 			var primeraInstancia = formOportunidad.Files["primera-instancia-file"];
 			var segundaInstancia = formOportunidad.Files["segunda-instancia-file"];
 			var LeadoportunidadId = 0;
@@ -209,8 +214,9 @@ namespace confinancia.Controllers
 					var responseStream3 = await response2.Content.ReadAsStringAsync();
 					var resultLead = JsonConvert.DeserializeObject<OportunidadDTO>(responseStream3);
 					LeadoportunidadId = (int)resultLead.id;
-					if (LeadoportunidadId > 0)
+                    if (LeadoportunidadId > 0)
 					{
+						leadOportunidad.id = (int)resultLead.id;
 						if(primeraInstancia != null)
 						{
 							MultipartFormDataContent formDataPI = new MultipartFormDataContent();
@@ -255,15 +261,20 @@ namespace confinancia.Controllers
 							{
 								var responseStreamError = await response.Content.ReadAsStringAsync();
                                 resultJS = "error";
+
                             }
                         }
 					}
                     resultJS = "success";
+                    _mail.SendSuccess(persona, leadOportunidad);
                 }
                 else
 				{
 					var responseStream5 = await response2.Content.ReadAsStringAsync();
-                    if (responseStream5.Contains("Ya existe un lead con numero de radicado")) { resultJS = "existing"; }
+                    if (responseStream5.Contains("Ya existe un lead con numero de radicado")) { 
+						resultJS = "existing";
+						_mail.SendError(persona, leadOportunidad);
+					}
 				}
 			}
 			else
@@ -273,11 +284,6 @@ namespace confinancia.Controllers
             }
 			return resultJS;
 		}
-
-        [HttpGet]
-
-
-
 
 
     }

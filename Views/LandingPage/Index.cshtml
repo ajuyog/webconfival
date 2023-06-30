@@ -9,7 +9,7 @@
     var loaderUno = new LoaderDTO() { Seccion = 1 };
     var loaderDos = new LoaderDTO() { Seccion = 2 };
     var loadertres = new LoaderDTO() { Seccion = 3 };
-
+    var loaderCuatro = new LoaderDTO() { Seccion = 4 };
 }
 
 <!--app-content open-->
@@ -1115,6 +1115,7 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <partial name="~/Views/Shared/_LoaderOportunidad.cshtml" model="loaderCuatro" />
                                                                                 <form id="formLeadOportunidad" name="formLeadOportunidad" method="post" enctype="multipart/form-data">
                                                                                     <div class="hide-info" id="oportunidad-hide">
                                                                                         <div>
@@ -1246,6 +1247,23 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
+
+
+                                                                                        <div class="row">
+                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                                <label class="rdiobox" for="rdio-primary-unchecked">
+                                                                                                    <input name="rdio-primary" type="radio" class="radio-primary" id="rdio-primary-unchecked">
+                                                                                                    <span>Abogado</span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                                <label class="rdiobox" for="rdio-primary-unchecked">
+                                                                                                    <input name="rdio-primary" type="radio" class="radio-primary" id="rdio-primary-unchecked">
+                                                                                                    <span>Beneficiario</span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+
 
 
                                                                                         <div id="btn-validar-celular">

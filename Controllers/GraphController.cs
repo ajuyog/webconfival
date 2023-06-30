@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using confinancia.Models.Graph;
+using confinancia.Services.Graph;
 using confinancia.Services.Token;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -18,12 +19,14 @@ namespace confinancia.Controllers
         private readonly IGetToken _getToken;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly ISendMail _sendMail;
 
-        public GraphController(IGetToken getToken, IConfiguration configuration, IMapper mapper)
+        public GraphController(IGetToken getToken, IConfiguration configuration, IMapper mapper, ISendMail sendMail)
         {
             _getToken = getToken;
             _configuration = configuration;
             _mapper = mapper;
+            _sendMail = sendMail;
         }
         #endregion
 
@@ -240,6 +243,15 @@ namespace confinancia.Controllers
                 return RedirectToAction("Index", "Home", routeValues: new { mensaje });
             }
             ViewBag.ImageData = await ImgProfile(accesToken);
+
+            byte[] IV = new byte[Convert.ToInt32(_configuration.GetSection("CalendarGraph:IV").Value)];
+            var tokenEncriptado = Encriptar(accesToken, _configuration.GetSection("CalendarGraph:Password").Value, IV);
+            CookieOptions options = new CookieOptions()
+            {
+                Expires = DateTime.Now.AddHours(1)
+            };
+            Response.Cookies.Append(_configuration.GetSection("CalendarGraph:Name").Value, tokenEncriptado, options);
+
             var modelMe = await GetMeGraph(accesToken);
             var modelSettings = _mapper.Map<SettingsGraphDTO>(modelMe);
             modelSettings.Folder = "Settings";
@@ -349,7 +361,8 @@ namespace confinancia.Controllers
             byte[] myByteArray = new byte[Convert.ToInt32(_configuration.GetSection("CalendarGraph:IV").Value)];
             var tokenDencrypted = Desencriptar(tokenEncrypted, _configuration.GetSection("CalendarGraph:Password").Value, myByteArray);
 
-            isSend = await SendMail(tokenDencrypted, message);
+            isSend = await _sendMail.Send(tokenDencrypted, message);
+
             if (isSend)
             {
                 return true;
