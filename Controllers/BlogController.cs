@@ -185,21 +185,27 @@ public class BlogController : Controller
             }
 		}
 		var json = JsonConvert.SerializeObject(obj);
-		var client = new HttpClient();
-		var request = new HttpRequestMessage(HttpMethod.Post, "https://apileadconfival.azurewebsites.net/api/blog");
-		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-		var content = new StringContent(json, null, "application/json");
-		request.Content = content;
-		var response = await client.SendAsync(request);
-		if (response.IsSuccessStatusCode)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+
+
+        var token = await _getToken.GetTokenV();
+        var client = new HttpClient();
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/blog/");
+        request.Headers.Add("Authorization", "Bearer " + token);
+        var content = new MultipartFormDataContent();
+		content.Add(new StringContent(json));
+        //content.Add(new StringContent("\"hola\""), "Titulo");
+        //content.Add(new StringContent("\"contenido\""), "Contenido");
+        //content.Add(new StringContent("[2, 1]"), "CategoriaId");
+        request.Content = content;
+        var response = await client.SendAsync(request);
+        if (response.IsSuccessStatusCode)
+        {
+            return true;
+        }
+        else
+        {
+            var responseStream = await response.Content.ReadAsStringAsync();
+            return false;
+        }
 	}
-
-
 }

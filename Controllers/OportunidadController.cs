@@ -160,7 +160,7 @@ namespace confinancia.Controllers
 		}
 
 		[HttpPost]
-		public async Task<bool> SaveForm()
+		public async Task<string> SaveForm()
 		{
 			var token = await _getToken.GetTokenV();
 			var formOportunidad = await HttpContext.Request.ReadFormAsync();
@@ -185,15 +185,16 @@ namespace confinancia.Controllers
 				corporacionId = Convert.ToInt32(formOportunidad["corporacion"]),
 				entidadPagaduriaId = Convert.ToInt32(formOportunidad["entidad-pagaduria"]),
 				fechaEjecutoria = formOportunidad["f-ejecutoria"] == "" ? DateTime.ParseExact("1900-01-01 14:00:00,531", "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture) : DateTime.Parse(formOportunidad["f-ejecutoria"]),
-				numeroRadicado = formOportunidad["numero-radicado-user"],
+				numeroRadicado = formOportunidad["numero-radicado-user"].ToString().Replace(" ", ""),
 				cuentaCobro = formOportunidad["cuenta-cobro-user"],
 				demandante = formOportunidad["demandante"]
 
 			};
+			leadOportunidad.numeroRadicado.Replace(" ", "");
 			var primeraInstancia = formOportunidad.Files["primera-instancia-file"];
 			var segundaInstancia = formOportunidad.Files["segunda-instancia-file"];
 			var LeadoportunidadId = 0;
-			var ok = false;
+			var resultJS = "error";
 			var httpClient = new HttpClient();
 			httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 			var response = await httpClient.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadPersona", persona);
@@ -225,12 +226,12 @@ namespace confinancia.Controllers
 							var responseArchivoPI = await httpClient.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:CotizadorLead:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:CotizadorLead:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:SubCategoria:PrimeraInstancia").Value, formDataPI);
 							if (responseArchivoPI.IsSuccessStatusCode)
 							{
-								ok = true;
+								resultJS = "success";
 							}
 							else
 							{
 								var responseStreamError = await response.Content.ReadAsStringAsync();
-								return false;
+                                resultJS = "error";
 							}
 						}
 						if(segundaInstancia != null)
@@ -248,30 +249,36 @@ namespace confinancia.Controllers
 							var responseArchivoSI = await httpClient.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:CotizadorLead:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:CotizadorLead:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:SubCategoria:SegundaInstancia").Value, formDataSI);
 							if (responseArchivoSI.IsSuccessStatusCode)
 							{
-								ok = true;
+								resultJS = "success";
 							}
 							else
 							{
 								var responseStreamError = await response.Content.ReadAsStringAsync();
-								return false;
-							}
-						}
+                                resultJS = "error";
+                            }
+                        }
 					}
-					ok = true;
+                    resultJS = "success";
                 }
-				else
+                else
 				{
 					var responseStream5 = await response2.Content.ReadAsStringAsync();
-					ok = false;
+                    if (responseStream5.Contains("Ya existe un lead con numero de radicado")) { resultJS = "existing"; }
 				}
 			}
 			else
 			{
 				var responseStream2 = await response.Content.ReadAsStringAsync();
-				ok = false;
-			}
-			return ok;
+                resultJS = "error";
+            }
+			return resultJS;
 		}
 
-	}
+        [HttpGet]
+
+
+
+
+
+    }
 }

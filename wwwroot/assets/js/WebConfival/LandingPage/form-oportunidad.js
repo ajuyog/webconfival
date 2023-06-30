@@ -414,7 +414,7 @@ function ShowOportunidad() {
 function LeadOportunidad() {
     var validacion = ValidarLeadOportunidad();
     if (validacion == 0) {
-        $("#politica-tratamiento").modal('show');
+        Lead();
     }
 }
 function ValidarLeadOportunidad() {
@@ -425,7 +425,7 @@ function ValidarLeadOportunidad() {
     var entidad = $("#entidad-pagaduria").val();
     var tipoCorporacion = $("#tipo-corporacion").val();
     var corporacion = $("#corporacion").val();
-    var numeroRadicado = $("#invalid-feedback-no-radicado").val();
+    var numeroRadicado = $("#numero-radicado-user").val();
     var fechaEjecutoria = $("#f-ejecutoria").val();
 
     if (tipoFallo == null) {
@@ -469,7 +469,7 @@ function ValidarLeadOportunidad() {
     } else {
         $("#invalid-feedback-corporacion").css("display", "none");
     }
-    if (numeroRadicado.length != 23) {
+    if (numeroRadicado.length != 29) {
         $("#invalid-feedback-no-radicado").css("display", "block");
         count = count + 1;
     } else {
@@ -484,25 +484,36 @@ function ValidarLeadOportunidad() {
     return count;
 }
 function Lead() {
-    $("#politica-tratamiento").modal('hide');
     const formElement = document.querySelector("form");
     var formData = new FormData(formElement);
     $.ajax({
         url: "Oportunidad/SaveForm",
         type: 'POST',
         data: formData,
-        success: function (data) {
-            if (data) {
-                //OPEN MODAL SUCCES
-                $("#success-leadOportunidad").modal("show");
-                window.location.reload();
+        success: function (result) {
+            if (result == "success") {
+                $("#oportunidad-hide").addClass("hide-info");
+                $("#validacion-tres").addClass("hide-info");
+                $("#lead-oportunidad-exitoso").removeClass("hide-info");
             } else {
-                notif({
-                    msg: 'Algo malo ha pasado, vuelve a intentar',
-                    type: "danger",
-                    multiline: true,
-                    position: "center"
-                });
+                if (result == "existing") {
+                    $("#oportunidad-hide").addClass("hide-info");
+                    $("#validacion-tres").addClass("hide-info");
+                    $("#oportunidad-existente").removeClass("hide-info");
+
+
+
+
+                } else {
+                    if (result == "error") {
+                        notif({
+                            msg: 'Algo malo ha pasado, vuelve a intentar',
+                            type: "danger",
+                            multiline: true,
+                            position: "center"
+                        });
+                    }
+                }
             }
         },
         cache: false,
