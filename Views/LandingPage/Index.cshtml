@@ -19,6 +19,8 @@
             <div class="section bg-white">
                 <!-- Inicio -->
                 <div class="section bg-white" id="Inicio" style="padding-top:120px;">
+
+                    <!-- Seccion 0 -- Banner Dinamico -->
                     <div class="section-banner bg-white">
                         <div class="col-md-12 col-lg-12">
                             <div class="card-body h-100">
@@ -41,7 +43,6 @@
                             </div>
                         </div>
                     </div>
-
 
                     <!-- Seccion 1 -- Qué hacemos en Confival? -->
                     <div class="container px-5 px-md-0">
@@ -1059,11 +1060,30 @@
                                                                                             <input type="hidden" id="fExpedicion-ok" name="fExpedicion-ok" />
                                                                                             <input type="hidden" id="no-contacto-ok" name="no-contacto-ok" />
                                                                                         </div>
+                                                                                        <label class="form-label">¿Cual es su relación con la sentencia ó conciliación</label>
                                                                                         <div class="row">
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            @foreach (var item in ViewBag.TipoActores)
+                                                                                            {
+                                                                                                <div class="col-4">
+                                                                                                    <div class="form-check">
+                                                                                                        <input type="radio" class="form-check-input" name="radio-stacked" id="@item.Id" onclick="ChangeActor(@item.Id)" required>
+                                                                                                        <label class="form-check-label">@item.Nombre</label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            }
+                                                                                            <div class="invalid-feedback" id="invalid-feedback-tipo-actores">Seleccione un tipo de relación.</div>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-12">
                                                                                                 <label class="form-label">Demandante</label>
                                                                                                 <input class="form-control" type="text" id="demandante" name="demandante">
                                                                                                 <div class="invalid-feedback" id="invalid-feedback-demandante">El campo 'Demandante' es requerido</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                                <label class="form-label">Cuenta de cobro</label>
+                                                                                                <input class="form-control" type="text" id="cuenta-cobro-user" name="cuenta-cobro-user">
                                                                                             </div>
                                                                                             <div class="col-lg-6 col-md-6 col-sm-12">
                                                                                                 <div class="form-group">
@@ -1154,13 +1174,9 @@
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="row">
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                                <label class="form-label">Cuenta de cobro</label>
-                                                                                                <input class="form-control" type="text" id="cuenta-cobro-user" name="cuenta-cobro-user">
-                                                                                            </div>
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                                                                            <div class="col-12">
                                                                                                 <label class="form-label">Numero de radicado</label>
-                                                                                                <input class="form-control" type="text" placeholder="_____ __ __ ___ ____ _____ __" id="numero-radicado-user" name="numero-radicado-user">
+                                                                                                <input class="form-control" type="text" placeholder="xxxxx - xx  - xx - xxx - xxxx - xxxxx - xx " id="numero-radicado-user" name="numero-radicado-user">
                                                                                                 <div class="invalid-feedback" id="invalid-feedback-no-radicado">El numero de radicado debe tener 23 caracteres.</div>
                                                                                             </div>
                                                                                         </div>
@@ -1178,21 +1194,6 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-
-                                                                                        <label class="form-label">¿Cual es su relación con la sentencia ó conciliación</label>
-
-                                                                                        @foreach (var item in ViewBag.TipoActores)
-                                                                                        {
-                                                                                            <div class="form-check">
-                                                                                                <input type="radio" class="form-check-input" name="radio-stacked" id="@item.Id" required>
-                                                                                                <label class="form-check-label">@item.Nombre</label>
-                                                                                            </div>
-                                                                                        }
-                                                                                        <div class="invalid-feedback" id="invalid-feedback-tipo-actores">Seleccione un tipo de relación.</div>
-
-
-
-
                                                                                         <div id="btn-validar-celular">
                                                                                             <a href="#Contact" class="btn btn-primary" onclick="LeadOportunidad()">Quiero que me contacten</a>
                                                                                         </div>

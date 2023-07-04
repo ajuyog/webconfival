@@ -18,7 +18,7 @@ $(document).ready(function () {
     $("#uncheckedPrimarySwitch-politica").val("on");
     GetAttempts("SMS");
     GetAttempts("Verifik");
-    $("#numero-radicado-user").mask("99999 99 99 999 9999 99999 99");
+    $("#numero-radicado-user").mask("99999-99-99-999-9999-99999-99");
 });
 
 // --- VALIDACION DE POLITICA TRATAMIENTO DE DATOS --- //
@@ -438,6 +438,7 @@ function ValidarLeadOportunidad() {
     } else {
         $("#invalid-feedback-tipo-actores").css("display", "none");
         actor = selected.id;
+        console.log(actor);
     }
     if (tipoFallo == null) {
         $("#invalid-feedback-tipo-fallo").css("display", "block");
@@ -635,7 +636,18 @@ $("#tipo-corporacion").on("change", function () {
         }
     });
 });
+function ChangeActor(data) {
+    var demandante = $("#demandante");
+    var demandanteReadOnly = $("#nombres-ok").val() + " " + $("#apellidos-ok").val();
+    if (data == 6) {
+        demandante.val(demandanteReadOnly);
+        demandante.addClass("disable-writing");
+    } else {
+        demandante.val("");
+        demandante.removeClass("disable-writing");
 
+    }
+}
 
 // --- CONTADOR SMS --- //
 $('#intentos-sms').click(function () {

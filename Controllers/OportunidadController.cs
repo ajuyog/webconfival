@@ -192,7 +192,7 @@ namespace confinancia.Controllers
 				corporacionId = Convert.ToInt32(formOportunidad["corporacion"]),
 				entidadPagaduriaId = Convert.ToInt32(formOportunidad["entidad-pagaduria"]),
 				fechaEjecutoria = formOportunidad["f-ejecutoria"] == "" ? DateTime.ParseExact("1900-01-01 14:00:00,531", "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture) : DateTime.Parse(formOportunidad["f-ejecutoria"]),
-				numeroRadicado = formOportunidad["numero-radicado-user"].ToString().Replace(" ", ""),
+				numeroRadicado = formOportunidad["numero-radicado-user"].ToString().Replace("-", ""),
 				cuentaCobro = formOportunidad["cuenta-cobro-user"],
 				demandante = formOportunidad["demandante"]
 
