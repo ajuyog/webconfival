@@ -5,6 +5,7 @@ using confinancia.Models.JsonDTO;
 using confinancia.Services.Token;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Kiota.Abstractions.Extensions;
 using Newtonsoft.Json;
 using Tavis.UriTemplates;
 using static System.Collections.Specialized.BitVector32;
@@ -147,6 +148,29 @@ public class LandingPageController : Controller
                 model.Add(bannerDefault);
             }
             #endregion
+
+            #region TipoActor
+            var requestTipoActor = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/TipoActor");
+            requestTipoActor.Headers.Add("Authorization", "Bearer " + token);
+            var responseTipoActor = await client.SendAsync(requestTipoActor);
+            if (responseTipoActor.IsSuccessStatusCode)
+            {
+                var responseStream = await responseTipoActor.Content.ReadAsStringAsync();
+                var lstActores = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStream);
+                foreach (var item in lstActores)
+                {
+                    item.Nombre = item.Nombre.ToLower();
+                    var mayus = item.Nombre[0].ToString().ToUpper();
+                    item.Nombre = mayus + item.Nombre.Substring(1, item.Nombre.Length - 1);
+                }
+                ViewBag.TipoActores = lstActores;
+            }
+            else
+            {
+                ViewBag.TipoActores = new List<DropDownListDTO>();
+            }
+            #endregion
+
         }
         return View(model);
     }

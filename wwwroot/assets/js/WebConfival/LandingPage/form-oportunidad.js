@@ -1,5 +1,5 @@
-﻿/*const { notify } = require("browser-sync");*/
-
+﻿
+var actor = "";
 var nombres = "";
 var intentosSMS = "";
 var intentosV = 0;
@@ -54,7 +54,7 @@ function showOTPCorreo()     {
 };
 function activeTimer() {
     $('#timer-countercallback').countdown({
-        from: 30,
+        from: 180,
         to: 0,
         timerEnd: function () {
             this.animate({ 'opacity': .5 }, 500).css({ 'text-decoration': 'line-through' });
@@ -328,7 +328,7 @@ function showOTPCelular() {
 };
 function activeTimer2() {
     $('#timer-countercallback2').countdown({
-        from: 30,
+        from: 180,
         to: 0,
         timerEnd: function () {
             this.animate({ 'opacity': .5 }, 500).css({ 'text-decoration': 'line-through' });
@@ -430,6 +430,15 @@ function ValidarLeadOportunidad() {
     var numeroRadicado = $("#numero-radicado-user").val();
     var fechaEjecutoria = $("#f-ejecutoria").val();
 
+    var selected = document.querySelector(
+        'input[name="radio-stacked"]:checked');
+    if (!selected) {
+        $("#invalid-feedback-tipo-actores").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-feedback-tipo-actores").css("display", "none");
+        actor = selected.id;
+    }
     if (tipoFallo == null) {
         $("#invalid-feedback-tipo-fallo").css("display", "block");
         count = count + 1;
@@ -488,6 +497,7 @@ function ValidarLeadOportunidad() {
 function Lead() {
     const formElement = document.querySelector("form");
     var formData = new FormData(formElement);
+    formData.append('actorId', actor);
     $("#loader4").removeClass("hide-info");
     $("#oportunidad-hide").addClass("hide-info");
     $("#validacion-tres").addClass("hide-info");

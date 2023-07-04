@@ -325,6 +325,28 @@ body {
     }
 }
 
+.responsive-indicators-banners{
+    height:305px;
+}
+
+@media (max-width:1024px) {
+    .responsive-indicators-banners {
+        height: 255px;
+    }
+}
+
+@media (max-width:768px) {
+    .responsive-indicators-banners {
+        height: 205px;
+    }
+}
+
+@media (max-width:560px) {
+    .responsive-indicators-banners {
+        height: 155px;
+    }
+}
+
 
 .h-carousel-c {
     height: 500px;

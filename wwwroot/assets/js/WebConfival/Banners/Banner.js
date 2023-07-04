@@ -35,9 +35,6 @@
         });
     }
 };
-
-
-
 function BannerContactoSuperior() {
     var valid = Valid();
     if (valid == 0) {
@@ -75,16 +72,28 @@ function BannerContactoSuperior() {
         });
     }
 };
-
-
 function Valid() {
     var count = 0;
     var file = $("#file-banner").get(0).files[0];
+    var height = "";
+    var width = "";
+    var result = $("#file-banner").get(0);
+    $.each(result, function (element, index) {
+        height = index.dropify.file.height;
+        width = index.dropify.file.width;
+        return false;
+    });
     if (file == null) {
         $("#invalid-file-banner").css("display", "block");
         count = count + 1;
     } else {
         $("#invalid-file-banner").css("display", "none");
+    }
+    if (height != 524 || width != 1920) {
+        $("#invalid-file-banner-hw").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-file-banner-hw").css("display", "none");
     }
     return count;
 }

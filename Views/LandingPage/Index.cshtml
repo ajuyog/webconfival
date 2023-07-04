@@ -15,102 +15,33 @@
 <!--app-content open-->
 <div class="hor-content main-content mt-0">
     <div class="side-app">
-        <!-- CONTAINER -->
         <div class="main-container">
-            <!-- Clients section-->
-            <!-- BANNER INICIAL NOA -->
-            <div class="section-banner bg-white" style="padding-top:120px">
-
-
-               
-
-                <div class="col-md-12 col-lg-12">
-                    <div class="card">
-                        <div class="card-body h-100">
-                            <div id="carousel-indicators5" class="carousel slide" data-bs-ride="carousel" style="height:330px;">
-                                <ol class="carousel-indicators carousel-indicators5">
-                                   @* <li data-bs-target="#carousel-indicators5" data-bs-slide-to="0" class="active"></li>
-                                    <li data-bs-target="#carousel-indicators5" data-bs-slide-to="1"></li>
-                                    <li data-bs-target="#carousel-indicators5" data-bs-slide-to="2"></li>
-                                    <li data-bs-target="#carousel-indicators5" data-bs-slide-to="3"></li>
-                                    <li data-bs-target="#carousel-indicators5" data-bs-slide-to="4"></li>*@
-
-                                    @foreach (var item in Model)
-                                    {
-                                        <li data-bs-target="#carousel-indicators5" data-bs-slide-to="@item.Posicion" class="@(item.Posicion == 0 ? "active" : null)"></li>
-                                    }
-
-                                </ol>
-                                <div class="carousel-inner">
-                                    @*<div class="carousel-item active">
-                                        <img class="d-block w-100" alt="" src="~/assets/images/media/9.jpg" data-bs-holder-rendered="true">
+            <div class="section bg-white">
+                <!-- Inicio -->
+                <div class="section bg-white" id="Inicio" style="padding-top:120px;">
+                    <div class="section-banner bg-white">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card-body h-100">
+                                <div id="carousel-indicators5" class="carousel slide responsive-indicators-banners" data-bs-ride="carousel">
+                                    <ol class="carousel-indicators carousel-indicators5">
+                                        @foreach (var item in Model)
+                                        {
+                                            <li data-bs-target="#carousel-indicators5" data-bs-slide-to="@item.Posicion" class="@(item.Posicion == 0 ? "active" : null)"></li>
+                                        }
+                                    </ol>
+                                    <div class="carousel-inner">
+                                        @foreach (var item in Model)
+                                        {
+                                            <div class="carousel-item @(item.Posicion == 0 ? "active" : null)">
+                                                <img class="d-block w-100 responsive-css-banner-principal" alt="" src="@item.UrlSoporte" data-bs-holder-rendered="true">
+                                            </div>
+                                        }
                                     </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" alt="" src="~/assets/images/media/10.jpg" data-bs-holder-rendered="true">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" alt="" src="~/assets/images/media/11.jpg" data-bs-holder-rendered="true">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" alt="" src="~/assets/images/media/12.jpg" data-bs-holder-rendered="true">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" alt="" src="~/assets/images/media/13.jpg" data-bs-holder-rendered="true">
-                                    </div>*@
-
-                                    @foreach (var item in Model)
-                                    {
-                                        <div class="carousel-item @(item.Posicion == 0 ? "active" : null)">
-                                            <img class="d-block w-100" alt="" src="@item.UrlSoporte" data-bs-holder-rendered="true">
-                                        </div>
-                                    }
-
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                
-
-
-
-                @*<div class="px-5 px-md-0">
-                    <div class="overflow-hidden">
-                        <div class="row">
-                            <div class="col-lg-12 text-left pos-relative overflow-hidden market-image text-center banner">
-                                <a href="https://api.whatsapp.com/send?phone=573146699814&text=Hola%20me%20encuentro%20interesado%20" target="_blank">
-                                    <img alt="" class="logo-2 responsive-css-banner-principal" src="https://storageaccountisaac.blob.core.windows.net/apivaluezdocumental/1/2/inicio/2/1/0/36974179-9bdc-405f-97a7-8a7e4881b315">
-                                    <img alt="" class="logo" src="~/assets/images/landing/Banner-Movil-2.png">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
-            </div>
-
-
-            <!-- BANNER MODIFICADO CSS -->
-            @*<div class="section bg-white" style="padding-top:20px">
-            <div class="px-5 px-md-0">
-            <div class="overflow-hidden">
-            <div class="row">
-            <div class="col-lg-12">
-            <a href="https://api.whatsapp.com/send?phone=573146699814&text=Hola%20me%20encuentro%20interesado%20" target="_blank">
-            <img alt="" class="responsive-css-banner-principal" src="@ViewBag.BannerSuperior">
-            </a>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>*@
-
-
-
-            <div class="section bg-white">
-
-                <!-- Inicio -->
-                <div class="section bg-white" id="Inicio">
 
                     <!-- Seccion 1 -- Qué hacemos en Confival? -->
                     <div class="container px-5 px-md-0">
@@ -1248,21 +1179,17 @@
                                                                                             </div>
                                                                                         </div>
 
+                                                                                        <label class="form-label">¿Cual es su relación con la sentencia ó conciliación</label>
 
-                                                                                        <div class="row">
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                                <label class="rdiobox" for="rdio-primary-unchecked">
-                                                                                                    <input name="rdio-primary" type="radio" class="radio-primary" id="rdio-primary-unchecked">
-                                                                                                    <span>Abogado</span>
-                                                                                                </label>
+                                                                                        @foreach (var item in ViewBag.TipoActores)
+                                                                                        {
+                                                                                            <div class="form-check">
+                                                                                                <input type="radio" class="form-check-input" name="radio-stacked" id="@item.Id" required>
+                                                                                                <label class="form-check-label">@item.Nombre</label>
                                                                                             </div>
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                                <label class="rdiobox" for="rdio-primary-unchecked">
-                                                                                                    <input name="rdio-primary" type="radio" class="radio-primary" id="rdio-primary-unchecked">
-                                                                                                    <span>Beneficiario</span>
-                                                                                                </label>
-                                                                                            </div>
-                                                                                        </div>
+                                                                                        }
+                                                                                        <div class="invalid-feedback" id="invalid-feedback-tipo-actores">Seleccione un tipo de relación.</div>
+
 
 
 
@@ -1604,5 +1531,14 @@
 
     <!-- PROGRESS BAR JS-->
     <script src="../assets/js/progress.js"></script>
+
+    <!-- FORM ELEMENTS JS -->
+    <script src="~/assets/js/form-elements.js"></script>
+
+    <!--Internal Color Picker js-->
+    <script src="~/assets/js/colorpicker.js"></script>
+
+    <!--Color Picker js-->
+    <script src="~/assets/plugins/colorpicker/pickr.es5.min.js"></script>
 
     }
