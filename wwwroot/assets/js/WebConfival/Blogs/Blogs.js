@@ -161,6 +161,9 @@ function Publicar() {
         processData: false,
         success: function () {
             console.log("ok");
+        },
+        error: function () {
+            console.log("fallo");
         }
     });
 

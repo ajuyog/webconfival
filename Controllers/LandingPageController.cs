@@ -122,6 +122,28 @@ public class LandingPageController : Controller
 
             #endregion
 
+            #region TipoActor 
+            var requestTipoActor = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/TipoActor");
+            requestTipoActor.Headers.Add("Authorization", "Bearer " + token);
+            var responseTipoActor = await client.SendAsync(requestTipoActor);
+            if (responseTipoActor.IsSuccessStatusCode)
+            {
+                var responseStream = await responseTipoActor.Content.ReadAsStringAsync();
+                var lstActores = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStream);
+                foreach (var item in lstActores)
+                {
+                    item.Nombre = item.Nombre.ToLower();
+                    var mayus = item.Nombre[0].ToString().ToUpper();
+                    item.Nombre = mayus + item.Nombre.Substring(1, item.Nombre.Length - 1);
+                }
+                ViewBag.TipoActores = lstActores;
+            }
+            else
+            {
+                ViewBag.TipoActores = new List<DropDownListDTO>();
+            }
+            #endregion
+
             #region Banner Principal
             var requestBannerSuperior = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/archivo/empresaProyectoArchivoSubCategoria?EmpresaId=" + _configuration.GetSection("LandingPage:BannerInicio:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:BannerInicio:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:BannerInicio:Agrupacion").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:BannerInicio:SubCategoria:Superior").Value + "&OrigenId=0");
             requestBannerSuperior.Headers.Add("Authorization", "Bearer " + token);
@@ -146,28 +168,6 @@ public class LandingPageController : Controller
                     UrlSoporte = "https://storageaccountisaac.blob.core.windows.net/apivaluezdocumental/1/2/bannerprincipal/2/1/0/acc366a7-1d50-4576-b783-89217db748e9"
                 };
                 model.Add(bannerDefault);
-            }
-            #endregion
-
-            #region TipoActor
-            var requestTipoActor = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/TipoActor");
-            requestTipoActor.Headers.Add("Authorization", "Bearer " + token);
-            var responseTipoActor = await client.SendAsync(requestTipoActor);
-            if (responseTipoActor.IsSuccessStatusCode)
-            {
-                var responseStream = await responseTipoActor.Content.ReadAsStringAsync();
-                var lstActores = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStream);
-                foreach (var item in lstActores)
-                {
-                    item.Nombre = item.Nombre.ToLower();
-                    var mayus = item.Nombre[0].ToString().ToUpper();
-                    item.Nombre = mayus + item.Nombre.Substring(1, item.Nombre.Length - 1);
-                }
-                ViewBag.TipoActores = lstActores;
-            }
-            else
-            {
-                ViewBag.TipoActores = new List<DropDownListDTO>();
             }
             #endregion
 

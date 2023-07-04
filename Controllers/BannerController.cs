@@ -73,7 +73,8 @@ namespace confinancia.Controllers
 			var response = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:BannerInicio:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:BannerInicio:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:BannerInicio:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:BannerInicio:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:BannerInicio:SubCategoria:Superior").Value, form);
 			if (response.IsSuccessStatusCode)
 			{
-				return true;
+                var responseStream = await response.Content.ReadAsStringAsync();
+                return true;
 			}
 			else
 			{
@@ -101,7 +102,8 @@ namespace confinancia.Controllers
 			var response = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:BannerContacto:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:BannerContacto:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:BannerContacto:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:BannerContacto:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:BannerContacto:SubCategoria:Superior").Value, form);
 			if (response.IsSuccessStatusCode)
 			{
-				return true;
+                var responseStream = await response.Content.ReadAsStringAsync();
+                return true;
 			}
 			else
 			{

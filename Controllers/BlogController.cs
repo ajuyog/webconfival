@@ -13,9 +13,12 @@ public class BlogController : Controller
 {
     #region CONSTRUCTOR
     private readonly IGetToken _getToken;
-    public BlogController(IGetToken getToken)
+    private readonly IConfiguration _configuration;
+
+    public BlogController(IGetToken getToken, IConfiguration configuration)
     {
         _getToken = getToken;
+        _configuration = configuration;
     }
 	#endregion
 
@@ -147,59 +150,72 @@ public class BlogController : Controller
 	[HttpPost]
 	public async Task<bool> Publicar(string titulo, IFormFile imagenPrincipal, string contenido, string categoria, List<string> lstCategorias, List<IFormFile> lstGaleria)
 	{
-		var array = lstCategorias.FirstOrDefault().Split(",");
-        var categoriaPrincipal = Convert.ToInt32(categoria.Replace('"', ' ').Trim());
-		int[] numeros = new int[1];
-		numeros[numeros.Length - 1] = categoriaPrincipal;
-		var obj = new BlogDTO();
-		if (lstCategorias[0] == "[]")
-		{
-			obj.Titulo = titulo;
-			obj.Contenido = contenido;
-			obj.Estado = false;
-			obj.Publicacion = DateTime.Now;
-			obj.Categoriass = new List<CategoriaDTO>();
-            obj.Categoriass.Add(new CategoriaDTO() 
-			{ 
-				Id = Convert.ToInt32(categoria)
-			});
-		}
-		else
-		{
-			foreach (var item in array)
-			{
-				var valor = Convert.ToInt32(item.Replace('[', ' ').Replace(']', ' ').Replace('"', ' ').Trim());
-				Array.Resize(ref numeros, numeros.Length + 1);
-				numeros[numeros.Length -1] = valor;
-			}
-			obj.Titulo = titulo;
-			obj.Contenido = contenido;
-            obj.Estado = false;
-            obj.Publicacion = DateTime.Now;
-            obj.Categoriass = new List<CategoriaDTO>();
-            var count = 0;
-            foreach (var item in numeros)
+        var inicio = "[";
+        var fin = "]";
+        var categoriasPost = "";
+        var lst = lstCategorias.FirstOrDefault().Split(",");
+        if (lstCategorias.Count == 0)
+        {
+            categoriasPost = inicio + categoria + fin;
+        }
+        else
+        {
+            foreach (var item in lst)
             {
-				obj.Categoriass.Add(new CategoriaDTO() { Id = numeros[count] });
-				count++;
+                var valor = Convert.ToInt32(item.Replace('[', ' ').Replace(']', ' ').Replace('"', ' ').Trim());
+                categoriasPost = categoriasPost + valor + ",";
             }
-		}
-		var json = JsonConvert.SerializeObject(obj);
-
-
+            categoriasPost = categoriasPost.Remove(categoriasPost.Length - 1);
+            categoriasPost = inicio + categoriasPost + fin;
+        }
         var token = await _getToken.GetTokenV();
         var client = new HttpClient();
         var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/blog/");
         request.Headers.Add("Authorization", "Bearer " + token);
         var content = new MultipartFormDataContent();
-		content.Add(new StringContent(json));
-        //content.Add(new StringContent("\"hola\""), "Titulo");
-        //content.Add(new StringContent("\"contenido\""), "Contenido");
-        //content.Add(new StringContent("[2, 1]"), "CategoriaId");
+        content.Add(new StringContent(titulo), "Titulo");
+        content.Add(new StringContent(contenido), "Contenido");
+        content.Add(new StringContent(categoriasPost), "CategoriaId");
         request.Content = content;
         var response = await client.SendAsync(request);
+
         if (response.IsSuccessStatusCode)
         {
+            //var responseStream = await response.Content.ReadAsStringAsync();
+            //MultipartFormDataContent form = new MultipartFormDataContent();
+            //form.Add(new StringContent("0" ), "codArchivo");
+            //Stream streamPDF = imagenPrincipal.OpenReadStream();
+            //if (streamPDF != null)
+            //{
+            //    var contentPDF = new StreamContent(streamPDF);
+            //    contentPDF.Headers.ContentType = MediaTypeHeaderValue.Parse(imagenPrincipal.ContentType);
+            //    form.Add(contentPDF, "UrlSoporte", imagenPrincipal.Name);
+            //}
+            //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            //var responseImgPrincipal = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:Blogs:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:Blogs:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:Blogs:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:Blogs:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:Blogs:SubCategoria:ImagenTop").Value, form);
+            //if (responseImgPrincipal.IsSuccessStatusCode)
+            //{
+            //    var responseStreamImgPrincipal = await response.Content.ReadAsStringAsync();
+            //    if(lstGaleria.Count > 0)
+            //    {
+            //        foreach (var item in lstGaleria)
+            //        {
+            //            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            //            var responseGaleria = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:Blogs:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:Blogs:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:Blogs:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:Blogs:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:Blogs:SubCategoria:ImagenTop").Value, form);
+            //            if (responseImgPrincipal.IsSuccessStatusCode)
+            //        }
+            //    }
+
+            //    return true;
+            //}
+            //else
+            //{
+            //    var responseStreamError = await response.Content.ReadAsStringAsync();
+            //    return false;
+            //}
+
+
+
             return true;
         }
         else
