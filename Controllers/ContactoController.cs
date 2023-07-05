@@ -36,7 +36,7 @@ public class ContactoController : Controller
 		{
 			#region Banner Principal
 			var client = new HttpClient();
-			var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/archivo/empresaProyectoArchivoSubCategoria?EmpresaId=" + _configuration.GetSection("LandingPage:BannerContacto:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:BannerContacto:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:BannerContacto:Agrupacion").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:BannerContacto:SubCategoria:Superior").Value + "&OrigenId=0");
+			var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/archivo/empresaProyectoArchivoSubCategoria?Pagina=1&RegistrosPorPagina=100&EmpresaId=" + _configuration.GetSection("LandingPage:BannerContacto:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:BannerContacto:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:BannerContacto:Agrupacion").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:BannerContacto:SubCategoria:Superior").Value + "&OrigenId=0");
 			request.Headers.Add("Authorization", "Bearer " + token);
 			var response = await client.SendAsync(request);
 			if (response.IsSuccessStatusCode)
