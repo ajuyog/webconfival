@@ -6,7 +6,15 @@ namespace frontend.Controllers
 {
 	public class HomeController : Controller
 	{
-		[Authorize]
+        #region CONSTRUCTOR
+        private readonly IConfiguration _configuration;
+        public HomeController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        #endregion
+
+        [Authorize]
 		public IActionResult Index(string mensaje = null)
 		{
 			if(mensaje != null) { ViewData["ErrorTokenGraph"] = mensaje; }
@@ -16,6 +24,7 @@ namespace frontend.Controllers
 				Apellido = User.Identities.First().Claims.ElementAtOrDefault(3).Value,
 				Correo = User.Identities.First().Claims.ElementAtOrDefault(4).Value
 			};
+			ViewBag.Redirect = _configuration.GetSection("LandingPage:RedirectGraph:https").Value;
 
 			return View(model);
 		}

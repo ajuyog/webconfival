@@ -23,14 +23,11 @@ namespace frontend.Controllers
 		#region CONSTRUCTOR
 		private readonly IConfiguration _configuration;
 		private readonly IGetToken _getToken;
-        private readonly ISendMail _sendMail;
         private readonly IMail _mail;
-
         public OportunidadController(IConfiguration configuration, IGetToken getToken, ISendMail sendMail, IMail mail )
 		{
 			_configuration = configuration;
 			_getToken = getToken;
-            _sendMail = sendMail;
             _mail = mail;
         }
 		#endregion
@@ -40,94 +37,94 @@ namespace frontend.Controllers
 			return View();
 		}
 
-		//[HttpGet]
-		//public async Task<bool> SendOTP(string entrada)
-		//{
-		//	var pattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-		//	Regex validMail = new Regex(pattern);
-
-		//	var token = _getToken.GetTokenV();
-		//	if (token.Result == "")
-		//	{
-		//		return false;
-		//	}
-		//	if (token.Result.Length == 177)
-		//	{
-		//		var client = new HttpClient();
-		//		var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/otp/enviar?longitud=" + _configuration.GetSection("OTP:Longitud").Value + "&caducidadSg=" + _configuration.GetSection("OTP:Caducidad").Value);
-		//		request.Headers.Add("Authorization", "Bearer " + token.Result);
-		//		var obj = new EnvioOTPDTO()
-		//		{
-		//			FuenteOTPId = validMail.IsMatch(entrada) == true ? Convert.ToInt32(_configuration.GetSection("OTP:FuenteOTPMail").Value) : Convert.ToInt32(_configuration.GetSection("OTP:FuenteOTPSMS").Value),
-		//			EmpresaId = Convert.ToInt32(_configuration.GetSection("OTP:EmpresaId").Value),
-		//			Entrada = validMail.IsMatch(entrada) == true ? entrada : "57" + entrada,
-		//		};
-		//		var json = JsonConvert.SerializeObject(obj);
-		//		var content = new StringContent(json, null, "application/json");
-		//		request.Content = content;
-		//		var response = await client.SendAsync(request);
-		//		if (response.IsSuccessStatusCode)
-		//		{
-		//			return true;
-		//		}
-		//		else
-		//		{
-		//			return false;
-		//		}
-		//	}
-		//	return false;
-		//}
-
 		[HttpGet]
-		public bool SendOTP(string entrada)
+		public async Task<bool> SendOTP(string entrada)
 		{
-			return true;
+			var pattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+			Regex validMail = new Regex(pattern);
+
+			var token = _getToken.GetTokenV();
+			if (token.Result == "")
+			{
+				return false;
+			}
+			if (token.Result.Length == 177)
+			{
+				var client = new HttpClient();
+				var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/otp/enviar?longitud=" + _configuration.GetSection("OTP:Longitud").Value + "&caducidadSg=" + _configuration.GetSection("OTP:Caducidad").Value);
+				request.Headers.Add("Authorization", "Bearer " + token.Result);
+				var obj = new EnvioOTPDTO()
+				{
+					FuenteOTPId = validMail.IsMatch(entrada) == true ? Convert.ToInt32(_configuration.GetSection("OTP:FuenteOTPMail").Value) : Convert.ToInt32(_configuration.GetSection("OTP:FuenteOTPSMS").Value),
+					EmpresaId = Convert.ToInt32(_configuration.GetSection("OTP:EmpresaId").Value),
+					Entrada = validMail.IsMatch(entrada) == true ? entrada : "57" + entrada,
+				};
+				var json = JsonConvert.SerializeObject(obj);
+				var content = new StringContent(json, null, "application/json");
+				request.Content = content;
+				var response = await client.SendAsync(request);
+				if (response.IsSuccessStatusCode)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			return false;
 		}
 
 		//[HttpGet]
-		//public async Task<string> ValidOTP(string llave, string entrada)
+		//public bool SendOTP(string entrada)
 		//{
-		//	var pattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-		//	Regex validMail = new Regex(pattern);
-		//	var token = _getToken.GetTokenV();
-		//	if (token.Result == "")
-		//	{
-		//		return "error";
-		//	}
-		//	if (token.Result.Length == 177)
-		//	{
-		//		var client = new HttpClient();
-		//		var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/otp/validatemailotp");
-		//		request.Headers.Add("Authorization", "Bearer " + token.Result);
-		//		var obj = new ValidatOTPDTO()
-		//		{
-		//			FuenteOTPId = validMail.IsMatch(entrada) == true ? Convert.ToInt32(_configuration.GetSection("OTP:FuenteOTPMail").Value) : Convert.ToInt32(_configuration.GetSection("OTP:FuenteOTPSMS").Value),
-		//			EmpresaId = Convert.ToInt32(_configuration.GetSection("OTP:EmpresaId").Value),
-		//			Entrada = validMail.IsMatch(entrada) == true ? entrada : "57" + entrada,
-		//			Llave = llave
-		//		};
-		//		var json = JsonConvert.SerializeObject(obj);
-		//		var content = new StringContent(json, null, "application/json");
-		//		request.Content = content;
-		//		var response = await client.SendAsync(request);
-		//		if (response.IsSuccessStatusCode)
-		//		{
-		//			return "success";
-		//		}
-		//		else
-		//		{
-		//			var responseStream = await response.Content.ReadAsStringAsync();
-		//			return responseStream;
-		//		}
-		//	}
-		//	return "error";
+		//	return true;
 		//}
 
 		[HttpGet]
-		public string ValidOTP(string llave, string entrada)
+		public async Task<string> ValidOTP(string llave, string entrada)
 		{
-			return "success";
+			var pattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+			Regex validMail = new Regex(pattern);
+			var token = _getToken.GetTokenV();
+			if (token.Result == "")
+			{
+				return "error";
+			}
+			if (token.Result.Length == 177)
+			{
+				var client = new HttpClient();
+				var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/otp/validatemailotp");
+				request.Headers.Add("Authorization", "Bearer " + token.Result);
+				var obj = new ValidatOTPDTO()
+				{
+					FuenteOTPId = validMail.IsMatch(entrada) == true ? Convert.ToInt32(_configuration.GetSection("OTP:FuenteOTPMail").Value) : Convert.ToInt32(_configuration.GetSection("OTP:FuenteOTPSMS").Value),
+					EmpresaId = Convert.ToInt32(_configuration.GetSection("OTP:EmpresaId").Value),
+					Entrada = validMail.IsMatch(entrada) == true ? entrada : "57" + entrada,
+					Llave = llave
+				};
+				var json = JsonConvert.SerializeObject(obj);
+				var content = new StringContent(json, null, "application/json");
+				request.Content = content;
+				var response = await client.SendAsync(request);
+				if (response.IsSuccessStatusCode)
+				{
+					return "success";
+				}
+				else
+				{
+					var responseStream = await response.Content.ReadAsStringAsync();
+					return responseStream;
+				}
+			}
+			return "error";
 		}
+
+		//[HttpGet]
+		//public string ValidOTP(string llave, string entrada)
+		//{
+		//	return "success";
+		//}
 
 		[HttpGet]
 		public async Task<ResultVerificaDTO> RegistraduriaCol(string documento, string nombre, string apellido, string tipoDocumento)
