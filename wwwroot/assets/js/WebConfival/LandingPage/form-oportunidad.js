@@ -158,6 +158,12 @@ function ValidarDocumento() {
     var apellidos = $("#apellidos-lead").val();
     var fExpedicion = $("#fecha-expedicion-user").val();
     var fnacimiento = $("#fecha-nacimiento-user").val();
+    if (fnacimiento == '')
+    {
+        fnacimiento = new Date();
+    }
+    var edad = calcularEdad(fnacimiento);
+
 
     // -- CONTROL DE INVALID FEEDBACK -- //
     if (numeroDocumento.length == 0) {
@@ -167,6 +173,8 @@ function ValidarDocumento() {
     }
     if (tipoDocumentoFront <= 0) {
         $("#invalid-tipo-documento").css("display", "block");
+    } else {
+        $("#invalid-tipo-documento").css("display", "none");
     }
     if (tipoDocumentoFront > 0) {
         $("#invalid-tipo-documento").css("display", "none");
@@ -181,9 +189,15 @@ function ValidarDocumento() {
     } else {
         $("#invalid-apellidos-lead").css("display", "none");
     }
+    if (edad < 18) {
+        $("#invalid-fecha-nacimiento-user").css("display", "block");
+    } else {
+        $("#invalid-fecha-nacimiento-user").css("display", "none");
+    }
+
     
     // -- CONSUMO API REGISTRADURIA -- //
-    if (numeroDocumento.length > 0 && tipoDocumentoFront.length > 0 && nombres.length > 0 && apellidos.length > 0) {
+    if (numeroDocumento.length > 0 && tipoDocumentoFront.length > 0 && nombres.length > 0 && apellidos.length > 0 && edad >= 18) {
         // lOADER
         $("#loader3").removeClass("hide-info");
         $("#documento-hide").addClass("hide-info");
@@ -259,6 +273,17 @@ function ValidarDocumento() {
         });
     }
 };
+
+function calcularEdad(fecha_nacimiento) {
+    var hoy = new Date();
+    var cumpleanos = new Date(fecha_nacimiento);
+    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    var m = hoy.getMonth() - cumpleanos.getMonth();
+    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
+    }
+    return edad;
+}
 function Cancel() {
     location.reload();
 };
@@ -421,6 +446,7 @@ function LeadOportunidad() {
 };
 function ValidarLeadOportunidad() {
     var count = 0;
+    var demandante = $("#invalid-feedback-demandante").val();
     var tipoFallo = $("#fallo").val();
     var tipoRegimen = $("#tipo-regimen").val();
     var medioContro = $("#medio-control").val();
@@ -438,7 +464,6 @@ function ValidarLeadOportunidad() {
     } else {
         $("#invalid-feedback-tipo-actores").css("display", "none");
         actor = selected.id;
-        console.log(actor);
     }
     if (tipoFallo == null) {
         $("#invalid-feedback-tipo-fallo").css("display", "block");
@@ -446,35 +471,30 @@ function ValidarLeadOportunidad() {
     } else {
         $("#invalid-feedback-tipo-fallo").css("display", "none");
     }
-
     if (tipoRegimen == null) {
         $("#invalid-feedback-tipo-regimen").css("display", "block");
         count = count + 1;
     } else {
         $("#invalid-feedback-tipo-regimen").css("display", "none");
     }
-
     if (medioContro == null) {
         $("#invalid-feedback-medio-control").css("display", "block");
         count = count + 1;
     } else {
         $("#invalid-feedback-medio-control").css("display", "none");
     }
-
     if (entidad == null) {
         $("#invalid-feedback-entidad-pagaduria").css("display", "block");
         count = count + 1;
     } else {
         $("#invalid-feedback-entidad-pagaduria").css("display", "none");
     }
-
     if (tipoCorporacion == null) {
         $("#invalid-feedback-tipo-corporacion").css("display", "block");
         count = count + 1;
     } else {
         $("#invalid-feedback-tipo-corporacion").css("display", "none");
     }
-
     if (corporacion == null) {
         $("#invalid-feedback-corporacion").css("display", "block");
         count = count + 1;
@@ -489,8 +509,15 @@ function ValidarLeadOportunidad() {
     }
     if (fechaEjecutoria.length == 0) {
         $("#invalid-f-ejecutoria").css("display", "block");
+        count = count + 1;
     } else {
         $("#invalid-f-ejecutoria").css("display", "none");
+    }
+    if (demandante.length == 0) {
+        $("#invalid-feedback-demandante").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-feedback-demandante").css("display", "none");
     }
 
     return count;
