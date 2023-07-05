@@ -517,12 +517,7 @@ function Lead() {
                 } else {
                     if (result == "error") {
                         $("#loader4").addClass("hide-info");
-                        notif({
-                            msg: 'Algo malo ha pasado, vuelve a intentar',
-                            type: "danger",
-                            multiline: true,
-                            position: "center"
-                        });
+                        $("#form-oportunidad-error-api").removeClass("hide-info");
                     }
                 }
             }

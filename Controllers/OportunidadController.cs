@@ -1,4 +1,5 @@
-﻿using confinancia.Models;
+﻿using Azure;
+using confinancia.Models;
 using confinancia.Models.JsonDTO;
 using confinancia.Services.Graph;
 using confinancia.Services.Token;
@@ -6,8 +7,11 @@ using confinancia.Services.Utilidaddes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileSystemGlobbing.Internal;
+using Microsoft.Graph.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -168,9 +172,8 @@ namespace confinancia.Controllers
 		[HttpPost]
 		public async Task<string> SaveForm()
 		{
-			var token = await _getToken.GetTokenV();
+            var result = "error";
 			var formOportunidad = await HttpContext.Request.ReadFormAsync();
-
 			var persona = new PersonaDTO()
 			{
 				nombres = formOportunidad["nombres-ok"],
@@ -199,93 +202,107 @@ namespace confinancia.Controllers
 			};
 			var primeraInstancia = formOportunidad.Files["primera-instancia-file"];
 			var segundaInstancia = formOportunidad.Files["segunda-instancia-file"];
-			var LeadoportunidadId = 0;
-			var resultJS = "error";
-			var httpClient = new HttpClient();
-			httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-			var response = await httpClient.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadPersona", persona);
+
+			var createPerson = await CreatePerson(persona);
+			if (createPerson == null) { return result; }
+
+            leadOportunidad.leadPersonaId = createPerson.id;
+            var createLead = await CreateLead(leadOportunidad);
+			if (createLead == "error") { return result; }
+            if (createLead == "existe") 
+			{
+                _mail.SendError(persona, leadOportunidad);
+				result = "existing";
+                return result; 
+			}
+            if (primeraInstancia != null)
+            {
+                var instancia = "primeraInstancia";
+                var createPrimeraInstancia = await CreateInstancia(primeraInstancia, Convert.ToInt32(createLead), instancia);
+                if (!createPrimeraInstancia) { return result; }
+            }
+            if (segundaInstancia != null)
+            {
+                var instancia = "segundaInstancia";
+                var createSegundaInstancia = await CreateInstancia(primeraInstancia, Convert.ToInt32(createLead), instancia);
+                if (!createSegundaInstancia) { return result; }
+            }
+            _mail.SendSuccess(persona, leadOportunidad);
+            result = "success";
+			return result;
+		}
+
+		[HttpPost]
+		public async Task<PersonaDTO> CreatePerson(PersonaDTO obj)
+		{
+			var result = new PersonaDTO();
+            var token = await _getToken.GetTokenV();
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            var response = await client.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadPersona", obj);
+			if (response.IsSuccessStatusCode)
+			{
+                var responseStream = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<PersonaDTO>(responseStream);
+            }
+			return result;
+        }
+
+		[HttpPost]
+		public async Task<string> CreateLead(OportunidadDTO obj)
+		{
+			var token = await _getToken.GetTokenV();
+			var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            var response = await client.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadOportunidad", obj);
 			if (response.IsSuccessStatusCode)
 			{
 				var responseStream = await response.Content.ReadAsStringAsync();
-				var lead = JsonConvert.DeserializeObject<PersonaDTO>(responseStream);
-				leadOportunidad.leadPersonaId = lead.id;
-				var response2 = await httpClient.PostAsJsonAsync("https://api2valuezbpm.azurewebsites.net/api/leadOportunidad", leadOportunidad);
-				if (response2.IsSuccessStatusCode)
-				{
-					var responseStream3 = await response2.Content.ReadAsStringAsync();
-					var resultLead = JsonConvert.DeserializeObject<OportunidadDTO>(responseStream3);
-					LeadoportunidadId = (int)resultLead.id;
-                    if (LeadoportunidadId > 0)
-					{
-						leadOportunidad.id = (int)resultLead.id;
-						if(primeraInstancia != null)
-						{
-							MultipartFormDataContent formDataPI = new MultipartFormDataContent();
-							formDataPI.Add(new StringContent(LeadoportunidadId.ToString()), "codArchivo");
-							Stream streamPDF = primeraInstancia.OpenReadStream();
-							if (streamPDF != null)
-							{
-								var contentPDF = new StreamContent(streamPDF);
-								contentPDF.Headers.ContentType = MediaTypeHeaderValue.Parse(primeraInstancia.ContentType);
-								formDataPI.Add(contentPDF, "UrlSoporte", primeraInstancia.Name);
-							}
-							httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-							var responseArchivoPI = await httpClient.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:CotizadorLead:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:CotizadorLead:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:SubCategoria:PrimeraInstancia").Value, formDataPI);
-							if (responseArchivoPI.IsSuccessStatusCode)
-							{
-								resultJS = "success";
-							}
-							else
-							{
-								var responseStreamError = await response.Content.ReadAsStringAsync();
-                                resultJS = "error";
-							}
-						}
-						if(segundaInstancia != null)
-						{
-							MultipartFormDataContent formDataSI = new MultipartFormDataContent();
-							formDataSI.Add(new StringContent(LeadoportunidadId.ToString()), "codArchivo");
-							Stream streamPDF = segundaInstancia.OpenReadStream();
-							if (streamPDF != null)
-							{
-								var contentPDF = new StreamContent(streamPDF);
-								contentPDF.Headers.ContentType = MediaTypeHeaderValue.Parse(segundaInstancia.ContentType);
-								formDataSI.Add(contentPDF, "UrlSoporte", segundaInstancia.Name);
-							}
-							httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-							var responseArchivoSI = await httpClient.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:CotizadorLead:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:CotizadorLead:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:SubCategoria:SegundaInstancia").Value, formDataSI);
-							if (responseArchivoSI.IsSuccessStatusCode)
-							{
-								resultJS = "success";
-							}
-							else
-							{
-								var responseStreamError = await response.Content.ReadAsStringAsync();
-                                resultJS = "error";
-
-                            }
-                        }
-					}
-                    resultJS = "success";
-                    _mail.SendSuccess(persona, leadOportunidad);
-                }
-                else
-				{
-					var responseStream5 = await response2.Content.ReadAsStringAsync();
-                    if (responseStream5.Contains("Ya existe un lead con numero de radicado")) { 
-						resultJS = "existing";
-						_mail.SendError(persona, leadOportunidad);
-					}
-				}
+				var result = JsonConvert.DeserializeObject<OportunidadDTO>(responseStream);
+				return result.id.ToString();
 			}
-			else
-			{
-				var responseStream2 = await response.Content.ReadAsStringAsync();
-                resultJS = "error";
+            else
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                if (responseStream.Contains("Ya existe un lead con numero de radicado"))
+                {
+					return "existe";
+				}
+				else
+				{
+					return "error";
+				}
             }
-			return resultJS;
 		}
 
-
+		[HttpPost]
+		public async Task<bool> CreateInstancia(IFormFile obj, int id, string instancia)
+		{
+            var client = new HttpClient();
+            var token = await _getToken.GetTokenV();
+            MultipartFormDataContent formData = new MultipartFormDataContent();
+            formData.Add(new StringContent(id.ToString()), "codArchivo");
+            Stream streamPDF = obj.OpenReadStream();
+            if (streamPDF != null)
+            {
+                var contentPDF = new StreamContent(streamPDF);
+                contentPDF.Headers.ContentType = MediaTypeHeaderValue.Parse(obj.ContentType);
+                formData.Add(contentPDF, "UrlSoporte", obj.Name);
+            }
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+			var httpString = "";
+			if(instancia == "primeraInstancia") { httpString = _configuration.GetSection("LandingPage:CotizadorLead:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:CotizadorLead:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:CotizadorLead:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:SubCategoria:PrimeraInstancia").Value; };
+			if(instancia == "segundaInstancia") { httpString = _configuration.GetSection("LandingPage:CotizadorLead:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:CotizadorLead:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:CotizadorLead:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:SubCategoria:SegundaInstancia").Value; };
+            var response = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + httpString, formData);
+            if (response.IsSuccessStatusCode)
+            {
+				return true;
+            }
+            else
+            {
+                var responseStreamError = await response.Content.ReadAsStringAsync();
+                return false;
+            }
+        }
     }
 }
