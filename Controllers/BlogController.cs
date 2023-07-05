@@ -1,3 +1,4 @@
+using Azure;
 using frontend.Models;
 using frontend.Models.JsonDTO;
 using frontend.Services.Token;
@@ -6,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Reflection.Metadata;
+using Tavis.UriTemplates;
 
 namespace noa.Controllers;
 
@@ -150,11 +153,36 @@ public class BlogController : Controller
 	[HttpPost]
 	public async Task<bool> Publicar(string titulo, IFormFile imagenPrincipal, string contenido, string categoria, List<string> lstCategorias, List<IFormFile> lstGaleria)
 	{
+        var result = false;
+        var Categorias = Order(categoria, lstCategorias);
+        var blog = new CreateBlogDTO()
+        {
+            Titulo = titulo,
+            Contenido = contenido,
+            Categorias = Categorias
+        };
+        var createBlog = await CreateBlog(blog);
+        if (createBlog == null) { return result; }
+
+        var createImgPrincipal = await CreateImgPrincipal(imagenPrincipal, createBlog.Id);
+        if (!createImgPrincipal) { return result; }
+
+        var createGaleria = await CreateGaleria(lstGaleria, createBlog.Id);
+        if(!createGaleria) { return result; }
+
+        result = true;
+        return result;
+    }
+
+
+    [HttpGet]
+    public string Order(string categoria, List<string> lstCategorias)
+    {
         var inicio = "[";
         var fin = "]";
         var categoriasPost = "";
         var lst = lstCategorias.FirstOrDefault().Split(",");
-        if (lstCategorias.Count == 0)
+        if (lst[0] == "[]")
         {
             categoriasPost = inicio + categoria + fin;
         }
@@ -168,60 +196,95 @@ public class BlogController : Controller
             categoriasPost = categoriasPost.Remove(categoriasPost.Length - 1);
             categoriasPost = inicio + categoriasPost + fin;
         }
+        return categoriasPost;
+    }
+
+    [HttpPost]
+    public async Task<BlogDTO> CreateBlog(CreateBlogDTO obj)
+    {
+        var blog = new BlogDTO();
         var token = await _getToken.GetTokenV();
         var client = new HttpClient();
         var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/blog/");
         request.Headers.Add("Authorization", "Bearer " + token);
         var content = new MultipartFormDataContent();
-        content.Add(new StringContent(titulo), "Titulo");
-        content.Add(new StringContent(contenido), "Contenido");
-        content.Add(new StringContent(categoriasPost), "CategoriaId");
+        content.Add(new StringContent(obj.Titulo), "Titulo");
+        content.Add(new StringContent(obj.Contenido), "Contenido");
+        content.Add(new StringContent(obj.Categorias), "CategoriaId");
         request.Content = content;
         var response = await client.SendAsync(request);
+        if (response.IsSuccessStatusCode) 
+        {
+            var responseStream = await response.Content.ReadAsStringAsync();
+            blog = JsonConvert.DeserializeObject<BlogDTO>(responseStream);
+        }
+        return blog;
+    }
 
+    [HttpGet]
+    public async Task<bool> CreateImgPrincipal(IFormFile img, int id)
+    {
+        var token = await _getToken.GetTokenV();
+        var client = new HttpClient();
+        MultipartFormDataContent form = new MultipartFormDataContent();
+        form.Add(new StringContent(id.ToString()), "codArchivo");
+        Stream streamPDF = img.OpenReadStream();
+        if (streamPDF != null)
+        {
+            var contentPDF = new StreamContent(streamPDF);
+            contentPDF.Headers.ContentType = MediaTypeHeaderValue.Parse(img.ContentType);
+            form.Add(contentPDF, "UrlSoporte", img.Name);
+        }
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        var response = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:Blogs:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:Blogs:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:Blogs:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:Blogs:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:Blogs:SubCategoria:ImagenTop").Value, form);
         if (response.IsSuccessStatusCode)
         {
-            //var responseStream = await response.Content.ReadAsStringAsync();
-            //MultipartFormDataContent form = new MultipartFormDataContent();
-            //form.Add(new StringContent("0" ), "codArchivo");
-            //Stream streamPDF = imagenPrincipal.OpenReadStream();
-            //if (streamPDF != null)
-            //{
-            //    var contentPDF = new StreamContent(streamPDF);
-            //    contentPDF.Headers.ContentType = MediaTypeHeaderValue.Parse(imagenPrincipal.ContentType);
-            //    form.Add(contentPDF, "UrlSoporte", imagenPrincipal.Name);
-            //}
-            //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            //var responseImgPrincipal = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:Blogs:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:Blogs:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:Blogs:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:Blogs:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:Blogs:SubCategoria:ImagenTop").Value, form);
-            //if (responseImgPrincipal.IsSuccessStatusCode)
-            //{
-            //    var responseStreamImgPrincipal = await response.Content.ReadAsStringAsync();
-            //    if(lstGaleria.Count > 0)
-            //    {
-            //        foreach (var item in lstGaleria)
-            //        {
-            //            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            //            var responseGaleria = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:Blogs:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:Blogs:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:Blogs:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:Blogs:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:Blogs:SubCategoria:ImagenTop").Value, form);
-            //            if (responseImgPrincipal.IsSuccessStatusCode)
-            //        }
-            //    }
-
-            //    return true;
-            //}
-            //else
-            //{
-            //    var responseStreamError = await response.Content.ReadAsStringAsync();
-            //    return false;
-            //}
-
-
-
             return true;
         }
         else
         {
-            var responseStream = await response.Content.ReadAsStringAsync();
+            var responseStreamError = await response.Content.ReadAsStringAsync();
             return false;
         }
-	}
+    }
+
+    [HttpGet]
+    public async Task<bool> CreateGaleria(List<IFormFile> files, int id)
+    {
+        var result = false;
+        foreach (var item in files)
+        {
+            var create = await CreateItemGaleria(item, id);
+            if (!create) { return result; }
+        }
+        result = true;
+        return result;
+    }
+
+    [HttpGet]
+    public async Task<bool> CreateItemGaleria(IFormFile img, int id)
+    {
+        var token = await _getToken.GetTokenV();
+        var client = new HttpClient();
+        MultipartFormDataContent form = new MultipartFormDataContent();
+        form.Add(new StringContent(id.ToString()), "codArchivo");
+        Stream streamPDF = img.OpenReadStream();
+        if (streamPDF != null)
+        {
+            var contentPDF = new StreamContent(streamPDF);
+            contentPDF.Headers.ContentType = MediaTypeHeaderValue.Parse(img.ContentType);
+            form.Add(contentPDF, "UrlSoporte", img.Name);
+        }
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        var response = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + _configuration.GetSection("LandingPage:Blogs:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:Blogs:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:Blogs:Agrupacion").Value + "&ArchivoCategoriaId=" + _configuration.GetSection("LandingPage:Blogs:Categoria").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:Blogs:SubCategoria:Galeria").Value, form);
+        if (response.IsSuccessStatusCode)
+        {
+            return true;
+        }
+        else
+        {
+            var responseStreamError = await response.Content.ReadAsStringAsync();
+            return false;
+        }
+    }
 }

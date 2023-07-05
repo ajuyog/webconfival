@@ -446,7 +446,7 @@ function LeadOportunidad() {
 };
 function ValidarLeadOportunidad() {
     var count = 0;
-    var demandante = $("#invalid-feedback-demandante").val();
+    var demandante = $("#demandante").val();
     var tipoFallo = $("#fallo").val();
     var tipoRegimen = $("#tipo-regimen").val();
     var medioContro = $("#medio-control").val();

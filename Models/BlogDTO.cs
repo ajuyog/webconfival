@@ -1,5 +1,4 @@
-﻿
-namespace frontend.Models
+﻿namespace frontend.Models
 {
 	public class BlogDTO
 	{

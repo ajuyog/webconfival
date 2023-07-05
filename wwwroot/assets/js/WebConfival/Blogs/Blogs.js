@@ -160,10 +160,12 @@ function Publicar() {
         contentType: false,//stop jquery auto convert form type to default x-www-form-urlencoded
         processData: false,
         success: function () {
-            console.log("ok");
+            $("#visualizador-campos").addClass("hide-info");
+            $("#visualizar-blog-principal").addClass("hide-info");
+            $("#visualizar-blog-confirmar").removeClass("hide-info");
         },
         error: function () {
-            console.log("fallo");
+            $("#api-error").modal('show');
         }
     });
 
