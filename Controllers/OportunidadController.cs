@@ -1,9 +1,9 @@
 ﻿using Azure;
-using confinancia.Models;
-using confinancia.Models.JsonDTO;
-using confinancia.Services.Graph;
-using confinancia.Services.Token;
-using confinancia.Services.Utilidaddes;
+using frontend.Models;
+using frontend.Models.JsonDTO;
+using frontend.Services.Graph;
+using frontend.Services.Token;
+using frontend.Services.Utilidaddes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileSystemGlobbing.Internal;
@@ -16,7 +16,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace confinancia.Controllers
+namespace frontend.Controllers
 {
 	public class OportunidadController : Controller
 	{

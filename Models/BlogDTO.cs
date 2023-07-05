@@ -1,5 +1,5 @@
 ﻿
-namespace confinancia.Models
+namespace frontend.Models
 {
 	public class BlogDTO
 	{

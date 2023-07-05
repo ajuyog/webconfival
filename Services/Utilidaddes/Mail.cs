@@ -1,10 +1,10 @@
-﻿using confinancia.Models;
+﻿using frontend.Models;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Kiota.Abstractions;
 using MimeKit;
 
-namespace confinancia.Services.Utilidaddes
+namespace frontend.Services.Utilidaddes
 {
     public interface IMail
     {

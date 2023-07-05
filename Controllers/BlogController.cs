@@ -1,6 +1,6 @@
-using confinancia.Models;
-using confinancia.Models.JsonDTO;
-using confinancia.Services.Token;
+using frontend.Models;
+using frontend.Models.JsonDTO;
+using frontend.Services.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

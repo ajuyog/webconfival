@@ -1,11 +1,11 @@
-﻿using confinancia.Models;
+﻿using frontend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Reflection;
 
-namespace confinancia.Controllers
+namespace frontend.Controllers
 {
 	public class ComentariosController : Controller
 	{

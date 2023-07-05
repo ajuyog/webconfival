@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using confinancia.Models.Graph;
-using confinancia.Services.Graph;
-using confinancia.Services.Token;
+using frontend.Models.Graph;
+using frontend.Services.Graph;
+using frontend.Services.Token;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Org.BouncyCastle.Asn1.X509;
@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 
-namespace confinancia.Controllers
+namespace frontend.Controllers
 {
     public class GraphController : Controller
     {

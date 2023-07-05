@@ -1,8 +1,8 @@
-﻿using confinancia.Models.JsonDTO;
+﻿using frontend.Models.JsonDTO;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace confinancia.Services.Token
+namespace frontend.Services.Token
 {
 
     public interface IGetToken

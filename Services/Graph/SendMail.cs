@@ -1,7 +1,7 @@
-﻿using confinancia.Models.Graph;
+﻿using frontend.Models.Graph;
 using Newtonsoft.Json;
 
-namespace confinancia.Services.Graph
+namespace frontend.Services.Graph
 {
     public interface ISendMail
     {

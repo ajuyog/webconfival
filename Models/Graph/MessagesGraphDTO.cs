@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace confinancia.Models.Graph
+namespace frontend.Models.Graph
 {
     public class MessagesGraphDTO: MeGraphDTO
     {

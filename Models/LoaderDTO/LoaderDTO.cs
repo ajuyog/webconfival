@@ -1,4 +1,4 @@
-﻿namespace confinancia.Models.LoaderDTO
+﻿namespace frontend.Models.LoaderDTO
 {
 	public class LoaderDTO
 	{

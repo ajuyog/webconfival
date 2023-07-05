@@ -1,4 +1,4 @@
-﻿namespace confinancia.Models.Graph
+﻿namespace frontend.Models.Graph
 {
     public class SettingsGraphDTO: MeGraphDTO
     {

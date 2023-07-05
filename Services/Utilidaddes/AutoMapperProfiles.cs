@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using confinancia.Models.Graph;
+using frontend.Models.Graph;
 
-namespace confinancia.Services.Utilidaddes
+namespace frontend.Services.Utilidaddes
 {
     public class AutoMapperProfiles : Profile
     {

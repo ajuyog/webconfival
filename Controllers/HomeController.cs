@@ -1,8 +1,8 @@
-﻿using confinancia.Models;
+﻿using frontend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace confinancia.Controllers
+namespace frontend.Controllers
 {
 	public class HomeController : Controller
 	{

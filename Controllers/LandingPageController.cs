@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using System.Reflection;
-using confinancia.Models;
-using confinancia.Models.JsonDTO;
-using confinancia.Services.Token;
+using frontend.Models;
+using frontend.Models.JsonDTO;
+using frontend.Services.Token;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Kiota.Abstractions.Extensions;

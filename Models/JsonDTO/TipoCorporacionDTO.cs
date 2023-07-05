@@ -1,4 +1,4 @@
-﻿namespace confinancia.Models.JsonDTO
+﻿namespace frontend.Models.JsonDTO
 {
     public class TipoCorporacionDTO
     {
