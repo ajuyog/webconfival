@@ -733,6 +733,13 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
+                                                                                    <div class="hide-info" id="progres-100-oportunidad">
+                                                                                        <div class="row">
+                                                                                            <div class="progress progress-md mb-3">
+                                                                                                <div class="progress-bar bg-success wp-100"> 100% Completado</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
 
                                                                                     <!-- Status de informacion personal -->
                                                                                     <div id="confirmacion-correo-status">
@@ -794,8 +801,7 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="col-lg-10 col-md-12 margin-auto">
-                                                                                                @*                                                                                            <p>Autorizo el tratamiento de mis datos y acepto la <strong><a class="modal-effect" data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#politica-tratamiento">Política de Tratamiento de Datos Personales</a></strong></p>
-                                                                                                *@                                                                                            <p>Autorizo el tratamiento de mis datos y acepto la <strong><a asp-action="DataPolicy" target="_blank">Política de Tratamiento de Datos Personales</a></strong></p>
+                                                                                                <p>Autorizo el tratamiento de mis datos y acepto la <strong><a asp-action="DataPolicy" target="_blank">Política de Tratamiento de Datos Personales</a></strong></p>
                                                                                             </div>
                                                                                             <div class="invalid-feedback pad-text" id="invalid-politica">Debes autorizar nuestra política de tratamiento de datos personales</div>
                                                                                         </div>
@@ -1188,7 +1194,8 @@
                                                                                             {
                                                                                                 <div class="col-4">
                                                                                                     <div class="form-check">
-                                                                                                        <input type="radio" class="form-check-input" name="radio-stacked" id="@item.Id" onclick="ChangeActor(@item.Id)" required>
+                                                                                                        @* en este input tenia el onclick  --  onclick="ChangeActor(@item.Id)"*@
+                                                                                                        <input type="radio" class="form-check-input" name="radio-stacked" id="@item.Id" required> 
                                                                                                         <label class="form-check-label">@item.Nombre</label>
                                                                                                     </div>
                                                                                                 </div>

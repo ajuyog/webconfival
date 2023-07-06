@@ -123,7 +123,7 @@ public class LandingPageController : Controller
             #endregion
 
             #region TipoActor 
-            var requestTipoActor = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/TipoActor");
+            var requestTipoActor = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/TipoActor/landing?Pagina=1&RegistrosPorPagina=10");
             requestTipoActor.Headers.Add("Authorization", "Bearer " + token);
             var responseTipoActor = await client.SendAsync(requestTipoActor);
             if (responseTipoActor.IsSuccessStatusCode)

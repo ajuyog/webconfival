@@ -537,6 +537,7 @@ function Lead() {
             if (result == "success") {
                 $("#loader4").addClass("hide-info");
                 $("#lead-oportunidad-exitoso").removeClass("hide-info");
+                $("#progres-100-oportunidad").removeClass("hide-info");
             } else {
                 if (result == "existing") {
                     $("#loader4").addClass("hide-info");
@@ -671,7 +672,6 @@ function ChangeActor(data) {
         demandante.val("");
         demandante.removeClass("disable-writing");
     }
-
 }
 
 // --- CONTADOR SMS --- //

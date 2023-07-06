@@ -13,5 +13,6 @@
         public string numeroRadicado { get; set; }
         public string cuentaCobro { get; set; }
         public string demandante { get; set; }
+        public int tipoActorId { get; set; }
     }
 }
