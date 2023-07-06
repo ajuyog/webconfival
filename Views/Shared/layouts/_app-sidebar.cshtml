@@ -26,6 +26,8 @@
 						<span class="side-menu__label">Blogs</span><i class="angle fa fa-angle-right"></i>
 					</a>
 					<ul class="slide-menu">
+						<li><a asp-controller="Blog" asp-action="Create" class="slide-item">Crear un Blog</a></li>
+						<li><a asp-controller="Comentarios" asp-action="Get" class="slide-item">Gestionar comentarios</a></li>
 						<li class="sub-slide">
 							<a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="#">
 								<span class="sub-side-menu__label">Categorias</span><i class="sub-angle fa fa-angle-right"></i>
@@ -35,8 +37,6 @@
 								<li><a asp-controller="Categoria" asp-action="Get" class="sub-slide-item">Consultar</a></li>
 							</ul>
 						</li>
-						<li><a asp-controller="Blog" asp-action="Create" class="slide-item">Crear un Blog</a></li>
-						<li><a asp-controller="Comentarios" asp-action="Get" class="slide-item">Gestionar comentarios</a></li>
 					</ul>
 				</li>
 				<li class="slide">

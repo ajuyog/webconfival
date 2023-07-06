@@ -151,9 +151,14 @@ public class BlogController : Controller
     /// <returns></returns>
     [Authorize]
 	[HttpPost]
-	public async Task<bool> Publicar(string titulo, IFormFile imagenPrincipal, string contenido, string categoria, List<string> lstCategorias, List<IFormFile> lstGaleria)
+	public async Task<string> Publicar(string titulo, IFormFile imagenPrincipal, string contenido, string categoria, List<string> lstCategorias, List<IFormFile> lstGaleria)
 	{
-        var result = false;
+        var result = "error";
+        if(contenido == null || titulo == "null" || imagenPrincipal == null) 
+        {
+            result = "campos null";
+            return result; 
+        }
         var Categorias = Order(categoria, lstCategorias);
         var blog = new CreateBlogDTO()
         {
@@ -170,7 +175,7 @@ public class BlogController : Controller
         var createGaleria = await CreateGaleria(lstGaleria, createBlog.Id);
         if(!createGaleria) { return result; }
 
-        result = true;
+        result = "success";
         return result;
     }
 

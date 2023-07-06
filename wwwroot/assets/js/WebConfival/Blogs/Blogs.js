@@ -128,9 +128,15 @@ function NextGallery() {
     // Mostrar seccion categoria
     $("#seccion-categorias").removeClass("hide-info");
 };
-
 function Publicar() {
-    let tituloBlog = $("#contenido-blog-visualizar").children("h2").get(0).outerHTML;
+
+    let tituloBlog = null;
+    if ($("#contenido-blog-visualizar").children("h2").length == 0) {
+        tituloBlog = null;
+    } else {
+        tituloBlog = $("#contenido-blog-visualizar").children("h2").get(0).outerHTML;
+    }
+
     let imagenPrincipalBlog = $("#imagen-blog")[0].files[0];
     let lstContenido = $("#contenido-blog").children();
     let contenidoBlog = "";
@@ -140,7 +146,6 @@ function Publicar() {
     let categoriaPrincipal = $("#categorias-principal").val();
     let arrayCategorias = $("#lst-categorias").val();
     let subcategorias = JSON.stringify(arrayCategorias);
-    //let list = JSON.stringify({ 'lstGaleria': galeriaBlog });
 
     var formData = new FormData();
     formData.append('titulo', tituloBlog);
@@ -159,10 +164,19 @@ function Publicar() {
         cache: false,
         contentType: false,//stop jquery auto convert form type to default x-www-form-urlencoded
         processData: false,
-        success: function () {
-            $("#visualizador-campos").addClass("hide-info");
-            $("#visualizar-blog-principal").addClass("hide-info");
-            $("#visualizar-blog-confirmar").removeClass("hide-info");
+        success: function (result) {
+            if (result == "success") {
+                $("#visualizador-campos").addClass("hide-info");
+                $("#visualizar-blog-principal").addClass("hide-info");
+                $("#visualizar-blog-confirmar").removeClass("hide-info");
+            }
+            if (result == "campos null") {
+                $("#campos-null").modal('show');
+            }
+            if (result == "error") {
+                $("#api-error").modal('show');
+            }
+
         },
         error: function () {
             $("#api-error").modal('show');
@@ -170,6 +184,7 @@ function Publicar() {
     });
 
 }
+
 $("#categorias-principal").on("change", function () {
     var cartegoriaPrincipal = $("#categorias-principal").val();
     if (cartegoriaPrincipal.length > 0) {
