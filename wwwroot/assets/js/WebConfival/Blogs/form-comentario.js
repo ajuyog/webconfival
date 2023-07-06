@@ -66,7 +66,7 @@ function Cancelar(data) {
     newFrom.removeClass("card-respuesta-comentario");
     newFrom.siblings(".boton-edit").children("span").children("a").css("display", "block");
     newFrom.children("div").remove();
-}
+};
 function responderDos(data, dataDos) {
     var newFrom = $("#" + data.toString() + "s" + dataDos.toString());
     var formsComment = $(".cancel-form-comment");
@@ -90,11 +90,41 @@ function CancelarDos(data, dataDos) {
     newFrom.removeClass("card-respuesta-comentario");
     newFrom.siblings(".boton-edit-2").children("div").children("span").children("a").css("display", "block");
     newFrom.children("div").remove();
-}
+};
 function EnviarRespuesta(data) {
     var validacion = ValidarFormulario();
     if (validacion == 0) {
         var newFrom = $("#" + data.toString());
         newFrom.children("div").remove();
     }
+};
+
+function TopCategoriaB(idBlog) {
+    $.ajax({
+        type: "GET",
+        url: '/Blog/TopCategoria',
+        data: { id: idBlog },
+        success: function (result) {
+            if (result != null) {
+                $("#list-blogs").children().remove();
+                $.each(result, function (element, index) {
+                    $("#list-blogs").append('<ul class="list-group mb-0">' +
+                        '<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">' +
+                        '<img src="' + index.imagen + '" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">' +
+                        '<div> <span class="d-block text-muted">' + 'categoria pendiente' + '</span> ' +
+                        '<a href="#" class="text-dark text-16 font-weight-semibold">' + index.titulo + '</a> ' +
+                        '</div> ' +
+                        '</li>' +
+                        '</ul>' 
+                        
+                    );
+                })
+                $("#blogs-categoria").removeClass("hide-info");
+            } else {
+                console.log("fallo");
+            }
+        }
+        //error: function () {
+        //}
+    });
 }

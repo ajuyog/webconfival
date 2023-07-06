@@ -23,25 +23,25 @@ public class BlogController : Controller
         _getToken = getToken;
         _configuration = configuration;
     }
-	#endregion
+    #endregion
 
-	[HttpGet]
-	public async Task<IActionResult> Index() 
-	{
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
         var model = new List<BlogDTO>();
         var token = await _getToken.GetTokenV();
         var client = new HttpClient();
         var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog?Pagina=1&RegistrosPorPagina=10");
         request.Headers.Add("Authorization", "Bearer " + token);
         var response = await client.SendAsync(request);
-		if (response.IsSuccessStatusCode)
-		{
+        if (response.IsSuccessStatusCode)
+        {
             var responseStream = await response.Content.ReadAsStringAsync();
             model = JsonConvert.DeserializeObject<List<BlogDTO>>(responseStream);
         }
         if (model != null)
         {
-            foreach (var item in model) 
+            foreach (var item in model)
             {
                 var imagenBlog = await Imagen(item.Id);
                 item.Imagen = imagenBlog;
@@ -50,19 +50,18 @@ public class BlogController : Controller
             }
         }
         ViewBag.Categorias = new List<DropDownListDTO>();
-		var requestCategorias = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/categoria/categorias");
-		requestCategorias.Headers.Add("Authorization", "Bearer " + token);
-		var responseCategorias = await client.SendAsync(requestCategorias);
+        var requestCategorias = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/categoria/categorias");
+        requestCategorias.Headers.Add("Authorization", "Bearer " + token);
+        var responseCategorias = await client.SendAsync(requestCategorias);
         if (responseCategorias.IsSuccessStatusCode)
         {
-			var responseStreamCategorias = await responseCategorias.Content.ReadAsStringAsync();
-			ViewBag.Categorias = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStreamCategorias);
-		}
+            var responseStreamCategorias = await responseCategorias.Content.ReadAsStringAsync();
+            ViewBag.Categorias = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStreamCategorias);
+        }
         ViewBag.H2 = "Blog principal";
 
         return View(model);
-	}
-
+    }
 
     [HttpGet]
     public async Task<IActionResult> GetCategoria(int idCategoria, string nombre)
@@ -110,59 +109,35 @@ public class BlogController : Controller
     [HttpGet]
     public async Task<IActionResult> GetById(int id)
     {
-		var model = new BlogDTO();
+        var model = new BlogDTO();
 
-		var client = new HttpClient();
-		var token = await _getToken.GetTokenV();
+        var client = new HttpClient();
+        var token = await _getToken.GetTokenV();
 
-		var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog/" + id);
-		request.Headers.Add("Authorization", "Bearer " + token);
-		var response = await client.SendAsync(request);
-		if(response.IsSuccessStatusCode)
-		{
-			var responseStream = await response.Content.ReadAsStringAsync();
-			model = JsonConvert.DeserializeObject<BlogDTO>(responseStream);
-		}
-		return View(model);
-	}
-
-	/// <summary>
-	/// Consulta los tres blogs mas recientes por idCategoria
-	/// </summary>
-	/// <param name="id"></param>
-	/// <returns></returns>
-    [HttpGet]
-    public async Task<List<BlogBetaDTO>> ConsultarTopTres(int id)
-    {
-		var parametro = id.ToString();
-		var client = new HttpClient();
-		var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/blog/filtro?categoriaId=" + parametro);
-		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-		var content = new StringContent(string.Empty);
-		content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-		request.Content = content;
-		var response = await client.SendAsync(request);
-		if (response.IsSuccessStatusCode)
-		{
-			var responseStream = await response.Content.ReadAsStringAsync();
-			var lstBlogs = JsonConvert.DeserializeObject<List<BlogBetaDTO>>(responseStream);
-			return lstBlogs;
-		}
-		else
-		{
-			var lstEmpy = new List<BlogBetaDTO>();
-			return lstEmpy;
-		}
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog/" + id.ToString());
+        request.Headers.Add("Authorization", "Bearer " + token);
+        var response = await client.SendAsync(request);
+        if (response.IsSuccessStatusCode)
+        {
+            var responseStream = await response.Content.ReadAsStringAsync();
+            model = JsonConvert.DeserializeObject<BlogDTO>(responseStream);
+        }
+        if (model != null)
+        {
+            model.Imagen = await Imagen(model.Id);
+            model.Galeria = await Galeria(model.Id);
+        }
+        return View(model);
     }
 
-	/// <summary>
-	/// Devuleve la vista de Crear Blogs
-	/// </summary>
-	/// <returns></returns>
-	[Authorize]
-	[HttpGet]
-	public async Task<IActionResult> Create()
-	{
+    /// <summary>
+    /// Devuleve la vista de Crear Blogs
+    /// </summary>
+    /// <returns></returns>
+    [Authorize]
+    [HttpGet]
+    public async Task<IActionResult> Create()
+    {
         var model = new List<CategoriaDTO>();
         var token = await _getToken.GetTokenV();
         var client = new HttpClient();
@@ -176,17 +151,17 @@ public class BlogController : Controller
             model = lstCategorias.ToList();
         }
         return View(model);
-	}
+    }
 
-	/// <summary>
-	/// Devuelve la lista de categorias 
-	/// </summary>
-	/// <returns></returns>
-	[Authorize]
-	[HttpGet]
-	public async Task<List<CategoriaDTO>> ConsultarCategorias(int id)
-	{
-		var list = new List<CategoriaDTO>();
+    /// <summary>
+    /// Devuelve la lista de categorias 
+    /// </summary>
+    /// <returns></returns>
+    [Authorize]
+    [HttpGet]
+    public async Task<List<CategoriaDTO>> ConsultarCategorias(int id)
+    {
+        var list = new List<CategoriaDTO>();
         var token = await _getToken.GetTokenV();
         var client = new HttpClient();
         var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Categoria/categorias");
@@ -210,14 +185,14 @@ public class BlogController : Controller
     /// <param name="categoria"></param>
     /// <returns></returns>
     [Authorize]
-	[HttpPost]
-	public async Task<string> Publicar(string titulo, IFormFile imagenPrincipal, string contenido, string categoria, List<string> lstCategorias, List<IFormFile> lstGaleria)
-	{
+    [HttpPost]
+    public async Task<string> Publicar(string titulo, IFormFile imagenPrincipal, string contenido, string categoria, List<string> lstCategorias, List<IFormFile> lstGaleria)
+    {
         var result = "error";
-        if(contenido == null || titulo == "null" || imagenPrincipal == null) 
+        if (contenido == null || titulo == "null" || imagenPrincipal == null)
         {
             result = "campos null";
-            return result; 
+            return result;
         }
         var Categorias = Order(categoria, lstCategorias);
         var blog = new CreateBlogDTO()
@@ -233,10 +208,42 @@ public class BlogController : Controller
         if (!createImgPrincipal) { return result; }
 
         var createGaleria = await CreateGaleria(lstGaleria, createBlog.Id);
-        if(!createGaleria) { return result; }
+        if (!createGaleria) { return result; }
 
         result = "success";
         return result;
+    }
+
+    /// <summary>
+    /// Consulta los tres blogs mas recientes por idCategoria
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<List<BlogDTO>> TopCategoria(int id)
+    {
+        var model = new List<BlogDTO>();
+        var token = await _getToken.GetTokenV();
+        var client = new HttpClient();
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Blog/filtro?CategoriaId=" + id.ToString());
+        request.Headers.Add("Authorization", "Bearer " + token);
+        var response = await client.SendAsync(request);
+        if (response.IsSuccessStatusCode)
+        {
+            var responseStream = await response.Content.ReadAsStringAsync();
+            model = JsonConvert.DeserializeObject<List<BlogDTO>>(responseStream);
+        }
+        if(model != null)
+        {
+            foreach (var item in model)
+            {
+                var imagenBlog = await Imagen(item.Id);
+                item.Imagen = imagenBlog;
+                var galeria = await Galeria(item.Id);
+                item.Galeria = galeria;
+            }
+        }
+        return model;
     }
 
     // Servicios //
@@ -279,7 +286,7 @@ public class BlogController : Controller
         content.Add(new StringContent(obj.Categorias), "CategoriaId");
         request.Content = content;
         var response = await client.SendAsync(request);
-        if (response.IsSuccessStatusCode) 
+        if (response.IsSuccessStatusCode)
         {
             var responseStream = await response.Content.ReadAsStringAsync();
             blog = JsonConvert.DeserializeObject<BlogDTO>(responseStream);
@@ -391,29 +398,29 @@ public class BlogController : Controller
         {
             var responseStream = await response.Content.ReadAsStringAsync();
             var lstImagenes = JsonConvert.DeserializeObject<List<StorageDTO>>(responseStream);
-            if(lstImagenes.Count > 0)
+            if (lstImagenes.Count > 0)
             {
-                foreach(var item in lstImagenes)
+                foreach (var item in lstImagenes)
                 {
                     url.Add(item.URLSoporte);
                 }
             }
             else
             {
-				url.Add("/assets/images/photos/blogmain2.jpg");
-				url.Add("/assets/images/photos/blogmain2.jpg");
-				url.Add("/assets/images/photos/blogmain2.jpg");
-				url.Add("/assets/images/photos/blogmain2.jpg");
-			}
+                url.Add("/assets/images/photos/blogmain2.jpg");
+                url.Add("/assets/images/photos/blogmain2.jpg");
+                url.Add("/assets/images/photos/blogmain2.jpg");
+                url.Add("/assets/images/photos/blogmain2.jpg");
+            }
         }
         else
         {
             url.Add("/assets/images/photos/blogmain2.jpg");
-			url.Add("/assets/images/photos/blogmain2.jpg");
-			url.Add("/assets/images/photos/blogmain2.jpg");
-			url.Add("/assets/images/photos/blogmain2.jpg");
-		}
-		return url;
+            url.Add("/assets/images/photos/blogmain2.jpg");
+            url.Add("/assets/images/photos/blogmain2.jpg");
+            url.Add("/assets/images/photos/blogmain2.jpg");
+        }
+        return url;
     }
 
 }

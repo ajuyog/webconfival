@@ -13,7 +13,7 @@
                 <div class="card-body bg-white">
                     <div class="row">
                         <div class="ps-relative p-1 bg-light br-5">
-                            <a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@Model[0].Id">
+                            <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model[0].Id">
                                 <img src="@Model[0].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
                                 <span class="badge rounded-pill bg-primary-gradient blog-label label1">@Model[0].Categoriass[0].Nombre</span>
                             </a>
@@ -21,7 +21,7 @@
                         <div class="card-body">
                             <a href="#" class="text-dark blog-title">@Model[0].Titulo</a>
                             <p class="mb-0 text-muted mt-4 justify-policy">@Model[0].Contenido.Substring(0, Convert.ToInt32(Model[0].Contenido.Length * 0.25))</p>
-                            <a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@Model[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
+                            <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
                         </div>
                         <div class="card-footer ">
                             <div class="d-sm-flex align-items-center">
@@ -187,7 +187,7 @@
                         <div class="col-xl-6 col-md-12 my-2 p-xl-max-0">
                             <div class="card overflow-hidden box-shadow mb-0 main-blog">
                                 <div class="ps-relative p-1 bg-light br-5">
-                                    <a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@Model[1].Id">
+                                    <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model[1].Id">
                                         <img src="@Model[1].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
                                         <span class="badge rounded-pill bg-info-gradient blog-label label2">@Model[1].Categoriass[0].Nombre</span>
                                     </a>
@@ -218,12 +218,12 @@
                                     <div class="col-6" style="margin:auto;">
                                         <div class="row mb-5">
                                             <div class="col-xl-4 col-md-4 col-sm-4 pe-sm-0 p-sm-max-0">
-                                                <a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@item.Id">
+                                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@item.Id">
                                                     <img src="@item.Imagen" alt="" title="" class="wp-100 editorpick-suggestion-img h-100">
                                                 </a>
                                             </div>
                                             <div class="col-xl-8 col-md-8 col-sm-8 editorpicks-suggestions border p-2 br-sm-max-0">
-                                                <a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@item.Id" class="text-dark mb-4 blog-title">@item.Titulo</a>
+                                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@item.Id" class="text-dark mb-4 blog-title">@item.Titulo</a>
                                                 <div class="d-md-flex mt-0">
                                                     <a class="d-flex"><span class="fe fe-user text-muted me-2 text-17"></span><div class="mt-0 mt-0  font-weight-semibold text-muted">Autor desconocido</div></a>
                                                     <div class="d-flex ms-auto">
