@@ -184,7 +184,7 @@
                 </div>
                 <div class="card-body bg-white">
                     <div class="row">
-                        <div class="col-xl-6 col-md-12 my-2 p-xl-max-0">
+                        <div class="col-xl-7 col-md-12 my-2 p-xl-max-0">
                             <div class="card overflow-hidden box-shadow mb-0 main-blog">
                                 <div class="ps-relative p-1 bg-light br-5">
                                     <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model[1].Id">
@@ -211,30 +211,28 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-6 col-md-12">
-                            <div class="row mb-5">
-                                @foreach (var item in Model.Skip(2).Take(10))
-                                {
-                                    <div class="col-6" style="margin:auto;">
-                                        <div class="row mb-5">
-                                            <div class="col-xl-4 col-md-4 col-sm-4 pe-sm-0 p-sm-max-0">
-                                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@item.Id">
-                                                    <img src="@item.Imagen" alt="" title="" class="wp-100 editorpick-suggestion-img h-100">
-                                                </a>
-                                            </div>
-                                            <div class="col-xl-8 col-md-8 col-sm-8 editorpicks-suggestions border p-2 br-sm-max-0">
-                                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@item.Id" class="text-dark mb-4 blog-title">@item.Titulo</a>
-                                                <div class="d-md-flex mt-0">
-                                                    <a class="d-flex"><span class="fe fe-user text-muted me-2 text-17"></span><div class="mt-0 mt-0  font-weight-semibold text-muted">Autor desconocido</div></a>
-                                                    <div class="d-flex ms-auto">
-                                                        <a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0  font-weight-semibold text-muted">@item.Publicacion.ToShortDateString()</div></a>
-                                                    </div>
-                                                </div>
+                        <div class="col-xl-5 col-md-12">
+                            @foreach (var item in Model.Skip(2).Take(6))
+                            {
+                                <div class="row mb-5">
+                              
+                                    <div class="col-xl-4 col-md-4 col-sm-4 pe-sm-0 p-sm-max-0">
+                                        <a asp-controller="Blog" asp-action="GetById" asp-route-id="@item.Id">
+                                            <img src="@item.Imagen" alt="" title="" class="wp-100 editorpick-suggestion-img h-100">
+                                        </a>
+                                    </div>
+                                    <div class="col-xl-8 col-md-8 col-sm-8 editorpicks-suggestions border p-2 br-sm-max-0">
+                                        <a asp-controller="Blog" asp-action="GetById" asp-route-id="@item.Id" class="text-dark mb-4 blog-title">@item.Titulo</a>
+                                        <div class="d-md-flex mt-0">
+                                            <a class="d-flex"><span class="fe fe-user text-muted me-2 text-17"></span><div class="mt-0 mt-0  font-weight-semibold text-muted">Autor desconocido</div></a>
+                                            <div class="d-flex ms-auto">
+                                                <a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0  font-weight-semibold text-muted">@item.Publicacion.ToShortDateString()</div></a>
                                             </div>
                                         </div>
                                     </div>
-                                }
-                            </div>
+                                
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

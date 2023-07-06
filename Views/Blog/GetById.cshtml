@@ -140,7 +140,7 @@
 														<div class="tags">
 															@foreach (var item in Model.Categoriass)
 															{
-																<a onclick="TopCategoriaB(@item.Id)" class="tag">@item.Nombre</a>
+																<a onclick="TopCategoriaB('@item.Id', '@item.Nombre')" class="tag">@item.Nombre</a>
 															}
 														</div>
 													</div>
@@ -149,19 +149,14 @@
 											<div id="blogs-categoria" class="hide-info">
 												<div class="card-confival-blogs border overflow-hidden">' 
 													<div class="card-header border-bottom">
-														<h3 class="card-title">Popular Posts</h3>
+														<h3 class="card-title">Publicaciones similares</h3>
 													</div>
 													<div class="card-body">
 														<div class="item-list" id="list-blogs">
 
-
-
-
 														</div>
 													</div>
 												</div>
-
-
 											</div>
 											<div class="card-confival-blogs overflow-hidden border">
 												<div class="card-header border-bottom">
