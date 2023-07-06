@@ -127,7 +127,7 @@ function NextGallery() {
 
     // Mostrar seccion categoria
     $("#seccion-categorias").removeClass("hide-info");
-};
+}
 function Publicar() {
 
     let tituloBlog = null;

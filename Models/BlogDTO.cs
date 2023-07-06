@@ -11,7 +11,8 @@
         //public AutorDTO Autor { get; set; }
         public List<CategoriaDTO> Categoriass { get; set; }
 		public List<ComentariosDTO> Comentarios { get; set; }
-        //public List<ImagenesDTO> Galeria { get; set; }
+        public string Imagen { get; set; }
+        public List<string> Galeria { get; set; }
 
     }
 }

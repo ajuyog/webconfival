@@ -659,6 +659,9 @@ $("#tipo-corporacion").on("change", function () {
     });
 });
 function ChangeActor(data) {
+
+    //if (data == 6) {
+    //}
     var demandante = $("#demandante");
     var demandanteReadOnly = $("#nombres-ok").val() + " " + $("#apellidos-ok").val();
     if (data == 6) {
@@ -667,8 +670,8 @@ function ChangeActor(data) {
     } else {
         demandante.val("");
         demandante.removeClass("disable-writing");
-
     }
+
 }
 
 // --- CONTADOR SMS --- //
