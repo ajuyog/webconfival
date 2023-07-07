@@ -112,7 +112,7 @@ function TopCategoriaB(idBlog, nombre) {
                         '<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">' +
                         '<img src="' + index.imagen + '" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">' +
                         '<div> <span class="d-block text-muted">Categoria: ' + nombre + '</span> ' +
-                        '<a href="#" class="text-dark text-16 font-weight-semibold">' + index.titulo + '</a> ' +
+                        '<a href="/Blog/GetById/' + index.id + '" class="text-dark text-16 font-weight-semibold">' + index.titulo + '</a> ' +
                         '</div> ' +
                         '</li>' +
                         '</ul>' 
@@ -121,10 +121,11 @@ function TopCategoriaB(idBlog, nombre) {
                 })
                 $("#blogs-categoria").removeClass("hide-info");
             } else {
-                console.log("fallo");
+                console.log("fallo 'TopCategoriaB'");
             }
+        },
+        error: function () {
+            console.log("fallo 'TopCategoriaB'");
         }
-        //error: function () {
-        //}
     });
 }
