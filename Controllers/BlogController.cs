@@ -29,6 +29,7 @@ public class BlogController : Controller
     /// Devuelve la vista de index o principal de Blog
     /// </summary>
     /// <returns></returns>
+    [Route("/Blog")]
     [HttpGet]
     public async Task<IActionResult> Index(string pagina)
     {
@@ -37,6 +38,7 @@ public class BlogController : Controller
             pagina = "1";
         };
         var model = new List<BlogDTO>();
+        var result = new ResultBlogsDTO();
         var token = await _getToken.GetTokenV();
         var client = new HttpClient();
         var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog?Pagina=" + pagina +"&RegistrosPorPagina=6");
@@ -45,7 +47,8 @@ public class BlogController : Controller
         if (response.IsSuccessStatusCode)
         {
             var responseStream = await response.Content.ReadAsStringAsync();
-            model = JsonConvert.DeserializeObject<List<BlogDTO>>(responseStream);
+            result = JsonConvert.DeserializeObject<ResultBlogsDTO>(responseStream);
+            model = result.ResultBlog;
         }
         if (model != null)
         {
@@ -68,7 +71,7 @@ public class BlogController : Controller
             ViewBag.Categorias = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStreamCategorias);
         }
         ViewBag.H2 = "Blog principal";
-
+        ViewBag.TotalBlogs = result.TotalBlog;
         return View(model);
     }
 
@@ -84,7 +87,7 @@ public class BlogController : Controller
         var model = new List<BlogDTO>();
         var token = await _getToken.GetTokenV();
         var client = new HttpClient();
-        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Blog/filtro?CategoriaId=" + idCategoria);
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Blog/filtro?top=10&CategoriaId=" + idCategoria);
         request.Headers.Add("Authorization", "Bearer " + token);
         var response = await client.SendAsync(request);
         if (response.IsSuccessStatusCode)
@@ -102,6 +105,7 @@ public class BlogController : Controller
                 item.Galeria = galeria;
             }
         }
+
         ViewBag.Categorias = new List<DropDownListDTO>();
         var requestCategorias = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/categoria/categorias");
         requestCategorias.Headers.Add("Authorization", "Bearer " + token);
@@ -239,7 +243,7 @@ public class BlogController : Controller
         var model = new List<BlogDTO>();
         var token = await _getToken.GetTokenV();
         var client = new HttpClient();
-        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Blog/filtro?CategoriaId=" + id.ToString());
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Blog/filtro?top=3&CategoriaId=" + id.ToString());
         request.Headers.Add("Authorization", "Bearer " + token);
         var response = await client.SendAsync(request);
         if (response.IsSuccessStatusCode)

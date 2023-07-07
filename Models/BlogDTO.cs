@@ -11,7 +11,7 @@ namespace frontend.Models
         public DateTime Publicacion { get; set; } 
 		public DateTime Actualizacion { get; set; } 
         //public AutorDTO Autor { get; set; }
-        public List<CategoriaDTO> Categoriass { get; set; }
+        public List<CategoriaDTO> Categorias { get; set; }
 		public List<ComentariosDTO> Comentarios { get; set; }
         public string Imagen { get; set; }
         public List<string> Galeria { get; set; }

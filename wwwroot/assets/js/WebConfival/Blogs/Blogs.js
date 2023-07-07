@@ -128,6 +128,9 @@ function NextGallery() {
     $("#seccion-categorias").removeClass("hide-info");
 }
 function Publicar() {
+    $("#visualizador-campos").addClass("hide-info");
+    $("#visualizar-blog-principal").addClass("hide-info");
+    $("#loader-create-blog").removeClass("hide-info");
 
     let tituloBlog = null;
     if ($("#contenido-blog-visualizar").children("h2").length == 0) {
@@ -165,8 +168,7 @@ function Publicar() {
         processData: false,
         success: function (result) {
             if (result == "success") {
-                $("#visualizador-campos").addClass("hide-info");
-                $("#visualizar-blog-principal").addClass("hide-info");
+                $("#loader-create-blog").addClass("hide-info");
                 $("#visualizar-blog-confirmar").removeClass("hide-info");
             }
             if (result == "campos null") {

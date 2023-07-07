@@ -15,7 +15,7 @@
                         <div class="ps-relative p-1 bg-light br-5">
                             <a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@Model[0].Id">
                                 <img src="@Model[0].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
-                                <span class="badge rounded-pill bg-primary-gradient blog-label label1">@Model[0].Categoriass[0].Nombre</span>
+                                <span class="badge rounded-pill bg-primary-gradient blog-label label1">@Model[0].Categorias[0].Nombre</span>
                             </a>
                         </div>
                         <div class="card-body">
@@ -189,7 +189,7 @@
                                 <div class="ps-relative p-1 bg-light br-5">
                                     <a asp-controller="Blog" asp-action="GetById" asp-route-idBlog="@Model[1].Id">
                                         <img src="@Model[1].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
-                                        <span class="badge rounded-pill bg-info-gradient blog-label label2">@Model[1].Categoriass[0].Nombre</span>
+                                        <span class="badge rounded-pill bg-info-gradient blog-label label2">@Model[1].Categorias[0].Nombre</span>
                                     </a>
                                 </div>
                                 <div class="card-body p-0 border border-top-0 br-br-5 br-bl-5 mb-2 mb-lg-0">

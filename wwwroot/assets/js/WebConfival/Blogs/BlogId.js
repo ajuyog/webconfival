@@ -50,8 +50,6 @@ function Cancelar(data) {
     newFrom.siblings(".boton-edit").children("span").children("a").css("display", "block");
     newFrom.children("div").remove();
 };
-
-// -- DEVELOPMENT -- //
 function SendReply(data) {
     var validacion = ValidReply();
     if (validacion == 0) {
@@ -84,36 +82,6 @@ function SendReply(data) {
 
 
     }
-};
-function TopCategoriaB(idBlog, nombre) {
-    $.ajax({
-        type: "GET",
-        url: '/Blog/TopCategoria',
-        data: { id: idBlog },
-        success: function (result) {
-            if (result != null) {
-                $("#list-blogs").children().remove();
-                $.each(result, function (element, index) {
-                    $("#list-blogs").append('<ul class="list-group mb-0">' +
-                        '<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">' +
-                        '<img src="' + index.imagen + '" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">' +
-                        '<div> <span class="d-block text-muted">Categoria: ' + nombre + '</span> ' +
-                        '<a href="/Blog/GetById/' + index.id + '" class="text-dark text-16 font-weight-semibold">' + index.titulo + '</a> ' +
-                        '</div> ' +
-                        '</li>' +
-                        '</ul>'
-
-                    );
-                })
-                $("#blogs-categoria").removeClass("hide-info");
-            } else {
-                console.log("fallo 'TopCategoriaB'");
-            }
-        },
-        error: function () {
-            console.log("fallo 'TopCategoriaB'");
-        }
-    });
 };
 function SeeGallery(data, data2) {
     var modal = $("#modal-gallery");
@@ -152,6 +120,38 @@ function SeeGallery(data, data2) {
         }
     });
     modal.modal("show");
+};
+
+// -- DEVELOPMENT -- //
+function TopCategoriaB(idBlog, nombre) {
+    $.ajax({
+        type: "GET",
+        url: '/Blog/TopCategoria',
+        data: { id: idBlog },
+        success: function (result) {
+            if (result != null) {
+                $("#list-blogs").children().remove();
+                $.each(result, function (element, index) {
+                    $("#list-blogs").append('<ul class="list-group mb-0">' +
+                        '<li class="list-group-item d-flex pb-4 pt-0 px-0 border-bottom-0">' +
+                        '<img src="' + index.imagen + '" class="avatar br-5 avatar-lg me-3 my-auto" alt="avatar-img">' +
+                        '<div> <span class="d-block text-muted">Categoria: ' + nombre + '</span> ' +
+                        '<a href="/Blog/GetById/' + index.id + '" class="text-dark text-16 font-weight-semibold">' + index.titulo + '</a> ' +
+                        '</div> ' +
+                        '</li>' +
+                        '</ul>'
+
+                    );
+                })
+                $("#blogs-categoria").removeClass("hide-info");
+            } else {
+                console.log("fallo 'TopCategoriaB'");
+            }
+        },
+        error: function () {
+            console.log("fallo 'TopCategoriaB'");
+        }
+    });
 };
 
 // -- UTILIDAD -- //
