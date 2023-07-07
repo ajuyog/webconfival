@@ -25,13 +25,21 @@ public class BlogController : Controller
     }
     #endregion
 
+    /// <summary>
+    /// Devuelve la vista de index o principal de Blog
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string pagina)
     {
+        if (pagina == null)
+        {
+            pagina = "1";
+        };
         var model = new List<BlogDTO>();
         var token = await _getToken.GetTokenV();
         var client = new HttpClient();
-        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog?Pagina=1&RegistrosPorPagina=10");
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog?Pagina=" + pagina +"&RegistrosPorPagina=6");
         request.Headers.Add("Authorization", "Bearer " + token);
         var response = await client.SendAsync(request);
         if (response.IsSuccessStatusCode)
@@ -48,6 +56,7 @@ public class BlogController : Controller
                 var galeria = await Galeria(item.Id);
                 item.Galeria = galeria;
             }
+            // Aca va el paginador 
         }
         ViewBag.Categorias = new List<DropDownListDTO>();
         var requestCategorias = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/categoria/categorias");
@@ -63,8 +72,16 @@ public class BlogController : Controller
         return View(model);
     }
 
+
+
+    /// <summary>
+    /// Devuele la vista con los blogs por idCategoria
+    /// </summary>
+    /// <param name="idCategoria"></param>
+    /// <param name="nombre"></param>
+    /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> GetCategoria(int idCategoria, string nombre)
+    public async Task<IActionResult> GetByCategoria(int idCategoria, string nombre)
     {
         var model = new List<BlogDTO>();
         var token = await _getToken.GetTokenV();

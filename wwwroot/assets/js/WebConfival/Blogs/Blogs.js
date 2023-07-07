@@ -64,7 +64,6 @@ function addImgGallery() {
     let inputImg = $("#imagen-g");
     let imagenB = inputImg[0].files
     galeriaBlog.push(imagenB[0]);
-    console.log(galeriaBlog);
     if (imagenB.length == 0) {
         $("#invalid-imagen-g").css("display", "block")
     } else {

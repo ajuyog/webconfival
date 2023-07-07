@@ -1,6 +1,8 @@
-﻿namespace frontend.Models
+﻿using frontend.Models.Shared;
+
+namespace frontend.Models
 {
-	public class BlogDTO
+	public class BlogDTO: PaginadorDTO
 	{
         public int Id { get; set; } 
         public string Titulo { get; set; } 
