@@ -1,6 +1,9 @@
 ﻿using frontend.Models;
+using frontend.Models.JsonDTO;
+using frontend.Services.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Graph.Models;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -9,6 +12,16 @@ namespace frontend.Controllers
 {
 	public class ComentariosController : Controller
 	{
+		#region CONSTRUCTOR
+		private readonly IConfiguration _configuration;
+		private readonly IGetToken _getToken;
+		public ComentariosController(IConfiguration configuration, IGetToken getToken)
+        {
+			_configuration = configuration;
+			_getToken = getToken;
+		}
+		#endregion
+
 		/// <summary>
 		/// Devuelve la vista con el listado de comentarios
 		/// </summary>
@@ -20,7 +33,7 @@ namespace frontend.Controllers
 			var model = new List<ComentariosDTO>() { };
 			var client = new HttpClient();
 			var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/blog/1/comentarios");
-			request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
+			request.Headers.Add("XApiKey", "H^qP[7p#18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
 			var content = new StringContent(string.Empty);
 			content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 			request.Content = content;
@@ -36,6 +49,34 @@ namespace frontend.Controllers
 				return View( model);
 			}
 		}
+
+		/// <summary>
+		/// Permite crear un comentario mediante API RestFull
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="comentario"></param>
+		/// <returns></returns>
+		[HttpGet]
+		public async Task<bool> Create(int id, string comentario)
+		{
+			var client = new HttpClient();
+			var token = await _getToken.GetTokenV();
+			var obj = new ComentarioDTO();
+			obj.Comentario = comentario;
+			var json = JsonConvert.SerializeObject(obj);
+			var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/blog/" + id + "/comentarios/0");
+			request.Headers.Add("Authorization", "Bearer " + token);
+			var content = new StringContent(json, null, "application/json");
+			request.Content = content;
+			var response = await client.SendAsync(request);
+			if(response.IsSuccessStatusCode)
+			{
+				return true;
+			}
+			return false;
+		}
+		
+
 
 		[Authorize]
 		[HttpGet]

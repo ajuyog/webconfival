@@ -112,6 +112,7 @@
 														</div>
 													</div>
 												</div>
+												
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -186,14 +187,11 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
-
 	<partial name="~/Views/Shared/_Footer1.cshtml" />
-
-
-	<div class="modal fade"  id="modal-gallery" tabindex="-1" role="dialog" style="padding-top: 120px;">
+</div>
+<div class="modal fade"  id="modal-gallery" tabindex="-1" role="dialog" style="padding-top: 120px;">
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content">
 				<div class="modal-header" id="modal-header-galeria">
@@ -216,11 +214,30 @@
 			</div>
 		</div>
 	</div>
-
+<div class="modal fade"  id="modal-comment-success">
+	<div class="modal-dialog modal-dialog-centered text-center " role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal" ><span aria-hidden="true">&times;</span></button>
+				<i class="fe fe-check-circle fs-65 text-success lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-success tx-semibold">Registro exitoso!</h4>
+				<p class="text-muted">Tu comentario está siendo analizado por uno de nuestros analistas, en caso de ser aprobado lo podrás ver en nuestro blog.</p><button aria-label="Close" class="btn btn-success pd-x-25" data-bs-dismiss="modal" >Continuar</button>
+			</div>
+		</div>
+	</div>
 </div>
-
-
-
+<div class="modal fade"  id="modal-comment-error">
+	<div class="modal-dialog modal-dialog-centered text-center" role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal" ><span aria-hidden="true">&times;</span></button>
+				<i class="fe fe-x-circle fs-65 text-danger lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-danger">Error: registro no exitoso!</h4>
+				<p class="text-muted">Nuestro sistema está presentando cambios, inténtalo de nuevo más tarde.</p><button aria-label="Close" class="btn btn-danger pd-x-25" data-bs-dismiss="modal" >Continue</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 @section scripts {
 

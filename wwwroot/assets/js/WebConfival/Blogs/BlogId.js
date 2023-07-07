@@ -1,8 +1,30 @@
 ﻿function SendComment(data) {
     var valid = Valid();
-    if (valid > 0) {
-        var idBlog = data;
-        // Debo hacer una funcion Ajax para crear un comentario en DB
+    if (valid == 0) {
+        var nombre = $("#comentario-nombre");
+        var profesion = $("#comentario-profesion");
+        var comentarioFront = $("#comentario-comentario");
+        var modalSuccess = $("#modal-comment-success");
+        var modalError = $("#modal-comment-error");
+        $.ajax({
+            type: "GET",
+            url: '/Comentarios/Create',
+            data: { id: data, comentario: comentarioFront.val() },
+            success: function (result) {
+                if (result == true) {
+                    modalSuccess.modal("show");
+                    nombre.val("");
+                    profesion.val("");
+                    comentarioFront.val("");
+
+                } else {
+                    modalError.modal("show");
+                }
+            },
+            error: function () {
+                modalError.modal("show");
+            }
+        });
 
 
     }
@@ -88,7 +110,6 @@ function EnviarRespuesta(data) {
         newFrom.children("div").remove();
     }
 };
-
 function TopCategoriaB(idBlog, nombre) {
     $.ajax({
         type: "GET",
@@ -119,7 +140,6 @@ function TopCategoriaB(idBlog, nombre) {
         }
     });
 }
-
 function SeeGallery(data, data2) {
     var modal = $("#modal-gallery");
     var indicadores = $("#ol-indicators");
@@ -151,15 +171,13 @@ function SeeGallery(data, data2) {
                 indicadores.append('<li data-bs-target="#carousel-indicators" data-bs-slide-to="' + posicion + '" class="' + active + '"></li>');
                 srcImagenes.append('<div class="carousel-item ' + active + '">' +
                     '<img class="d-block w-100 responsive-css-banner-principal" alt="" src="' + index + '" data-bs-holder-rendered="true">' +
-                '</div>')
+                    '</div>')
                 posicion = posicion + 1;
             })
         }
     });
     modal.modal("show");
 };
-
-
 
 // -- UTILIDAD -- //
 function Valid() {
@@ -185,4 +203,5 @@ function Valid() {
     } else {
         $("#invalid-comentario-comentario").css("display", "none");
     }
+    return count;
 };
