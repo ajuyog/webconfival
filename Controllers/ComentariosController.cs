@@ -57,14 +57,14 @@ namespace frontend.Controllers
 		/// <param name="comentario"></param>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<bool> Create(int id, string comentario)
+		public async Task<bool> Create(int id, string comentario, string relation)
 		{
 			var client = new HttpClient();
 			var token = await _getToken.GetTokenV();
 			var obj = new ComentarioDTO();
 			obj.Comentario = comentario;
 			var json = JsonConvert.SerializeObject(obj);
-			var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/blog/" + id + "/comentarios/0");
+			var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/blog/" + id + "/comentarios/" + relation);
 			request.Headers.Add("Authorization", "Bearer " + token);
 			var content = new StringContent(json, null, "application/json");
 			request.Content = content;
@@ -76,8 +76,6 @@ namespace frontend.Controllers
 			return false;
 		}
 		
-
-
 		[Authorize]
 		[HttpGet]
 		public IActionResult Editar(int id)

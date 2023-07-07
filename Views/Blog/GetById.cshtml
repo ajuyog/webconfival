@@ -1,4 +1,4 @@
-﻿@model frontend.Models.BlogDTO
+﻿	@model frontend.Models.BlogDTO
 @{
 	Layout = "_Layoutlandingpage2";
 }
@@ -42,6 +42,7 @@
 											</div>
 											<div class="mt-4 pt-5 border-top">
 												<h3 class="card-title">Comentarios:</h3>
+                                                <input type="hidden" id="id-blog" value="@Model.Id"/>
 												@foreach(var item in Model.Comentarios)
 												{
 													<div class="media mb-4 overflow-visible">
