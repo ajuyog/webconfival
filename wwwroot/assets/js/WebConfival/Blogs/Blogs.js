@@ -136,7 +136,7 @@ function Publicar() {
     if ($("#contenido-blog-visualizar").children("h2").length == 0) {
         tituloBlog = null;
     } else {
-        tituloBlog = $("#contenido-blog-visualizar").children("h2").get(0).outerHTML;
+        tituloBlog = $("#contenido-blog-visualizar").children("h2").get(0).innerHTML;
     }
 
     let imagenPrincipalBlog = $("#imagen-blog")[0].files[0];

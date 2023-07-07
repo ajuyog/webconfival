@@ -1,4 +1,8 @@
-﻿function SendComment(data) {
+﻿$(function () {
+    Justify();
+});
+
+function SendComment(data) {
     var valid = Valid();
     if (valid == 0) {
         var nombre = $("#comentario-nombre");
@@ -179,7 +183,7 @@ function Valid() {
         $("#invalid-comentario-comentario").css("display", "none");
     }
     return count;
-}
+};
 function ValidReply() {
     var nombre = $("#nombre").val();
     var profesion = $("#profesion").val();
@@ -206,7 +210,10 @@ function ValidReply() {
     return count;
 };
 
-
+function Justify() {
+    $("p").css("text-align", "justify")
+    $("h3").css("text-align", "justify")
+}
 
 
 

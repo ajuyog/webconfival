@@ -1,4 +1,5 @@
-﻿	@model frontend.Models.BlogDTO
+﻿@using Microsoft.AspNetCore.Html;
+	@model frontend.Models.BlogDTO
 @{
 	Layout = "_Layoutlandingpage2";
 }
@@ -38,7 +39,12 @@
 												<span class="badge bg-primary-gradient blog-label label5">Blogs Confival</span>
 											</div>
 											<div class=" mb-2 mt-5 content">
-												<p class="text-muted text-14 justify-policy">@Model.Contenido</p>
+												<p class="text-muted text-14 justify-policy">
+													
+													@(new HtmlString(Model.Contenido))
+													
+												
+												</p>
 											</div>
 											<div class="mt-4 pt-5 border-top">
 												<h3 class="card-title">Comentarios:</h3>
