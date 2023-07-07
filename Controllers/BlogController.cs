@@ -72,8 +72,6 @@ public class BlogController : Controller
         return View(model);
     }
 
-
-
     /// <summary>
     /// Devuele la vista con los blogs por idCategoria
     /// </summary>
@@ -116,7 +114,6 @@ public class BlogController : Controller
         ViewBag.H2 = nombre;
         return View("~/Views/Blog/Index.cshtml", model);
     }
-
 
     /// <summary>
     ///  Devuelve la vista de Blog por Id
@@ -403,6 +400,7 @@ public class BlogController : Controller
         return url;
     }
 
+    [HttpGet]
     public async Task<List<string>> Galeria(int id)
     {
         var url = new List<string>();
@@ -440,4 +438,35 @@ public class BlogController : Controller
         return url;
     }
 
+    [HttpGet]
+    public async Task<BlogDTO> SeeGallery(int id)
+    {
+		var obj = new BlogDTO();
+
+		var client = new HttpClient();
+		var token = await _getToken.GetTokenV();
+
+		var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog/" + id.ToString());
+		request.Headers.Add("Authorization", "Bearer " + token);
+		var response = await client.SendAsync(request);
+		if (response.IsSuccessStatusCode)
+		{
+			var responseStream = await response.Content.ReadAsStringAsync();
+			obj = JsonConvert.DeserializeObject<BlogDTO>(responseStream);
+		}
+		if (obj != null)
+		{
+			obj.Imagen = await Imagen(obj.Id);
+			obj.Galeria = await Galeria(obj.Id);
+		}
+        if(obj == null)
+        {
+            obj.Galeria = new List<string>();
+            obj.Galeria.Add("/assets/images/photos/blogmain2.jpg");
+			obj.Galeria.Add("/assets/images/photos/blogmain2.jpg");
+			obj.Galeria.Add("/assets/images/photos/blogmain2.jpg");
+			obj.Galeria.Add("/assets/images/photos/blogmain2.jpg");
+		}
+		return obj;
+	}
 }

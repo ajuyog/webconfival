@@ -54,11 +54,7 @@ namespace frontend.Controllers
 					},
 					Nombre = "Autor desconocido 25"
 				},
-				BlogId = new BlogDTO()
-				{
-					Id = 1,
-					Titulo = "Un blog por defecto"
-				},
+				
 				Comentario = "Un comentario realizado al blog por defecto",
 				Activo = false,
 				FechaPublicacion = DateTime.Now,

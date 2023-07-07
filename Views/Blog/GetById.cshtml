@@ -45,16 +45,13 @@
 												@foreach(var item in Model.Comentarios)
 												{
 													<div class="media mb-4 overflow-visible">
-														<div class="me-3">
-															<img class="media-object rounded-circle thumb-sm" alt="64x64" src="~/assets/images/photos/11.jpg">
-														</div>
 														<div class="media-body overflow-visible">
 															<div class="border mb-5 p-4 br-5 boton-edit">
 																<h5 class="mt-0">Autor desconocido<span class="text-muted fs-12 ms-1">@item.FechaPublicacion</span></h5>
 																<span><i class="fe fe-thumb-up text-danger"></i></span>
 																<p class="font-13 text-muted">@item.Comentario</p>
 																<span class="reply">
-																	<a onclick="responder(@item.Id.ToString())" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
+																	<a onclick="Reply(@item.Id.ToString())" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
 																</span>
 															</div>
 															<div id="@item.Id.ToString()" class="cancel-form-comment"></div>
@@ -111,15 +108,12 @@
 															<div class="invalid-feedback" id="invalid-comentario-comentario">El campo comentario es requerido</div>
 														</div>
 														<div class="col-md-12 my-2">
-															<button class="btn btn-primary text-white float-end" onclick="EnviarComentario()">Enviar</button>
+															<button class="btn btn-primary text-white float-end" onclick="SendComment(@Model.Id)">Enviar</button>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-
-
-
 										<div class="col-xl-4">
 											<div class="card-confival-blogs overflow-hidden border br-5">
 												<div class="card-header border-bottom">
@@ -173,10 +167,8 @@
 															<ul id="lightgallery" class="list-unstyled row row-sm">
 																@foreach (var item in Model.Galeria)
 																{
-																	<li class="col-sm-6 col-lg-4">
-																		<a href="javascript:void(0)">
+																	<li class="col-sm-6 col-lg-4" onclick="SeeGallery('@Model.Id', '@Model.Titulo')">
 																			<img class="img-responsive br-5 w-100" height="90" src="@item">
-																		</a>
 																	</li>
 																}
 															</ul>
@@ -185,6 +177,8 @@
 												</div>
 											</div>
 										</div>
+
+
 									</div>
 								</div>
 							</div>
@@ -197,6 +191,31 @@
 	</div>
 
 	<partial name="~/Views/Shared/_Footer1.cshtml" />
+
+
+	<div class="modal fade"  id="modal-gallery" tabindex="-1" role="dialog" style="padding-top: 120px;">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header" id="modal-header-galeria">
+					<h5 class="modal-title" >Modal title</h5>
+					<button  class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body" id="modal-body-gallery">
+					<h4>Galeria de imagenes</h4>
+					<div class="card-body h-100">
+                        <div id="carousel-indicators" class="carousel slide responsive-indicators-banners" data-bs-ride="carousel">
+                            <ol class="carousel-indicators carousel-indicators" id="ol-indicators">
+                            </ol>
+                            <div class="carousel-inner" id="src-imagen">
+                            </div>
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </div>
 
