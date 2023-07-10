@@ -2,6 +2,7 @@
 using frontend.Models.Graph;
 using frontend.Services.Graph;
 using frontend.Services.Token;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Org.BouncyCastle.Asn1.X509;
@@ -20,7 +21,6 @@ namespace frontend.Controllers
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly ISendMail _sendMail;
-
         public GraphController(IGetToken getToken, IConfiguration configuration, IMapper mapper, ISendMail sendMail)
         {
             _getToken = getToken;
@@ -31,39 +31,17 @@ namespace frontend.Controllers
         #endregion
 
         #region Bandeja de entrada
-        [HttpPost]
-        [Route("/Graph/GetOutlook")]
-        [Consumes("application/x-www-form-urlencoded")]
-        public async Task<IActionResult> Getoutlook([FromForm] IFormCollection value)
+        public async Task<IActionResult> Getoutlook()
         {
-            if (value.Count == 0)
-            {
-                var referesh = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize?client_id=57f0978d-23bc-4172-ae60-d548461c018d&response_type=code&redirect_uri=" + _configuration.GetSection("LandingPage:RedirectGraph:https").Value + "Graph/GetOutlook&response_mode=form_post&scope=user.read&state=0";
-                return Redirect(referesh);
-            }
-            string code = value.First().Value;
-            var skip = (Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 0 : (Convert.ToInt32(value.ElementAt(1).Value) - 1) * 10);
-            string redirect = "Graph/GetOutlook";
-            string accesToken = await _getToken.GetTokenMGraph(code, redirect);
-            var mensaje = "";
-            if (accesToken == "AADSTS54005")
-            {
-                mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
-            }
-            if (accesToken == "AADSTS65001")
-            {
-                mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
-            }
-            ViewBag.ImageData = await ImgProfile(accesToken);
-            //ViewBag.Entorno = _configuration.GetSection("LandingPage:RedirectGraph:https").Value;
-            var modelMe = await GetMeGraph(accesToken);
+            var objToken = await _getToken.GetTokenMicrosoft();
+            ViewBag.ImageData = await ImgProfile(objToken.access_token);
+            ViewBag.Entorno = _configuration.GetSection("LandingPage:RedirectGraph:https").Value;
+            var modelMe = await GetMeGraph(objToken.access_token);
             var client = new HttpClient();
             var modelOutlook = new MessagesGraphDTO();
-            var folderId = await GetFolferId(modelMe.Id, accesToken, "Bandeja de entrada");
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/Users/" + modelMe.Id + "/mailFolders/" + folderId + "/messages?$skip=" + skip.ToString() + "&count=true");
-            request.Headers.Add("Authorization", "Bearer " + accesToken);
+            var folderId = await GetFolferId(modelMe.Id, objToken.access_token, "Bandeja de entrada");
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/Users/" + modelMe.Id + "/mailFolders/" + folderId + "/messages?$skip=10&count=true");
+            request.Headers.Add("Authorization", "Bearer " + objToken.access_token);
             var content = new StringContent(string.Empty);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             request.Content = content;
@@ -78,15 +56,21 @@ namespace frontend.Controllers
                 modelOutlook.Count = Convert.ToInt32(array[1].ToString().Substring(15));
                 modelOutlook.Paginas = (int)Math.Ceiling((double)modelOutlook.Count / 10);
                 modelOutlook.BaseUrl = "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/authorize?client_id=" + _configuration.GetSection("Azure:ClientId").Value + "&response_type=code&redirect_uri=" + _configuration.GetSection("LandingPage:RedirectGraph:https").Value + "Graph/GetOutlook&response_mode=form_post&scope=user.read&state=";
-                modelOutlook.PaginaActual = Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 1 : Convert.ToInt32(value.ElementAt(1).Value);
+                modelOutlook.PaginaActual = 2;
                 modelOutlook.Folder = "Bandeja de entrada";
                 modelOutlook.Entorno = _configuration.GetSection("LandingPage:RedirectGraph:https").Value;
                 modelOutlook.value.ForEach(x => x.ReceivedDateTime = x.ReceivedDateTime.Substring(0, x.ReceivedDateTime.Length - 4).Replace("T", " ").Trim());
 
             }
+            else
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                var y = 7;
+            }
             return View(modelOutlook);
         }
         #endregion
+
 
         #region Elementos enviados
         [Consumes("application/x-www-form-urlencoded")]

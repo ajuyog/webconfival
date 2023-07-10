@@ -41,7 +41,6 @@ public class LandingPageController : Controller
         {
             ViewData["mensaje"] = mensaje;
         }
-
         var model = new List<BannerDTO>();
         var token = await _getToken.GetTokenV();
         if (token == "")
@@ -237,7 +236,7 @@ public class LandingPageController : Controller
 		return new ChallengeResult(proveedor2, propiedades);
 	}
 
-
+    [HttpGet]
 	public async Task<IActionResult> RegistrarUsuarioExterno(string? urlRetorno = null,
 		string? remoteError = null)
 	{

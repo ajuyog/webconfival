@@ -12,15 +12,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 //builder.Services.AddAuthentication(options =>
 //{
-//    options.DefaultScheme =
-//    CookieAuthenticationDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = MicrosoftAccountDefaults.AuthenticationScheme;
+//	options.DefaultScheme =
+//	CookieAuthenticationDefaults.AuthenticationScheme;
+//	options.DefaultChallengeScheme = MicrosoftAccountDefaults.AuthenticationScheme;
 //}).AddCookie().AddMicrosoftAccount(o =>
 //{
 //	o.ClientId = builder.Configuration.GetValue<string>("Azure:ClientId");
 //	o.ClientSecret = builder.Configuration.GetValue<string>("Azure:ClientSecret");
-//    o.AuthorizationEndpoint = "https://login.microsoftonline.com/" + builder.Configuration.GetValue<string>("Azure:TenantId") + "/oauth2/v2.0/authorize";
+//	o.AuthorizationEndpoint = "https://login.microsoftonline.com/" + builder.Configuration.GetValue<string>("Azure:TenantId") + "/oauth2/v2.0/authorize";
 //	o.TokenEndpoint = "https://login.microsoftonline.com/" + builder.Configuration.GetValue<string>("Azure:TenantId") + "/oauth2/v2.0/token";
+//	o.SaveTokens = true;
 //});
 
 builder.Services.AddAuthentication().AddMicrosoftAccount(o =>
@@ -30,14 +31,15 @@ builder.Services.AddAuthentication().AddMicrosoftAccount(o =>
 	o.AuthorizationEndpoint = "https://login.microsoftonline.com/" + builder.Configuration.GetValue<string>("Azure:TenantId") + "/oauth2/v2.0/authorize";
 	o.TokenEndpoint = "https://login.microsoftonline.com/" + builder.Configuration.GetValue<string>("Azure:TenantId") + "/oauth2/v2.0/token";
 	o.SaveTokens = true;
+	o.Scope.Add("offline_access User.Read Mail.Read Calendars.Read");
 });
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-
 builder.Services.AddTransient<IGetToken, GetToken>();
 builder.Services.AddTransient<ISendMail, SendMail>();
 builder.Services.AddTransient<IMail, Mail>();
+builder.Services.AddHttpClient();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 	options.UseSqlServer(connectionString));
@@ -46,14 +48,6 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(opciones =>
 {
 	opciones.SignIn.RequireConfirmedAccount = false;
 }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-
-//builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
-//	opciones =>
-//	{
-//		opciones.LoginPath = "/usuarios/login";
-//		opciones.AccessDeniedPath = "/usuarios/login";
-//	});
-
 
 builder.Services.AddAutoMapper(typeof(Program));
 
