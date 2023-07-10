@@ -40,10 +40,7 @@
 											</div>
 											<div class=" mb-2 mt-5 content">
 												<p class="text-muted text-14 justify-policy">
-													
 													@(new HtmlString(Model.Contenido))
-													
-												
 												</p>
 											</div>
 											<div class="mt-4 pt-5 border-top">
@@ -51,7 +48,9 @@
                                                 <input type="hidden" id="id-blog" value="@Model.Id"/>
 												@foreach(var item in Model.Comentarios)
 												{
-													<div class="media mb-4 overflow-visible">
+													if(item.Id == item.ComentarioId)
+													{
+														<div class="media mb-4 overflow-visible">
 														<div class="media-body overflow-visible">
 															<div class="border mb-5 p-4 br-5 boton-edit">
 																<h5 class="mt-0">Autor desconocido<span class="text-muted fs-12 ms-1">@item.FechaPublicacion</span></h5>
@@ -62,22 +61,23 @@
 																</span>
 															</div>
 															<div id="@item.Id.ToString()" class="cancel-form-comment"></div>
-
-															@*@foreach(var subitem in item.SubComentarios)
+															@foreach(var subitem in Model.Comentarios)
 															{
-																<div>
+																if (subitem.ComentarioId == item.Id)
+																{
+																	<div>
 																	<div class="media mb-4 overflow-visible boton-edit-2">
 																		<div class="me-3">
 																			<img class="media-object rounded-circle thumb-sm" alt="" title="" src="~/assets/images/photos/11.jpg">
 																		</div>
 																		<div class="media-body border p-4 overflow-visible br-5">
-																			<h5 class="mt-0">Autor desconocido<span class="text-muted fs-12 mx-1 bg-normal-light">Reply to Autor desconocido </span><span class="text-muted fs-12 ms-1">@subitem.FechaPublicacion</span></h5>
+																			<h5 class="mt-0">Respuesta a comenntario<span class="text-muted fs-12 mx-1 bg-normal-light">Respuesta a comenntario </span><span class="text-muted fs-12 ms-1">@subitem.FechaPublicacion</span></h5>
 																			<span><i class="fe fe-thumb-up text-danger"></i></span>
 																			<p class="font-13 text-muted">
-																				@subitem.Contenido
+																				@subitem.Comentario
 																			</p>
 																			<span class="reply">
-																				<a onclick="responderDos(@subitem.ComentarioId, @subitem.Id)" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
+																				<a onclick="Reply(@item.Id.ToString())" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
 																			</span>
 																		</div>
 																	</div>
@@ -86,9 +86,11 @@
 																	}
 																	<div id="@identificador" class="cancel-form-comment"></div>
 																</div>
-															}*@
+																}
+															}
 														</div>
 													</div>
+													}
 												}
 												<div id="main-form-comentario">
 													<div class="row row-xs form-group-wrapper">

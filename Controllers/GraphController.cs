@@ -32,8 +32,8 @@ namespace frontend.Controllers
 
         #region Bandeja de entrada
         [HttpPost]
-        [Consumes("application/x-www-form-urlencoded")]
         [Route("/Graph/GetOutlook")]
+        [Consumes("application/x-www-form-urlencoded")]
         public async Task<IActionResult> Getoutlook([FromForm] IFormCollection value)
         {
             if (value.Count == 0)
@@ -191,8 +191,8 @@ namespace frontend.Controllers
         #endregion
 
         #region teams en desarrollo
+		[Consumes("application/x-www-form-urlencoded")]
         [Route("/Graph/GetTeams")]
-        [Consumes("application/x-www-form-urlencoded")]
         public async Task<IActionResult> GetTeams([FromForm] IFormCollection value)
         {
             string code = value.First().Value;

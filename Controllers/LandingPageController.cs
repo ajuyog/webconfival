@@ -1,9 +1,11 @@
 using System.Diagnostics;
 using System.Reflection;
+using System.Security.Claims;
 using frontend.Models;
 using frontend.Models.JsonDTO;
 using frontend.Services.Token;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Kiota.Abstractions.Extensions;
 using Newtonsoft.Json;
@@ -19,17 +21,27 @@ public class LandingPageController : Controller
     #region CONSTRUCTOR
     private readonly IConfiguration _configuration;
     private readonly IGetToken _getToken;
-    public LandingPageController(IConfiguration configuration, IGetToken getToken)
+	private readonly UserManager<IdentityUser> _userManager;
+	private readonly SignInManager<IdentityUser> _signInManager;
+
+	public LandingPageController(IConfiguration configuration, IGetToken getToken, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
     {
         _configuration = configuration;
         _getToken = getToken;
-    }
+		_userManager = userManager;
+		_signInManager = signInManager;
+	}
     #endregion
 
     [Route("/")]
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string mensaje = null)
     {
+        if(mensaje != null)
+        {
+            ViewData["mensaje"] = mensaje;
+        }
+
         var model = new List<BannerDTO>();
         var token = await _getToken.GetTokenV();
         if (token == "")
@@ -216,41 +228,119 @@ public class LandingPageController : Controller
         return View();
     }
 
-    [HttpGet]
-    public IActionResult SignIn()
-    {
-        var props = new AuthenticationProperties();
-        props.RedirectUri = "/LandingPage/SignInSuccess";
-        return Challenge(props);
-    }
-    public async Task<IActionResult> SignInSuccess()
-    {
-        var mail = User.Identities.First().Claims.LastOrDefault().Value;
-        var obj = new CuentasLoginDTO()
-        {
-            Id = _configuration.GetSection("Variables:IdLogin").Value,
-            Email = mail,
-            password = "123456789"
-        };
-        var json = JsonConvert.SerializeObject(obj);
-        var client = new HttpClient();
-        var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/cuentas/inicioSesion?secret=" + _configuration.GetSection("Variables:Secret").Value);
-        var content = new StringContent(json, null, "application/json");
-        request.Content = content;
-        var response = await client.SendAsync(request);
-        if (response.IsSuccessStatusCode)
-        {
-            var responseStream = await response.Content.ReadAsStringAsync();
-            var tokenSuccess = JsonConvert.DeserializeObject<TokenValuezDTO>(responseStream);
-            return RedirectToAction("Index", "Home");
-        }
-        else
-        {
-            return RedirectToAction("Index", "LandingPage");
-        }
-    }
+	[HttpGet]
+	public ChallengeResult SignIn(string proveedor, string? urlRetorno = null)
+	{
+        var proveedor2 = "Microsoft";
+		var urlRedireccion = Url.Action("RegistrarUsuarioExterno", values: new { urlRetorno });
+		var propiedades = _signInManager.ConfigureExternalAuthenticationProperties(proveedor2, urlRedireccion);
+		return new ChallengeResult(proveedor2, propiedades);
+	}
 
-    [HttpPost]
+
+	public async Task<IActionResult> RegistrarUsuarioExterno(string? urlRetorno = null,
+		string? remoteError = null)
+	{
+		
+        urlRetorno = "~/Home/Index";
+		var mensaje = "";
+
+		if (remoteError != null)
+		{
+			mensaje = $"Error from external provider: {remoteError}";
+			return RedirectToAction("Index", routeValues: new { mensaje });
+		}
+
+		var info = await _signInManager.GetExternalLoginInfoAsync();
+		if (info == null)
+		{
+			mensaje = "Error loading external login information.";
+			return RedirectToAction("Index", routeValues: new { mensaje });
+		}
+
+		string email = "";
+
+		if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
+		{
+			email = info.Principal.FindFirstValue(ClaimTypes.Email)!;
+		}
+		else
+		{
+			mensaje = "Error leyendo el email del usuario del proveedor.";
+			return RedirectToAction("Index", routeValues: new { mensaje });
+		}
+
+		var usuario = new IdentityUser() { UserName = email, Email = email };
+
+		// Optener Tocken de Microsoft
+		var props = new AuthenticationProperties();
+		props.StoreTokens(info.AuthenticationTokens);
+		props.IsPersistent = true;
+
+
+		var resultadoLoginExterno = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: true, bypassTwoFactor: true);
+		if (resultadoLoginExterno.Succeeded)
+		{
+			await _signInManager.SignInAsync(usuario, props, info.LoginProvider);
+			return LocalRedirect(urlRetorno);
+		}
+
+		var resultadoCrearUsuario = await _userManager.CreateAsync(usuario);
+		if (!resultadoCrearUsuario.Succeeded)
+		{
+			mensaje = resultadoCrearUsuario.Errors.First().Description;
+			return RedirectToAction("Index", routeValues: new { mensaje });
+		}
+
+		var resultadoAgregarLogin = await _userManager.AddLoginAsync(usuario, info);
+		if (resultadoAgregarLogin.Succeeded)
+		{
+			await _signInManager.SignInAsync(usuario, props, info.LoginProvider);
+			return LocalRedirect(urlRetorno);
+		}
+
+		mensaje = "Ha ocurrido un error agregando el login.";
+		return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+	}
+
+
+
+	//[HttpGet]
+	//public IActionResult SignIn()
+	//{
+	//    var props = new AuthenticationProperties();
+	//    props.RedirectUri = "/LandingPage/SignInSuccess";
+	//    return Challenge(props);
+	//}
+	//[HttpGet]
+	//public async Task<IActionResult> SignInSuccess()
+	//{
+	//    var mail = User.Identities.First().Claims.LastOrDefault().Value;
+	//    var obj = new CuentasLoginDTO()
+	//    {
+	//        Id = _configuration.GetSection("Variables:IdLogin").Value,
+	//        Email = mail,
+	//        password = "123456789"
+	//    };
+	//    var json = JsonConvert.SerializeObject(obj);
+	//    var client = new HttpClient();
+	//    var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/cuentas/inicioSesion?secret=" + _configuration.GetSection("Variables:Secret").Value);
+	//    var content = new StringContent(json, null, "application/json");
+	//    request.Content = content;
+	//    var response = await client.SendAsync(request);
+	//    if (response.IsSuccessStatusCode)
+	//    {
+	//        var responseStream = await response.Content.ReadAsStringAsync();
+	//        var tokenSuccess = JsonConvert.DeserializeObject<TokenValuezDTO>(responseStream);
+	//        return RedirectToAction("Index", "Home");
+	//    }
+	//    else
+	//    {
+	//        return RedirectToAction("Index", "LandingPage");
+	//    }
+	//}
+
+	[HttpPost]
     public IActionResult SignOut(string signOutType)
     {
         if (signOutType == "app")

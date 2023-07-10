@@ -29,7 +29,7 @@ function AddTitulo() {
             $("#invalid-imagen-blog-principal").css("display", "block");
         }
     }
-}
+};
 function AddContenido() {
     let contenidoBlog = $("#contenido-blog");
 
@@ -55,11 +55,11 @@ function AddContenido() {
         $("#subtitulo-blog").val("");
         $("#parrafo-general").val("");
     }
-}
+};
 function ShowFormGallery() {
     $("#seccion-uno").addClass("hide-info");
     $("#seccion-galeria").removeClass("hide-info");
-}
+};
 function addImgGallery() {
     let inputImg = $("#imagen-g");
     let imagenB = inputImg[0].files
@@ -85,7 +85,7 @@ function addImgGallery() {
         readUrlGallery(imagenB, imgGallery);
         imgGallery++;
     }
-}
+};
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -109,7 +109,7 @@ function readUrlGallery(imagenB, id) {
         }
         reader.readAsDataURL(imagenB.files[0]);
     }
-}
+};
 function backContenido() {
     var seccionTitulo = $("#seccion-uno-publicar");
     let seccionContenido = $("#seccion-contenido");
@@ -118,7 +118,7 @@ function backContenido() {
 
     $("#seccion-uno").removeClass("hide-info");
     $("#seccion-galeria").addClass("hide-info");
-}
+};
 function NextGallery() {
     // Remove Secciones
     $("#seccion-uno").addClass("hide-info");
@@ -126,7 +126,8 @@ function NextGallery() {
 
     // Mostrar seccion categoria
     $("#seccion-categorias").removeClass("hide-info");
-}
+};
+
 function Publicar() {
     $("#visualizador-campos").addClass("hide-info");
     $("#visualizar-blog-principal").addClass("hide-info");
@@ -184,7 +185,7 @@ function Publicar() {
         }
     });
 
-}
+};
 
 $("#categorias-principal").on("change", function () {
     var cartegoriaPrincipal = $("#categorias-principal").val();
@@ -214,5 +215,5 @@ $("#categorias-principal").on("change", function () {
     if (cartegoriaPrincipal.length == 0) {
         $("#seccion-btn-finalizar").addClass("hide-info");
     }
-})
+});
 
