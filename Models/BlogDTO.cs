@@ -2,7 +2,7 @@
 
 namespace frontend.Models
 {
-	public class BlogDTO: PaginadorDTO
+	public class BlogDTO
 	{
         public int Id { get; set; } 
         public string Titulo { get; set; } 

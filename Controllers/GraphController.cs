@@ -65,12 +65,11 @@ namespace frontend.Controllers
             else
             {
                 var responseStream = await response.Content.ReadAsStringAsync();
-                var y = 7;
+                var leerError = 7;
             }
             return View(modelOutlook);
         }
         #endregion
-
 
         #region Elementos enviados
         [Consumes("application/x-www-form-urlencoded")]

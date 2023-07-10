@@ -1,4 +1,4 @@
-﻿@model List<frontend.Models.BlogDTO>
+﻿@model frontend.Models.BlogsDTO
 @{
     Layout = "_Layoutlandingpage2";
 }
@@ -15,15 +15,15 @@
                     <div class="card-body bg-white">
                         <div class="row">
                             <div class="ps-relative p-1 bg-light br-5">
-                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model[0].Id">
-                                    <img src="@Model[0].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
-                                    <span class="badge rounded-pill bg-primary-gradient blog-label label1">@Model[0].Categorias[0].Nombre</span>
+                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[0].Id">
+                                    <img src="@Model.ResultBlog[0].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
+                                    <span class="badge rounded-pill bg-primary-gradient blog-label label1">@Model.ResultBlog[0].Categorias[0].Nombre</span>
                                 </a>
                             </div>
                             <div class="card-body">
-                                <a href="#" class="text-dark blog-title">@Model[0].Titulo</a>
-                                <p class="mb-0 text-muted mt-4 justify-policy">@Model[0].Contenido.Substring(0, Convert.ToInt32(Model[0].Contenido.Length * 0.25))</p>
-                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
+                                <a href="#" class="text-dark blog-title">@Model.ResultBlog[0].Titulo</a>
+                                <p class="mb-0 text-muted mt-4 justify-policy">@Model.ResultBlog[0].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[0].Contenido.Length * 0.25))</p>
+                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
                             </div>
                             <div class="card-footer ">
                                 <div class="d-sm-flex align-items-center">
@@ -34,8 +34,8 @@
                                     </div>
                                     <h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Autor desconocido</h6>
                                     <div class="d-sm-flex ms-sm-auto">
-                                        <a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model[0].Publicacion.ToShortDateString()</div></a>
-                                        <a class="me-0 d-flex"><span class="fe fe-message-square text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@(Model[0].Comentarios.Count() == 1 ? " Comentario" : " Comentarios")</div></a>
+                                        <a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model.ResultBlog[0].Publicacion.ToShortDateString()</div></a>
+                                        <a class="me-0 d-flex"><span class="fe fe-message-square text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@(Model.ResultBlog[0].Comentarios.Count() == 1 ? " Comentario" : " Comentarios")</div></a>
                                     </div>
                                 </div>
                             </div>
@@ -193,15 +193,15 @@
                     <div class="card-body bg-white">
                         <div class="row">
                             <div class="ps-relative p-1 bg-light br-5">
-                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model[0].Id">
-                                    <img src="@Model[0].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
-                                    <span class="badge rounded-pill bg-primary-gradient blog-label label1">@Model[0].Categorias[0].Nombre</span>
+                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[0].Id">
+                                    <img src="@Model.ResultBlog[0].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
+                                    <span class="badge rounded-pill bg-primary-gradient blog-label label1">@Model.ResultBlog[0].Categorias[0].Nombre</span>
                                 </a>
                             </div>
                             <div class="card-body">
-                                <a href="#" class="text-dark blog-title">@Model[0].Titulo</a>
-                                <p class="mb-0 text-muted mt-4 justify-policy">@Model[0].Contenido.Substring(0, Convert.ToInt32(Model[0].Contenido.Length * 0.25))</p>
-                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
+                                <a href="#" class="text-dark blog-title">@Model.ResultBlog[0].Titulo</a>
+                                <p class="mb-0 text-muted mt-4 justify-policy">@Model.ResultBlog[0].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[0].Contenido.Length * 0.25))</p>
+                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
                             </div>
                             <div class="card-footer ">
                                 <div class="d-sm-flex align-items-center">
@@ -212,8 +212,8 @@
                                     </div>
                                     <h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Autor desconocido</h6>
                                     <div class="d-sm-flex ms-sm-auto">
-                                        <a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model[0].Publicacion.ToShortDateString()</div></a>
-                                        <a class="me-0 d-flex"><span class="fe fe-message-square text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@(Model[0].Comentarios.Count() == 1 ? " Comentario" : " Comentarios")</div></a>
+                                        <a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model.ResultBlog[0].Publicacion.ToShortDateString()</div></a>
+                                        <a class="me-0 d-flex"><span class="fe fe-message-square text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@(Model.ResultBlog[0].Comentarios.Count() == 1 ? " Comentario" : " Comentarios")</div></a>
                                     </div>
                                 </div>
                             </div>
@@ -367,15 +367,15 @@
                         <div class="col-xl-12 col-md-12 my-2 p-xl-max-0">
                             <div class="card overflow-hidden box-shadow mb-0 main-blog">
                                 <div class="ps-relative p-1 bg-light br-5">
-                                    <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model[1].Id">
-                                        <img src="@Model[1].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
-                                        <span class="badge rounded-pill bg-info-gradient blog-label label2">@Model[1].Categorias[0].Nombre</span>
+                                    <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[1].Id">
+                                        <img src="@Model.ResultBlog[1].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
+                                        <span class="badge rounded-pill bg-info-gradient blog-label label2">@Model.ResultBlog[1].Categorias[0].Nombre</span>
                                     </a>
                                 </div>
                                 <div class="card-body p-0 border border-top-0 br-br-5 br-bl-5 mb-2 mb-lg-0">
                                     <div class="p-5 border-bottom">
-                                        <a href="#" class="text-dark blog-title">@Model[1].Titulo</a>
-                                        <p class="mb-0 text-muted mt-4">@Model[1].Contenido.Substring(0, Convert.ToInt32(Model[1].Contenido.Length * 0.25)) </p>
+                                        <a href="#" class="text-dark blog-title">@Model.ResultBlog[1].Titulo</a>
+                                        <p class="mb-0 text-muted mt-4">@Model.ResultBlog[1].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[1].Contenido.Length * 0.25)) </p>
                                     </div>
                                     <div class="d-sm-flex p-5 align-items-center">
                                         <div class="avatar-list indicators">
@@ -385,7 +385,7 @@
                                         </div>
                                         <h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Autor Desconocido</h6>
                                         <div class="d-sm-flex ms-sm-auto">
-                                            <a href="#" class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model[1].Publicacion.ToShortDateString()</div></a>
+                                            <a href="#" class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model.ResultBlog[1].Publicacion.ToShortDateString()</div></a>
                                         </div>
                                     </div>
                                 </div>
@@ -411,15 +411,15 @@
                 <div class="card-body bg-white">
                     <div class="row">
                         <div class="ps-relative p-1 bg-light br-5">
-                            <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model[0].Id">
-                                <img src="@Model[0].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
-                                <span class="badge rounded-pill bg-primary-gradient blog-label label1">@Model[0].Categorias[0].Nombre</span>
+                            <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[0].Id">
+                                <img src="@Model.ResultBlog[0].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
+                                <span class="badge rounded-pill bg-primary-gradient blog-label label1">@Model.ResultBlog[0].Categorias[0].Nombre</span>
                             </a>
                         </div>
                         <div class="card-body">
-                            <a href="#" class="text-dark blog-title">@Model[0].Titulo</a>
-                            <p class="mb-0 text-muted mt-4 justify-policy">@Model[0].Contenido.Substring(0, Convert.ToInt32(Model[0].Contenido.Length * 0.25))</p>
-                            <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
+                            <a href="#" class="text-dark blog-title">@Model.ResultBlog[0].Titulo</a>
+                            <p class="mb-0 text-muted mt-4 justify-policy">@Model.ResultBlog[0].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[0].Contenido.Length * 0.25))</p>
+                            <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
                         </div>
                         <div class="card-footer ">
                             <div class="d-sm-flex align-items-center">
@@ -430,8 +430,8 @@
                                 </div>
                                 <h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Autor desconocido</h6>
                                 <div class="d-sm-flex ms-sm-auto">
-                                    <a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model[0].Publicacion.ToShortDateString()</div></a>
-                                    <a class="me-0 d-flex"><span class="fe fe-message-square text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@(Model[0].Comentarios.Count() == 1 ? " Comentario" : " Comentarios")</div></a>
+                                    <a class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model.ResultBlog[0].Publicacion.ToShortDateString()</div></a>
+                                    <a class="me-0 d-flex"><span class="fe fe-message-square text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@(Model.ResultBlog[0].Comentarios.Count() == 1 ? " Comentario" : " Comentarios")</div></a>
                                 </div>
                             </div>
                         </div>
@@ -584,15 +584,15 @@
                         <div class="col-xl-7 col-md-12 my-2 p-xl-max-0">
                             <div class="card overflow-hidden box-shadow mb-0 main-blog">
                                 <div class="ps-relative p-1 bg-light br-5">
-                                    <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model[1].Id">
-                                        <img src="@Model[1].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
-                                        <span class="badge rounded-pill bg-info-gradient blog-label label2">@Model[1].Categorias[0].Nombre</span>
+                                    <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[1].Id">
+                                        <img src="@Model.ResultBlog[1].Imagen" alt="" title="" class="card custom-card background-image-blog img1 mb-0">
+                                        <span class="badge rounded-pill bg-info-gradient blog-label label2">@Model.ResultBlog[1].Categorias[0].Nombre</span>
                                     </a>
                                 </div>
                                 <div class="card-body p-0 border border-top-0 br-br-5 br-bl-5 mb-2 mb-lg-0">
                                     <div class="p-5 border-bottom">
-                                        <a href="#" class="text-dark blog-title">@Model[1].Titulo</a>
-                                        <p class="mb-0 text-muted mt-4">@Model[1].Contenido.Substring(0, Convert.ToInt32(Model[1].Contenido.Length * 0.25)) </p>
+                                        <a href="#" class="text-dark blog-title">@Model.ResultBlog[1].Titulo</a>
+                                        <p class="mb-0 text-muted mt-4">@Model.ResultBlog[1].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[1].Contenido.Length * 0.25)) </p>
                                     </div>
                                     <div class="d-sm-flex p-5 align-items-center">
                                         <div class="avatar-list indicators">
@@ -602,14 +602,14 @@
                                         </div>
                                         <h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Autor Desconocido</h6>
                                         <div class="d-sm-flex ms-sm-auto">
-                                            <a href="#" class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model[1].Publicacion.ToShortDateString()</div></a>
+                                            <a href="#" class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model.ResultBlog[1].Publicacion.ToShortDateString()</div></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-5 col-md-12">
-                            @foreach (var item in Model.Skip(2).Take(6))
+                            @foreach (var item in Model.ResultBlog.Skip(2).Take(8))
                             {
                                 <div class="row mb-5">
                               
@@ -627,9 +627,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                
                                 </div>
                             }
+                                <partial name="~/Views/Shared/_Paginador.cshtml" />
                         </div>
                     </div>
                 </div>
