@@ -50,7 +50,6 @@ namespace frontend.Controllers
                 mensaje = "La sesion se ha cerrado por inactividad, por favor ingresa nuevamente";
                 return RedirectToAction("Index", "LandingPage", routeValues: new { mensaje });
             }
-            ViewBag.ImageData = await _graphServices.ImgProfile(objToken.access_token);
             var modelMe = await _graphServices.GetMeGraph(objToken.access_token);
             if (modelMe == null)
             {
@@ -74,6 +73,7 @@ namespace frontend.Controllers
             var array = json.Split(",");
             model.GivenName = modelMe.GivenName;
             model.JobTitle = modelMe.JobTitle;
+            model.DisplayName = modelMe.DisplayName;
             model.Count = Convert.ToInt32(array[1].ToString().Substring(15));
             model.Paginas = (int)Math.Ceiling((double)model.Count / 10);
             model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Graph/Getoutlook?folder=" + folder + "&pagina=";
@@ -81,6 +81,8 @@ namespace frontend.Controllers
             model.Folder = folder;
             model.Entorno = _configuration["LandingPage:RedirectGraph:https"];
             model.value.ForEach(x => x.ReceivedDateTime = x.ReceivedDateTime.Substring(0, x.ReceivedDateTime.Length - 4).Replace("T", " ").Trim());
+            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+            ViewBag.user = model.DisplayName;
             return View(model);
         }
 
@@ -98,7 +100,7 @@ namespace frontend.Controllers
                 mensaje = "La sesion se ha cerrado por inactividad, por favor ingresa nuevamente";
                 return RedirectToAction("Index", "LandingPage", routeValues: new { mensaje });
             }
-            ViewBag.ImageData = await _graphServices.ImgProfile(token.access_token);
+            ViewBag.Imagen = await _graphServices.ImgProfile(token.access_token);
             var modelMe = await _graphServices.GetMeGraph(token.access_token);
             var modelCalendar = new CalendarGraphDTO();
             modelCalendar.GivenName = modelMe.GivenName;

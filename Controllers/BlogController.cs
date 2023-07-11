@@ -1,6 +1,7 @@
 using Azure;
 using frontend.Models;
 using frontend.Models.JsonDTO;
+using frontend.Services.Graph;
 using frontend.Services.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,13 @@ public class BlogController : Controller
     #region CONSTRUCTOR
     private readonly IGetToken _getToken;
     private readonly IConfiguration _configuration;
+    private readonly IGraphServices _graphServices;
 
-    public BlogController(IGetToken getToken, IConfiguration configuration)
+    public BlogController(IGetToken getToken, IConfiguration configuration, IGraphServices graphServices)
     {
         _getToken = getToken;
         _configuration = configuration;
+        _graphServices = graphServices;
     }
     #endregion
 
@@ -204,6 +207,7 @@ public class BlogController : Controller
     {
         var model = new List<CategoriaDTO>();
         var token = await _getToken.GetTokenV();
+        var objToken = await _getToken.GetTokenMicrosoft();
         var client = new HttpClient();
         var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Categoria/categorias");
         request.Headers.Add("Authorization", "Bearer " + token);
@@ -214,6 +218,9 @@ public class BlogController : Controller
             var lstCategorias = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
             model = lstCategorias.ToList();
         }
+        ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+        var me = await _graphServices.GetMeGraph(objToken.access_token);
+        ViewBag.user = me.DisplayName;
         return View(model);
     }
 

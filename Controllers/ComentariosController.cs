@@ -1,10 +1,12 @@
 ﻿using frontend.Models;
 using frontend.Models.JsonDTO;
+using frontend.Services.Graph;
 using frontend.Services.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Graph.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using System.Reflection;
 
@@ -15,11 +17,14 @@ namespace frontend.Controllers
 		#region CONSTRUCTOR
 		private readonly IConfiguration _configuration;
 		private readonly IGetToken _getToken;
-		public ComentariosController(IConfiguration configuration, IGetToken getToken)
+        private readonly IGraphServices _graphServices;
+
+        public ComentariosController(IConfiguration configuration, IGetToken getToken, IGraphServices graphServices)
         {
 			_configuration = configuration;
 			_getToken = getToken;
-		}
+            _graphServices = graphServices;
+        }
 		#endregion
 
 		/// <summary>
@@ -30,6 +35,7 @@ namespace frontend.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
+			var objToken = await _getToken.GetTokenMicrosoft();
 			var model = new List<ComentariosDTO>() { };
 			var client = new HttpClient();
 			var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/blog/1/comentarios");
@@ -38,6 +44,9 @@ namespace frontend.Controllers
 			content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 			request.Content = content;
 			var response = await client.SendAsync(request);
+            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+            var me = await _graphServices.GetMeGraph(objToken.access_token);
+            ViewBag.user = me.DisplayName;
 			if (response.IsSuccessStatusCode)
 			{
 				var responseStream = await response.Content.ReadAsStringAsync();
@@ -48,7 +57,7 @@ namespace frontend.Controllers
 			{
 				return View( model);
 			}
-		}
+        }
 
 		/// <summary>
 		/// Permite crear un comentario mediante API RestFull
@@ -72,9 +81,9 @@ namespace frontend.Controllers
 			if(response.IsSuccessStatusCode)
 			{
 				return true;
-			}
+            }
 			return false;
-		}
+        }
 		
 		[Authorize]
 		[HttpGet]

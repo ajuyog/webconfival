@@ -1,4 +1,4 @@
-﻿@model frontend.Models.UserDTO
+﻿@model frontend.Models.Graph.MeGraphDTO
 @{
     Layout = "_Layout3";
 }
@@ -23,13 +23,13 @@
                 <div class="row align-items-center">
                     <div class="col-lg-12 col-md-12 col-xl-6">
                         <div class="d-flex flex-wrap align-items-center">
-                            @*<div class="profile-img-main rounded">
-                            <img src="~/assets/images/faces/6.jpg" alt="img" class="m-0 p-1 rounded hrem-6">
-                            </div>*@
+                            <div class="profile-img-main rounded">
+                                <img src="@Model.Photo" alt="img" class="m-0 p-1 rounded hrem-6">
+                            </div>
                             <div class="ms-4">
-                                <h2 class="header-family pad-text">Bienvenido</h2>
-                                <h3>@Model.Nombre</h3>
-                                <h4>@Model.Apellido</h4>
+                                <h3>@Model.GivenName</h3>
+                                <h4>@Model.Surname</h4>
+                                <h5>@Model.JobTitle</h5>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div class="user-mail">
-                            <h4>@Model.Correo</h4>
+                            <h5>@Model.Mail</h5>
                         </div>
                     </div>
                 </div>

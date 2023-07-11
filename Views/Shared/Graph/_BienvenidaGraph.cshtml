@@ -5,10 +5,10 @@
                 <div class="col-lg-12 col-md-12 col-xl-12">
                     <div class="d-flex flex-wrap align-items-center">
                         <div class="profile-img-main rounded">
-                            <img src=@ViewBag.ImageData alt="img" class="m-0 p-1 rounded hrem-6">
+                            <img src=@ViewBag.Imagen alt="img" class="m-0 p-1 rounded hrem-6">
                         </div>
                         <div class="ms-4">
-                            <h2 class="header-family pad-text"><strong>@Model.GivenName</strong>@(Model.Folder == "Bandeja de entrada" ? ", Revisa tu bandeja de entrada" : Model.Folder == "Elementos enviados" ? ", Revisa tus correos enviados" : Model.Folder == "Settings" ? ", Revisa las configuraciones de tu cuenta" : Model.Folder == "Carpeta Automatizacion" ? ", Revisa todos los correos de automatizacion" : Model.Folder == "Calendar" ? ", Revisa todos tus eventos" : "")</h2>
+                            <h2 class="header-family pad-text"><strong>@Model.GivenName</strong>@(Model.Folder == "Bandeja de entrada" ? ", Revisa tu bandeja de entrada" : Model.Folder == "Elementos enviados" ? ", Revisa tus correos enviados" : Model.Folder == "Settings" ? ", Revisa las configuraciones de tu cuenta" : Model.Folder == "AutomatizacionConfival" ? ", Revisa todos los correos de automatizacion" : Model.Folder == "Calendar" ? ", Revisa todos tus eventos" : "")</h2>
                             <h4>@Model.JobTitle</h4>
                         </div>
                     </div>

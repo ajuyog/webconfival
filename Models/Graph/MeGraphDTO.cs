@@ -8,6 +8,6 @@
         public string JobTitle { get; set; }
         public string Mail { get; set; }
         public string Surname { get; set; }
-
+        public string Photo { get; set; }
     }
 }

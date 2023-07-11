@@ -1,5 +1,6 @@
 ﻿using frontend.Models;
 using frontend.Models.JsonDTO;
+using frontend.Services.Graph;
 using frontend.Services.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +19,13 @@ namespace frontend.Controllers
 		#region CONSTRUCTOR
 		private readonly IConfiguration _configuration;
         private readonly IGetToken _getToken;
+        private readonly IGraphServices _graphServices;
 
-        public BannerController(IConfiguration configuration, IGetToken getToken)
+        public BannerController(IConfiguration configuration, IGetToken getToken, IGraphServices graphServices)
 		{
 			_configuration = configuration;
             _getToken = getToken;
+            _graphServices = graphServices;
         }
 		#endregion
 
@@ -36,9 +39,14 @@ namespace frontend.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public IActionResult InicioSuperior()
+		public async Task<IActionResult> InicioSuperior()
 		{
-			ViewBag.Nombre = "Inicio";
+            var objToken = await _getToken.GetTokenMicrosoft();
+            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+            var me = await _graphServices.GetMeGraph(objToken.access_token);
+            ViewBag.user = me.DisplayName;
+
+            ViewBag.Nombre = "Inicio";
 			ViewBag.SubCategoria = "Superior";
 			ViewBag.Function = "BannerInicioSuperior()";
 			return View("~/Views/Banner/Create.cshtml");
@@ -46,9 +54,14 @@ namespace frontend.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public IActionResult ContactoSuperior()
+		public async Task<IActionResult> ContactoSuperior()
 		{
-			ViewBag.Nombre = "Contacto";
+            var objToken = await _getToken.GetTokenMicrosoft();
+            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+            var me = await _graphServices.GetMeGraph(objToken.access_token);
+            ViewBag.user = me.DisplayName;
+
+            ViewBag.Nombre = "Contacto";
 			ViewBag.SubCategoria = "Superior";
 			ViewBag.Function = "BannerContactoSuperior()";
 			return View("~/Views/Banner/Create.cshtml");

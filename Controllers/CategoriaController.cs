@@ -1,7 +1,10 @@
 ﻿using frontend.Models;
+using frontend.Services.Graph;
+using frontend.Services.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 
@@ -9,16 +12,29 @@ namespace frontend.Controllers
 {
 	public class CategoriaController : Controller
 	{
-		/// <summary>
-		/// Devuelve las vista para crear una categoria
-		/// </summary>
-		/// <returns></returns>
-		[Authorize]
+        private readonly IGetToken _getToken;
+        private readonly IGraphServices _graphServices;
+
+        public CategoriaController(IGetToken getToken, IGraphServices graphServices)
+        {
+            _getToken = getToken;
+            _graphServices = graphServices;
+        }
+
+        /// <summary>
+        /// Devuelve las vista para crear una categoria
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
 		[HttpGet]
-		public IActionResult AddCategory()
+		public async Task<IActionResult> AddCategory()
 		{
 			var model = new CategoriaDTO() { };
-			return View(model);
+			var objToken = await _getToken.GetTokenMicrosoft();
+            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+            var me = await _graphServices.GetMeGraph(objToken.access_token);
+            ViewBag.user = me.DisplayName;
+            return View(model);
 		}
 
 		/// <summary>
@@ -29,6 +45,10 @@ namespace frontend.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
+            var objToken = await _getToken.GetTokenMicrosoft();
+            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+            var me = await _graphServices.GetMeGraph(objToken.access_token);
+            ViewBag.user = me.DisplayName;
 			var model = new List<CategoriaDTO>();
 			var client = new HttpClient();
 			var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/categoria/categorias");
@@ -37,7 +57,7 @@ namespace frontend.Controllers
 			content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 			request.Content = content;
 			var response = await client.SendAsync(request);
-			if (response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
 			{
 				var responseStream = await response.Content.ReadAsStringAsync();
 				model = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
