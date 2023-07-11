@@ -24,7 +24,7 @@ namespace frontend.Controllers
 		private readonly IConfiguration _configuration;
 		private readonly IGetToken _getToken;
         private readonly IMail _mail;
-        public OportunidadController(IConfiguration configuration, IGetToken getToken, ISendMail sendMail, IMail mail )
+        public OportunidadController(IConfiguration configuration, IGetToken getToken, IMail mail )
 		{
 			_configuration = configuration;
 			_getToken = getToken;

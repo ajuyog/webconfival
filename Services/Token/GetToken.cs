@@ -1,4 +1,5 @@
-﻿using frontend.Models.JsonDTO;
+﻿using Azure.Core;
+using frontend.Models.JsonDTO;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,12 +12,11 @@ namespace frontend.Services.Token
 
     public interface IGetToken
     {
-		Task<string> GetTokenMGraph(string code, string redirect);
         Task<TokenGraphDTO> GetTokenMicrosoft();
         Task<string> GetTokenV();
     }
 
-    public class GetToken: IGetToken
+    public class GetToken : IGetToken
     {
         #region CONSTRUCTOR
         private readonly IConfiguration _configuration;
@@ -59,45 +59,6 @@ namespace frontend.Services.Token
         }
 
         [HttpGet]
-        public async Task<string> GetTokenMGraph(string code, string redirect)
-        {
-            var Http = new HttpClient();
-            string tokenGraph = "";
-            TokenGraphDTO TG = new TokenGraphDTO();
-
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/token ");
-            var collection = new List<KeyValuePair<string, string>>();
-            collection.Add(new("client_id", _configuration.GetSection("Azure:ClientId").Value));
-            collection.Add(new("scope", "User.Read Mail.Read Calendars.Read"));
-            collection.Add(new("code", code));
-            collection.Add(new("redirect_uri", "https://localhost:7191/" + redirect));
-            collection.Add(new("grant_type", "authorization_code"));
-            collection.Add(new("client_secret", _configuration.GetSection("Azure:ClientSecret").Value));
-            var content = new FormUrlEncodedContent(collection);
-            request.Content = content;
-            var response = await Http.SendAsync(request);
-            if (response.IsSuccessStatusCode)
-            {
-                tokenGraph = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                TG = JsonConvert.DeserializeObject<TokenGraphDTO>(tokenGraph);
-            }
-            else
-            {
-                var array = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                if (array.Contains("AADSTS65001"))
-				{
-					return "AADSTS65001";
-				}
-				if (array.Contains("AADSTS54005"))
-                {
-                    return "AADSTS54005";
-                }
-                return "Ocurrio un error, comuniquese con el administrador del sistema";
-            }
-            return TG.access_token;
-        }
-
-        [HttpGet]
         public async Task<TokenGraphDTO> GetTokenMicrosoft()
         {
             var token = new TokenGraphDTO()
@@ -108,11 +69,11 @@ namespace frontend.Services.Token
                 expires_in = await _contextAccessor.HttpContext.GetTokenAsync("expires_at")
             };
 
-            if(token.access_token != null) 
+            if (token.access_token != null)
             {
                 var fecha = DateTime.UtcNow;
                 DateTime Expires_at = DateTime.Parse(token.expires_in!).ToUniversalTime()!;
-                if (fecha < Expires_at) 
+                if (fecha < Expires_at)
                 {
                     DateTime taskTime = Expires_at.AddMinutes(-40);
                     if (fecha >= taskTime)

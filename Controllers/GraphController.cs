@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using frontend.Models.Graph;
 using frontend.Services.Graph;
 using frontend.Services.Token;
@@ -20,158 +21,66 @@ namespace frontend.Controllers
         private readonly IGetToken _getToken;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-        private readonly ISendMail _sendMail;
-        public GraphController(IGetToken getToken, IConfiguration configuration, IMapper mapper, ISendMail sendMail)
+        private readonly IGraphServices _graphServices;
+
+        public GraphController(IGetToken getToken, IConfiguration configuration, IMapper mapper, IGraphServices graphServices)
         {
             _getToken = getToken;
             _configuration = configuration;
             _mapper = mapper;
-            _sendMail = sendMail;
+            _graphServices = graphServices;
         }
         #endregion
 
-        #region Bandeja de entrada
-        public async Task<IActionResult> Getoutlook()
+        /// <summary>
+        /// Permite obtener los correos segun carpeta y numero de pagina
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <param name="pagina"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> GetOutlook(string folder, int pagina)
         {
+            var mensaje = "";
             var objToken = await _getToken.GetTokenMicrosoft();
-            ViewBag.ImageData = await ImgProfile(objToken.access_token);
-            ViewBag.Entorno = _configuration.GetSection("LandingPage:RedirectGraph:https").Value;
-            var modelMe = await GetMeGraph(objToken.access_token);
-            var client = new HttpClient();
-            var modelOutlook = new MessagesGraphDTO();
-            var folderId = await GetFolferId(modelMe.Id, objToken.access_token, "Bandeja de entrada");
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/Users/" + modelMe.Id + "/mailFolders/" + folderId + "/messages?$skip=10&count=true");
-            request.Headers.Add("Authorization", "Bearer " + objToken.access_token);
-            var content = new StringContent(string.Empty);
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            request.Content = content;
-            var response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+            if (objToken == null)
             {
-                var responseStream = await response.Content.ReadAsStringAsync();
-                modelOutlook = JsonConvert.DeserializeObject<MessagesGraphDTO>(responseStream);
-                modelOutlook.GivenName = modelMe.GivenName;
-                modelOutlook.JobTitle = modelMe.JobTitle;
-                var array = responseStream.Split(",");
-                modelOutlook.Count = Convert.ToInt32(array[1].ToString().Substring(15));
-                modelOutlook.Paginas = (int)Math.Ceiling((double)modelOutlook.Count / 10);
-                modelOutlook.BaseUrl = "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/authorize?client_id=" + _configuration.GetSection("Azure:ClientId").Value + "&response_type=code&redirect_uri=" + _configuration.GetSection("LandingPage:RedirectGraph:https").Value + "Graph/GetOutlook&response_mode=form_post&scope=user.read&state=";
-                modelOutlook.PaginaActual = 2;
-                modelOutlook.Folder = "Bandeja de entrada";
-                modelOutlook.Entorno = _configuration.GetSection("LandingPage:RedirectGraph:https").Value;
-                modelOutlook.value.ForEach(x => x.ReceivedDateTime = x.ReceivedDateTime.Substring(0, x.ReceivedDateTime.Length - 4).Replace("T", " ").Trim());
+                mensaje = "La sesion se ha cerrado por inactividad, por favor ingresa nuevamente";
+                return RedirectToAction("Index", "LandingPage", routeValues: new { mensaje });
+            }
+            ViewBag.ImageData = await _graphServices.ImgProfile(objToken.access_token);
+            var modelMe = await _graphServices.GetMeGraph(objToken.access_token);
+            if (modelMe == null)
+            {
+                mensaje = "Los servicios de Microsoft Grap estan presentando fallos, por favor intenta nuevamente";
+                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+            }
+            var folderId = await _graphServices.GetFolferId(modelMe.Id, objToken.access_token, folder);
+            if (folderId == "")
+            {
+                mensaje = "Los servicios de Microsoft Grap estan presentando fallos, por favor intenta nuevamente";
+                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+            }
 
-            }
-            else
+            var json = await _graphServices.GetMessages(modelMe.Id, folderId, pagina, objToken.access_token);
+            if (json == "")
             {
-                var responseStream = await response.Content.ReadAsStringAsync();
-                var leerError = 7;
+                mensaje = "Los servicios de Microsoft Grap estan presentando fallos, por favor intenta nuevamente";
+                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
             }
-            return View(modelOutlook);
+            var model = JsonConvert.DeserializeObject<MessagesGraphDTO>(json);
+            var array = json.Split(",");
+            model.GivenName = modelMe.GivenName;
+            model.JobTitle = modelMe.JobTitle;
+            model.Count = Convert.ToInt32(array[1].ToString().Substring(15));
+            model.Paginas = (int)Math.Ceiling((double)model.Count / 10);
+            model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Graph/Getoutlook?folder=" + folder + "&pagina=";
+            model.PaginaActual = pagina;
+            model.Folder = folder;
+            model.Entorno = _configuration["LandingPage:RedirectGraph:https"];
+            model.value.ForEach(x => x.ReceivedDateTime = x.ReceivedDateTime.Substring(0, x.ReceivedDateTime.Length - 4).Replace("T", " ").Trim());
+            return View(model);
         }
-        #endregion
 
-        #region Elementos enviados
-        [Consumes("application/x-www-form-urlencoded")]
-        public async Task<IActionResult> GetoutlookSent([FromForm] IFormCollection value)
-        {
-            if (value.Count == 0)
-            {
-                var referesh = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize?client_id=57f0978d-23bc-4172-ae60-d548461c018d&response_type=code&redirect_uri=" + _configuration.GetSection("LandingPage:RedirectGraph:https").Value + "Graph/GetoutlookSent&response_mode=form_post&scope=user.read&state=0";
-                return Redirect(referesh);
-            }
-            string code = value.First().Value;
-            var skip = (Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 0 : (Convert.ToInt32(value.ElementAt(1).Value) - 1) * 10);
-            string redirect = "Graph/GetoutlookSent";
-            string accesToken = await _getToken.GetTokenMGraph(code, redirect);
-            var mensaje = "";
-            if (accesToken == "AADSTS54005")
-            {
-                mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
-            }
-            if (accesToken == "AADSTS65001")
-            {
-                mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
-            }
-            ViewBag.ImageData = await ImgProfile(accesToken);
-            var modelMe = await GetMeGraph(accesToken);
-            var client = new HttpClient();
-            var modelOutlook = new MessagesGraphDTO();
-            var folderId = await GetFolferId(modelMe.Id, accesToken, "Elementos enviados");
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/Users/" + modelMe.Id + "/mailFolders/" + folderId + "/messages?$skip=" + skip + "&count=true");
-            request.Headers.Add("Authorization", "Bearer " + accesToken);
-            var response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseStream = await response.Content.ReadAsStringAsync();
-                modelOutlook = JsonConvert.DeserializeObject<MessagesGraphDTO>(responseStream);
-                modelOutlook.GivenName = modelMe.GivenName;
-                modelOutlook.JobTitle = modelMe.JobTitle;
-                var array = responseStream.Split(",");
-                modelOutlook.Count = Convert.ToInt32(array[1].ToString().Substring(15));
-                modelOutlook.Paginas = (int)Math.Ceiling((double)modelOutlook.Count / 10);
-                modelOutlook.BaseUrl = "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/authorize?client_id=" + _configuration.GetSection("Azure:ClientId").Value + "&response_type=code&redirect_uri=" + _configuration.GetSection("LandingPage:RedirectGraph:https").Value + "Graph/GetoutlookSent&response_mode=form_post&scope=user.read&state=";
-                modelOutlook.PaginaActual = Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 1 : Convert.ToInt32(value.ElementAt(1).Value);
-                modelOutlook.Folder = "Elementos enviados";
-                modelOutlook.Entorno = _configuration.GetSection("LandingPage:RedirectGraph:https").Value;
-                modelOutlook.value.ForEach(x => x.ReceivedDateTime = x.ReceivedDateTime.Substring(0, x.ReceivedDateTime.Length - 4).Replace("T", " ").Trim());
-            }
-            return View(modelOutlook);
-        }
-        #endregion
-
-        #region Carpeta automatizacion
-        [Consumes("application/x-www-form-urlencoded")]
-        public async Task<IActionResult> GetoutlookCarpetaAutomatizacion([FromForm] IFormCollection value)
-        {
-            if (value.Count == 0)
-            {
-                var referesh = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize?client_id=57f0978d-23bc-4172-ae60-d548461c018d&response_type=code&redirect_uri=" + _configuration.GetSection("LandingPage:RedirectGraph:https").Value + "Graph/GetoutlookCarpetaAutomatizacion&response_mode=form_post&scope=user.read&state=0";
-                return Redirect(referesh);
-            }
-            string code = value.First().Value;
-            var skip = (Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 0 : (Convert.ToInt32(value.ElementAt(1).Value) - 1) * 10);
-            string redirect = "Graph/GetoutlookCarpetaAutomatizacion";
-            string accesToken = await _getToken.GetTokenMGraph(code, redirect);
-            var mensaje = "";
-            if (accesToken == "AADSTS54005")
-            {
-                mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
-            }
-            if (accesToken == "AADSTS65001")
-            {
-                mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
-            }
-            ViewBag.ImageData = await ImgProfile(accesToken);
-            var modelMe = await GetMeGraph(accesToken);
-            var client = new HttpClient();
-            var modelOutlook = new MessagesGraphDTO();
-            var folderId = await GetFolferId(modelMe.Id, accesToken, "AutomatizacionConfival");
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/Users/" + modelMe.Id + "/mailFolders/" + folderId + "/messages?$skip=" + skip + "&count=true");
-            request.Headers.Add("Authorization", "Bearer " + accesToken);
-            var response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseStream = await response.Content.ReadAsStringAsync();
-                modelOutlook = JsonConvert.DeserializeObject<MessagesGraphDTO>(responseStream);
-                modelOutlook.GivenName = modelMe.GivenName;
-                modelOutlook.JobTitle = modelMe.JobTitle;
-                var array = responseStream.Split(",");
-                modelOutlook.Count = Convert.ToInt32(array[1].ToString().Substring(15));
-                modelOutlook.Paginas = (int)Math.Ceiling((double)modelOutlook.Count / 10);
-                modelOutlook.BaseUrl = "https://login.microsoftonline.com/" + _configuration.GetSection("Azure:TenantId").Value + "/oauth2/v2.0/authorize?client_id=" + _configuration.GetSection("Azure:ClientId").Value + "&response_type=code&redirect_uri=" + _configuration.GetSection("LandingPage:RedirectGraph:https").Value + "Graph/GetoutlookCarpetaAutomatizacion&response_mode=form_post&scope=user.read&state=";
-                modelOutlook.PaginaActual = Convert.ToInt32(value.ElementAt(1).Value) == 0 ? 1 : Convert.ToInt32(value.ElementAt(1).Value);
-                modelOutlook.Folder = "Carpeta Automatizacion";
-                modelOutlook.Entorno = _configuration.GetSection("LandingPage:RedirectGraph:https").Value;
-                modelOutlook.value.ForEach(x => x.ReceivedDateTime = x.ReceivedDateTime.Substring(0, x.ReceivedDateTime.Length - 4).Replace("T", " ").Trim());
-            }
-            return View(modelOutlook);
-        }
-        #endregion
 
         #region teams en desarrollo
 		[Consumes("application/x-www-form-urlencoded")]
@@ -180,31 +89,25 @@ namespace frontend.Controllers
         {
             string code = value.First().Value;
             string redirect = "Graph/GetTeams";
-            string accesToken = await _getToken.GetTokenMGraph(code, redirect);
+            var accesToken = await _getToken.GetTokenMicrosoft();
             var mensaje = "";
-            if (accesToken == "AADSTS54005")
+            if (accesToken.access_token == "AADSTS54005")
             {
                 mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
                 return RedirectToAction("Index", "Home", routeValues: new { mensaje });
             }
-            if (accesToken == "AADSTS65001")
+            if (accesToken.access_token == "AADSTS65001")
             {
                 mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
                 return RedirectToAction("Index", "Home", routeValues: new { mensaje });
             }
-            var modelMe = await GetMeGraph(accesToken);
+            var modelMe = await GetMeGraph(accesToken.access_token);
             var modelCalendar = new CalendarGraphDTO();
             modelCalendar.GivenName = modelMe.GivenName;
             modelCalendar.JobTitle = modelMe.JobTitle;
             modelCalendar.Folder = "Calendar";
-            ViewBag.ImageData = await ImgProfile(accesToken);
-            byte[] IV = new byte[Convert.ToInt32(_configuration.GetSection("CalendarGraph:IV").Value)];
-            var tokenEncriptado = Encriptar(accesToken, _configuration.GetSection("CalendarGraph:Password").Value, IV);
-            CookieOptions options = new CookieOptions()
-            {
-                Expires = DateTime.Now.AddHours(1)
-            };
-            Response.Cookies.Append(_configuration.GetSection("CalendarGraph:Name").Value, tokenEncriptado, options);
+            ViewBag.ImageData = await ImgProfile(accesToken.access_token);
+            
             return View(modelCalendar);
         }
         #endregion
@@ -215,29 +118,23 @@ namespace frontend.Controllers
         {
             string code = value.First().Value;
             string redirect = "Graph/Settings";
-            string accesToken = await _getToken.GetTokenMGraph(code, redirect);
+            var accesToken = await _getToken.GetTokenMicrosoft();
             var mensaje = "";
-            if (accesToken == "AADSTS54005")
+            if (accesToken.access_token == "AADSTS54005")
             {
                 mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
                 return RedirectToAction("Index", "Home", routeValues: new { mensaje });
             }
-            if (accesToken == "AADSTS65001")
+            if (accesToken.access_token == "AADSTS65001")
             {
                 mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
                 return RedirectToAction("Index", "Home", routeValues: new { mensaje });
             }
-            ViewBag.ImageData = await ImgProfile(accesToken);
+            ViewBag.ImageData = await ImgProfile(accesToken.access_token);
 
             byte[] IV = new byte[Convert.ToInt32(_configuration.GetSection("CalendarGraph:IV").Value)];
-            var tokenEncriptado = Encriptar(accesToken, _configuration.GetSection("CalendarGraph:Password").Value, IV);
-            CookieOptions options = new CookieOptions()
-            {
-                Expires = DateTime.Now.AddHours(1)
-            };
-            Response.Cookies.Append(_configuration.GetSection("CalendarGraph:Name").Value, tokenEncriptado, options);
 
-            var modelMe = await GetMeGraph(accesToken);
+            var modelMe = await GetMeGraph(accesToken.access_token);
             var modelSettings = _mapper.Map<SettingsGraphDTO>(modelMe);
             modelSettings.Folder = "Settings";
             modelSettings.Entorno = _configuration.GetSection("LandingPage:RedirectGraph:https").Value;
@@ -249,14 +146,11 @@ namespace frontend.Controllers
         [HttpGet]
         public async Task<JsonResult> GetEventosCalendar()
         {
-            var tokenEncrypted = Request.Cookies[_configuration.GetSection("CalendarGraph:Name").Value];
-            byte[] myByteArray = new byte[Convert.ToInt32(_configuration.GetSection("CalendarGraph:IV").Value)];
-            var tokenDencrypted = Desencriptar(tokenEncrypted, _configuration.GetSection("CalendarGraph:Password").Value, myByteArray);
-
+            var token = await _getToken.GetTokenMicrosoft();
             var modelCalendar = new CalendarGraphDTO();
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me/events?$select=subject,body,bodyPreview,organizer,attendees,start,end,location&$skip=0");
-            request.Headers.Add("Authorization", "Bearer " + tokenDencrypted);
+            request.Headers.Add("Authorization", "Bearer " + token.access_token);
             var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
@@ -287,12 +181,11 @@ namespace frontend.Controllers
             var fechaInicio = date.ToString("o").Substring(0, 16);
             var fechaFin = fechaInicio.Replace("00:00", "23:59");
             var result = new CalendarGraphDTO();
-            var tokenEncrypted = Request.Cookies[_configuration.GetSection("CalendarGraph:Name").Value];
-            byte[] myByteArray = new byte[Convert.ToInt32(_configuration.GetSection("CalendarGraph:IV").Value)];
-            var tokenDencrypted = Desencriptar(tokenEncrypted, _configuration.GetSection("CalendarGraph:Password").Value, myByteArray);
+           
+            var token = await _getToken.GetTokenMicrosoft();
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me/events?$filter=start/dateTime ge '" + fechaInicio + "' and end/dateTime le '" + fechaFin + "'");
-            request.Headers.Add("Authorization", "Bearer " + tokenDencrypted);
+            request.Headers.Add("Authorization", "Bearer " + token.access_token);
             var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
@@ -341,12 +234,8 @@ namespace frontend.Controllers
                     }
                 }
             };
-
-            var tokenEncrypted = Request.Cookies[_configuration.GetSection("CalendarGraph:Name").Value];
-            byte[] myByteArray = new byte[Convert.ToInt32(_configuration.GetSection("CalendarGraph:IV").Value)];
-            var tokenDencrypted = Desencriptar(tokenEncrypted, _configuration.GetSection("CalendarGraph:Password").Value, myByteArray);
-
-            isSend = await _sendMail.Send(tokenDencrypted, message);
+            var token = await _getToken.GetTokenMicrosoft();
+            isSend = await _graphServices.SendMail(token.access_token, message);
 
             if (isSend)
             {
@@ -396,23 +285,7 @@ namespace frontend.Controllers
             return model;
         }
 
-        [HttpGet]
-        public async Task<string> GetFolferId(string meId, string token, string folderName)
-        {
-            var idFolder = "";
-            var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/Users/" + meId + "/mailFolders");
-            request.Headers.Add("Authorization", "Bearer " + token);
-            var response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseStreamMe = await response.Content.ReadAsStringAsync();
-                var lstFolders = JsonConvert.DeserializeObject<MailFoldersDTO>(responseStreamMe);
-                var folder = lstFolders.Value.Where(x => x.DisplayName == folderName).FirstOrDefault();
-                return folder.Id;
-            }
-            return idFolder;
-        }
+        
 
         [HttpGet]
         public async Task<bool> SendMail(string TokenGraph, BodyMessageDTO correo)
@@ -433,42 +306,6 @@ namespace frontend.Controllers
             }
         }
 
-        [HttpGet]
-        public string Encriptar(string token, string password, byte[] IV) 
-        {
-            byte[] key = Encoding.UTF8.GetBytes(password);
-            var aes = Aes.Create();
-            aes.Key = key;
-            aes.IV = IV;
-
-            MemoryStream memoryStream = new MemoryStream();
-            CryptoStream cryptoStream = new CryptoStream(memoryStream, aes.CreateEncryptor(), CryptoStreamMode.Write);
-
-            byte[] tokenByte = Encoding.UTF8.GetBytes(token);
-            cryptoStream.Write(tokenByte, 0, tokenByte.Length);
-            cryptoStream.FlushFinalBlock();
-
-            byte[] encrypted = memoryStream.ToArray();
-            return Convert.ToBase64String(encrypted);
-        }
-
-        [HttpGet]
-        public string Desencriptar(string tokenEncriptado, string password, byte[] IV)
-        {
-            byte[] key = Encoding.UTF8.GetBytes(password);
-            var aes = Aes.Create();
-            aes.Key = key;
-            aes.IV = IV;
-
-            MemoryStream memoryStream = new MemoryStream();
-            CryptoStream cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
-
-            byte[] tokenEncrypt = Convert.FromBase64String(tokenEncriptado);
-            cryptoStream.Write(tokenEncrypt, 0, tokenEncrypt.Length);
-            cryptoStream.FlushFinalBlock();
-
-            byte[] Decrypted = memoryStream.ToArray();
-            return Encoding.UTF8.GetString(Decrypted);
-        }
+        
     }
 }

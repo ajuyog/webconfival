@@ -37,8 +37,9 @@ builder.Services.AddAuthentication().AddMicrosoftAccount(o =>
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddTransient<IGetToken, GetToken>();
-builder.Services.AddTransient<ISendMail, SendMail>();
 builder.Services.AddTransient<IMail, Mail>();
+builder.Services.AddTransient<IGraphServices, GraphServices>();
+
 builder.Services.AddHttpClient();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

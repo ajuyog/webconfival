@@ -237,10 +237,8 @@ public class LandingPageController : Controller
 	}
 
     [HttpGet]
-	public async Task<IActionResult> RegistrarUsuarioExterno(string? urlRetorno = null,
-		string? remoteError = null)
+	public async Task<IActionResult> RegistrarUsuarioExterno(string? urlRetorno = null, string? remoteError = null)
 	{
-		
         urlRetorno = "~/Home/Index";
 		var mensaje = "";
 
@@ -274,7 +272,7 @@ public class LandingPageController : Controller
 		// Optener Tocken de Microsoft
 		var props = new AuthenticationProperties();
 		props.StoreTokens(info.AuthenticationTokens);
-		props.IsPersistent = true;
+		props.IsPersistent = false;
 
 
 		var resultadoLoginExterno = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: true, bypassTwoFactor: true);
@@ -301,43 +299,6 @@ public class LandingPageController : Controller
 		mensaje = "Ha ocurrido un error agregando el login.";
 		return RedirectToAction("Index", "Home", routeValues: new { mensaje });
 	}
-
-
-
-	//[HttpGet]
-	//public IActionResult SignIn()
-	//{
-	//    var props = new AuthenticationProperties();
-	//    props.RedirectUri = "/LandingPage/SignInSuccess";
-	//    return Challenge(props);
-	//}
-	//[HttpGet]
-	//public async Task<IActionResult> SignInSuccess()
-	//{
-	//    var mail = User.Identities.First().Claims.LastOrDefault().Value;
-	//    var obj = new CuentasLoginDTO()
-	//    {
-	//        Id = _configuration.GetSection("Variables:IdLogin").Value,
-	//        Email = mail,
-	//        password = "123456789"
-	//    };
-	//    var json = JsonConvert.SerializeObject(obj);
-	//    var client = new HttpClient();
-	//    var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/cuentas/inicioSesion?secret=" + _configuration.GetSection("Variables:Secret").Value);
-	//    var content = new StringContent(json, null, "application/json");
-	//    request.Content = content;
-	//    var response = await client.SendAsync(request);
-	//    if (response.IsSuccessStatusCode)
-	//    {
-	//        var responseStream = await response.Content.ReadAsStringAsync();
-	//        var tokenSuccess = JsonConvert.DeserializeObject<TokenValuezDTO>(responseStream);
-	//        return RedirectToAction("Index", "Home");
-	//    }
-	//    else
-	//    {
-	//        return RedirectToAction("Index", "LandingPage");
-	//    }
-	//}
 
 	[HttpPost]
     public IActionResult SignOut(string signOutType)
