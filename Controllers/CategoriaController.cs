@@ -3,6 +3,7 @@ using frontend.Services.Graph;
 using frontend.Services.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Graph.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace frontend.Controllers
 {
 	public class CategoriaController : Controller
 	{
+        #region CONSTRUCTOR
         private readonly IGetToken _getToken;
         private readonly IGraphServices _graphServices;
 
@@ -20,6 +22,7 @@ namespace frontend.Controllers
             _getToken = getToken;
             _graphServices = graphServices;
         }
+        #endregion
 
         /// <summary>
         /// Devuelve las vista para crear una categoria
@@ -49,25 +52,22 @@ namespace frontend.Controllers
             ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
             var me = await _graphServices.GetMeGraph(objToken.access_token);
             ViewBag.user = me.DisplayName;
+			var token = await _getToken.GetTokenV();
+
 			var model = new List<CategoriaDTO>();
-			var client = new HttpClient();
-			var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/categoria/categorias");
-			request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-			var content = new StringContent(string.Empty);
-			content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-			request.Content = content;
-			var response = await client.SendAsync(request);
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Categoria/categorias");
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
-			{
-				var responseStream = await response.Content.ReadAsStringAsync();
-				model = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
-				return View(model);
-			}
-			else
-			{
-				return View(model);
-			}
-		}
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                var lstCategorias = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
+                model = lstCategorias.ToList();
+            }
+			return View(model);
+
+        }
 
 		/// <summary>
 		/// Devuelve las vista para editar una categoria
@@ -77,77 +77,77 @@ namespace frontend.Controllers
 		[HttpGet]
 		public async Task<IActionResult> EditCategory(int id)
 		{
-			var parametro = id.ToString();
-			var model = new CategoriaDTO() { };
-			var client = new HttpClient();
-			var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/categoria/" + parametro);
-			request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-			var content = new StringContent(string.Empty);
-			content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-			request.Content = content;
-			var response = await client.SendAsync(request);
+            var objToken = await _getToken.GetTokenMicrosoft();
+            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+            var me = await _graphServices.GetMeGraph(objToken.access_token);
+            ViewBag.user = me.DisplayName;
+
+            var token = await _getToken.GetTokenV();
+			var model = new CategoriaDTO();
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Categoria/" + id);
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var response = await client.SendAsync(request);
 			if (response.IsSuccessStatusCode)
 			{
-				var responseStream = await response.Content.ReadAsStringAsync();
-				model = JsonConvert.DeserializeObject<CategoriaDTO>(responseStream);
-				return View("~/Views/Categoria/AddCategory.cshtml",  model);
+                var responseStream = await response.Content.ReadAsStringAsync();
+                model = JsonConvert.DeserializeObject<CategoriaDTO>(responseStream);
 			}
 			else
 			{
-				return View("~/Views/Categoria/AddCategory.cshtml", model);
-			}
-		}
+                var responseStream = await response.Content.ReadAsStringAsync();
+				var readError = "leer linea anterior";
+            }
+            return View("~/Views/Categoria/AddCategory.cshtml", model);
+        }
 
-		[Authorize]
+        [Authorize]
 		[HttpGet]
 		public async Task<bool> EditCategoryDB(string nombre, string id)
 		{
-			var obj = new CategoriaDTO()
-			{
-				Id = Convert.ToInt32(id),
-				Nombre = nombre
-			};
-			var json = JsonConvert.SerializeObject(obj);
-			var client = new HttpClient();
-			var request = new HttpRequestMessage(HttpMethod.Put, "https://apileadconfival.azurewebsites.net/api/categoria/" + id);
-			request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-			var content = new StringContent(json, null, "application/json");
-			request.Content = content;
-			var response = await client.SendAsync(request);
-			if (response.IsSuccessStatusCode)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
+            var result = false;
+            var obj = new CategoriaDTO()
+            {
+                Nombre = nombre
+            };
+            var json = JsonConvert.SerializeObject(obj);
+            var token = await _getToken.GetTokenV();
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Put, "https://api2valuezbpm.azurewebsites.net/api/Categoria/" + id);
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var content = new StringContent(json, null, "application/json");
+            request.Content = content;
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                result = true;
+            }
+            return result;
 
-		[Authorize]
+        }
+
+        [Authorize]
 		[HttpGet]
 		public async Task<bool> SaveCategoria(string nombre)
 		{
+			var result = false;
 			var obj = new CategoriaDTO()
 			{
-				Id = 0,
 				Nombre = nombre
 			};
-			var json = JsonConvert.SerializeObject(obj);
-			var client = new HttpClient();
-			var request = new HttpRequestMessage(HttpMethod.Post, "https://apileadconfival.azurewebsites.net/api/categoria");
-			request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
+            var json = JsonConvert.SerializeObject(obj);
+            var token = await _getToken.GetTokenV();
+            var client = new HttpClient();
+			var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/Categoria");
+			request.Headers.Add("Authorization", "Bearer " + token);
 			var content = new StringContent(json, null, "application/json");
 			request.Content = content;
 			var response = await client.SendAsync(request);
-			if (response.IsSuccessStatusCode)
+			if(response.IsSuccessStatusCode)
 			{
-				return true;
+				result = true;
 			}
-			else
-			{
-				return false;
-			}
-		}
-	}
+            return result;
+        }
+    }
 }

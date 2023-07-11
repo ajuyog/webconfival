@@ -36,6 +36,10 @@ namespace frontend.Controllers
 		public async Task<IActionResult> Get()
 		{
 			var objToken = await _getToken.GetTokenMicrosoft();
+            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+            var me = await _graphServices.GetMeGraph(objToken.access_token);
+            ViewBag.user = me.DisplayName;
+
 			var model = new List<ComentariosDTO>() { };
 			var client = new HttpClient();
 			var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/blog/1/comentarios");
@@ -44,9 +48,6 @@ namespace frontend.Controllers
 			content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 			request.Content = content;
 			var response = await client.SendAsync(request);
-            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
-            var me = await _graphServices.GetMeGraph(objToken.access_token);
-            ViewBag.user = me.DisplayName;
 			if (response.IsSuccessStatusCode)
 			{
 				var responseStream = await response.Content.ReadAsStringAsync();
