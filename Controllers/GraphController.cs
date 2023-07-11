@@ -5,7 +5,9 @@ using frontend.Services.Graph;
 using frontend.Services.Token;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Graph.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Net.Http.Headers;
@@ -38,6 +40,7 @@ namespace frontend.Controllers
         /// <param name="folder"></param>
         /// <param name="pagina"></param>
         /// <returns></returns>
+        [HttpGet]
         public async Task<IActionResult> GetOutlook(string folder, int pagina)
         {
             var mensaje = "";
@@ -81,68 +84,33 @@ namespace frontend.Controllers
             return View(model);
         }
 
-
-        #region teams en desarrollo
-		[Consumes("application/x-www-form-urlencoded")]
-        [Route("/Graph/GetTeams")]
-        public async Task<IActionResult> GetTeams([FromForm] IFormCollection value)
+        /// <summary>
+        /// Devuelve la vista Calendario 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetTeams()
         {
-            string code = value.First().Value;
-            string redirect = "Graph/GetTeams";
-            var accesToken = await _getToken.GetTokenMicrosoft();
             var mensaje = "";
-            if (accesToken.access_token == "AADSTS54005")
+            var token = await _getToken.GetTokenMicrosoft();
+            if (token == null)
             {
-                mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+                mensaje = "La sesion se ha cerrado por inactividad, por favor ingresa nuevamente";
+                return RedirectToAction("Index", "LandingPage", routeValues: new { mensaje });
             }
-            if (accesToken.access_token == "AADSTS65001")
-            {
-                mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
-            }
-            var modelMe = await GetMeGraph(accesToken.access_token);
+            ViewBag.ImageData = await ImgProfile(token.access_token);
+            var modelMe = await GetMeGraph(token.access_token);
             var modelCalendar = new CalendarGraphDTO();
             modelCalendar.GivenName = modelMe.GivenName;
             modelCalendar.JobTitle = modelMe.JobTitle;
             modelCalendar.Folder = "Calendar";
-            ViewBag.ImageData = await ImgProfile(accesToken.access_token);
-            
             return View(modelCalendar);
         }
-        #endregion
 
-        #region Settings
-        [Consumes("application/x-www-form-urlencoded")]
-        public async Task<IActionResult> Settings([FromForm] IFormCollection value)
-        {
-            string code = value.First().Value;
-            string redirect = "Graph/Settings";
-            var accesToken = await _getToken.GetTokenMicrosoft();
-            var mensaje = "";
-            if (accesToken.access_token == "AADSTS54005")
-            {
-                mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
-            }
-            if (accesToken.access_token == "AADSTS65001")
-            {
-                mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
-            }
-            ViewBag.ImageData = await ImgProfile(accesToken.access_token);
-
-            byte[] IV = new byte[Convert.ToInt32(_configuration.GetSection("CalendarGraph:IV").Value)];
-
-            var modelMe = await GetMeGraph(accesToken.access_token);
-            var modelSettings = _mapper.Map<SettingsGraphDTO>(modelMe);
-            modelSettings.Folder = "Settings";
-            modelSettings.Entorno = _configuration.GetSection("LandingPage:RedirectGraph:https").Value;
-            return View(modelSettings);
-        }
-        #endregion
-
-        #region GetEventosCalendar
+        /// <summary>
+        /// Devuelve un JsonResult de los eventos del calendario
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<JsonResult> GetEventosCalendar()
         {
@@ -175,6 +143,11 @@ namespace frontend.Controllers
             return Json(jsonEventosCalendarEmpty);
         }
 
+        /// <summary>
+        /// Devuelve un JsonResult de los eventos por día para mostrar en un modal
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<JsonResult> GetEventByDateTime(DateTime date)
         {
@@ -197,7 +170,40 @@ namespace frontend.Controllers
 
 
         }
+
+
+
+        #region Settings
+        [Consumes("application/x-www-form-urlencoded")]
+        public async Task<IActionResult> Settings([FromForm] IFormCollection value)
+        {
+            string code = value.First().Value;
+            string redirect = "Graph/Settings";
+            var accesToken = await _getToken.GetTokenMicrosoft();
+            var mensaje = "";
+            if (accesToken.access_token == "AADSTS54005")
+            {
+                mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
+                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+            }
+            if (accesToken.access_token == "AADSTS65001")
+            {
+                mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
+                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+            }
+            ViewBag.ImageData = await ImgProfile(accesToken.access_token);
+
+            byte[] IV = new byte[Convert.ToInt32(_configuration.GetSection("CalendarGraph:IV").Value)];
+
+            var modelMe = await GetMeGraph(accesToken.access_token);
+            var modelSettings = _mapper.Map<SettingsGraphDTO>(modelMe);
+            modelSettings.Folder = "Settings";
+            modelSettings.Entorno = _configuration.GetSection("LandingPage:RedirectGraph:https").Value;
+            return View(modelSettings);
+        }
         #endregion
+
+
 
         [HttpGet]
         public async Task<bool> RequestPermissions(string usuario, string mail, List<string> permisos, string mensaje)
