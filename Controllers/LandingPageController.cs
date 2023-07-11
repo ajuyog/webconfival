@@ -12,7 +12,6 @@ using Newtonsoft.Json;
 using Tavis.UriTemplates;
 using static System.Collections.Specialized.BitVector32;
 
-
 namespace noa.Controllers;
 
 public class LandingPageController : Controller
@@ -33,6 +32,11 @@ public class LandingPageController : Controller
 	}
     #endregion
 
+    /// <summary>
+    /// Devuelve la vista Inicio de la LandingPage
+    /// </summary>
+    /// <param name="mensaje"></param>
+    /// <returns></returns>
     [Route("/")]
     [HttpGet]
     public async Task<IActionResult> Index(string mensaje = null)
@@ -186,6 +190,11 @@ public class LandingPageController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Devuelve una lista de Corporacion para el formulario de oportunidad
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<List<DropDownListDTO>> CorporacionId(int id)
     {
@@ -214,6 +223,11 @@ public class LandingPageController : Controller
         return new List<DropDownListDTO>();
     }
 
+    /// <summary>
+    /// Devuelve la vista de servicios de la landingPage
+    /// </summary>
+    /// <param name="seccion"></param>
+    /// <returns></returns>
     [HttpGet]
     public IActionResult ServicioLanding(string seccion)
     {
@@ -221,12 +235,22 @@ public class LandingPageController : Controller
         return View();
     }
 
+    /// <summary>
+    /// Devuelve la vista de Politica de tratamiento de datos
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IActionResult DataPolicy()
     {
         return View();
     }
 
+    /// <summary>
+    /// Permite el login en la intranet de webConfival con Microsoft
+    /// </summary>
+    /// <param name="proveedor"></param>
+    /// <param name="urlRetorno"></param>
+    /// <returns></returns>
 	[HttpGet]
 	public ChallengeResult SignIn(string proveedor, string? urlRetorno = null)
 	{
@@ -236,6 +260,12 @@ public class LandingPageController : Controller
 		return new ChallengeResult(proveedor2, propiedades);
 	}
 
+    /// <summary>
+    /// Obtiene los tokens de Microsoft y realiza redirect a la Intranet
+    /// </summary>
+    /// <param name="urlRetorno"></param>
+    /// <param name="remoteError"></param>
+    /// <returns></returns>
     [HttpGet]
 	public async Task<IActionResult> RegistrarUsuarioExterno(string? urlRetorno = null, string? remoteError = null)
 	{
@@ -272,7 +302,7 @@ public class LandingPageController : Controller
 		// Optener Tocken de Microsoft
 		var props = new AuthenticationProperties();
 		props.StoreTokens(info.AuthenticationTokens);
-		props.IsPersistent = false;
+		props.IsPersistent = true;
 
 
 		var resultadoLoginExterno = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: true, bypassTwoFactor: true);
@@ -300,6 +330,11 @@ public class LandingPageController : Controller
 		return RedirectToAction("Index", "Home", routeValues: new { mensaje });
 	}
 
+    /// <summary>
+    /// Permite el desloguear al usuario y redireciona a la landingPage
+    /// </summary>
+    /// <param name="signOutType"></param>
+    /// <returns></returns>
 	[HttpPost]
     public IActionResult SignOut(string signOutType)
     {

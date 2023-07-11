@@ -98,8 +98,8 @@ namespace frontend.Controllers
                 mensaje = "La sesion se ha cerrado por inactividad, por favor ingresa nuevamente";
                 return RedirectToAction("Index", "LandingPage", routeValues: new { mensaje });
             }
-            ViewBag.ImageData = await ImgProfile(token.access_token);
-            var modelMe = await GetMeGraph(token.access_token);
+            ViewBag.ImageData = await _graphServices.ImgProfile(token.access_token);
+            var modelMe = await _graphServices.GetMeGraph(token.access_token);
             var modelCalendar = new CalendarGraphDTO();
             modelCalendar.GivenName = modelMe.GivenName;
             modelCalendar.JobTitle = modelMe.JobTitle;
@@ -171,40 +171,35 @@ namespace frontend.Controllers
 
         }
 
-
-
-        #region Settings
-        [Consumes("application/x-www-form-urlencoded")]
-        public async Task<IActionResult> Settings([FromForm] IFormCollection value)
+        /// <summary>
+        /// Devuelve la vista de configuraciones
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Settings()
         {
-            string code = value.First().Value;
-            string redirect = "Graph/Settings";
-            var accesToken = await _getToken.GetTokenMicrosoft();
             var mensaje = "";
-            if (accesToken.access_token == "AADSTS54005")
+            var objToken = await _getToken.GetTokenMicrosoft();
+            if (objToken == null)
             {
-                mensaje = "El codigo de autorizacion ha exprirado por favor ingresa nuevamente";
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
+                mensaje = "La sesion se ha cerrado por inactividad, por favor ingresa nuevamente";
+                return RedirectToAction("Index", "LandingPage", routeValues: new { mensaje });
             }
-            if (accesToken.access_token == "AADSTS65001")
-            {
-                mensaje = "Su perfil actualmente no tiene permisos para acceder a este recurso, comuniquese con el administrador del sistema";
-                return RedirectToAction("Index", "Home", routeValues: new { mensaje });
-            }
-            ViewBag.ImageData = await ImgProfile(accesToken.access_token);
-
-            byte[] IV = new byte[Convert.ToInt32(_configuration.GetSection("CalendarGraph:IV").Value)];
-
-            var modelMe = await GetMeGraph(accesToken.access_token);
-            var modelSettings = _mapper.Map<SettingsGraphDTO>(modelMe);
-            modelSettings.Folder = "Settings";
-            modelSettings.Entorno = _configuration.GetSection("LandingPage:RedirectGraph:https").Value;
-            return View(modelSettings);
+            ViewBag.ImageData = await _graphServices.ImgProfile(objToken.access_token);
+            var modelMe = await _graphServices.GetMeGraph(objToken.access_token);
+            var model = _mapper.Map<SettingsGraphDTO>(modelMe);
+            model.Folder = "Settings";
+            model.Entorno = _configuration["LandingPage:RedirectGraph:https"];
+            return View(model);
         }
-        #endregion
 
-
-
+        /// <summary>
+        /// Permite enviar notificacion de solicitud de permisos
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <param name="mail"></param>
+        /// <param name="permisos"></param>
+        /// <param name="mensaje"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<bool> RequestPermissions(string usuario, string mail, List<string> permisos, string mensaje)
         {
@@ -242,7 +237,6 @@ namespace frontend.Controllers
             };
             var token = await _getToken.GetTokenMicrosoft();
             isSend = await _graphServices.SendMail(token.access_token, message);
-
             if (isSend)
             {
                 return true;
@@ -252,66 +246,5 @@ namespace frontend.Controllers
                 return false;
             }
         }
-
-        [HttpGet]
-        public async Task<string> ImgProfile(string token)
-        {
-            var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me/photo/$value");
-            request.Headers.Add("Authorization", "Bearer " + token);
-            var response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseStream = await response.Content.ReadAsStreamAsync();
-                MemoryStream ms = new MemoryStream();
-                responseStream.CopyTo(ms);
-                byte[] buffer = ms.ToArray();
-                string result = Convert.ToBase64String(buffer);
-                return string.Format("data:image/png;base64,{0}", result);
-            }
-            else
-            {
-                return "~/assets/images/faces/6.jpg";
-            }
-        }
-
-        [HttpGet]
-        public async Task<MeGraphDTO> GetMeGraph(string token)
-        {
-            var client = new HttpClient();
-            var model = new MeGraphDTO();
-            var requestMe = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me");
-            requestMe.Headers.Add("Authorization", "Bearer " + token);
-            var responseMe = await client.SendAsync(requestMe);
-            if (responseMe.IsSuccessStatusCode)
-            {
-                var responseStreamMe = await responseMe.Content.ReadAsStringAsync();
-                model = JsonConvert.DeserializeObject<MeGraphDTO>(responseStreamMe);
-            }
-            return model;
-        }
-
-        
-
-        [HttpGet]
-        public async Task<bool> SendMail(string TokenGraph, BodyMessageDTO correo)
-        {
-            var Http = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://graph.microsoft.com/v1.0/me/sendMail");
-            request.Headers.Add("Authorization", "Bearer " + TokenGraph);
-            var content = new StringContent(JsonConvert.SerializeObject(correo), null, "application/json");
-            request.Content = content;
-            var response = await Http.SendAsync(request);
-            if (response.IsSuccessStatusCode)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        
     }
 }
