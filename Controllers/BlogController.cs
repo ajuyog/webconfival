@@ -31,16 +31,12 @@ public class BlogController : Controller
     /// <returns></returns>
     [Route("/Blog")]
     [HttpGet]
-    public async Task<IActionResult> Index(string pagina)
+    public async Task<IActionResult> Index()
     {
-        if (pagina == null)
-        {
-            pagina = "1";
-        };
         var model = new BlogsDTO();
         var token = await _getToken.GetTokenV();
         var client = new HttpClient();
-        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog?Pagina=" + pagina +"&RegistrosPorPagina=10");
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog?Pagina=1&RegistrosPorPagina=10");
         request.Headers.Add("Authorization", "Bearer " + token);
         var response = await client.SendAsync(request);
         if (response.IsSuccessStatusCode)
@@ -60,7 +56,7 @@ public class BlogController : Controller
             model.Count = model.TotalBlog;
             model.Paginas = (int)Math.Ceiling((double)model.Count / 10);
             model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/IndexPaginar?pagina=";
-            model.PaginaActual = Convert.ToInt32(pagina);
+            model.PaginaActual = 1;
         }
         ViewBag.Categorias = new List<DropDownListDTO>();
         var requestCategorias = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/categoria/categorias");
@@ -130,7 +126,7 @@ public class BlogController : Controller
     [HttpGet]
     public async Task<IActionResult> GetByCategoria(int idCategoria, string nombre)
     {
-        var model = new List<BlogDTO>();
+        var model = new BlogsDTO();
         var token = await _getToken.GetTokenV();
         var client = new HttpClient();
         var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Blog/filtro?top=10&CategoriaId=" + idCategoria);
@@ -139,17 +135,21 @@ public class BlogController : Controller
         if (response.IsSuccessStatusCode)
         {
             var responseStream = await response.Content.ReadAsStringAsync();
-            model = JsonConvert.DeserializeObject<List<BlogDTO>>(responseStream);
+            model.ResultBlog = JsonConvert.DeserializeObject<List<BlogDTO>>(responseStream);
         }
         if (model != null)
         {
-            foreach (var item in model)
+            foreach (var item in model.ResultBlog)
             {
                 var imagenBlog = await Imagen(item.Id);
                 item.Imagen = imagenBlog;
                 var galeria = await Galeria(item.Id);
                 item.Galeria = galeria;
             }
+            model.Count = 1;
+            model.Paginas = (int)Math.Ceiling((double)model.Count / 10);
+            model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/GetByCategoria?idCategoria=" + idCategoria + "&nombre=" + nombre;
+            model.PaginaActual = 1;
         }
 
         ViewBag.Categorias = new List<DropDownListDTO>();
@@ -161,7 +161,7 @@ public class BlogController : Controller
             var responseStreamCategorias = await responseCategorias.Content.ReadAsStringAsync();
             ViewBag.Categorias = JsonConvert.DeserializeObject<List<DropDownListDTO>>(responseStreamCategorias);
         }
-        ViewBag.H2 = nombre;
+        ViewBag.H2 = "Blogs de categoria: " + nombre;
         return View("~/Views/Blog/Index.cshtml", model);
     }
 
