@@ -129,11 +129,12 @@ namespace frontend.Controllers
                 mensaje = "La sesion se ha cerrado por inactividad, por favor ingresa nuevamente";
                 return RedirectToAction("Index", "LandingPage", routeValues: new { mensaje });
             }
-            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
             var modelMe = await _graphServices.GetMeGraph(objToken.access_token);
             var model = _mapper.Map<SettingsGraphDTO>(modelMe);
             model.Folder = "Settings";
             model.Entorno = _configuration["LandingPage:RedirectGraph:https"];
+            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+            ViewBag.User = modelMe.DisplayName;
             return View(model);
         }
 

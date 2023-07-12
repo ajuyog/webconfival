@@ -1,6 +1,9 @@
 ﻿using frontend.Models.Graph;
+using Microsoft.AspNetCore.Hosting.Server;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections;
+using System.IO;
 using System.Net.Http.Headers;
 
 namespace frontend.Services.Graph

@@ -59,9 +59,7 @@ async function EventByDate(data) {
 			'<p class="card-text"><i class="fa fa-clock-o" style="color: #0088CC; margin-right: 13px;"></i>' + index.end.dateTime + '</p>' +
 			'<p class="card-text"><i class="fa fa-user" style="color: #0088CC; margin-right: 13px;"></i>' + index.organizer.emailAddress.name + '</p>' +
 			'<div>' + index.body.content + '</div>' +
-			'</div> ' +
-			'<div class="card-footer"><button aria-label="Close" class="btn btn-success pd-x-25" data-bs-dismiss="modal">Continuar</button></div>' +
-			'</div></div>');
+			'</div></div></div>');
 	})
 	$('span[style*="white-space:nowrap"]').remove();
 	detalleEventos.show();
