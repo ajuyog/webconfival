@@ -4,6 +4,7 @@ using frontend.Models.Graph;
 using frontend.Services.Graph;
 using frontend.Services.Token;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Graph.Models;
 using Newtonsoft.Json;
@@ -40,6 +41,7 @@ namespace frontend.Controllers
         /// <param name="folder"></param>
         /// <param name="pagina"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetOutlook(string folder, int pagina)
         {
@@ -90,6 +92,7 @@ namespace frontend.Controllers
         /// Devuelve la vista Calendario 
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetTeams()
         {
@@ -100,83 +103,23 @@ namespace frontend.Controllers
                 mensaje = "La sesion se ha cerrado por inactividad, por favor ingresa nuevamente";
                 return RedirectToAction("Index", "LandingPage", routeValues: new { mensaje });
             }
-            ViewBag.Imagen = await _graphServices.ImgProfile(token.access_token);
             var modelMe = await _graphServices.GetMeGraph(token.access_token);
             var modelCalendar = new CalendarGraphDTO();
             modelCalendar.GivenName = modelMe.GivenName;
             modelCalendar.JobTitle = modelMe.JobTitle;
             modelCalendar.Folder = "Calendar";
+            ViewBag.user = modelMe.DisplayName;
+            ViewBag.Imagen = await _graphServices.ImgProfile(token.access_token);
             return View(modelCalendar);
         }
 
-        /// <summary>
-        /// Devuelve un JsonResult de los eventos del calendario
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<JsonResult> GetEventosCalendar()
-        {
-            var token = await _getToken.GetTokenMicrosoft();
-            var modelCalendar = new CalendarGraphDTO();
-            var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me/events?$select=subject,body,bodyPreview,organizer,attendees,start,end,location&$skip=0");
-            request.Headers.Add("Authorization", "Bearer " + token.access_token);
-            var response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseStream = await response.Content.ReadAsStringAsync();
-                modelCalendar = JsonConvert.DeserializeObject<CalendarGraphDTO>(responseStream);
-                var jsonEventosCalendar = modelCalendar.Value.Select(x => new EventoCalendarioDTO()
-                {
-                    Title = x.Subject.ToString(),
-                    Start = x.Start.DateTime,
-                    End = x.End.DateTime,
-                    Color = null
-                });
-                return Json(jsonEventosCalendar);
-            }
-            var jsonEventosCalendarEmpty = modelCalendar.Value.Select(x => new EventoCalendarioDTO()
-            {
-                Title = x.Subject.ToString(),
-                Start = x.Start.DateTime,
-                End = x.End.DateTime,
-                Color = null
-            });
-            return Json(jsonEventosCalendarEmpty);
-        }
-
-        /// <summary>
-        /// Devuelve un JsonResult de los eventos por día para mostrar en un modal
-        /// </summary>
-        /// <param name="date"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<JsonResult> GetEventByDateTime(DateTime date)
-        {
-            var fechaInicio = date.ToString("o").Substring(0, 16);
-            var fechaFin = fechaInicio.Replace("00:00", "23:59");
-            var result = new CalendarGraphDTO();
-           
-            var token = await _getToken.GetTokenMicrosoft();
-            var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me/events?$filter=start/dateTime ge '" + fechaInicio + "' and end/dateTime le '" + fechaFin + "'");
-            request.Headers.Add("Authorization", "Bearer " + token.access_token);
-            var response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseStream = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<CalendarGraphDTO>(responseStream);
-                return Json(result.Value);
-            }
-            return Json(null);
-
-
-        }
 
         /// <summary>
         /// Devuelve la vista de configuraciones
         /// </summary>
         /// <returns></returns>
+        [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Settings()
         {
             var mensaje = "";
@@ -202,6 +145,7 @@ namespace frontend.Controllers
         /// <param name="permisos"></param>
         /// <param name="mensaje"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpGet]
         public async Task<bool> RequestPermissions(string usuario, string mail, List<string> permisos, string mensaje)
         {
@@ -247,6 +191,91 @@ namespace frontend.Controllers
             {
                 return false;
             }
+        }
+
+        /// - Servicios -- //
+        /// <summary>
+        /// Devuelve un JsonResult de los eventos del calendario
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet]
+        public async Task<JsonResult> GetEventosCalendar()
+        {
+            var token = await _getToken.GetTokenMicrosoft();
+            var modelCalendar = new CalendarGraphDTO();
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me/events?$select=subject,body,bodyPreview,organizer,attendees,start,end,location&$skip=0");
+            request.Headers.Add("Authorization", "Bearer " + token.access_token);
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                modelCalendar = JsonConvert.DeserializeObject<CalendarGraphDTO>(responseStream);
+                var jsonEventosCalendar = modelCalendar.Value.Select(x => new EventoCalendarioDTO()
+                {
+                    Title = x.Subject.ToString(),
+                    Start = x.Start.DateTime,
+                    End = x.End.DateTime,
+                    Color = null,
+                    PublicId = x.Id
+                });
+                return Json(jsonEventosCalendar);
+            }
+            var jsonEventosCalendarEmpty = modelCalendar.Value.Select(x => new EventoCalendarioDTO()
+            {
+                Title = x.Subject.ToString(),
+                Start = x.Start.DateTime,
+                End = x.End.DateTime,
+                Color = null
+            });
+            return Json(jsonEventosCalendarEmpty);
+        }
+
+        /// <summary>
+        /// Devuelve un JsonResult de los eventos por día para mostrar en un modal
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet]
+        public async Task<JsonResult> GetEventByDateTime(DateTime date)
+        {
+            var fechaInicio = date.ToString("o").Substring(0, 16);
+            var fechaFin = fechaInicio.Replace("00:00", "23:59");
+            var result = new CalendarGraphDTO();
+           
+            var token = await _getToken.GetTokenMicrosoft();
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me/events?$filter=start/dateTime ge '" + fechaInicio + "' and end/dateTime le '" + fechaFin + "'");
+            request.Headers.Add("Authorization", "Bearer " + token.access_token);
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<CalendarGraphDTO>(responseStream);
+                return Json(result.Value);
+            }
+            return Json(null);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<JsonResult> GetEventById(string id)
+        {
+            var result = new ObjCalendar();
+            var token = await _getToken.GetTokenMicrosoft();
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me/events/" + id);
+            request.Headers.Add("Authorization", "Bearer " + token.access_token);
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<ObjCalendar>(responseStream);
+                return Json(result);
+            }
+            return Json(null);
         }
     }
 }

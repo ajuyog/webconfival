@@ -14,6 +14,7 @@
         public EndDTO End { get; set; }
         public LocationDTO Location { get; set; }
         public OrganizerDTO organizer { get; set; }
+        public string Id { get; set; }
     }
 
 
