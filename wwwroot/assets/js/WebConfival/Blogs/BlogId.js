@@ -127,11 +127,11 @@ function SeeGallery(data, data2) {
 };
 
 // -- DEVELOPMENT -- //
-function TopCategoriaB(idBlog, nombre) {
+function TopCategoriaB(idCategoria, nombre) {
     $.ajax({
         type: "GET",
         url: '/Blog/TopCategoria',
-        data: { id: idBlog },
+        data: { id: idCategoria },
         success: function (result) {
             if (result != null) {
                 $("#list-blogs").children().remove();

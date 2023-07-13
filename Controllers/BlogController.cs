@@ -8,6 +8,7 @@ using frontend.Services.Token;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Net.Http.Headers;
@@ -42,12 +43,12 @@ public class BlogController : Controller
     /// <returns></returns>
     [Route("/Blog")]
     [Route("/Blog/Index/{pagina}")]
-
     [HttpGet]
-    public async Task<IActionResult> Index(int pagina)
+    public async Task<IActionResult> Index(int pagina, int registros)
     {
         if (pagina == 0) { pagina = 1; }
-        var model = await _blogServices.Get(pagina);
+        registros = 10;
+        var model = await _blogServices.Get(pagina, registros);
         if (model != null)
         {
             foreach (var item in model.ResultBlog)
@@ -58,11 +59,11 @@ public class BlogController : Controller
                 item.Galeria = galeria;
             }
             model.Count = model.TotalBlog;
-            model.Paginas = (int)Math.Ceiling((double)model.Count / 10);
+            model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
             model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/Index/";
             model.PaginaActual = pagina;
         }
-        ViewBag.Categorias = await _categoriasServices.Get(pagina);
+        ViewBag.Categorias = await _categoriasServices.Get(1, 100, false);
         ViewBag.H2 = "Blog principal";
         return View(model);
     }
@@ -74,9 +75,11 @@ public class BlogController : Controller
     /// <param name="nombre"></param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> GetByCategoria(int idCategoria, string nombre)
+    public async Task<IActionResult> GetByCategoria(int idCategoria, int pagina, int registros )
     {
-        var model = await _blogServices.GetByCategoria(idCategoria, nombre);
+        if (pagina == 0) { pagina = 1; }
+        registros = 10;
+        var model = await _blogServices.GetByCategoria(idCategoria, pagina, registros);
         if (model != null)
         {
             foreach (var item in model.ResultBlog)
@@ -86,13 +89,13 @@ public class BlogController : Controller
                 var galeria = await _blogServices.Galeria(item.Id);
                 item.Galeria = galeria;
             }
-            model.Count = 2;
-            model.Paginas = (int)Math.Ceiling((double)model.Count / 10);
-            model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/GetByCategoria?idCategoria=" + idCategoria + "&nombre=" + nombre;
-            model.PaginaActual = 1;
+            model.Count = model.TotalBlog;
+            model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
+            model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/GetByCategoria?idCategoria=" + idCategoria + "&pagina=";
+            model.PaginaActual = pagina;
         }
-		ViewBag.Categorias = await _categoriasServices.Get(1);
-        ViewBag.H2 = "Blogs de categoria: " + nombre;
+		ViewBag.Categorias = await _categoriasServices.Get(1, 0, false);
+        ViewBag.H2 = "Blogs de categoria: " + model.ResultBlog[0].Categorias[0].Nombre;
         return View("~/Views/Blog/Index.cshtml", model);
     }
 
@@ -104,19 +107,7 @@ public class BlogController : Controller
     [HttpGet]
     public async Task<IActionResult> GetById(int id)
     {
-        var model = new BlogDTO();
-
-        var client = new HttpClient();
-        var token = await _getToken.GetTokenV();
-
-        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog/" + id.ToString());
-        request.Headers.Add("Authorization", "Bearer " + token);
-        var response = await client.SendAsync(request);
-        if (response.IsSuccessStatusCode)
-        {
-            var responseStream = await response.Content.ReadAsStringAsync();
-            model = JsonConvert.DeserializeObject<BlogDTO>(responseStream);
-        }
+        var model = await _blogServices.GetById(id);
         if (model != null)
         {
             model.Imagen = await _blogServices.Imagen(model.Id);
@@ -133,19 +124,8 @@ public class BlogController : Controller
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        var model = new List<CategoriaDTO>();
-        var token = await _getToken.GetTokenV();
+        var model = await _categoriasServices.Get(1, 100, true);
         var objToken = await _getToken.GetTokenMicrosoft();
-        var client = new HttpClient();
-        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Categoria/categorias");
-        request.Headers.Add("Authorization", "Bearer " + token);
-        var response = await client.SendAsync(request);
-        if (response.IsSuccessStatusCode)
-        {
-            var responseStream = await response.Content.ReadAsStringAsync();
-            var lstCategorias = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
-            model = lstCategorias.ToList();
-        }
         ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
         var me = await _graphServices.GetMeGraph(objToken.access_token);
         ViewBag.user = me.DisplayName;
@@ -160,19 +140,16 @@ public class BlogController : Controller
     [HttpGet]
     public async Task<List<CategoriaDTO>> ConsultarCategorias(int id)
     {
-        var list = new List<CategoriaDTO>();
-        var token = await _getToken.GetTokenV();
-        var client = new HttpClient();
-        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Categoria/categorias");
-        request.Headers.Add("Authorization", "Bearer " + token);
-        var response = await client.SendAsync(request);
-        if (response.IsSuccessStatusCode)
+        var lst = await _categoriasServices.Get(1, 0, true);
+        var lstResult = new List<CategoriaDTO>();
+        foreach(var item in  lst)
         {
-            var responseStream = await response.Content.ReadAsStringAsync();
-            var lstCategorias = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
-            list = lstCategorias.ToList();
+            if (item.Id != id)
+            {
+                lstResult.Add(item);
+            }
         }
-        return list;
+        return lstResult;
     }
 
     /// <summary>
@@ -221,28 +198,16 @@ public class BlogController : Controller
     [HttpGet]
     public async Task<List<BlogDTO>> TopCategoria(int id)
     {
-        var model = new List<BlogDTO>();
-        var token = await _getToken.GetTokenV();
-        var client = new HttpClient();
-        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Blog/filtro?top=3&CategoriaId=" + id.ToString());
-        request.Headers.Add("Authorization", "Bearer " + token);
-        var response = await client.SendAsync(request);
-        if (response.IsSuccessStatusCode)
-        {
-            var responseStream = await response.Content.ReadAsStringAsync();
-            model = JsonConvert.DeserializeObject<List<BlogDTO>>(responseStream);
-        }
+        var model = await _blogServices.GetByCategoria(id, 1, 3);
         if (model != null)
         {
-            foreach (var item in model)
+            foreach (var item in model.ResultBlog)
             {
                 var imagenBlog = await _blogServices.Imagen(item.Id);
                 item.Imagen = imagenBlog;
-                var galeria = await _blogServices.Galeria(item.Id);
-                item.Galeria = galeria;
             }
         }
-        return model;
+        return model.ResultBlog;
     }
 
     [HttpGet]
@@ -282,16 +247,14 @@ public class BlogController : Controller
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> Edit(int pagina)
+    public async Task<IActionResult> Edit(int pagina, int registros)
     {
-        if (pagina == 0) { pagina = 1; }
-        var model = await _blogServices.Get(pagina);
+        if (pagina == 0) { pagina = 1; registros = 10; }
+        var model = await _blogServices.Get(pagina, registros);
 		model.Count = model.TotalBlog;
 		model.Paginas = (int)Math.Ceiling((double)model.Count / 10);
 		model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/Edit?pagina=";
 		model.PaginaActual = pagina;
 		return View(model);
     }
-
-
 }

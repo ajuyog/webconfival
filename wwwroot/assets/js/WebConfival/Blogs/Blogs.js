@@ -198,12 +198,6 @@ $("#categorias-principal").on("change", function () {
             url: '/Blog/ConsultarCategorias',
             data: { id: idCategoria },
             success: function (result) {
-                $.each(result, function (element, index) {
-                    if (index.id == parseInt(idCategoria)) {
-                        result.splice(index.id - 1, 1);
-                        return false;
-                    }
-                })
                 lstCategorias.remove();
                 $("#lst-categorias").append('<option disabled value="">Seleccione..</option>')
                 $.each(result, function (element, index) {

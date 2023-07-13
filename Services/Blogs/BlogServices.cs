@@ -9,7 +9,7 @@ namespace frontend.Services.Blogs
 {
     public interface IBlogServices
     {
-        Task<BlogsDTO> Get(int pagina);
+        Task<BlogsDTO> Get(int pagina, int registros);
         Task<BlogDTO> CreateBlog(CreateBlogDTO obj);
         Task<bool> CreateGaleria(List<IFormFile> files, int id);
         Task CreateImgAutor();
@@ -18,7 +18,8 @@ namespace frontend.Services.Blogs
         Task<List<string>> Galeria(int id);
         Task<string> Imagen(int id);
         string Order(string categoria, List<string> lstCategorias);
-		Task<BlogsDTO> GetByCategoria(int idCategoria, string nombre);
+		Task<BlogsDTO> GetByCategoria(int idCategoria, int pagina, int registros);
+		Task<BlogDTO> GetById(int id);
 	}
     public class BlogServices: IBlogServices
     {
@@ -224,12 +225,12 @@ namespace frontend.Services.Blogs
             return url;
         }
 
-        public async Task<BlogsDTO> Get(int pagina)
+        public async Task<BlogsDTO> Get(int pagina, int registros)
         {
             var model = new BlogsDTO();
             var token = await _getToken.GetTokenV();
             var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog?Pagina=" + pagina +"&RegistrosPorPagina=10");
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog?Pagina=" + pagina +"&RegistrosPorPagina=" + registros);
             request.Headers.Add("Authorization", "Bearer " + token);
             var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
@@ -240,18 +241,34 @@ namespace frontend.Services.Blogs
             return model;
         }
 
-        public async Task<BlogsDTO> GetByCategoria(int idCategoria, string nombre)
+        public async Task<BlogsDTO> GetByCategoria(int idCategoria, int pagina, int registros)
         {
-			var model = new BlogsDTO();
-			var token = await _getToken.GetTokenV();
+            var model = new BlogsDTO();
+            var client = new HttpClient();
+            var token = await _getToken.GetTokenV();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Blog/filtro?CategoriaId=" + idCategoria + "&Pagina=" + pagina + "&RegistrosPorPagina=" + registros);
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var response = await client.SendAsync(request);
+            if(response.IsSuccessStatusCode)
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                model = JsonConvert.DeserializeObject<BlogsDTO>(responseStream);
+            }
+            return model;
+        }
+
+        public async Task<BlogDTO> GetById(int id)
+        {
+			var model = new BlogDTO();
 			var client = new HttpClient();
-			var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Blog/filtro?top=10&CategoriaId=" + idCategoria);
+			var token = await _getToken.GetTokenV();
+			var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog/" + id);
 			request.Headers.Add("Authorization", "Bearer " + token);
 			var response = await client.SendAsync(request);
 			if (response.IsSuccessStatusCode)
 			{
 				var responseStream = await response.Content.ReadAsStringAsync();
-				model.ResultBlog = JsonConvert.DeserializeObject<List<BlogDTO>>(responseStream);
+				model = JsonConvert.DeserializeObject<BlogDTO>(responseStream);
 			}
             return model;
 		}
