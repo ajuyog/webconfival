@@ -3,21 +3,19 @@
     Layout = "_Layout3";
 }
 <!-- PAGE-HEADER -->
-	<div class="page-header">
-		<div>
-			<h1 class="page-title">@(Model.Nombre == null ? "Crear Categorias" : "Editar Categoria")</h1>
-		</div>
-		<div class="ms-auto pageheader-btn">
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="javascript:void(0);">Blogs</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Categoria</li>
-			<li class="breadcrumb-item active" aria-current="page">@(Model.Nombre == null ? "Crear Categorias" : "Editar Categoria")</li>
-			</ol>
-		</div>
+<div class="page-header">
+	<div>
+		<h1 class="page-title">@(Model.Nombre == null ? "Crear Categorias" : "Editar Categoria")</h1>
 	</div>
+	<div class="ms-auto pageheader-btn">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:void(0);">Blogs</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Categoria</li>
+		<li class="breadcrumb-item active" aria-current="page">@(Model.Nombre == null ? "Crear Categorias" : "Editar Categoria")</li>
+		</ol>
+	</div>
+</div>
 
-<!-- PAGE-HEADER END -->
-<!-- row -->
 <div class="row">
 	<div class="col-lg-12 col-md-12" id="form-categoria">
 		<div class="card">

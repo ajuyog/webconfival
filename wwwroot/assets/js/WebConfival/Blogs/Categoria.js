@@ -22,7 +22,7 @@
         });
     }
 };
-function GuardarCategoria(nombreCorregido){
+function GuardarCategoria(nombreCorregido) {
     $.ajax({
         type: "GET",
         url: '/Categoria/SaveCategoria',
@@ -61,7 +61,7 @@ function EditarCategoria() {
                 if (count == 0) {
                     $("#invalid-nombre-categoria-existe").css("display", "none");
                     EditarCategoriaDB(nombreCorregido);
-                    
+
                 }
             }
         });
@@ -72,7 +72,7 @@ function EditarCategoriaDB(nombreCorregido) {
     $.ajax({
         type: "GET",
         url: '/Categoria/EditCategoryDB',
-        data: { nombre: nombreCorregido, id: idCategoria},
+        data: { nombre: nombreCorregido, id: idCategoria },
         success: function (result) {
             if (result == true) {
                 $("#form-categoria").addClass("hide-info");
@@ -83,6 +83,20 @@ function EditarCategoriaDB(nombreCorregido) {
         }
     });
 };
+
+//function Delete(id, nombre) {
+//    var modal = $("#delete-item");
+//    var contenido = $("#message-delete");
+//    contenido.children().remove();
+//    contenido.append('<p class="text-muted">Esta seguro de eliminar el registro: ' + nombre + '</p>' +
+//        '<button aria-label="Close" class="btn btn-info pd-x-25" data-bs-dismiss="modal">Cancelar</button>' +
+//        '<button class="btn btn-danger pd-x-25" onclick="DeleteItem(' + id + ')">Eliminar</button>');
+//    modal.modal("show");
+//}
+
+function DeleteItem(id) {
+    console.log("vamos OK");
+}
 
 
 // -- Utilidad -- //

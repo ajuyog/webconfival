@@ -1,4 +1,6 @@
-﻿namespace frontend.Models
+﻿using frontend.Models.Shared;
+
+namespace frontend.Models
 {
 	public class CategoriaDTO
 	{

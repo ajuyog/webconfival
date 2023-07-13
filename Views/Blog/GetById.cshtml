@@ -63,29 +63,26 @@
 															<div id="@item.Id.ToString()" class="cancel-form-comment"></div>
 															@foreach(var subitem in Model.Comentarios)
 															{
-																if (subitem.ComentarioId == item.Id)
+																if (subitem.ComentarioId == item.Id && subitem.Id != subitem.ComentarioId )
 																{
-																	<div>
-																	<div class="media mb-4 overflow-visible boton-edit-2">
-																		<div class="me-3">
-																			<img class="media-object rounded-circle thumb-sm" alt="" title="" src="~/assets/images/photos/11.jpg">
+																	<div style="margin-left:50px;">
+																		<div class="media mb-4 overflow-visible boton-edit-2">
+																			<div class="media-body border p-4 overflow-visible br-5">
+																				<h5 class="mt-0">Respuesta a comenntario<span class="text-muted fs-12 mx-1 bg-normal-light">Respuesta a comenntario </span><span class="text-muted fs-12 ms-1">@subitem.FechaPublicacion</span></h5>
+																				<span><i class="fe fe-thumb-up text-danger"></i></span>
+																				<p class="font-13 text-muted">
+																					@subitem.Comentario
+																				</p>
+																				<span class="reply">
+																					<a onclick="Reply(@item.Id.ToString())" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
+																				</span>
+																			</div>
 																		</div>
-																		<div class="media-body border p-4 overflow-visible br-5">
-																			<h5 class="mt-0">Respuesta a comenntario<span class="text-muted fs-12 mx-1 bg-normal-light">Respuesta a comenntario </span><span class="text-muted fs-12 ms-1">@subitem.FechaPublicacion</span></h5>
-																			<span><i class="fe fe-thumb-up text-danger"></i></span>
-																			<p class="font-13 text-muted">
-																				@subitem.Comentario
-																			</p>
-																			<span class="reply">
-																				<a onclick="Reply(@item.Id.ToString())" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
-																			</span>
-																		</div>
+																		@{
+																			var identificador = @subitem.ComentarioId.ToString() + "s" + @subitem.Id.ToString();
+																		}
+																		<div id="@identificador" class="cancel-form-comment"></div>
 																	</div>
-																	@{
-																		var identificador = @subitem.ComentarioId.ToString() + "s" + @subitem.Id.ToString();
-																	}
-																	<div id="@identificador" class="cancel-form-comment"></div>
-																</div>
 																}
 															}
 														</div>
