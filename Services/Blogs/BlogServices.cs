@@ -9,6 +9,7 @@ namespace frontend.Services.Blogs
 {
     public interface IBlogServices
     {
+        Task<BlogsDTO> Get(int pagina);
         Task<BlogDTO> CreateBlog(CreateBlogDTO obj);
         Task<bool> CreateGaleria(List<IFormFile> files, int id);
         Task CreateImgAutor();
@@ -17,7 +18,8 @@ namespace frontend.Services.Blogs
         Task<List<string>> Galeria(int id);
         Task<string> Imagen(int id);
         string Order(string categoria, List<string> lstCategorias);
-    }
+		Task<BlogsDTO> GetByCategoria(int idCategoria, string nombre);
+	}
     public class BlogServices: IBlogServices
     {
         #region CONSTRUCTOR
@@ -221,5 +223,38 @@ namespace frontend.Services.Blogs
             }
             return url;
         }
-    }
+
+        public async Task<BlogsDTO> Get(int pagina)
+        {
+            var model = new BlogsDTO();
+            var token = await _getToken.GetTokenV();
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog?Pagina=" + pagina +"&RegistrosPorPagina=10");
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                model = JsonConvert.DeserializeObject<BlogsDTO>(responseStream);
+            }
+            return model;
+        }
+
+        public async Task<BlogsDTO> GetByCategoria(int idCategoria, string nombre)
+        {
+			var model = new BlogsDTO();
+			var token = await _getToken.GetTokenV();
+			var client = new HttpClient();
+			var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Blog/filtro?top=10&CategoriaId=" + idCategoria);
+			request.Headers.Add("Authorization", "Bearer " + token);
+			var response = await client.SendAsync(request);
+			if (response.IsSuccessStatusCode)
+			{
+				var responseStream = await response.Content.ReadAsStringAsync();
+				model.ResultBlog = JsonConvert.DeserializeObject<List<BlogDTO>>(responseStream);
+			}
+            return model;
+		}
+
+	}
 }

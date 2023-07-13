@@ -1,5 +1,6 @@
 using frontend;
 using frontend.Services.Blogs;
+using frontend.Services.Categorias;
 using frontend.Services.Graph;
 using frontend.Services.Token;
 using frontend.Services.Utilidaddes;
@@ -41,6 +42,9 @@ builder.Services.AddTransient<IGetToken, GetToken>();
 builder.Services.AddTransient<IMail, Mail>();
 builder.Services.AddTransient<IGraphServices, GraphServices>();
 builder.Services.AddTransient<IBlogServices, BlogServices>();
+builder.Services.AddTransient<ICategoriasServices, CategoriasServices>();
+
+
 
 
 builder.Services.AddHttpClient();
