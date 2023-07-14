@@ -1,5 +1,6 @@
 ﻿using frontend.Models;
 using frontend.Models.JsonDTO;
+using frontend.Services.Comentarios;
 using frontend.Services.Graph;
 using frontend.Services.Token;
 using Microsoft.AspNetCore.Authorization;
@@ -18,12 +19,14 @@ namespace frontend.Controllers
 		private readonly IConfiguration _configuration;
 		private readonly IGetToken _getToken;
         private readonly IGraphServices _graphServices;
+        private readonly IComentariosServices _comentariosServices;
 
-        public ComentariosController(IConfiguration configuration, IGetToken getToken, IGraphServices graphServices)
+        public ComentariosController(IConfiguration configuration, IGetToken getToken, IGraphServices graphServices, IComentariosServices comentariosServices)
         {
 			_configuration = configuration;
 			_getToken = getToken;
             _graphServices = graphServices;
+            _comentariosServices = comentariosServices;
         }
 		#endregion
 
@@ -33,32 +36,29 @@ namespace frontend.Controllers
 		/// <returns></returns>
 		[Authorize]
 		[HttpGet]
-		public async Task<IActionResult> Get()
-		{
-			var objToken = await _getToken.GetTokenMicrosoft();
-            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
-            var me = await _graphServices.GetMeGraph(objToken.access_token);
-            ViewBag.user = me.DisplayName;
+		//public async Task<IActionResult> Get()
+		//{
+		//	var objToken = await _getToken.GetTokenMicrosoft();
+  //          ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+  //          var me = await _graphServices.GetMeGraph(objToken.access_token);
+  //          ViewBag.user = me.DisplayName;
 
-			var model = new List<ComentariosDTO>() { };
-			var client = new HttpClient();
-			var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/blog/1/comentarios");
-			request.Headers.Add("XApiKey", "H^qP[7p#18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-			var content = new StringContent(string.Empty);
-			content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-			request.Content = content;
-			var response = await client.SendAsync(request);
-			if (response.IsSuccessStatusCode)
-			{
-				var responseStream = await response.Content.ReadAsStringAsync();
-				model = JsonConvert.DeserializeObject<List<ComentariosDTO>>(responseStream);
-				return View(model);
-			}
-			else
-			{
-				return View( model);
-			}
-        }
+		//	var model = await _comentariosServices.GetByStateFalse()
+			
+
+
+
+		//	if (response.IsSuccessStatusCode)
+		//	{
+		//		var responseStream = await response.Content.ReadAsStringAsync();
+		//		model = JsonConvert.DeserializeObject<List<ComentariosDTO>>(responseStream);
+		//		return View(model);
+		//	}
+		//	else
+		//	{
+		//		return View( model);
+		//	}
+  //      }
 
 		/// <summary>
 		/// Permite crear un comentario mediante API RestFull

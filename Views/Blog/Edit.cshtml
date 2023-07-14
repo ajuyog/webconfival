@@ -59,8 +59,8 @@
 										@(item.Categorias == null ? "" : item.Categorias[0].Nombre)
 									</td>
 									<td>
-										<a asp-action="EditBlog" asp-route-id="@item.Id" class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar Blog"><i class="fe fe-refresh-ccw"></i></a>
-										<a asp-action="EditComments" asp-route-id="@item.Id" class="btn btn-success-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar Blog"><i class="fe fe-refresh-ccw"></i></a>
+										<a asp-action="EditBlog" asp-route-id="@item.Id" class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar Contenido"><i class="fe fe-edit"></i></a>
+										<a asp-action="EditComments" asp-route-id="@item.Id" class="btn btn-success-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar Comentarios"><i class="fe fe-message-square"></i></a>
 									</td>
 								</tr>
 							}

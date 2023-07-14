@@ -7,6 +7,7 @@ namespace frontend.Services.Categorias
 {
     public interface ICategoriasServices
     {
+        Task<bool> Delete(int id);
         Task<List<CategoriaDTO>> Get(int pagina, int registros, bool perfil);
     }
     public class CategoriasServices: ICategoriasServices
@@ -36,5 +37,25 @@ namespace frontend.Services.Categorias
 			}
 			return model;
 		}
+
+        public async Task<bool> Delete(int id)
+        {
+            var result = false;
+            var token = await _getToken.GetTokenV();
+            var obj = new DropDownListDTO();
+            obj.Id = id;
+            var json = JsonConvert.SerializeObject(obj);
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Delete, "https://api2valuezbpm.azurewebsites.net/api/Categoria/" + id);
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var content = new StringContent(json, null, "application/json");
+            request.Content = content;
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                result = true;
+            }
+            return result;
+        }
 	}
 }

@@ -249,10 +249,11 @@ public class BlogController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(int pagina, int registros)
     {
-        if (pagina == 0) { pagina = 1; registros = 10; }
+        if (pagina == 0) { pagina = 1; }
+        registros = 10;
         var model = await _blogServices.Get(pagina, registros);
 		model.Count = model.TotalBlog;
-		model.Paginas = (int)Math.Ceiling((double)model.Count / 10);
+		model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
 		model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/Edit?pagina=";
 		model.PaginaActual = pagina;
 		return View(model);

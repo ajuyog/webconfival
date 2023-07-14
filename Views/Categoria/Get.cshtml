@@ -48,7 +48,10 @@
                                     </td>
                                     <td>
                                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar"><i class="fe fe-refresh-ccw"></i></a>
-                                        <a class="btn btn-danger-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Eliminar"><i class="fe fe-trash fs-13"></i> </a>
+                                        @if (item.cantidadBlogs <= 0)
+                                        {
+                                            <a class="btn btn-danger-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Eliminar" onclick="Delete('@item.Id', '@item.Nombre')"><i class="fe fe-trash fs-13"></i> </a>
+                                        }
                                     </td>
                                 </tr>
                             }
@@ -71,8 +74,21 @@
                 <i class="fe fe-x-circle fs-65 text-danger lh-1 mb-5 d-inline-block"></i>
                 <h4 class="text-danger">Eliminar registro!</h4>
                 <div id="message-delete">
-
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="api-error-delete">
+    <div class="modal-dialog modal-dialog-centered text-center " role="document">
+        <div class="modal-content tx-size-sm">
+            <div class="modal-body text-center p-4">
+                <i class="ion-wrench fs-65 text-primary lh-1 mb-5 d-inline-block"></i>
+                <h4 class="text-success tx-semibold">Estamos trabajando para solucionar!</h4>
+                <p class="text-muted">Nuestro sistema esta presentando cambios, intentalo de nuevo mas tarde.</p>
+               @* <button aria-label="Close" class="btn-close" data-bs-dismiss="modal">Continuar</button>*@
+                <button aria-label="Close" class="btn btn-info pd-x-25" data-bs-dismiss="modal">Continuar</button>
             </div>
         </div>
     </div>

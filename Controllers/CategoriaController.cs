@@ -105,18 +105,16 @@ namespace frontend.Controllers
         }
 
         /// <summary>
-        /// Devuelve la vista para Eliminar una categoria
+        /// Permite Eliminar una categoria
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="nombre"></param>
         /// <returns></returns>
-        //[Authorize]
-        //[HttpGet]
-        //public IActionResult Delete(int id) 
-        //{
-        //    ViewBag.Nombre = nombre;
-        //    return PartialView("~/Views/Shared/_Delete.cshtml");
-        //}
+        [Authorize]
+        [HttpGet]
+        public async Task<bool> Delete(int id)
+        {
+            return await _categoriasServices.Delete(id);
+        }
 
 
         [Authorize]
