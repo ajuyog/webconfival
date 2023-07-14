@@ -30,7 +30,7 @@
 								<th class="w-15">Id</th>
 								<th class="w-5">Nombre</th>
 								<th class="w-5">Estado</th>
-								<th class="w-5">Comentarios</th>
+								<th class="w-5">Comentarios aprobados</th>
 								<th class="w-5">Fecha publicado</th>
 								<th class="w-5">Categoria princial</th>
 								<th class="w-5">Action</th>
@@ -60,7 +60,7 @@
 									</td>
 									<td>
 										<a asp-action="EditBlog" asp-route-id="@item.Id" class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar Contenido"><i class="fe fe-edit"></i></a>
-										<a asp-action="EditComments" asp-route-id="@item.Id" class="btn btn-success-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar Comentarios"><i class="fe fe-message-square"></i></a>
+										<a asp-controller="Comentarios" asp-action="EditComment" asp-route-idBlog="@item.Id" asp-route-titulo="@item.Titulo" class="btn btn-success-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Aprobar Comentarios"><i class="fe fe-message-square"></i></a>
 									</td>
 								</tr>
 							}

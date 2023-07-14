@@ -30,42 +30,22 @@ namespace frontend.Controllers
         }
 		#endregion
 
-		/// <summary>
-		/// Devuelve la vista con el listado de comentarios
-		/// </summary>
-		/// <returns></returns>
 		[Authorize]
 		[HttpGet]
-		//public async Task<IActionResult> Get()
-		//{
-		//	var objToken = await _getToken.GetTokenMicrosoft();
-  //          ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
-  //          var me = await _graphServices.GetMeGraph(objToken.access_token);
-  //          ViewBag.user = me.DisplayName;
+		public async Task<IActionResult> EditComment(int idBlog, string titulo)
+		{
+			var model = await _comentariosServices.GetByStateFalse(idBlog);
+			ViewBag.Titulo = titulo;
+			ViewBag.IdBlog = idBlog;
+			return View(model);
+		}
 
-		//	var model = await _comentariosServices.GetByStateFalse()
-			
+		[HttpGet]
+		public async Task<bool> ApproveComment(int id, int idBlog)
+		{
+			return await _comentariosServices.ApproveComment(id, idBlog);
+		}
 
-
-
-		//	if (response.IsSuccessStatusCode)
-		//	{
-		//		var responseStream = await response.Content.ReadAsStringAsync();
-		//		model = JsonConvert.DeserializeObject<List<ComentariosDTO>>(responseStream);
-		//		return View(model);
-		//	}
-		//	else
-		//	{
-		//		return View( model);
-		//	}
-  //      }
-
-		/// <summary>
-		/// Permite crear un comentario mediante API RestFull
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="comentario"></param>
-		/// <returns></returns>
 		[HttpGet]
 		public async Task<bool> Create(int id, string comentario, string relation)
 		{
@@ -86,31 +66,7 @@ namespace frontend.Controllers
 			return false;
         }
 		
-		[Authorize]
-		[HttpGet]
-		public IActionResult Editar(int id)
-		{
-			var model = new ComentariosDTO()
-			{
-				Id = 1,
-				Autor = new AutorDTO()
-				{
-					Id = 1,
-					Correo = "correo@hotmail.com",
-					ImagenAutor = new ImagenesDTO()
-					{
-						URLImagen = "/assets/images/photos/11.jpg",
-					},
-					Nombre = "Autor desconocido 25"
-				},
-				
-				Comentario = "Un comentario realizado al blog por defecto",
-				Activo = false,
-				FechaPublicacion = DateTime.Now,
-
-			};
-			return PartialView("~/Views/Comentarios/_Editar.cshtml", model);
-		}
+		
 
 	}
 }

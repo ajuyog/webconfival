@@ -37,10 +37,6 @@ public class BlogController : Controller
     }
     #endregion
 
-    /// <summary>
-    /// Devuelve la vista de index o principal de Blog
-    /// </summary>
-    /// <returns></returns>
     [Route("/Blog")]
     [Route("/Blog/Index/{pagina}")]
     [HttpGet]
@@ -68,12 +64,6 @@ public class BlogController : Controller
         return View(model);
     }
 
-    /// <summary>
-    /// Devuele la vista con los blogs por idCategoria
-    /// </summary>
-    /// <param name="idCategoria"></param>
-    /// <param name="nombre"></param>
-    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> GetByCategoria(int idCategoria, int pagina, int registros )
     {
@@ -99,11 +89,6 @@ public class BlogController : Controller
         return View("~/Views/Blog/Index.cshtml", model);
     }
 
-    /// <summary>
-    ///  Devuelve la vista de Blog por Id
-    /// </summary>
-    /// <param name="idBlog"></param>
-    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> GetById(int id)
     {
@@ -115,11 +100,7 @@ public class BlogController : Controller
         }
         return View(model);
     }
-
-    /// <summary>
-    /// Devuleve la vista de Crear Blogs
-    /// </summary>
-    /// <returns></returns>
+    
     [Authorize]
     [HttpGet]
     public async Task<IActionResult> Create()
@@ -132,10 +113,6 @@ public class BlogController : Controller
         return View(model);
     }
 
-    /// <summary>
-    /// Devuelve la lista de categorias 
-    /// </summary>
-    /// <returns></returns>
     [Authorize]
     [HttpGet]
     public async Task<List<CategoriaDTO>> ConsultarCategorias(int id)
@@ -152,14 +129,6 @@ public class BlogController : Controller
         return lstResult;
     }
 
-    /// <summary>
-    /// Permite crear un blog
-    /// </summary>
-    /// <param name="titulo"></param>
-    /// <param name="contenido"></param>
-    /// <param name="lstCategorias"></param>
-    /// <param name="categoria"></param>
-    /// <returns></returns>
     [Authorize]
     [HttpPost]
     public async Task<string> Publicar(string titulo, IFormFile imagenPrincipal, string contenido, string categoria, List<string> lstCategorias, List<IFormFile> lstGaleria)
@@ -190,11 +159,6 @@ public class BlogController : Controller
         return result;
     }
 
-    /// <summary>
-    /// Consulta los tres blogs mas recientes por idCategoria
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
     [HttpGet]
     public async Task<List<BlogDTO>> TopCategoria(int id)
     {
@@ -242,10 +206,6 @@ public class BlogController : Controller
         return obj;
     }
 
-    /// <summary>
-    /// Devuelve la vista para Editar los Blogs
-    /// </summary>
-    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int pagina, int registros)
     {
@@ -257,5 +217,12 @@ public class BlogController : Controller
 		model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/Edit?pagina=";
 		model.PaginaActual = pagina;
 		return View(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> EditBlog(int id)
+    {
+        var model = await _blogServices.GetById(id);
+        return View(model);
     }
 }

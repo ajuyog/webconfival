@@ -4,7 +4,7 @@
 	{
         public int Id { get; set; }
         public string Comentario { get; set; }
-        public DateTime FechaPublicacion { get; set; }
+        public string FechaPublicacion { get; set; }
         public AutorDTO Autor { get; set; }
         public bool Activo { get; set; }
         public bool Revisado { get; set; }
