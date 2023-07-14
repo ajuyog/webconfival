@@ -1,4 +1,4 @@
-﻿@model List<frontend.Models.ComentariosDTO>
+﻿@model frontend.Models.ComentariosDTO
 @{
 	Layout = "_Layout3";
 }
@@ -31,12 +31,13 @@
 								<th class="w-5">Comentario</th>
 								<th class="w-5">Fecha publicación</th>
 								<th class="w-5">Estado</th>
+								<th class="w-5">Revisado</th>
 								<th class="w-5">Tipo comentario</th>
 								<th class="w-10">Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach (var item in Model)
+							@foreach (var item in Model.Comentarios)
 							{
 								<tr>
 									<td>
@@ -49,7 +50,24 @@
 										@item.FechaPublicacion;
 									</td>
 									<td>
-										<span class="badge bg-danger">@(item.Revisado == false ? "Sin revisar" : "")</span>
+										@if(item.Estado == true)
+										{
+											<span class="badge bg-success">Activo</span>
+										}
+										else
+										{
+											<span class="badge bg-danger">Inactivo</span>
+										}
+									</td>
+									<td>
+										@if (item.Revisado == true)
+										{
+											<span class="badge bg-success">Revisado</span>
+										}
+										else
+										{
+											<span class="badge bg-danger">Sin revisar</span>
+										}
 									</td>
 									<td>
 										@(item.Id == item.ComentarioId ? "Principal" : "Respuesta")
@@ -62,8 +80,9 @@
 						</tbody>
 					</table>
 				</div>
-				
-				<!-- Paginador -->
+
+				<partial name="~/Views/Shared/_Paginador.cshtml" />
+
 
 
 

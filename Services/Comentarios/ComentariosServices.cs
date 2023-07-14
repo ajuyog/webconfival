@@ -9,7 +9,8 @@ namespace frontend.Services.Comentarios
     public interface IComentariosServices
     {
 		Task<bool> ApproveComment(int id, int idBlog);
-		Task<List<ComentariosDTO>> GetByStateFalse(int idBlog);
+		Task<bool> Create(int idBlog, string comentario, string relation);
+		Task<List<ComentarioDTO>> Get(int idBlog, int pagina, int registros);
     }
     public class ComentariosServices: IComentariosServices
     {
@@ -21,24 +22,41 @@ namespace frontend.Services.Comentarios
         }
         #endregion
 
-        public async Task <List<ComentariosDTO>> GetByStateFalse(int idBlog)
+        public async Task <List<ComentarioDTO>> Get(int idBlog, int pagina, int registros)
         {
-            var model = new List<ComentariosDTO>();
+            var model = new List<ComentarioDTO>();
             var client = new HttpClient();
             var token = await _getToken.GetTokenV();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog/" + idBlog + "/comentarios/listFalse");
-            request.Headers.Add("Authorization", "Bearer " + token );
-            var response = await client.SendAsync(request);
+			var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog/" + idBlog + "/comentarios/listFalse?Pagina=" + pagina + "&RegistrosPorPagina=" + registros);
+			request.Headers.Add("Authorization", "Bearer " + token);
+			var response = await client.SendAsync(request);
             if(response.IsSuccessStatusCode) 
             {
                 var responseStream = await response.Content.ReadAsStringAsync();
-                model = JsonConvert.DeserializeObject<List<ComentariosDTO>>(responseStream);
+                model = JsonConvert.DeserializeObject<List<ComentarioDTO>>(responseStream);
             }
 			return model;
 
         }
 
-        public async Task<bool> ApproveComment(int id, int idBlog)
+        public async Task<bool> Create(int idBlog, string comentario, string relation)
+        {
+			var result = false;
+			var token = await _getToken.GetTokenV();
+			var client = new HttpClient();
+			var obj = new CreateCommentDTO();
+			obj.Comentario = comentario;
+			var json = JsonConvert.SerializeObject(obj);
+			var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/blog/" + idBlog + "/comentarios/" + relation);
+			request.Headers.Add("Authorization", "Bearer " + token);
+			var content = new StringContent(json, null, "application/json");
+			request.Content = content;
+			var response = await client.SendAsync(request);
+			if(response.IsSuccessStatusCode) { result = true; }
+			return result;
+		}
+
+		public async Task<bool> ApproveComment(int id, int idBlog)
         {
             var result = false;
             var approve = await Patch(id, idBlog, "estado");

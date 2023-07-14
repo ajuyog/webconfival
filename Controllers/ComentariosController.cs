@@ -32,9 +32,16 @@ namespace frontend.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public async Task<IActionResult> EditComment(int idBlog, string titulo)
+		public async Task<IActionResult> EditComment(int idBlog, string titulo, int pagina, int registros)
 		{
-			var model = await _comentariosServices.GetByStateFalse(idBlog);
+			if(pagina == 0) { pagina = 1; }
+			registros = 10;
+			var model = new ComentariosDTO();
+			model.Comentarios = await _comentariosServices.Get(idBlog, pagina, registros);
+			model.Count = model.Comentarios.Count();
+			model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
+			model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Comentarios/EditComment?idBlog=" + idBlog + "&titulo=" + titulo + "&pagina=";
+			model.PaginaActual = pagina;
 			ViewBag.Titulo = titulo;
 			ViewBag.IdBlog = idBlog;
 			return View(model);
@@ -49,21 +56,8 @@ namespace frontend.Controllers
 		[HttpGet]
 		public async Task<bool> Create(int id, string comentario, string relation)
 		{
-			var client = new HttpClient();
-			var token = await _getToken.GetTokenV();
-			var obj = new ComentarioDTO();
-			obj.Comentario = comentario;
-			var json = JsonConvert.SerializeObject(obj);
-			var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/blog/" + id + "/comentarios/" + relation);
-			request.Headers.Add("Authorization", "Bearer " + token);
-			var content = new StringContent(json, null, "application/json");
-			request.Content = content;
-			var response = await client.SendAsync(request);
-			if(response.IsSuccessStatusCode)
-			{
-				return true;
-            }
-			return false;
+			var result = await _comentariosServices.Create(id, comentario, relation);
+			return result;
         }
 		
 		

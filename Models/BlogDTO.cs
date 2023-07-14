@@ -12,7 +12,7 @@ namespace frontend.Models
 		public DateTime Actualizacion { get; set; } 
         //public AutorDTO Autor { get; set; }
         public List<CategoriaDTO> Categorias { get; set; }
-		public List<ComentariosDTO> Comentarios { get; set; }
+		public List<ComentarioDTO> Comentarios { get; set; }
         public string Imagen { get; set; }
         public List<string> Galeria { get; set; }
 

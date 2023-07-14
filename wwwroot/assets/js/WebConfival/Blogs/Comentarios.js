@@ -7,7 +7,6 @@
         '<button class="btn btn-success pd-x-25" onclick="ApproveComment(' + id + ')" style="margin-left: 15px;">Aprobar</button>');
     modal.modal("show");
 }
-
 function ApproveComment(data) {
     var blog = $("#blog-id").val();
     var modalConfirm = $("#approve-item");
