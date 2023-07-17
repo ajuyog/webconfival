@@ -1,4 +1,4 @@
-﻿@model List<confinancia.Models.ComentariosDTO>
+﻿@model List<frontend.Models.ComentarioDTO>
 @{
     Layout = "_Layout3";
 }
@@ -46,7 +46,7 @@
 										@item.Comentario
 									</td>
 									<td>
-										@item.FechaPublicacion.ToString()
+										@item.FechaPublicacion;
 									</td>
 									<td>
 										<span class="badge bg-danger">@(item.Revisado == false ? "Sin revisar" : "")</span>

@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			center: 'title',
 			right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
 		},
-
 		defaultView: 'month',
 		navLinks: true, // can click day/week names to navigate views
 		businessHours: true, // display business hours
@@ -27,75 +26,70 @@ document.addEventListener('DOMContentLoaded', function () {
 		selectable: true,
 		selectMirror: true,
 		droppable: true, // this allows things to be dropped onto the calendar
-		select: function (arg) {
-			var title = prompt('Event Title:');
-			if (title) {
-				calendar.addEvent({
-					title: title,
-					start: arg.start,
-					end: arg.end,
-					allDay: arg.allDay
-				})
-			}
-			calendar.unselect()
+		select: async function (arg) {
+			await EventByDate(arg.startStr);
 		},
-		eventClick: function (arg) {
-			if (confirm('Are you sure you want to delete this event?')) {
-				arg.event.remove()
-			}
+		eventClick: async function (arg) {
+			await EventById(arg.event._def.extendedProps.publicId);
 		},
 		editable: true,
 		dayMaxEvents: true, // allow "more" link when too many events
-		events: [{
-			title: 'Business Lunch',
-			start: '2021-10-03T13:00:00',
-			constraint: 'businessHours'
-		}, {
-			title: 'Meeting',
-			start: '2021-10-13T11:00:00',
-			constraint: 'availableForMeeting', // defined below
-			color: '#38cab3'
-		}, {
-			title: 'Conference',
-			start: '2021-10-18',
-			end: '2021-10-20',
-			color: '#f74f75'
-		}, {
-			title: 'Party',
-			start: '2021-11-29T20:00:00',
-			color: '#ffbd5a'
-		},
-		// areas where "Meeting" must be dropped
-		{
-			id: 'availableForMeeting',
-			start: '2021-10-11T10:00:00',
-			end: '2021-10-11T16:00:00',
-			rendering: 'background',
-			color: '#f34343'
-		}, {
-			id: 'availableForMeeting',
-			start: '2021-10-13T10:00:00',
-			end: '2021-10-13T16:00:00',
-			rendering: '#4ec2f0'
-		}, {
-			title: 'Jyo birthday',
-			id: 'Jyo birthday',
-			start: '2021-12-19T10:00:00',
-			end: '2021-12-19T16:00:00',
-			rendering: '#4ec2f0'
-		}, {
-			title: 'Chandu birthday',
-			id: 'Jyo birthday',
-			start: '2021-11-30T10:00:00',
-			end: '2021-11-30T16:00:00',
-			rendering: '#4ec2f0'
-		},
-		]
+		events: '/Graph/GetEventosCalendar'
 	});
-
+	$("#json-eventos").val(" ");
 	calendar.render();
 });
-
+async function EventByDate(data) {
+	const response = await fetch(`/Graph/GetEventByDateTime?date=${data}`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/Json'
+		}
+	});
+	const json = await response.json();
+	const detalleEventos = new bootstrap.Modal(document.getElementById('modalEvents'));
+	$("#body-modalEvents").children().remove();
+	$.each(json, function (element, index) {
+		$("#body-modalEvents").append('<div class="col-lg-4 col-md-6 col-sm-12" style="margin:auto;">' +
+			'<div class="card">' +
+			'<div class="card-body">' +
+			'<h5 class="card-title"><i class="fa fa-briefcase" style="color: #0088CC; margin-right: 2px;"></i>   ' + index.subject + '</h5>' +
+			'<h6 class="card-subtitle mb-2 text-muted"><i class="fa fa-map-marker" style="color: #0088CC; margin-right: 15px;"></i>' + index.location.displayName + '</h6>' +
+			'<p class="card-text"><i class="fa fa-clock-o" style="color: #0088CC; margin-right: 13px;"></i>' + index.start.dateTime + '</p>' +
+			'<p class="card-text"><i class="fa fa-clock-o" style="color: #0088CC; margin-right: 13px;"></i>' + index.end.dateTime + '</p>' +
+			'<p class="card-text"><i class="fa fa-user" style="color: #0088CC; margin-right: 13px;"></i>' + index.organizer.emailAddress.name + '</p>' +
+			'<div>' + index.body.content + '</div>' +
+			'</div></div></div>');
+	})
+	$('span[style*="white-space:nowrap"]').remove();
+	detalleEventos.show();
+};
+async function EventById(data) {
+	const response = await fetch(`/Graph/GetEventById?id=${data}`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/Json'
+		}
+	});
+	const json = await response.json();
+	const detalleEvento = new bootstrap.Modal(document.getElementById('modalEvent'));
+	$("#body-modalEvent").children().remove();
+	$("#body-modalEvent").append('<div class="col-lg-12 col-md-12 col-sm-12" style="margin:auto;">' +
+		'<div class="card">' + 
+		'<div class="card-body">' +
+		'<h5 class="card-title"><i class="fa fa-briefcase" style="color: #0088CC; margin-right: 2px;"></i>' + json.subject + '</h5>' +
+		'<h6 class="card-subtitle mb-2 text-muted"><i class="fa fa-map-marker" style="color: #0088CC; margin-right: 15px;"></i>' + json.location.displayName + '</h6>' +
+		'<p class="card-text"><i class="fa fa-clock-o" style="color: #0088CC; margin-right: 13px;"></i>' + json.start.dateTime + '</p>' +
+		'<p class="card-text"><i class="fa fa-clock-o" style="color: #0088CC; margin-right: 13px;"></i>' + json.end.dateTime + '</p>' +
+		'<p class="card-text"><i class="fa fa-user" style="color: #0088CC; margin-right: 13px;"></i>' + json.organizer.emailAddress.name + '</p>' +
+		'<div>' + json.body.content + '</div>' +
+		'</div>' +
+		'<div class="card-footer"><button aria-label="Close" class="btn btn-success pd-x-25" data-bs-dismiss="modal">Continuar</button></div>' +
+		'</div>' +
+		'</div>');
+	$('span[style*="white-space:nowrap"]').remove();
+	detalleEvento.show();
+};
 
 //List FullCalendar
 document.addEventListener('DOMContentLoaded', function () {
@@ -176,4 +170,4 @@ document.addEventListener('DOMContentLoaded', function () {
 		width: '100%'
 	})
 
-});
+})

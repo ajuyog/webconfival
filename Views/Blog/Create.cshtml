@@ -1,721 +1,284 @@
-﻿@model List<confinancia.Models.CategoriaDTO>
+﻿@model List<frontend.Models.CategoriaDTO>
 @{
     Layout = "_Layout3";
 }
 <div class="page-header" id="PublicarBlog">
-	<div>
-		<h1 class="page-title">Crear Blogs Confival</h1>
-	</div>
-	<div class="ms-auto pageheader-btn">
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="javascript:void(0);">Blogs</a></li>
-			<li class="breadcrumb-item active" aria-current="page">Crear un Blog</li>
-		</ol>
-	</div>
+    <div>
+        <h1 class="page-title">Crear Blogs Confival</h1>
+    </div>
+    <div class="ms-auto pageheader-btn">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0);">Blogs</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Crear un Blog</li>
+        </ol>
+    </div>
 </div>
 <!-- PAGE-HEADER END -->
 
 
 <div class="row">
-	<div id="visualizar-blog-confirmar" class="hide-info">
-		<div class="card">
-			<div class="card-body">
-				<div class="alert alert-default pad-text" role="alert">
-					<span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>
-					<span class="alert-inner--text"><strong>Tu publicación esta siendo analizada,</strong> Uno de nuestros colaboradores te notificara al correo electronico cuando sea aprovada !!!</span>
-					<div class="row">
-						<div class="col-12">
-							<a href="#PublicarBlog" class="btn btn-success" onclick="restartBlog()" style="margin-top:20px;">Quiero publicar otro Blog!!</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div id="visualizar-blog-confirmar" class="hide-info">
+        <div class="card">
+            <div class="card-body">
+                <div class="alert alert-default pad-text" role="alert">
+                    <span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>
+                    <span class="alert-inner--text">El Blog  fue publicado <strong> exitosamente !</strong></span>
+                    <div class="row">
+                        <div class="col-12">
+                            <a asp-action="Index" asp-controller="Home" class="btn btn-success" style="margin-top:20px;">Quiero publicar otro Blog!!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row">
-	<div class="col-xl-4 col-sm-12 col-xs-12" id="visualizador-campos">
-		<!-- Seccion 1 -->
-		<div id="seccion-uno-publicar">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Empecemos con:  Titulo, Imagen y Primer parrafo</h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label class="form-label">Titulo</label>
-						<input class="form-control" type="text" placeholder="Titulo de tu blog" id="titulo-blog">
-					</div>
-					<div class="invalid-feedback" id="invalid-titulo-blog">Debes agregar un titulo para el blog</div>
+    <div class="col-xl-4 col-sm-12 col-xs-12" id="visualizador-campos">
+        <div id="seccion-uno">
+            <div id="seccion-uno-publicar">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mt-3 header-blog-publicar"> Empecemos con:  Titulo, Imagen</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">Titulo</label>
+                            <input class="form-control" type="text" placeholder="Titulo de tu blog" id="titulo-blog">
+                        </div>
+                        <div class="invalid-feedback" id="invalid-titulo-blog">Debes agregar un titulo para el blog</div>
+                        <div class="form-group">
+                            <label class="form-label">Imagen del Blog</label>
+                            <div class="col-sm-12 col-md-12">
+                                <input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-blog" />
+                            </div>
+                            <div class="invalid-feedback" id="invalid-imagen-blog-principal">Debes agregar una imagen</div>
+                        </div>
+                        <a class="btn btn-success" onclick="AddTitulo()" style="margin-top:20px;">Añadir</a>
+                    </div>
+                </div>
+            </div>
+            <div id="seccion-contenido" class="hide-info">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mt-3 header-blog-publicar"> Contenido</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">Subtitulo</label>
+                            <input class="form-control" type="text" placeholder="Subtitulo de tu blog" id="subtitulo-blog">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Parrafo</label>
+                            <textarea class="form-control mb-4" placeholder="Refacta el parrafo" rows="8" id="parrafo-general"></textarea>
+                        </div>
+                        <a href="#PublicarBlog" class="btn btn-success" onclick="AddContenido()" style="margin-top:20px;">Añadir</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <p class="text-muted">Configurar galeria: </p>
+                    <p>
+                        <a href="#PublicarBlog" class="btn btn-primary" onclick="ShowFormGallery()" style="margin-top:10px;">Crear Galeria</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="seccion-galeria" class="hide-info">
+            <div class="card">
+                <div class="card-header-blogs">
+                    <h4 class="mt-3 header-blog-publicar">Agrega imagen a la galeria !!</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">Imagen</label>
+                        <div class="col-sm-12 col-md-12">
+                            <input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-g" />
+                        </div>
+                        <div class="invalid-feedback" id="invalid-imagen-g">Debes agregar una imagen</div>
+                    </div>
+                    @*<div class="form-group">
+                        <label class="form-label">Descripción</label>
+                        <textarea class="form-control mb-4" placeholder="Descripcion" rows="3" id="descripcion-ig"></textarea>
+                    </div>
+                    <div class="form-group" style="padding-bottom: 35px;">
+                        <label class="form-label">URL Fuente</label>
+                        <input class="form-control" type="text" placeholder="URL Fuente" id="url-fuente-ig">
+                    </div>*@
+                   @* <hr>
+                    <p>Datos Metadata</p>
+                    <div class="form-group">
+                        <label class="form-label">Texto alternativo</label>
+                        <input class="form-control" type="text" placeholder="Alt=' '" id="texto-alternativo-ig">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Titulo</label>
+                        <textarea class="form-control mb-4" placeholder="Titulo=' '" rows="3" id="titulo-ig"></textarea>
+                    </div>*@
+                    <a class="btn btn-success" onclick="addImgGallery()" style="margin-top:20px;">Añadir</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <p class="text-muted">Configurar Categoria: </p>
+                    <p>
+                        <a class="btn btn-info" onclick="backContenido()" style="margin-top:10px;">Volver al Contenido</a>
+                        <a class="btn btn-primary" onclick="NextGallery()" style="margin-top:10px;">Ir a Categoria</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="seccion-categorias" class="hide-info">
+            <div class="card">
+                <div class="card-header-blogs">
+                    <h4 class="mt-3 header-blog-publicar">Selecciona las categorias del Blog !!</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">Categoria principal</label>
+                        <select class="form-control select2 form-select" data-placeholder="Seleccione .." id="categorias-principal">
+                            <option label="Choose one"></option>
+                            @foreach (var item in Model)
+                            {
+                                <option value="@item.Id">@item.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                    <div id="reload">
+                        <partial name="~/Views/Blog/_CategoriasSecundarias.cshtml" model="@Model" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="seccion-btn-finalizar" class="hide-info">
+            <div class="card">
+                <div class="card-header-blogs">
+                    <h4 class="mt-3 header-blog-publicar">Genial !!</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Agrega las categorias secundarias que consideres necesarias y procede a publicar</p>
+                    <p>
+                        <a href="#PublicarBlog" class="btn btn-primary" onclick="Publicar()" style="margin-top:20px;">Publicar !!</a>
+                    </p>
+                </div>
+            </div>
 
-					<div class="form-group">
-						<label class="form-label">Imagen del Blog</label>
-						<div class="col-sm-12 col-md-12">
-							<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-blog" />
-						</div>
-						<div class="invalid-feedback" id="invalid-imagen-blog-principal">Debes agregar una imagen</div>
+        </div>
+    </div>
+    <div class="col-xl-8 col-sm-12 col-xs-12" id="visualizar-blog-principal">
+        <div class="card">
+            <div class="main-chat-header pt-3 d-block d-sm-flex">
+                <div class="margin-auto">
+                    <h3 class="margin-auto">Visualiza tu blog</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="main-chat-body flex-2 ps" id="ChatBody">
+                    <div class="content-inner">
+                        <div class="row justify-content-center text-center">
+                            <!-- Seccion 1 -->
+                            <div id="contenido-blog-visualizar"></div>
+                            <div class="ps-relative p-1 bg-light br-5 hide-info" id="img-onchange">
+                                <img src="" alt="img" class="cover-image br-5 ms-auto me-auto wp-100" id="blah"><br>
+                            </div>
+                            <div id="contenido-blog" style="margin-top:20px;">
+                                <div id="parrafo1" class="hide-info"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="main-chat-header pt-3 d-block d-sm-flex">
+                <div class="margin-auto">
+                    <h3 class="margin-auto">Visualiza la galeria</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="text-center demo-gallery">
+                    <div class="mt-2">
+                        <ul id="lightgallery" class="list-unstyled row row-sm">
+                            <li class="col-sm-6 col-lg-4" id="lightgalleryLi1">
+                                <div class="ps-relative p-1 bg-light br-5 " id="onchange-ig">
+                                    <img src="" alt="img" height="90" class="cover-image br-5 ms-auto me-auto wp-100" id="imgGalleryBlog1"><br>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="loader-create-blog" class="hide-info">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="dimmer active">
+                        <div class="spinner2">
+                            <div class="cube1"></div>
+                            <div class="cube2"></div>
+                        </div>
+                    </div>
+                    <p style="text-align: center;">
+                        Estamos publicando el blog!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-					</div>
-					<div class="form-group">
-						<label class="form-label">Primer Parrafo</label>
-						<textarea class="form-control mb-4" placeholder="Empieza con el primer parrafo" rows="8" id="primer-parrafo"></textarea>
-					</div>
-					<div class="invalid-feedback" id="invalid-primer-parrafo">Debes agregar un primer parrafo al blog</div>
+    <div class="modal fade" id="api-error">
+        <div class="modal-dialog modal-dialog-centered text-center " role="document">
+            <div class="modal-content tx-size-sm">
+                <div class="modal-body text-center p-4">
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">×</span></button>
+                    <i class="ion-wrench fs-65 text-primary lh-1 mb-5 d-inline-block"></i>
+                    <h4 class="text-success tx-semibold">Estamos trabajando para solucionar!</h4>
+                    <p class="text-muted">Nuestro sistema esta presentando cambios, intentalo de nuevo mas tarde.</p>
+                    <button aria-label="Close" class="btn btn-success pd-x-25" data-bs-dismiss="modal">Cerrar</button>
+                    <a class="btn btn-info pd-x-25" asp-action="Create" asp-controller="Blog">Inicio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="campos-null">
+        <div class="modal-dialog modal-dialog-centered text-center " role="document">
+            <div class="modal-content tx-size-sm">
+                <div class="modal-body text-center p-4">
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">×</span></button>
+                    <i class="ion-wrench fs-65 text-primary lh-1 mb-5 d-inline-block"></i>
+                    <h4 class="text-success tx-semibold">Hay campos vacios en la creación del blog!</h4>
+                    <p class="text-muted">El campo 'titulo', 'imagen principal' o 'contenido' no fueron diligenciados</p>
+                    <button aria-label="Close" class="btn btn-success pd-x-25" data-bs-dismiss="modal">Cerrar</button>
+                    <a class="btn btn-info pd-x-25" asp-action="Create" asp-controller="Blog">Inicio</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion 2 -->
-		<div id="seccion-dos-publicar" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Adicionando el parrafo 2 de 5</h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label class="form-label">Subtitulo</label>
-						<input class="form-control" type="text" placeholder="Subtitulo de tu blog" id="subtitulo-uno-blog">
-					</div>
-					<div class="form-group">
-						<label class="form-label">Segundo Parrafo</label>
-						<textarea class="form-control mb-4" placeholder="Continua con el segundo parrafo" rows="8" id="segundo-parrafo"></textarea>
-					</div>
-					<div class="invalid-feedback" id="invalid-segundo-parrafo">Primero debes asignar un Subtitulo para este parrafo</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion 2 textArea -->
-		<div id="seccion-dos-publicar-textarea" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Adicionando el parrafo 2 de 5</h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label class="form-label">Segundo Parrafo</label>
-						<textarea class="form-control mb-4" placeholder="Continua con el segundo parrafo" rows="8" id="segundo-parrafo-textarea"></textarea>
-					</div>
-					<div class="invalid-feedback" id="invalid-segundo-parrafo-textarea">Debes agregar un parrafo</div>
-
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion 3 -->
-		<div id="seccion-tres-publicar" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Adicionando el parrafo 3 de 5</h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label class="form-label">Subtitulo</label>
-						<input class="form-control" type="text" placeholder="Subtitulo de tu blog" id="subtitulo-tres-blog">
-					</div>
-					<div class="form-group">
-						<label class="form-label">Nuevo Parrafo</label>
-						<textarea class="form-control mb-4" placeholder="Continua con un nuevo parrafo" rows="8" id="parrafo-tres-blog"></textarea>
-					</div>
-					<div class="invalid-feedback" id="invalid-parrafo-tres">Primero debes asignar un Subtitulo para este parrafo</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion 3 TextArea -->
-		<div id="seccion-publicar-tres-textarea" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Adicionando el parrafo 3 de 5</h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label class="form-label">Nuevo Parrafo</label>
-						<textarea class="form-control mb-4" placeholder="Continua con un nuevo parrafo" rows="8" id="parrafo-tres-textarea"></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion 4 -->
-		<div id="seccion-cuatro-publicar" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Adicionando el parrafo 4 de 5</h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label class="form-label">Subtitulo</label>
-						<input class="form-control" type="text" placeholder="Subtitulo de tu blog" id="subtitulo-cuatro-blog">
-					</div>
-					<div class="form-group">
-						<label class="form-label">Nuevo Parrafo</label>
-						<textarea class="form-control mb-4" placeholder="Continua con un nuevo parrafo" rows="8" id="parrafo-cuatro-blog"></textarea>
-					</div>
-					<div class="invalid-feedback" id="invalid-parrafo-cuatro">Primero debes asignar un Subtitulo para este parrafo</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion 4 TextArea -->
-		<div id="seccion-publicar-cuatro-textarea" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Adicionando el parrafo 4 de 5</h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label class="form-label">Nuevo Parrafo</label>
-						<textarea class="form-control mb-4" placeholder="Continua con un nuevo parrafo" rows="8" id="parrafo-cuatro-textarea"></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion 5 -->
-		<div id="seccion-cinco-publicar" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Adicionando el parrafo 5 de 5</h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label class="form-label">Subtitulo</label>
-						<input class="form-control" type="text" placeholder="Subtitulo de tu blog" id="subtitulo-cinco-blog">
-					</div>
-					<div class="form-group">
-						<label class="form-label">Nuevo Parrafo</label>
-						<textarea class="form-control mb-4" placeholder="Continua con un nuevo parrafo" rows="8" id="parrafo-cinco-blog"></textarea>
-					</div>
-					<div class="invalid-feedback" id="invalid-parrafo-cinco">Primero debes asignar un Subtitulo para este parrafo</div>
-				</div>
-			</div>
-		</div>
-			
-		<!-- Seccion 5 TextArea -->
-		<div id="seccion-publicar-cinco-textarea" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Adicionando el parrafo 5 de 5</h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label class="form-label">Nuevo Parrafo</label>
-						<textarea class="form-control mb-4" placeholder="Continua con un nuevo parrafo" rows="8" id="parrafo-cinco-textarea"></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion 6 -->
-		<div id="seccion-galeria-uno" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Agrega la primera imagen a la galeria !!</h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label class="form-label">Primera Imagen</label>
-						<div class="col-sm-12 col-md-12">
-							<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-g-uno" />
-						</div>
-						<div class="invalid-feedback" id="invalid-imagen-g-uno">Debes agregar una imagen</div>
-					</div>
-					<div class="form-group">
-						<label class="form-label">Descripción</label>
-						<textarea class="form-control mb-4" placeholder="Descripcion" rows="3" id="descripcion-ig-uno"></textarea>
-					</div>
-					<div class="form-group" style="padding-bottom: 35px;">
-						<label class="form-label">URL Fuente</label>
-						<input class="form-control" type="text" placeholder="URL Fuente" id="url-fuente-ig-uno">
-					</div>
-					<hr />
-					<p>Datos Metadata</p>
-					<div class="form-group">
-						<label class="form-label">Texto alternativo</label>
-						<input class="form-control" type="text" placeholder="Alt=' '" id="texto-alternativo-ig-uno">
-					</div>
-					<div class="form-group">
-						<label class="form-label">Titulo</label>
-						<textarea class="form-control mb-4" placeholder="Titulo=' '" rows="3" id="titulo-ig-uno"></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion 7 -->
-		<div id="seccion-galeria-dos" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Agrega la segunda imagen a la galeria !!</h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label class="form-label">Segunda Imagen</label>
-						<div class="col-sm-12 col-md-12">
-							<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-g-dos" />
-						</div>
-						<div class="invalid-feedback" id="invalid-imagen-g-dos">Debes agregar una imagen</div>
-					</div>
-					<div class="form-group">
-						<label class="form-label">Descripción</label>
-						<textarea class="form-control mb-4" placeholder="Descripcion" rows="3" id="descripcion-ig-dos"></textarea>
-					</div>
-					<div class="form-group" style="padding-bottom: 35px;">
-						<label class="form-label">URL Fuente</label>
-						<input class="form-control" type="text" placeholder="URL de referencia" id="url-fuente-ig-dos">
-					</div>
-					<hr />
-					<p>Datos Metadata</p>
-					<div class="form-group">
-						<label class="form-label">Texto alternativo</label>
-						<input class="form-control" type="text" placeholder="Alt=''" id="texto-alternativo-ig-dos">
-					</div>
-					<div class="form-group">
-						<label class="form-label">Titulo</label>
-						<textarea class="form-control mb-4" placeholder="Titulo=' '" rows="3" id="titulo-ig-dos"></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion 8 -->
-		<div id="seccion-galeria-tres" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Agrega la tercera imagen a la galeria !!</h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label class="form-label">Tercera Imagen</label>
-						<div class="col-sm-12 col-md-12">
-							<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-g-tres" />
-						</div>
-						<div class="invalid-feedback" id="invalid-imagen-g-tres">Debes agregar una imagen</div>
-
-					</div>
-					<div class="form-group">
-						<label class="form-label">Descripción</label>
-						<textarea class="form-control mb-4" placeholder="Descripcion" rows="3" id="descripcion-ig-tres"></textarea>
-					</div>
-					<div class="form-group" style="padding-bottom: 35px;">
-						<label class="form-label">URL Fuente</label>
-						<input class="form-control" type="text" placeholder="URL de referencia" id="url-fuente-ig-tres">
-					</div>
-					<hr />
-					<p>Datos Metadata</p>
-					<div class="form-group">
-						<label class="form-label">Texto alternativo</label>
-						<input class="form-control" type="text" placeholder="Alt=''" id="texto-alternativo-ig-tres">
-					</div>
-					<div class="form-group">
-						<label class="form-label">Titulo</label>
-						<textarea class="form-control mb-4" placeholder="Titulo=' '" rows="3" id="titulo-ig-tres"></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion 9 -->
-		<div id="seccion-galeria-cuatro" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Agrega la cuarta imagen a la galeria !!</h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label class="form-label">Cuarta Imagen</label>
-						<div class="col-sm-12 col-md-12">
-							<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="imagen-g-cuatro" />
-						</div>
-						<div class="invalid-feedback" id="invalid-imagen-g-cuatro">Debes agregar una imagen</div>
-					</div>
-					<div class="form-group">
-						<label class="form-label">Descripción</label>
-						<textarea class="form-control mb-4" placeholder="Descripcion" rows="3" id="descripcion-ig-cuatro"></textarea>
-					</div>
-					<div class="form-group" style="padding-bottom: 35px;">
-						<label class="form-label">URL Fuente</label>
-						<input class="form-control" type="text" placeholder="URL de referencia" id="url-fuente-ig-cuatro">
-					</div>
-					<hr />
-					<p>Datos Metadata</p>
-					<div class="form-group">
-						<label class="form-label">Texto alternativo</label>
-						<input class="form-control" type="text" placeholder="Alt=''" id="texto-alternativo-ig-cuatro">
-					</div>
-					<div class="form-group">
-						<label class="form-label">Titulo</label>
-						<textarea class="form-control mb-4" placeholder="Titulo=' '" rows="3" id="titulo-ig-cuatro"></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion 10 -->
-		<div id="seccion-categorias" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Selecciona las categorias del Blog !!</h4>
-				</div>
-				<div class="card-body">
-
-					<div class="form-group">
-						<label class="form-label">Categoria principal</label>
-						<select class="form-control select2 form-select" data-placeholder="Seleccione .." id="categorias-principal">
-							<option label="Choose one"></option>
-							@foreach(var item in Model)
-							{
-								<option value="@item.Id">@item.Nombre</option>
-							}
-						</select>
-					</div>
-					<div id="reload">
-						
-						<partial name="~/Views/Blog/_CategoriasSecundarias.cshtml" model="@Model"/>
-	
-						@*@Html.Partial("_CategoriasSecundarias.cshtml", Model);*@
-							
-					</div>
-				</div>
-
-				
-			</div>
-		</div>
-
-
-
-
-		<!-- Seccion Botones -->
-		<div id="seccion-btn-publicar" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Adiciona un segundo parrafo</h4>
-				</div>
-				<div class="card-body">
-					<div class="caption">
-						<p class="text-muted">¿Deseas agregar un Subtitulo el segundo parrafo ?</p>
-						<p>
-							<a href="#PublicarBlog" class="btn btn-success" onclick="AddSubtitulo()" style="margin-top:20px;">Si, si quiero !!</a>
-							<a href="#PublicarBlog" class="btn btn-info" onclick="AddParrafo()" style="margin-top:20px;">No, no quiero !!</a>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="card">
-				<div class="card-body">
-					<p class="text-muted">Saltar al siguiente paso: </p>
-					<p>
-						<a href="#PublicarBlog" class="btn btn-primary" onclick="NextGallery()" style="margin-top:20px;">Crear Galeria</a>
-					</p>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion Botones dos -->
-		<div id="seccion-btn-publicar-dos" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Adiciona un tercer parrafo</h4>
-				</div>
-				<div class="card-body">
-					<div class="caption">
-						<p class="text-muted">¿Deseas agregar un Subtitulo el tercer parrafo ?</p>
-						<p>
-							<a href="#PublicarBlog" class="btn btn-success" onclick="AddSubtituloTres()" style="margin-top:20px;">Si, si quiero !!</a>
-							<a href="#PublicarBlog" class="btn btn-info" onclick="AddParrafoTres()" style="margin-top:20px;">No, no quiero !!</a>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="card">
-				<div class="card-body">
-					<p class="text-muted">Saltar al siguiente paso: </p>
-					<p>
-						<a href="#PublicarBlog" class="btn btn-primary" onclick="NextGallery()" style="margin-top:20px;">Crear Galeria</a>
-					</p>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion Botones Tres-->
-		<div id="seccion-btn-publicar-tres" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Adiciona un cuarto parrafo</h4>
-				</div>
-				<div class="card-body">
-					<div class="caption">
-						<p class="text-muted">¿Deseas agregar un Subtitulo el cuarto parrafo ?</p>
-						<p>
-							<a href="#PublicarBlog" class="btn btn-success" onclick="AddSubtituloCuatro()" style="margin-top:20px;">Si, si quiero !!</a>
-							<a href="#PublicarBlog" class="btn btn-info" onclick="AddParrafoCuatro()" style="margin-top:20px;">No, no quiero !!</a>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="card">
-				<div class="card-body">
-					<p class="text-muted">Saltar al siguiente paso: </p>
-					<p>
-						<a href="#PublicarBlog" class="btn btn-primary" onclick="NextGallery()" style="margin-top:20px;">Crear Galeria</a>
-					</p>
-				</div>
-			</div>
-
-		</div>
-
-		<!-- Seccion Botones Cuatro-->
-		<div id="seccion-btn-publicar-cuatro" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Adiciona un quinto parrafo</h4>
-				</div>
-				<div class="card-body">
-					<div class="caption">
-						<p class="text-muted">¿Deseas agregar un Subtitulo el quinto parrafo ?</p>
-						<p>
-							<a href="#PublicarBlog" class="btn btn-success" onclick="AddSubtituloQuinto()" style="margin-top:20px;">Si, si quiero !!</a>
-							<a href="#PublicarBlog" class="btn btn-info" onclick="AddParrafoQuinto()" style="margin-top:20px;">No, no quiero !!</a>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="card">
-				<div class="card-body">
-					<p class="text-muted">Saltar al siguiente paso: </p>
-					<p>
-						<a href="#PublicarBlog" class="btn btn-primary" onclick="NextGallery()" style="margin-top:20px;">Crear Galeria</a>
-					</p>
-				</div>
-			</div>
-
-
-		</div>
-
-		<!-- Seccion Botones Cinco -->
-		<div id="seccion-btn-publicar-cinco" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Galeria de imagenes</h4>
-				</div>
-				<div class="card-body">
-					<div class="caption">
-						<p class="text-muted">¿Deseas agregar una galeria de imagenes al Blog?</p>
-						<p>
-							<a href="#PublicarBlog" class="btn btn-success" onclick="AddGallery()" style="margin-top:20px;">Si, si quiero !!</a>
-							<a href="#PublicarBlog" class="btn btn-info" onclick="NextCategoria()" style="margin-top:20px;">No, no quiero !!</a>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion Botones imagen1 Galeria -->
-		<div id="seccion-btn-imagen-uno-g" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Galeria de imagenes</h4>
-				</div>
-				<div class="card-body">
-					<div class="caption">
-						<p class="text-muted">¿Deseas agregar una segunda imagen?</p>
-						<p>
-							<a href="#PublicarBlog" class="btn btn-success" onclick="AddGallery2()" style="margin-top:20px;">Si, si quiero !!</a>
-							<a href="#PublicarBlog" class="btn btn-info" onclick="NextCategoria()" style="margin-top:20px;">No, no quiero !!</a>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion Botones imagen2 Galeria -->
-		<div id="seccion-btn-imagen-dos-g" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Galeria de imagenes</h4>
-				</div>
-				<div class="card-body">
-					<div class="caption">
-						<p class="text-muted">¿Deseas agregar una tercera imagen?</p>
-						<p>
-							<a href="#PublicarBlog" class="btn btn-success" onclick="AddGallery3()" style="margin-top:20px;">Si, si quiero !!</a>
-							<a href="#PublicarBlog" class="btn btn-info" onclick="NextCategoria()" style="margin-top:20px;">No, no quiero !!</a>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion Botones imagen3 Galeria -->
-		<div id="seccion-btn-imagen-tres-g" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Galeria de imagenes</h4>
-				</div>
-				<div class="card-body">
-					<div class="caption">
-						<p class="text-muted">¿Deseas agregar una cuarta imagen?</p>
-						<p>
-							<a href="#PublicarBlog" class="btn btn-success" onclick="AddGallery4()" style="margin-top:20px;">Si, si quiero !!</a>
-							<a href="#PublicarBlog" class="btn btn-info" onclick="NextCategoria()" style="margin-top:20px;">No, no quiero !!</a>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seccion Botones imagen4 Galeria -->
-		<div id="seccion-btn-imagen-cuatro-g" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Siguiente paso</h4>
-				</div>
-				<div class="card-body">
-					<div class="caption">
-						<p class="text-muted">Continua agregando las categorias del Blog</p>
-						<p>
-							<a href="#PublicarBlog" class="btn btn-primary" onclick="AddGallery5()" style="margin-top:20px;">Continuar !!</a>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	
-		<!-- Seccion Boton finalizar -->
-		<div id="seccion-btn-finalizar" class="hide-info">
-			<div class="card">
-				<div class="card-header-blogs">
-					<h4 class="mt-3 header-blog-publicar">Genial !!</h4>
-				</div>
-				<div class="card-body">
-					<p class="text-muted">Agrega las categorias secundarias que consideres necesarias y procede a publicar</p>
-					<p>
-						<a href="#PublicarBlog" class="btn btn-primary" onclick="Publicar()" style="margin-top:20px;">Publicar !!</a>
-					</p>
-				</div>
-			</div>
-			
-		</div>
-
-
-	</div>
-	<div class="col-xl-8 col-sm-12 col-xs-12" id="visualizar-blog-principal">
-		<div class="card">
-			<div class="main-chat-header pt-3 d-block d-sm-flex">
-				<div class="margin-auto">
-					<h3 class="margin-auto">Visualiza tu blog</h3>
-				</div>
-			</div>
-			<div class="card-body">
-				<div class="main-chat-body flex-2" id="ChatBody">
-					<div class="content-inner">
-						<div class="row justify-content-center text-center">
-
-							<!-- Seccion 1 -->
-							<div id="contenido-blog-visualizar"></div>
-							<div class="ps-relative p-1 bg-light br-5 hide-info" id="img-onchange">
-								<img src="" alt="img" class="cover-image br-5 ms-auto me-auto wp-100" id="blah"><br>
-								<span class="badge bg-primary-gradient blog-label label5">Blogs Confival</span>
-							</div>
-							<div id="contenido-blog-visualizar-parrafo" style="margin-top:20px;"></div>
-							
-							<!-- Seccion 2 -->
-							<div id="contenido-blog-visualizar-subtitulo-dos" style="margin-top:20px;"></div>
-							<div id="contenido-blog-visualizar-parrafo-dos" style="margin-top:20px;"></div>
-
-							<!-- Seccion 3 -->
-							<div id="contenido-blog-visualizar-subtitulo-tres" style="margin-top:20px;"></div>
-							<div id="contenido-blog-visualizar-parrafo-tres" style="margin-top:20px;"></div>
-
-							<!-- Seccion 4 -->
-							<div id="contenido-blog-visualizar-subtitulo-cuatro" style="margin-top:20px;"></div>
-							<div id="contenido-blog-visualizar-parrafo-cuatro" style="margin-top:20px;"></div>
-
-							<!-- Seccion 5 -->
-							<div id="contenido-blog-visualizar-subtitulo-quinto" style="margin-top:20px;"></div>
-							<div id="contenido-blog-visualizar-parrafo-quinto" style="margin-top:20px;"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="card">
-			<div class="main-chat-header pt-3 d-block d-sm-flex">
-				<div class="margin-auto">
-					<h3 class="margin-auto">Visualiza la galeria</h3>
-				</div>
-			</div>
-			<div class="card-body">
-				<div class="text-center demo-gallery">
-					<div class="mt-2">
-						<ul id="lightgallery" class="list-unstyled row row-sm">
-							<li class="col-sm-6 col-lg-4">
-								<div class="ps-relative p-1 bg-light br-5 hide-info" id="onchange-ig-uno">
-									<img src="" alt="img" height="90" class="cover-image br-5 ms-auto me-auto wp-100" id="blah-dos"><br>
-								</div>
-							</li>
-							<li class="col-sm-6 col-lg-4">
-								<div class="ps-relative p-1 bg-light br-5 hide-info" id="onchange-ig-dos">
-									<img src="" alt="img" height="90" class="cover-image br-5 ms-auto me-auto wp-100" id="blah-tres"><br>
-								</div>
-							</li>
-							<li class="col-sm-6 col-lg-4">
-								<div class="ps-relative p-1 bg-light br-5 hide-info" id="onchange-ig-tres">
-									<img src="" alt="img" height="90" class="cover-image br-5 ms-auto me-auto wp-100" id="blah-cuatro"><br>
-								</div>
-							</li>
-							<li class="col-sm-6 col-lg-4">
-								<div class="ps-relative p-1 bg-light br-5 hide-info" id="onchange-ig-cuatro">
-									<img src="" alt="img" height="90" class="cover-image br-5 ms-auto me-auto wp-100" id="blah-cinco"><br>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<div class="modal fade" id="api-error">
-		<div class="modal-dialog modal-dialog-centered text-center " role="document">
-			<div class="modal-content tx-size-sm">
-				<div class="modal-body text-center p-4">
-					<button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-					<i class="ion-wrench fs-65 text-primary lh-1 mb-5 d-inline-block"></i>
-					<h4 class="text-success tx-semibold">Estamos trabajando para solucionar!</h4>
-					<p class="text-muted">Nuestro sistema esta presentando cambios, intentalo de nuevo mas tarde.</p>
-					<button aria-label="Close" class="btn btn-success pd-x-25" data-bs-dismiss="modal">Cerrar</button>
-					<a class="btn btn-info pd-x-25" href="https://localhost:7191/#Servicios">Inicio</a>
-				</div>
-			</div>
-		</div>
-	</div>
 </div>
 
-
 @section scripts {
-	<script src="../assets/js/WebConfival/Blogs/Blogs.js"></script>
+    <script src="~/assets/js/WebConfival/Blogs/Blogs.js"></script>
 
-	<!-- SELECT2 JS -->
-	<script src="~/assets/plugins/select2/select2.full.min.js"></script>
+    <!-- SELECT2 JS -->
+    <script src="~/assets/plugins/select2/select2.full.min.js"></script>
 
-	<!--Internal Fileuploads js-->
-	<script src="~/assets/plugins/fileuploads/js/fileupload.js"></script>
-	<script src="~/assets/plugins/fileuploads/js/file-upload.js"></script>
+    <!--Internal Fileuploads js-->
+    <script src="~/assets/plugins/fileuploads/js/fileupload.js"></script>
+    <script src="~/assets/plugins/fileuploads/js/file-upload.js"></script>
 
-	<!-- FORM ELEMENTADVANCED JS -->
-	<script src="~/assets/js/formelementadvnced.js"></script>
+    <!-- FORM ELEMENTADVANCED JS -->
+    <script src="~/assets/js/formelementadvnced.js"></script>
 
-	<!--- TABS JS -->
-	<script src="~/assets/plugins/tabs/jquery.multipurpose_tabcontent.js"></script>
-	<script src="~/assets/plugins/tabs/tab-content.js"></script>
+    <!--- TABS JS -->
+    <script src="~/assets/plugins/tabs/jquery.multipurpose_tabcontent.js"></script>
+    <script src="~/assets/plugins/tabs/tab-content.js"></script>
 
-	<!-- Internal Chat js-->
-	<script src="~/assets/js/chat.js"></script>
+    <!-- Internal Chat js-->
+    <script src="~/assets/js/chat.js"></script>
 }

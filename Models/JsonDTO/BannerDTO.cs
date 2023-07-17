@@ -1,9 +1,8 @@
-﻿namespace confinancia.Models.JsonDTO
+﻿namespace frontend.Models.JsonDTO
 {
 	public class BannerDTO
 	{
-        public string Nombre { get; set; }
-        public string Url { get; set; }
-		public IFormFile Archivos { get; set; }
-	}
+        public string UrlSoporte { get; set; }
+        public int Posicion { get; set; }
+    }
 }

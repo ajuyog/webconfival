@@ -1,5 +1,8 @@
-﻿var nombres = "";
-
+﻿
+var actor = "";
+var nombres = "";
+var intentosSMS = "";
+var intentosV = 0;
 $(document).ready(function () {
     // --- INPUTS OTP CORREO --- //
     $(".inputs").keyup(function () {
@@ -13,6 +16,9 @@ $(document).ready(function () {
         }
     });
     $("#uncheckedPrimarySwitch-politica").val("on");
+    GetAttempts("SMS");
+    GetAttempts("Verifik");
+    $("#numero-radicado-user").mask("99999-99-99-999-9999-99999-99");
 });
 
 // --- VALIDACION DE POLITICA TRATAMIENTO DE DATOS --- //
@@ -48,7 +54,7 @@ function showOTPCorreo()     {
 };
 function activeTimer() {
     $('#timer-countercallback').countdown({
-        from: 20,
+        from: 180,
         to: 0,
         timerEnd: function () {
             this.animate({ 'opacity': .5 }, 500).css({ 'text-decoration': 'line-through' });
@@ -152,6 +158,12 @@ function ValidarDocumento() {
     var apellidos = $("#apellidos-lead").val();
     var fExpedicion = $("#fecha-expedicion-user").val();
     var fnacimiento = $("#fecha-nacimiento-user").val();
+    if (fnacimiento == '')
+    {
+        fnacimiento = new Date();
+    }
+    var edad = calcularEdad(fnacimiento);
+
 
     // -- CONTROL DE INVALID FEEDBACK -- //
     if (numeroDocumento.length == 0) {
@@ -161,6 +173,8 @@ function ValidarDocumento() {
     }
     if (tipoDocumentoFront <= 0) {
         $("#invalid-tipo-documento").css("display", "block");
+    } else {
+        $("#invalid-tipo-documento").css("display", "none");
     }
     if (tipoDocumentoFront > 0) {
         $("#invalid-tipo-documento").css("display", "none");
@@ -175,9 +189,15 @@ function ValidarDocumento() {
     } else {
         $("#invalid-apellidos-lead").css("display", "none");
     }
+    if (edad < 18) {
+        $("#invalid-fecha-nacimiento-user").css("display", "block");
+    } else {
+        $("#invalid-fecha-nacimiento-user").css("display", "none");
+    }
+
     
     // -- CONSUMO API REGISTRADURIA -- //
-    if (numeroDocumento.length > 0 && tipoDocumentoFront.length > 0 && nombres.length > 0 && apellidos.length > 0) {
+    if (numeroDocumento.length > 0 && tipoDocumentoFront.length > 0 && nombres.length > 0 && apellidos.length > 0 && edad >= 18) {
         // lOADER
         $("#loader3").removeClass("hide-info");
         $("#documento-hide").addClass("hide-info");
@@ -215,15 +235,15 @@ function ValidarDocumento() {
                     $("#fExpedicion-ok").val(fExpedicion.toString());
 
                 } else {
-                    $("#intentos-sms-msg").get(0).innerHTML = "Haz alcanzado el maximo de intentos permitidos para verificar tu documento de identidad"
                     $('#intentos-verifik-count').html(function (i, val) { return val * 1 + 1 });
-                    if (parseInt($('#intentos-verifik-count').get(0).innerHTML) >= 2) {
+                    if (parseInt($('#intentos-verifik-count').get(0).innerHTML) >= intentosV) {
                         // LOADER
                         $("#loader3").addClass("hide-info");
                         $("#documento-hide").removeClass("hide-info");
 
                         $("#documento-hide").addClass("hide-info");
                         $("#intentos-verifik-superados").removeClass("hide-info");
+                        $("[id=intentos-sms-msg]").addClass("hide-info");
 
                     } else {
                         // LOADER
@@ -253,6 +273,17 @@ function ValidarDocumento() {
         });
     }
 };
+
+function calcularEdad(fecha_nacimiento) {
+    var hoy = new Date();
+    var cumpleanos = new Date(fecha_nacimiento);
+    var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+    var m = hoy.getMonth() - cumpleanos.getMonth();
+    if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
+    }
+    return edad;
+}
 function Cancel() {
     location.reload();
 };
@@ -322,7 +353,7 @@ function showOTPCelular() {
 };
 function activeTimer2() {
     $('#timer-countercallback2').countdown({
-        from: 30,
+        from: 180,
         to: 0,
         timerEnd: function () {
             this.animate({ 'opacity': .5 }, 500).css({ 'text-decoration': 'line-through' });
@@ -410,87 +441,120 @@ function ShowOportunidad() {
 function LeadOportunidad() {
     var validacion = ValidarLeadOportunidad();
     if (validacion == 0) {
-        const formElement = document.querySelector("form");
-        var formData = new FormData(formElement);
-        $.ajax({
-            url: "Oportunidad/SaveForm",
-            type: 'POST',
-            data: formData,
-            success: function (data) {
-                console.log(data);
-                if (data) {
-                    $("#success-leadOportunidad").modal("show");
-                    window.location.reload();
-                } else {
-                    notif({
-                        msg: 'Algo malo ha pasado, vuelve a intentar',
-                        type: "danger",
-                        multiline: true,
-                        position: "center"
-                    });
-                }
-            },
-            cache: false,
-            contentType: false,
-            processData: false
-        });
+        Lead();
     }
-}
-
+};
 function ValidarLeadOportunidad() {
     var count = 0;
+    var demandante = $("#demandante").val();
     var tipoFallo = $("#fallo").val();
     var tipoRegimen = $("#tipo-regimen").val();
     var medioContro = $("#medio-control").val();
     var entidad = $("#entidad-pagaduria").val();
     var tipoCorporacion = $("#tipo-corporacion").val();
     var corporacion = $("#corporacion").val();
+    var numeroRadicado = $("#numero-radicado-user").val();
+    var fechaEjecutoria = $("#f-ejecutoria").val();
 
+    var selected = document.querySelector(
+        'input[name="radio-stacked"]:checked');
+    if (!selected) {
+        $("#invalid-feedback-tipo-actores").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-feedback-tipo-actores").css("display", "none");
+        actor = selected.id;
+    }
     if (tipoFallo == null) {
         $("#invalid-feedback-tipo-fallo").css("display", "block");
         count = count + 1;
     } else {
         $("#invalid-feedback-tipo-fallo").css("display", "none");
     }
-
     if (tipoRegimen == null) {
         $("#invalid-feedback-tipo-regimen").css("display", "block");
         count = count + 1;
     } else {
         $("#invalid-feedback-tipo-regimen").css("display", "none");
     }
-
     if (medioContro == null) {
         $("#invalid-feedback-medio-control").css("display", "block");
         count = count + 1;
     } else {
         $("#invalid-feedback-medio-control").css("display", "none");
     }
-
     if (entidad == null) {
         $("#invalid-feedback-entidad-pagaduria").css("display", "block");
         count = count + 1;
     } else {
         $("#invalid-feedback-entidad-pagaduria").css("display", "none");
     }
-
     if (tipoCorporacion == null) {
         $("#invalid-feedback-tipo-corporacion").css("display", "block");
         count = count + 1;
     } else {
         $("#invalid-feedback-tipo-corporacion").css("display", "none");
     }
-
     if (corporacion == null) {
         $("#invalid-feedback-corporacion").css("display", "block");
         count = count + 1;
     } else {
         $("#invalid-feedback-corporacion").css("display", "none");
     }
+    if (numeroRadicado.length != 29) {
+        $("#invalid-feedback-no-radicado").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-feedback-no-radicado").css("display", "none");
+    }
+    if (fechaEjecutoria.length == 0) {
+        $("#invalid-f-ejecutoria").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-f-ejecutoria").css("display", "none");
+    }
+    if (demandante.length == 0) {
+        $("#invalid-feedback-demandante").css("display", "block");
+        count = count + 1;
+    } else {
+        $("#invalid-feedback-demandante").css("display", "none");
+    }
+
     return count;
-}
-
-
+};
+function Lead() {
+    const formElement = document.querySelector("form");
+    var formData = new FormData(formElement);
+    formData.append('actorId', actor);
+    $("#loader4").removeClass("hide-info");
+    $("#oportunidad-hide").addClass("hide-info");
+    $("#validacion-tres").addClass("hide-info");
+    $.ajax({
+        url: "Oportunidad/SaveForm",
+        type: 'POST',
+        data: formData,
+        success: function (result) {
+            if (result == "success") {
+                $("#loader4").addClass("hide-info");
+                $("#lead-oportunidad-exitoso").removeClass("hide-info");
+                $("#progres-100-oportunidad").removeClass("hide-info");
+            } else {
+                if (result == "existing") {
+                    $("#loader4").addClass("hide-info");
+                    $("#oportunidad-existente").removeClass("hide-info");
+                } else {
+                    if (result == "error") {
+                        $("#loader4").addClass("hide-info");
+                        $("#form-oportunidad-error-api").removeClass("hide-info");
+                    }
+                }
+            }
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+};
 
 // --- UTILIDAD --- //
 function MailRegex(data) {
@@ -504,8 +568,6 @@ function MailRegex(data) {
         count = 0;
     }
     return count;
-
-
 };
 function ResendMailAPI(data) {
 
@@ -549,7 +611,7 @@ function ResendMailAPI(data) {
         }
     });
 
-}
+};
 function CleanDocumento(data) {
     $("#nombre-completo-lead").val("");
     $("#nombre-completo-lead").removeClass("disable-writing");
@@ -560,8 +622,22 @@ function CleanDocumento(data) {
     $("#mensaje-error-verifica").get(0).innerHTML = data;
     $("#segundo-intento").removeClass("hide-info");
     $("#btn-validar-documento").removeClass("hide-info");
-}
-
+};
+function GetAttempts(data) {
+    $.ajax({
+        type: "GET",
+        url: '/Oportunidad/GetAttempts',
+        data: { valor: data },
+        success: function (result) {
+            if (data == "SMS") {
+                intentosSMS = result;
+            }
+            if (data == "Verifik") {
+                intentosV = parseInt(result);
+            }
+        }
+    });
+};
 $("#tipo-corporacion").on("change", function () {
     var select = $("#corporacion");
     var idCorporacion = $("#tipo-corporacion").val();
@@ -583,16 +659,28 @@ $("#tipo-corporacion").on("change", function () {
         }
     });
 });
+function ChangeActor(data) {
 
+    //if (data == 6) {
+    //}
+    var demandante = $("#demandante");
+    var demandanteReadOnly = $("#nombres-ok").val() + " " + $("#apellidos-ok").val();
+    if (data == 6) {
+        demandante.val(demandanteReadOnly);
+        demandante.addClass("disable-writing");
+    } else {
+        demandante.val("");
+        demandante.removeClass("disable-writing");
+    }
+}
 
 // --- CONTADOR SMS --- //
 $('#intentos-sms').click(function () {
     var count = $('#intentos-sms-count');
-    /*var intentos = GetAttempts("SMS");*/
-    if (count.get(0).innerHTML == "1") {
+    if (count.get(0).innerHTML == intentosSMS) {
         $("#celular-hide").addClass("hide-info");
         $("#intentos-sms-superados").removeClass("hide-info");
-        $("#intentos-sms-msg").get(0).innerHTML = "Haz alcanzado el maximo de intentos permitidos para solicitar un SMS"
+        $("[id=intentos-verifik-msg]").addClass("hide-info");
     } else {
         $('#intentos-sms-count').html(function (i, val) { return val * 1 + 1 });
     }

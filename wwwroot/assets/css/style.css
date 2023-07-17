@@ -299,11 +299,59 @@ body {
     }
 }
 
-.h-carousel-c{
+.responsive-css-banner-principal{
+    height: 292px;
+    width:1873px;
+}
+
+@media (max-width:1024px) {
+    .responsive-css-banner-principal {
+        height: 242px;
+        width: 1552px;
+    }
+}
+
+@media (max-width:768px) {
+    .responsive-css-banner-principal {
+        height: 192px;
+        width: 1231px;
+    }
+}
+
+@media (max-width:560px) {
+    .responsive-css-banner-principal {
+        height: 142px;
+        width: 910px;
+    }
+}
+
+.responsive-indicators-banners{
+    height:305px;
+}
+
+@media (max-width:1024px) {
+    .responsive-indicators-banners {
+        height: 255px;
+    }
+}
+
+@media (max-width:768px) {
+    .responsive-indicators-banners {
+        height: 205px;
+    }
+}
+
+@media (max-width:560px) {
+    .responsive-indicators-banners {
+        height: 155px;
+    }
+}
+
+
+.h-carousel-c {
     height: 500px;
     width: 888px;
     margin: auto;
-    
 }
 
 @media (max-width:1024px) {
@@ -672,6 +720,43 @@ body {
     font-size: 1.2rem;
     margin:auto;
 }
+
+.policy {
+    /*margin: 15px;*/
+    background-color: white
+}
+
+.landing-page .card-policy {
+    background-color: white;
+    box-shadow: none;
+}
+
+.justify-policy{
+    text-align: justify;
+}
+
+.user-mail{
+    text-align: end;
+}
+
+@media (max-width: 990px) {
+    .user-mail {
+        text-align: start;
+    }
+}
+
+.text-pagination-left::before {
+    content: attr(data-letras);
+}
+
+@media (max-width: 1245px) {
+    .text-pagination-left::before {
+        content: attr(data-icono);
+    }
+}
+
+
+
 
 /*-------------------------------------------------------------*/
 .margin-tabs-li {
