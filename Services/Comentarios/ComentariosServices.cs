@@ -10,7 +10,7 @@ namespace frontend.Services.Comentarios
     {
 		Task<bool> ApproveComment(int id, int idBlog);
 		Task<bool> Create(int idBlog, string comentario, string relation);
-		Task<List<ComentarioDTO>> Get(int idBlog, int pagina, int registros);
+		Task<ComentariosDTO> Get(int idBlog, int pagina, int registros);
     }
     public class ComentariosServices: IComentariosServices
     {
@@ -22,18 +22,18 @@ namespace frontend.Services.Comentarios
         }
         #endregion
 
-        public async Task <List<ComentarioDTO>> Get(int idBlog, int pagina, int registros)
+        public async Task <ComentariosDTO> Get(int idBlog, int pagina, int registros)
         {
-            var model = new List<ComentarioDTO>();
+            var model = new ComentariosDTO();
             var client = new HttpClient();
             var token = await _getToken.GetTokenV();
-			var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog/" + idBlog + "/comentarios/listFalse?Pagina=" + pagina + "&RegistrosPorPagina=" + registros);
-			request.Headers.Add("Authorization", "Bearer " + token);
-			var response = await client.SendAsync(request);
-            if(response.IsSuccessStatusCode) 
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog/" + idBlog + "/comentarios/listFalse?Pagina=" + pagina + "&RegistrosPorPagina=" + registros);
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode) 
             {
                 var responseStream = await response.Content.ReadAsStringAsync();
-                model = JsonConvert.DeserializeObject<List<ComentarioDTO>>(responseStream);
+                model = JsonConvert.DeserializeObject<ComentariosDTO>(responseStream);
             }
 			return model;
 

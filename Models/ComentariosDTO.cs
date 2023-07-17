@@ -4,6 +4,7 @@ namespace frontend.Models
 {
 	public class ComentariosDTO: PaginadorDTO
 	{
-        public List<ComentarioDTO> Comentarios { get; set; }
+        public int totalBlogs { get; set; }
+        public List<ComentarioDTO> comentariosBlog { get; set; }
     }
 }
