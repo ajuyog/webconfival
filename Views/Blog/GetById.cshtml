@@ -174,7 +174,7 @@
 															<ul id="lightgallery" class="list-unstyled row row-sm">
 																@foreach (var item in Model.Galeria)
 																{
-																	<li class="col-sm-6 col-lg-4"  data-responsive="@item" data-src="@item" onclick="SeeGallery('@Model.Id', '@Model.Titulo')">
+																	<li class="col-sm-6 col-lg-4"  onclick="SeeGallery('@Model.Id', '@Model.Titulo')">
 																			<img class="img-responsive br-5 w-100" height="90" src="@item">
 																	</li>
 																}

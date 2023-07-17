@@ -3,7 +3,7 @@
     Layout = "_Layoutlandingpage2";
 }
 
-@if (Model.Count == 1)
+@if (Model.ResultBlog.Count == 1)
 {
     <div class="main-container container-fluid">
         <div class="row" style="padding-top:125px;">
@@ -168,7 +168,7 @@
     <partial name="~/Views/Shared/_Footer1.cshtml" />
 }
 
-@if (Model.Count == 2)
+@if (Model.ResultBlog.Count == 2)
 {
     <div class="main-container container-fluid">
         <div class="row" style="padding-top:125px;">
@@ -373,7 +373,7 @@
     <partial name="~/Views/Shared/_Footer1.cshtml" />
 }
 
-@if (Model.Count > 2)
+@if (Model.ResultBlog.Count > 2)
 {
     <div class="main-container container-fluid">
         <div class="row" style="padding-top:125px;">

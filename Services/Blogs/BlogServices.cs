@@ -9,7 +9,7 @@ namespace frontend.Services.Blogs
 {
     public interface IBlogServices
     {
-        Task<BlogsDTO> Get(int pagina, int registros);
+        Task<BlogsDTO> Get(bool admin, int pagina, int registros);
         Task<BlogDTO> CreateBlog(CreateBlogDTO obj);
         Task<bool> CreateGaleria(List<IFormFile> files, int id);
         Task CreateImgAutor();
@@ -225,14 +225,14 @@ namespace frontend.Services.Blogs
             return url;
         }
 
-        public async Task<BlogsDTO> Get(int pagina, int registros)
+        public async Task<BlogsDTO> Get(bool admin, int pagina, int registros)
         {
             var model = new BlogsDTO();
             var token = await _getToken.GetTokenV();
             var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog?Pagina=" + pagina +"&RegistrosPorPagina=" + registros);
-            request.Headers.Add("Authorization", "Bearer " + token);
-            var response = await client.SendAsync(request);
+			var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Blog/" + admin + "?Pagina=" + pagina + "&RegistrosPorPagina=" + registros);
+			request.Headers.Add("Authorization", "Bearer " + token);
+			var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 var responseStream = await response.Content.ReadAsStringAsync();

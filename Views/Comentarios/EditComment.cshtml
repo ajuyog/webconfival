@@ -5,7 +5,7 @@
 <!-- PAGE-HEADER -->
 <div class="page-header">
 	<div>
-		<h1 class="page-title">Comentarios sin aprobacion</h1>
+		<h1 class="page-title">Comentarios</h1>
 	</div>
 	<div class="ms-auto pageheader-btn">
 		<ol class="breadcrumb">
@@ -15,11 +15,39 @@
 	</div>
 </div>
 
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
+
+
+				<ul class="">
+					<li class="d-flex pt-0 px-0">
+						<img src="@ViewBag.ImagenBlog" class="avatar br-5 avatar-lg me-3 my-auto" style="width: 5rem; height: 5rem;">
+						<div>
+							<span class="d-block text-muted">Categoria: @ViewBag.Categoria</span>
+							<h3>@ViewBag.Titulo</h3>
+							<h4 class="d-block text-muted">@ViewBag.Publicacion</h4>
+						</div>
+					</li>
+
+				</ul>
+
+				
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
 <div class="row">
 	<div class="col-xl-12 col-md-12">
 		<div class="card cart">
 			<div class="card-header border-bottom">
-				<h3 class="card-title">Blog: @ViewBag.Titulo</h3>
+				<h3 class="card-title">Listado de comentarios</h3>
 			</div>
 			<div class="card-body">
 				<input id="blog-id" type="hidden" value="@ViewBag.IdBlog" />
