@@ -37,9 +37,8 @@ namespace frontend.Controllers
 			if(pagina == 0) { pagina = 1; }
 			registros = 10;
 			var model = new ComentariosDTO();
-			model.Comentarios = await _comentariosServices.Get(idBlog, pagina, registros);
-			model.Count = model.Comentarios.Count();
-			model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
+			model = await _comentariosServices.Get(idBlog, pagina, registros);
+			model.Paginas = (int)Math.Ceiling((double)model.totalBlogs / registros);
 			model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Comentarios/EditComment?idBlog=" + idBlog + "&titulo=" + titulo + "&pagina=";
 			model.PaginaActual = pagina;
 			ViewBag.Titulo = titulo;

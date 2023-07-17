@@ -48,7 +48,7 @@ function AddContenido() {
         parrafoC.append('<h3>' + subtitulo + '</h3>');
     }
     if (parrafoC.length != 0) {
-        parrafoC.append('<p>' + parrafoG + '</p>');
+        parrafoC.append('<p class="px-3 py-2 text-17 br-5">' + parrafoG + '</p>');
         $("#parrafo" + parrafo).removeClass("hide-info");
         parrafo++;
 

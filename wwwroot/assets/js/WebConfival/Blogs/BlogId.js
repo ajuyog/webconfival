@@ -211,8 +211,9 @@ function ValidReply() {
 };
 
 function Justify() {
-    $("p").css("text-align", "justify")
-    $("h3").css("text-align", "justify")
+    $("p").css("text-align", "justify");
+    $("h3").css("text-align", "justify");
+    /*$("p").addClass("px-3 py-2 text-17 br-5");*/
 }
 
 

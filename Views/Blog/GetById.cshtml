@@ -7,13 +7,13 @@
 <div class="hor-content main-content mt-0">
 	<div class="side-app">
 		<!-- CONTAINER -->
-		<div class="main-container">
+		<div class="main-container container-fluid">
 			<!-- DETALLES BLOG -->
-			<div class="section pb-5 bg-white border-bottom" style="padding-bottom:50px; padding-top:120px;">
+			<div style="padding-bottom:50px; padding-top:120px;">
 				<div class="px-5 px-md-0">
 					<div class="row">
 						<div class="col-xl-12">
-							<div class="card">
+							<div class="card" style="background-color: white">
 								<div class="card-body">
 									<div class="row">
 
@@ -23,9 +23,9 @@
 												<div class="d-sm-flex d-block align-items-center">
 													<div class="d-flex align-items-center mb-sm-0 mb-2">
 														<div class="me-3">
-															<img class="media-object rounded-circle thumb-sm" alt="64x64" src="~/assets/images/photos/11.jpg" width="50">
+															<img class="avatar avatar-sm rounded-circle cover-image" alt="64x64" src="~/assets/images/landing/Carrousel-1-Confival.png">
 														</div>
-														<h6 class="mb-0 text-muted ms-2 text-13 me-sm-0 me-2">Autor desconocido</h6>
+														<h6 class="mb-0 text-muted ms-2 text-13 me-sm-0 me-2">Confival Capital S.A.S.</h6>
 													</div>
 													<a href="#" class="d-f-ai-c mx-0 mb-sm-0 mb-2 mx-sm-4 mx-0 text-13"><span class="fe fe-calendar text-muted me-1 text-15"></span><span class="mt-0 mt-0 text-muted">@Model.Publicacion.ToString()</span></a>
 													<a href="#" class="me-0 d-f-ai-c mb-sm-0 mb-2 text-13"><span class="fe fe-message-square text-muted me-1 text-15"></span><span class="mt-0 mt-0 text-muted">@Model.Comentarios.Count</span></a>
@@ -124,14 +124,14 @@
 										<div class="col-xl-4">
 											<div class="card-confival-blogs overflow-hidden border br-5">
 												<div class="card-header border-bottom">
-													<h3 class="card-title">Acerca  del autor</h3>
+													<h3 class="card-title">Acerca del Autor</h3>
 												</div>
 												<div class="card-body">
 													<div class="text-center">
-														<img class="card-img-top w-100 w-100" src="~/assets/images/photos/11.jpg" alt="" title="">
+														<img class="card-img-top w-100 w-100" src="~/assets/images/landing/Carrousel-1-Confival.png" alt="" title="">
 														<div class="br-5 pt-3 text-justify">
 															<p class="m-0 text-muted">
-																una descripcion del autor
+																 Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nulla deleniti voluptas officia accusamus magnam ullam inventore Lorem ipsum dolor, sit amet consectetur dolorem quibusdam?. 
 															</p>
 														</div>
 													</div>
@@ -174,7 +174,7 @@
 															<ul id="lightgallery" class="list-unstyled row row-sm">
 																@foreach (var item in Model.Galeria)
 																{
-																	<li class="col-sm-6 col-lg-4" onclick="SeeGallery('@Model.Id', '@Model.Titulo')">
+																	<li class="col-sm-6 col-lg-4"  data-responsive="@item" data-src="@item" onclick="SeeGallery('@Model.Id', '@Model.Titulo')">
 																			<img class="img-responsive br-5 w-100" height="90" src="@item">
 																	</li>
 																}
@@ -184,8 +184,6 @@
 												</div>
 											</div>
 										</div>
-
-
 									</div>
 								</div>
 							</div>
@@ -195,8 +193,13 @@
 			</div>
 		</div>
 	</div>
-	<partial name="~/Views/Shared/_Footer1.cshtml" />
+	<div>
+		<partial name="~/Views/Shared/_Footer1.cshtml" />
+		<partial name="~/Views/Shared/_Footer1.cshtml" />
+	</div>
+
 </div>
+
 <div class="modal fade"  id="modal-gallery" tabindex="-1" role="dialog" style="padding-top: 120px;">
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content">
