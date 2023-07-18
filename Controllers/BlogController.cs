@@ -44,7 +44,7 @@ public class BlogController : Controller
     {
         if (pagina == 0) { pagina = 1; }
         registros = 10;
-        var model = await _blogServices.Get(pagina, registros);
+        var model = await _blogServices.Get(false, pagina, registros);
         if (model != null)
         {
             foreach (var item in model.ResultBlog)
@@ -54,7 +54,7 @@ public class BlogController : Controller
                 var galeria = await _blogServices.Galeria(item.Id);
                 item.Galeria = galeria;
             }
-            model.Count = model.TotalBlog;
+            model.Count = model.totalBlogTrue;
             model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
             model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/Index/";
             model.PaginaActual = pagina;
@@ -211,8 +211,8 @@ public class BlogController : Controller
     {
         if (pagina == 0) { pagina = 1; }
         registros = 10;
-        var model = await _blogServices.Get(pagina, registros);
-		model.Count = model.TotalBlog;
+        var model = await _blogServices.Get(true, pagina, registros);
+		model.Count = model.totalBlogTrue + model.totalBlogFalse;
 		model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
 		model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/Edit?pagina=";
 		model.PaginaActual = pagina;
