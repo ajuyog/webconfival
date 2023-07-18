@@ -1,1655 +1,228 @@
-using confinancia.Models;
+using Azure;
+using frontend.Models;
+using frontend.Models.JsonDTO;
+using frontend.Services.Blogs;
+using frontend.Services.Categorias;
+using frontend.Services.Graph;
+using frontend.Services.Token;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Win32;
 using Newtonsoft.Json;
+using System.Collections;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Reflection.Metadata;
+using Tavis.UriTemplates;
 
 namespace noa.Controllers;
 
 public class BlogController : Controller
 {
-	#region CONSTRUCTOR
-	private readonly ILogger<BlogController> _logger;
+    #region CONSTRUCTOR
+    private readonly IGetToken _getToken;
+    private readonly IConfiguration _configuration;
+    private readonly IGraphServices _graphServices;
+    private readonly IBlogServices _blogServices;
+    private readonly ICategoriasServices _categoriasServices;
 
-    public BlogController(ILogger<BlogController> logger)
+    public BlogController(IGetToken getToken, IConfiguration configuration, IGraphServices graphServices, IBlogServices blogServices, ICategoriasServices categoriasServices)
     {
-        _logger = logger;
+        _getToken = getToken;
+        _configuration = configuration;
+        _graphServices = graphServices;
+        _blogServices = blogServices;
+        _categoriasServices = categoriasServices;
     }
-	#endregion
+    #endregion
 
-	/// <summary>
-	///  Devuelve la vista de Blog por Id
-	/// </summary>
-	/// <param name="idBlog"></param>
-	/// <returns></returns>
-	[HttpGet]
-    public IActionResult GetById(int idBlog)
-    {
-        // Esta es el API - esta pendiente
-        var model = new BlogDTO()
-        {
-            Id = idBlog,
-            Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-            Autor = new AutorDTO()
-            {
-                Id= 1,
-                ImagenAutor = new ImagenesDTO()
-				{ 
-					Id = 1,
-					URLImagen = "/assets/images/photos/11.jpg",
-					Alt = "altPruebas",
-					Descripcion = "Descripcion prueba",
-					Titulo = "Titulo de la image"
-				},
-                Nombre = "Autor Desconocido 1",
-                Descripcion = "Esta es una descripción del autor desconocido 1"
-            } ,
-            FechaPublicacion = DateTime.Now,
-            Categorias = new List<CategoriaDTO>()
-            {
-                new CategoriaDTO(){ Id = 1, Nombre = "Sentencias"},
-				new CategoriaDTO(){ Id = 2, Nombre = "Juridico"},
-            },
-            Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-            IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-            Comentarios = new List<ComentariosDTO>()
-            {
-                new ComentariosDTO()
-                {
-                    Id = 1,
-					Autor = new AutorDTO()
-					{
-						Id= 2,
-						ImagenAutor = new ImagenesDTO()
-						{
-							Id = 2,
-							URLImagen = "/assets/images/photos/11.jpg",
-							Alt = "altPruebas dos",
-							Descripcion = "Descripcion prueba dos",
-							Titulo = "Titulo de la image dos"
-						},
-						Nombre = "Autor Desconocido 2",
-						Descripcion = "Esta es una descripción del autor desconocido 2"
-					},
-                    FechaPublicacion = DateTime.Now,
-                    Comentario = "Este es un comentario",
-                    SubComentarios = new List<SubComentarioDTO>
-                    {
-                        new SubComentarioDTO()
-                        {
-                            Id = 1,
-                            SubComentario = 20,
-							Autor = new AutorDTO()
-							{
-								Id= 3,
-								ImagenAutor = new ImagenesDTO()
-								{
-									Id = 3,
-									URLImagen = "/assets/images/photos/11.jpg",
-									Alt = "altPruebas tres",
-									Descripcion = "Descripcion prueba tres",
-									Titulo = "Titulo de la image tres"
-								},
-								Nombre = "Autor Desconocido 3",
-								Descripcion = "Esta es una descripción del autor desconocido 3"
-							},
-							ComentarioId = 1,
-                            FechaPublicacion= DateTime.Now,
-                            Contenido = "Este es un SubComentario"
-                        },
-                        new SubComentarioDTO()
-                        {
-                            Id = 2,
-							SubComentario = 21,
-							Autor = new AutorDTO()
-							{
-								Id= 4,
-								ImagenAutor = new ImagenesDTO()
-								{
-									Id = 4,
-									URLImagen = "/assets/images/photos/11.jpg",
-									Alt = "altPruebas cuatro",
-									Descripcion = "Descripcion prueba cuatro",
-									Titulo = "Titulo de la image cuatro"
-								},
-								Nombre = "Autor Desconocido 4",
-								Descripcion = "Esta es una descripción del autor desconocido 4"
-							},
-							ComentarioId = 1,
-                            FechaPublicacion= DateTime.Now,
-                            Contenido = "Este es un segundo SubComentario"
-                        }
-                    }
-                },
-                new ComentariosDTO()
-                {
-                    Id = 2,
-					Autor = new AutorDTO()
-					{
-						Id= 5,
-						ImagenAutor = new ImagenesDTO()
-						{
-							Id = 5,
-							URLImagen = "/assets/images/photos/11.jpg",
-							Alt = "altPruebas cinco",
-							Descripcion = "Descripcion prueba cinco",
-							Titulo = "Titulo de la image cinco"
-						},
-						Nombre = "Autor Desconocido 5",
-						Descripcion = "Esta es una descripción del autor desconocido 5"
-					},
-                    FechaPublicacion = DateTime.Now,
-                    Comentario = "Este es un comentario",
-                    SubComentarios = new List<SubComentarioDTO>()
-				}
-			},
-			Galeria = new List<ImagenesDTO>()
-			{ 
-				new ImagenesDTO()
-				{
-					Id = 1,
-					Alt = "Alt 1",
-					Descripcion = "Descripcion Imagen 1",
-					Titulo = "Titulo imagen 1",
-					URLImagen = "/assets/images/photos/blogmain2.jpg",
-					URLSoporte = null
-				},
-				new ImagenesDTO()
-				{
-					Id = 2,
-					Alt = "Alt 2",
-					Descripcion = "Descripcion Imagen 2",
-					Titulo = "Titulo imagen 2",
-					URLImagen = "/assets/images/photos/blogmain2.jpg",
-					URLSoporte = "www.eltiempo.com"
-				},
-				new ImagenesDTO()
-				{
-					Id = 3,
-					Alt = "Alt 3",
-					Descripcion = "Descripcion Imagen 3",
-					Titulo = "Titulo imagen 3",
-					URLImagen = "/assets/images/photos/blogmain2.jpg",
-					URLSoporte = "www.eltiempo.com"
-				}
-			}
-		};
-		return View(model);
-	}
-
-	/// <summary>
-	/// Consulta los tres blogs mas recientes por idCategoria
-	/// </summary>
-	/// <param name="id"></param>
-	/// <returns></returns>
+    [Route("/Blog")]
+    [Route("/Blog/Index/{pagina}")]
     [HttpGet]
-    public async Task<List<BlogBetaDTO>> ConsultarTopTres(int id)
+    public async Task<IActionResult> Index(int pagina, int registros)
     {
-		var parametro = id.ToString();
-		var client = new HttpClient();
-		var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/blog/filtro?categoriaId=" + parametro);
-		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-		var content = new StringContent(string.Empty);
-		content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-		request.Content = content;
-		var response = await client.SendAsync(request);
-		if (response.IsSuccessStatusCode)
-		{
-			var responseStream = await response.Content.ReadAsStringAsync();
-			var lstBlogs = JsonConvert.DeserializeObject<List<BlogBetaDTO>>(responseStream);
-			return lstBlogs;
-		}
-		else
-		{
-			var lstEmpy = new List<BlogBetaDTO>();
-			return lstEmpy;
-		}
+        if (pagina == 0) { pagina = 1; }
+        registros = 10;
+        var model = await _blogServices.Get(false, pagina, registros);
+        if (model != null)
+        {
+            foreach (var item in model.ResultBlog)
+            {
+                var imagenBlog = await _blogServices.Imagen(item.Id);
+                item.Imagen = imagenBlog;
+                var galeria = await _blogServices.Galeria(item.Id);
+                item.Galeria = galeria;
+            }
+            model.Count = model.totalBlogTrue;
+            model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
+            model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/Index/";
+            model.PaginaActual = pagina;
+        }
+        ViewBag.Categorias = await _categoriasServices.Get(1, 100, false);
+        ViewBag.H2 = "Blog principal";
+        return View(model);
     }
 
-	/// <summary>
-	/// Devuleve la vista de Crear Blogs
-	/// </summary>
-	/// <returns></returns>
-	[Authorize]
-	[HttpGet]
-	public async Task<IActionResult> Create()
-	{
-		var model = new List<CategoriaDTO>();
-		var client = new HttpClient();
-		var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/categoria/categorias");
-		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-		var content = new StringContent(string.Empty);
-		content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-		request.Content = content;
-		var response = await client.SendAsync(request);
-		if (response.IsSuccessStatusCode)
-		{
-			var responseStream = await response.Content.ReadAsStringAsync();
-			var lstCategorias = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
-			model = lstCategorias.ToList();
-		}
+    [HttpGet]
+    public async Task<IActionResult> GetByCategoria(int idCategoria, int pagina, int registros )
+    {
+        if (pagina == 0) { pagina = 1; }
+        registros = 10;
+        var model = await _blogServices.GetByCategoria(idCategoria, pagina, registros);
+        if (model != null)
+        {
+            foreach (var item in model.ResultBlog)
+            {
+                var imagenBlog = await _blogServices.Imagen(item.Id);
+                item.Imagen = imagenBlog;
+                var galeria = await _blogServices.Galeria(item.Id);
+                item.Galeria = galeria;
+            }
+            model.Count = model.TotalBlog;
+            model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
+            model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/GetByCategoria?idCategoria=" + idCategoria + "&pagina=";
+            model.PaginaActual = pagina;
+        }
+		ViewBag.Categorias = await _categoriasServices.Get(1, 0, false);
+        ViewBag.H2 = "Blogs de categoria: " + model.ResultBlog[0].Categorias[0].Nombre;
+        return View("~/Views/Blog/Index.cshtml", model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var model = await _blogServices.GetById(id);
+        if (model != null)
+        {
+            model.Imagen = await _blogServices.Imagen(model.Id);
+            model.Galeria = await _blogServices.Galeria(model.Id);
+        }
+        return View(model);
+    }
+    
+    [Authorize]
+    [HttpGet]
+    public async Task<IActionResult> Create()
+    {
+        var model = await _categoriasServices.Get(1, 100, true);
+        var objToken = await _getToken.GetTokenMicrosoft();
+        ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+        var me = await _graphServices.GetMeGraph(objToken.access_token);
+        ViewBag.user = me.DisplayName;
+        return View(model);
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<List<CategoriaDTO>> ConsultarCategorias(int id)
+    {
+        var lst = await _categoriasServices.Get(1, 0, true);
+        var lstResult = new List<CategoriaDTO>();
+        foreach(var item in  lst)
+        {
+            if (item.Id != id)
+            {
+                lstResult.Add(item);
+            }
+        }
+        return lstResult;
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<string> Publicar(string titulo, IFormFile imagenPrincipal, string contenido, string categoria, List<string> lstCategorias, List<IFormFile> lstGaleria)
+    {
+        var result = "error";
+        if (contenido == null || titulo == "null" || imagenPrincipal == null)
+        {
+            result = "campos null";
+            return result;
+        }
+        var Categorias = _blogServices.Order(categoria, lstCategorias);
+        var blog = new CreateBlogDTO()
+        {
+            Titulo = titulo,
+            Contenido = contenido,
+            Categorias = Categorias
+        };
+        var createBlog = await _blogServices.CreateBlog(blog);
+        if (createBlog == null) { return result; }
+
+        var createImgPrincipal = await _blogServices.CreateImgPrincipal(imagenPrincipal, createBlog.Id);
+        if (!createImgPrincipal) { return result; }
+
+        var createGaleria = await _blogServices.CreateGaleria(lstGaleria, createBlog.Id);
+        if (!createGaleria) { return result; }
+
+        result = "success";
+        return result;
+    }
+
+    [HttpGet]
+    public async Task<List<BlogDTO>> TopCategoria(int id)
+    {
+        var model = await _blogServices.GetByCategoria(id, 1, 3);
+        if (model != null)
+        {
+            foreach (var item in model.ResultBlog)
+            {
+                var imagenBlog = await _blogServices.Imagen(item.Id);
+                item.Imagen = imagenBlog;
+            }
+        }
+        return model.ResultBlog;
+    }
+
+    [HttpGet]
+    public async Task<BlogDTO> SeeGallery(int id)
+    {
+        var obj = new BlogDTO();
+
+        var client = new HttpClient();
+        var token = await _getToken.GetTokenV();
+
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog/" + id.ToString());
+        request.Headers.Add("Authorization", "Bearer " + token);
+        var response = await client.SendAsync(request);
+        if (response.IsSuccessStatusCode)
+        {
+            var responseStream = await response.Content.ReadAsStringAsync();
+            obj = JsonConvert.DeserializeObject<BlogDTO>(responseStream);
+        }
+        if (obj != null)
+        {
+            obj.Imagen = await _blogServices.Imagen(obj.Id);
+            obj.Galeria = await _blogServices.Galeria(obj.Id);
+        }
+        if (obj == null)
+        {
+            obj.Galeria = new List<string>();
+            obj.Galeria.Add("/assets/images/photos/blogmain2.jpg");
+            obj.Galeria.Add("/assets/images/photos/blogmain2.jpg");
+            obj.Galeria.Add("/assets/images/photos/blogmain2.jpg");
+            obj.Galeria.Add("/assets/images/photos/blogmain2.jpg");
+        }
+        return obj;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(int pagina, int registros)
+    {
+        if (pagina == 0) { pagina = 1; }
+        registros = 10;
+        var model = await _blogServices.Get(true, pagina, registros);
+		model.Count = model.totalBlogTrue + model.totalBlogFalse;
+		model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
+		model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/Edit?pagina=";
+		model.PaginaActual = pagina;
 		return View(model);
-	}
+    }
 
-	/// <summary>
-	/// Devuelve la lista de categorias 
-	/// </summary>
-	/// <returns></returns>
-	[Authorize]
-	[HttpGet]
-	public async Task<List<CategoriaDTO>> ConsultarCategorias()
-	{
-		var list = new List<CategoriaDTO>();
-		var client = new HttpClient();
-		var request = new HttpRequestMessage(HttpMethod.Get, "https://apileadconfival.azurewebsites.net/api/categoria");
-		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-		var content = new StringContent(string.Empty);
-		content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-		request.Content = content;
-		var response = await client.SendAsync(request);
-		if (response.IsSuccessStatusCode)
-		{
-			var responseStream = await response.Content.ReadAsStringAsync();
-			var lstCategorias = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
-			return lstCategorias;
-		}
-		else
-		{
-			return list;
-		}
-	}
-
-	/// <summary>
-	/// Permite crear un blog
-	/// </summary>
-	/// <param name="titulo"></param>
-	/// <param name="contenido"></param>
-	/// <param name="lstCategorias"></param>
-	/// <param name="categoria"></param>
-	/// <returns></returns>
-	[Authorize]
-	[HttpGet]
-	public async Task<bool> CreateBlog(string titulo, string contenido, List<string> lstCategorias, string categoria)
-	{
-		var array = lstCategorias.FirstOrDefault().Split(",");
-		var categoriaPrincipal = Convert.ToInt32(categoria.Replace('"', ' ').Trim());
-		int[] numeros = new int[1];
-		numeros[numeros.Length - 1] = categoriaPrincipal;
-		var obj = new BlogBetaDTO();
-		if (lstCategorias[0] == "[]")
-		{
-			obj.Titulo = titulo;
-			obj.Contenido = contenido;
-			obj.CategoriaId = numeros;
-		}
-		else
-		{
-			foreach (var item in array)
-			{
-				var valor = Convert.ToInt32(item.Replace('[', ' ').Replace(']', ' ').Replace('"', ' ').Trim());
-				Array.Resize(ref numeros, numeros.Length + 1);
-				numeros[numeros.Length -1] = valor;
-			}
-			obj.Titulo = titulo;
-			obj.Contenido = contenido;
-			obj.CategoriaId = numeros;
-		}
-		var json = JsonConvert.SerializeObject(obj);
-		var client = new HttpClient();
-		var request = new HttpRequestMessage(HttpMethod.Post, "https://apileadconfival.azurewebsites.net/api/blog");
-		request.Headers.Add("XApiKey", "H^qP[7p#$18EXbV(lIP5xu+tCe-kgCM&{i_V,=(&");
-		var content = new StringContent(json, null, "application/json");
-		request.Content = content;
-		var response = await client.SendAsync(request);
-		if (response.IsSuccessStatusCode)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	[HttpGet]
-	public IActionResult Index() 
-	{
-		var model = new List<BlogDTO>()
-		{
-			new BlogDTO()
-			{
-				Id = 1,
-				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				Autor = new AutorDTO()
-				{
-					Id= 1,
-					ImagenAutor = new ImagenesDTO()
-					{
-						Id = 6,
-						URLImagen = "/assets/images/photos/11.jpg",
-						Alt = "altPruebas seis",
-						Descripcion = "Descripcion prueba seis",
-						Titulo = "Titulo de la image seis"
-					},
-					Nombre = "Autor Desconocido 1",
-					Descripcion = "Esta es una descripción del autor desconocido 1"
-				} ,
-				FechaPublicacion = DateTime.Now,
-				Categorias = new List<CategoriaDTO>()
-				{
-					new CategoriaDTO(){ Id = 1, Nombre = "Economia"},
-					new CategoriaDTO(){ Id = 2, Nombre = "Sentencias"},
-					new CategoriaDTO(){ Id = 3, Nombre = "Indicadores economicos"},
-					new CategoriaDTO(){ Id = 4, Nombre = "Juridicos"}
-				},
-				Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-				IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-				Comentarios = new List<ComentariosDTO>()
-				{
-					new ComentariosDTO()
-					{
-						Id = 1,
-						Autor = new AutorDTO()
-						{
-							Id= 2,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 7,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas siete",
-								Descripcion = "Descripcion prueba siete",
-								Titulo = "Titulo de la image siete"
-							},
-							Nombre = "Autor Desconocido 2",
-							Descripcion = "Esta es una descripción del autor desconocido 2"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>
-						{
-							new SubComentarioDTO()
-							{
-								Id = 1,
-								SubComentario = 20,
-								Autor = new AutorDTO()
-								{
-									Id= 3,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 7,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas siete",
-										Descripcion = "Descripcion prueba siete",
-										Titulo = "Titulo de la image siete"
-									},
-									Nombre = "Autor Desconocido 2",
-									Descripcion = "Esta es una descripción del autor desconocido 3"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un SubComentario"
-							},
-							new SubComentarioDTO()
-							{
-								Id = 2,
-								SubComentario = 21,
-								Autor = new AutorDTO()
-								{
-									Id= 4,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 8,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas ocho",
-										Descripcion = "Descripcion prueba ocho",
-										Titulo = "Titulo de la image ocho"
-									},
-									Nombre = "Autor Desconocido 4",
-									Descripcion = "Esta es una descripción del autor desconocido 4"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un segundo SubComentario"
-							}
-						}
-					},
-					new ComentariosDTO()
-					{
-						Id = 2,
-						Autor = new AutorDTO()
-						{
-							Id= 5,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 9,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas nueve",
-								Descripcion = "Descripcion prueba nueve",
-								Titulo = "Titulo de la image nueve"
-							},
-							Nombre = "Autor Desconocido 5",
-							Descripcion = "Esta es una descripción del autor desconocido 5"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>()
-					}
-				},
-				Galeria = new List<ImagenesDTO>()
-				{
-					new ImagenesDTO()
-					{
-						Id = 1,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					},
-					new ImagenesDTO()
-					{
-						Id = 2,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					}
-				}
-			},
-			new BlogDTO()
-			{
-				Id = 2,
-				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				Autor = new AutorDTO()
-				{
-					Id= 1,
-					ImagenAutor = new ImagenesDTO()
-					{
-						Id = 10,
-						URLImagen = "/assets/images/photos/11.jpg",
-						Alt = "altPruebas diez",
-						Descripcion = "Descripcion prueba diez",
-						Titulo = "Titulo de la image diez"
-					},
-					Nombre = "Autor Desconocido 1",
-					Descripcion = "Esta es una descripción del autor desconocido 1"
-				} ,
-				FechaPublicacion = DateTime.Now,
-				Categorias = new List<CategoriaDTO>()
-				{
-					new CategoriaDTO(){ Id = 1, Nombre = "Economia"},
-					new CategoriaDTO(){ Id = 2, Nombre = "Sentencias"},
-					new CategoriaDTO(){ Id = 3, Nombre = "Indicadores economicos"},
-					new CategoriaDTO(){ Id = 4, Nombre = "Juridicos"}
-				},
-				Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-				IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-				Comentarios = new List<ComentariosDTO>()
-				{
-					new ComentariosDTO()
-					{
-						Id = 1,
-						Autor = new AutorDTO()
-						{
-							Id= 2,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 11,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas once",
-								Descripcion = "Descripcion prueba once",
-								Titulo = "Titulo de la image once"
-							},
-							Nombre = "Autor Desconocido 2",
-							Descripcion = "Esta es una descripción del autor desconocido 2"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>
-						{
-							new SubComentarioDTO()
-							{
-								Id = 1,
-								SubComentario = 20,
-								Autor = new AutorDTO()
-								{
-									Id= 3,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 12,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas doce",
-										Descripcion = "Descripcion prueba doce",
-										Titulo = "Titulo de la image doce"
-									},
-									Nombre = "Autor Desconocido 2",
-									Descripcion = "Esta es una descripción del autor desconocido 3"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un SubComentario"
-							},
-							new SubComentarioDTO()
-							{
-								Id = 2,
-								SubComentario = 21,
-								Autor = new AutorDTO()
-								{
-									Id= 4,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 12,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas doce",
-										Descripcion = "Descripcion prueba doce",
-										Titulo = "Titulo de la image doce"
-									},
-									Nombre = "Autor Desconocido 4",
-									Descripcion = "Esta es una descripción del autor desconocido 4"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un segundo SubComentario"
-							}
-						}
-					},
-					new ComentariosDTO()
-					{
-						Id = 2,
-						Autor = new AutorDTO()
-						{
-							Id= 5,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 13,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas trece",
-								Descripcion = "Descripcion prueba trece",
-								Titulo = "Titulo de la image trece"
-							},
-							Nombre = "Autor Desconocido 5",
-							Descripcion = "Esta es una descripción del autor desconocido 5"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>()
-					}
-				},
-				Galeria = new List<ImagenesDTO>()
-				{
-					new ImagenesDTO()
-					{
-						Id = 1,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					},
-					new ImagenesDTO()
-					{
-						Id = 2,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					}
-				}
-			},
-			new BlogDTO()
-			{
-				Id = 3,
-				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				Autor = new AutorDTO()
-				{
-					Id= 1,
-					ImagenAutor = new ImagenesDTO()
-					{
-						Id = 14,
-						URLImagen = "/assets/images/photos/11.jpg",
-						Alt = "altPruebas catorce",
-						Descripcion = "Descripcion prueba catorce",
-						Titulo = "Titulo de la image catorce"
-					},
-					Nombre = "Autor Desconocido 1",
-					Descripcion = "Esta es una descripción del autor desconocido 1"
-				} ,
-				FechaPublicacion = DateTime.Now,
-				Categorias = new List<CategoriaDTO>()
-				{
-					new CategoriaDTO(){ Id = 1, Nombre = "Economia"},
-					new CategoriaDTO(){ Id = 2, Nombre = "Sentencias"},
-					new CategoriaDTO(){ Id = 3, Nombre = "Indicadores economicos"},
-					new CategoriaDTO(){ Id = 4, Nombre = "Juridicos"}
-				},
-				Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-				IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-				Comentarios = new List<ComentariosDTO>()
-				{
-					new ComentariosDTO()
-					{
-						Id = 1,
-						Autor = new AutorDTO()
-						{
-							Id= 2,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 15,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas quince",
-								Descripcion = "Descripcion prueba quince",
-								Titulo = "Titulo de la image quince"
-							},
-							Nombre = "Autor Desconocido 2",
-							Descripcion = "Esta es una descripción del autor desconocido 2"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>
-						{
-							new SubComentarioDTO()
-							{
-								Id = 1,
-								SubComentario = 20,
-								Autor = new AutorDTO()
-								{
-									Id= 3,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 2",
-									Descripcion = "Esta es una descripción del autor desconocido 3"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un SubComentario"
-							},
-							new SubComentarioDTO()
-							{
-								Id = 2,
-								SubComentario = 21,
-								Autor = new AutorDTO()
-								{
-									Id= 4,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 4",
-									Descripcion = "Esta es una descripción del autor desconocido 4"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un segundo SubComentario"
-							}
-						}
-					},
-					new ComentariosDTO()
-					{
-						Id = 2,
-						Autor = new AutorDTO()
-						{
-							Id= 5,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 16,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas dieciseis",
-								Descripcion = "Descripcion prueba dieciseis",
-								Titulo = "Titulo de la image dieciseis"
-							},
-							Nombre = "Autor Desconocido 5",
-							Descripcion = "Esta es una descripción del autor desconocido 5"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>()
-					}
-				},
-				Galeria = new List<ImagenesDTO>()
-				{
-					new ImagenesDTO()
-					{
-						Id = 1,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					},
-					new ImagenesDTO()
-					{
-						Id = 2,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					}
-				}
-			},
-			new BlogDTO()
-			{
-				Id = 4,
-				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				Autor = new AutorDTO()
-				{
-					Id= 1,
-					ImagenAutor = new ImagenesDTO()
-					{
-						Id = 14,
-						URLImagen = "/assets/images/photos/11.jpg",
-						Alt = "altPruebas catorce",
-						Descripcion = "Descripcion prueba catorce",
-						Titulo = "Titulo de la image catorce"
-					},
-					Nombre = "Autor Desconocido 1",
-					Descripcion = "Esta es una descripción del autor desconocido 1"
-				} ,
-				FechaPublicacion = DateTime.Now,
-				Categorias = new List<CategoriaDTO>()
-				{
-					new CategoriaDTO(){ Id = 1, Nombre = "Economia"},
-					new CategoriaDTO(){ Id = 2, Nombre = "Sentencias"},
-					new CategoriaDTO(){ Id = 3, Nombre = "Indicadores economicos"},
-					new CategoriaDTO(){ Id = 4, Nombre = "Juridicos"}
-				},
-				Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-				IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-				Comentarios = new List<ComentariosDTO>()
-				{
-					new ComentariosDTO()
-					{
-						Id = 1,
-						Autor = new AutorDTO()
-						{
-							Id= 2,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 15,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas quince",
-								Descripcion = "Descripcion prueba quince",
-								Titulo = "Titulo de la image quince"
-							},
-							Nombre = "Autor Desconocido 2",
-							Descripcion = "Esta es una descripción del autor desconocido 2"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>
-						{
-							new SubComentarioDTO()
-							{
-								Id = 1,
-								SubComentario = 20,
-								Autor = new AutorDTO()
-								{
-									Id= 3,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 2",
-									Descripcion = "Esta es una descripción del autor desconocido 3"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un SubComentario"
-							},
-							new SubComentarioDTO()
-							{
-								Id = 2,
-								SubComentario = 21,
-								Autor = new AutorDTO()
-								{
-									Id= 4,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 4",
-									Descripcion = "Esta es una descripción del autor desconocido 4"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un segundo SubComentario"
-							}
-						}
-					},
-					new ComentariosDTO()
-					{
-						Id = 2,
-						Autor = new AutorDTO()
-						{
-							Id= 5,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 16,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas dieciseis",
-								Descripcion = "Descripcion prueba dieciseis",
-								Titulo = "Titulo de la image dieciseis"
-							},
-							Nombre = "Autor Desconocido 5",
-							Descripcion = "Esta es una descripción del autor desconocido 5"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>()
-					}
-				},
-				Galeria = new List<ImagenesDTO>()
-				{
-					new ImagenesDTO()
-					{
-						Id = 1,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					},
-					new ImagenesDTO()
-					{
-						Id = 2,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					}
-				}
-			},
-			new BlogDTO()
-			{
-				Id = 5,
-				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				Autor = new AutorDTO()
-				{
-					Id= 1,
-					ImagenAutor = new ImagenesDTO()
-					{
-						Id = 14,
-						URLImagen = "/assets/images/photos/11.jpg",
-						Alt = "altPruebas catorce",
-						Descripcion = "Descripcion prueba catorce",
-						Titulo = "Titulo de la image catorce"
-					},
-					Nombre = "Autor Desconocido 1",
-					Descripcion = "Esta es una descripción del autor desconocido 1"
-				} ,
-				FechaPublicacion = DateTime.Now,
-				Categorias = new List<CategoriaDTO>()
-				{
-					new CategoriaDTO(){ Id = 1, Nombre = "Economia"},
-					new CategoriaDTO(){ Id = 2, Nombre = "Sentencias"},
-					new CategoriaDTO(){ Id = 3, Nombre = "Indicadores economicos"},
-					new CategoriaDTO(){ Id = 4, Nombre = "Juridicos"}
-				},
-				Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-				IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-				Comentarios = new List<ComentariosDTO>()
-				{
-					new ComentariosDTO()
-					{
-						Id = 1,
-						Autor = new AutorDTO()
-						{
-							Id= 2,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 15,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas quince",
-								Descripcion = "Descripcion prueba quince",
-								Titulo = "Titulo de la image quince"
-							},
-							Nombre = "Autor Desconocido 2",
-							Descripcion = "Esta es una descripción del autor desconocido 2"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>
-						{
-							new SubComentarioDTO()
-							{
-								Id = 1,
-								SubComentario = 20,
-								Autor = new AutorDTO()
-								{
-									Id= 3,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 2",
-									Descripcion = "Esta es una descripción del autor desconocido 3"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un SubComentario"
-							},
-							new SubComentarioDTO()
-							{
-								Id = 2,
-								SubComentario = 21,
-								Autor = new AutorDTO()
-								{
-									Id= 4,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 4",
-									Descripcion = "Esta es una descripción del autor desconocido 4"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un segundo SubComentario"
-							}
-						}
-					},
-					new ComentariosDTO()
-					{
-						Id = 2,
-						Autor = new AutorDTO()
-						{
-							Id= 5,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 16,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas dieciseis",
-								Descripcion = "Descripcion prueba dieciseis",
-								Titulo = "Titulo de la image dieciseis"
-							},
-							Nombre = "Autor Desconocido 5",
-							Descripcion = "Esta es una descripción del autor desconocido 5"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>()
-					}
-				},
-				Galeria = new List<ImagenesDTO>()
-				{
-					new ImagenesDTO()
-					{
-						Id = 1,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					},
-					new ImagenesDTO()
-					{
-						Id = 2,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					}
-				}
-			},
-			new BlogDTO()
-			{
-				Id = 6,
-				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				Autor = new AutorDTO()
-				{
-					Id= 1,
-					ImagenAutor = new ImagenesDTO()
-					{
-						Id = 14,
-						URLImagen = "/assets/images/photos/11.jpg",
-						Alt = "altPruebas catorce",
-						Descripcion = "Descripcion prueba catorce",
-						Titulo = "Titulo de la image catorce"
-					},
-					Nombre = "Autor Desconocido 1",
-					Descripcion = "Esta es una descripción del autor desconocido 1"
-				} ,
-				FechaPublicacion = DateTime.Now,
-				Categorias = new List<CategoriaDTO>()
-				{
-					new CategoriaDTO(){ Id = 1, Nombre = "Economia"},
-					new CategoriaDTO(){ Id = 2, Nombre = "Sentencias"},
-					new CategoriaDTO(){ Id = 3, Nombre = "Indicadores economicos"},
-					new CategoriaDTO(){ Id = 4, Nombre = "Juridicos"}
-				},
-				Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-				IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-				Comentarios = new List<ComentariosDTO>()
-				{
-					new ComentariosDTO()
-					{
-						Id = 1,
-						Autor = new AutorDTO()
-						{
-							Id= 2,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 15,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas quince",
-								Descripcion = "Descripcion prueba quince",
-								Titulo = "Titulo de la image quince"
-							},
-							Nombre = "Autor Desconocido 2",
-							Descripcion = "Esta es una descripción del autor desconocido 2"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>
-						{
-							new SubComentarioDTO()
-							{
-								Id = 1,
-								SubComentario = 20,
-								Autor = new AutorDTO()
-								{
-									Id= 3,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 2",
-									Descripcion = "Esta es una descripción del autor desconocido 3"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un SubComentario"
-							},
-							new SubComentarioDTO()
-							{
-								Id = 2,
-								SubComentario = 21,
-								Autor = new AutorDTO()
-								{
-									Id= 4,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 4",
-									Descripcion = "Esta es una descripción del autor desconocido 4"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un segundo SubComentario"
-							}
-						}
-					},
-					new ComentariosDTO()
-					{
-						Id = 2,
-						Autor = new AutorDTO()
-						{
-							Id= 5,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 16,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas dieciseis",
-								Descripcion = "Descripcion prueba dieciseis",
-								Titulo = "Titulo de la image dieciseis"
-							},
-							Nombre = "Autor Desconocido 5",
-							Descripcion = "Esta es una descripción del autor desconocido 5"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>()
-					}
-				},
-				Galeria = new List<ImagenesDTO>()
-				{
-					new ImagenesDTO()
-					{
-						Id = 1,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					},
-					new ImagenesDTO()
-					{
-						Id = 2,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					}
-				}
-			},
-			new BlogDTO()
-			{
-				Id = 7,
-				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				Autor = new AutorDTO()
-				{
-					Id= 1,
-					ImagenAutor = new ImagenesDTO()
-					{
-						Id = 14,
-						URLImagen = "/assets/images/photos/11.jpg",
-						Alt = "altPruebas catorce",
-						Descripcion = "Descripcion prueba catorce",
-						Titulo = "Titulo de la image catorce"
-					},
-					Nombre = "Autor Desconocido 1",
-					Descripcion = "Esta es una descripción del autor desconocido 1"
-				} ,
-				FechaPublicacion = DateTime.Now,
-				Categorias = new List<CategoriaDTO>()
-				{
-					new CategoriaDTO(){ Id = 1, Nombre = "Economia"},
-					new CategoriaDTO(){ Id = 2, Nombre = "Sentencias"},
-					new CategoriaDTO(){ Id = 3, Nombre = "Indicadores economicos"},
-					new CategoriaDTO(){ Id = 4, Nombre = "Juridicos"}
-				},
-				Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-				IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-				Comentarios = new List<ComentariosDTO>()
-				{
-					new ComentariosDTO()
-					{
-						Id = 1,
-						Autor = new AutorDTO()
-						{
-							Id= 2,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 15,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas quince",
-								Descripcion = "Descripcion prueba quince",
-								Titulo = "Titulo de la image quince"
-							},
-							Nombre = "Autor Desconocido 2",
-							Descripcion = "Esta es una descripción del autor desconocido 2"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>
-						{
-							new SubComentarioDTO()
-							{
-								Id = 1,
-								SubComentario = 20,
-								Autor = new AutorDTO()
-								{
-									Id= 3,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 2",
-									Descripcion = "Esta es una descripción del autor desconocido 3"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un SubComentario"
-							},
-							new SubComentarioDTO()
-							{
-								Id = 2,
-								SubComentario = 21,
-								Autor = new AutorDTO()
-								{
-									Id= 4,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 4",
-									Descripcion = "Esta es una descripción del autor desconocido 4"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un segundo SubComentario"
-							}
-						}
-					},
-					new ComentariosDTO()
-					{
-						Id = 2,
-						Autor = new AutorDTO()
-						{
-							Id= 5,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 16,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas dieciseis",
-								Descripcion = "Descripcion prueba dieciseis",
-								Titulo = "Titulo de la image dieciseis"
-							},
-							Nombre = "Autor Desconocido 5",
-							Descripcion = "Esta es una descripción del autor desconocido 5"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>()
-					}
-				},
-				Galeria = new List<ImagenesDTO>()
-				{
-					new ImagenesDTO()
-					{
-						Id = 1,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					},
-					new ImagenesDTO()
-					{
-						Id = 2,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					}
-				}
-			},
-			new BlogDTO()
-			{
-				Id = 8,
-				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				Autor = new AutorDTO()
-				{
-					Id= 1,
-					ImagenAutor = new ImagenesDTO()
-					{
-						Id = 14,
-						URLImagen = "/assets/images/photos/11.jpg",
-						Alt = "altPruebas catorce",
-						Descripcion = "Descripcion prueba catorce",
-						Titulo = "Titulo de la image catorce"
-					},
-					Nombre = "Autor Desconocido 1",
-					Descripcion = "Esta es una descripción del autor desconocido 1"
-				} ,
-				FechaPublicacion = DateTime.Now,
-				Categorias = new List<CategoriaDTO>()
-				{
-					new CategoriaDTO(){ Id = 1, Nombre = "Economia"},
-					new CategoriaDTO(){ Id = 2, Nombre = "Sentencias"},
-					new CategoriaDTO(){ Id = 3, Nombre = "Indicadores economicos"},
-					new CategoriaDTO(){ Id = 4, Nombre = "Juridicos"}
-				},
-				Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-				IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-				Comentarios = new List<ComentariosDTO>()
-				{
-					new ComentariosDTO()
-					{
-						Id = 1,
-						Autor = new AutorDTO()
-						{
-							Id= 2,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 15,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas quince",
-								Descripcion = "Descripcion prueba quince",
-								Titulo = "Titulo de la image quince"
-							},
-							Nombre = "Autor Desconocido 2",
-							Descripcion = "Esta es una descripción del autor desconocido 2"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>
-						{
-							new SubComentarioDTO()
-							{
-								Id = 1,
-								SubComentario = 20,
-								Autor = new AutorDTO()
-								{
-									Id= 3,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 2",
-									Descripcion = "Esta es una descripción del autor desconocido 3"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un SubComentario"
-							},
-							new SubComentarioDTO()
-							{
-								Id = 2,
-								SubComentario = 21,
-								Autor = new AutorDTO()
-								{
-									Id= 4,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 4",
-									Descripcion = "Esta es una descripción del autor desconocido 4"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un segundo SubComentario"
-							}
-						}
-					},
-					new ComentariosDTO()
-					{
-						Id = 2,
-						Autor = new AutorDTO()
-						{
-							Id= 5,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 16,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas dieciseis",
-								Descripcion = "Descripcion prueba dieciseis",
-								Titulo = "Titulo de la image dieciseis"
-							},
-							Nombre = "Autor Desconocido 5",
-							Descripcion = "Esta es una descripción del autor desconocido 5"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>()
-					}
-				},
-				Galeria = new List<ImagenesDTO>()
-				{
-					new ImagenesDTO()
-					{
-						Id = 1,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					},
-					new ImagenesDTO()
-					{
-						Id = 2,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					}
-				}
-			},
-			new BlogDTO()
-			{
-				Id = 9,
-				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				Autor = new AutorDTO()
-				{
-					Id= 1,
-					ImagenAutor = new ImagenesDTO()
-					{
-						Id = 14,
-						URLImagen = "/assets/images/photos/11.jpg",
-						Alt = "altPruebas catorce",
-						Descripcion = "Descripcion prueba catorce",
-						Titulo = "Titulo de la image catorce"
-					},
-					Nombre = "Autor Desconocido 1",
-					Descripcion = "Esta es una descripción del autor desconocido 1"
-				} ,
-				FechaPublicacion = DateTime.Now,
-				Categorias = new List<CategoriaDTO>()
-				{
-					new CategoriaDTO(){ Id = 1, Nombre = "Economia"},
-					new CategoriaDTO(){ Id = 2, Nombre = "Sentencias"},
-					new CategoriaDTO(){ Id = 3, Nombre = "Indicadores economicos"},
-					new CategoriaDTO(){ Id = 4, Nombre = "Juridicos"}
-				},
-				Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-				IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-				Comentarios = new List<ComentariosDTO>()
-				{
-					new ComentariosDTO()
-					{
-						Id = 1,
-						Autor = new AutorDTO()
-						{
-							Id= 2,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 15,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas quince",
-								Descripcion = "Descripcion prueba quince",
-								Titulo = "Titulo de la image quince"
-							},
-							Nombre = "Autor Desconocido 2",
-							Descripcion = "Esta es una descripción del autor desconocido 2"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>
-						{
-							new SubComentarioDTO()
-							{
-								Id = 1,
-								SubComentario = 20,
-								Autor = new AutorDTO()
-								{
-									Id= 3,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 2",
-									Descripcion = "Esta es una descripción del autor desconocido 3"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un SubComentario"
-							},
-							new SubComentarioDTO()
-							{
-								Id = 2,
-								SubComentario = 21,
-								Autor = new AutorDTO()
-								{
-									Id= 4,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 4",
-									Descripcion = "Esta es una descripción del autor desconocido 4"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un segundo SubComentario"
-							}
-						}
-					},
-					new ComentariosDTO()
-					{
-						Id = 2,
-						Autor = new AutorDTO()
-						{
-							Id= 5,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 16,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas dieciseis",
-								Descripcion = "Descripcion prueba dieciseis",
-								Titulo = "Titulo de la image dieciseis"
-							},
-							Nombre = "Autor Desconocido 5",
-							Descripcion = "Esta es una descripción del autor desconocido 5"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>()
-					}
-				},
-				Galeria = new List<ImagenesDTO>()
-				{
-					new ImagenesDTO()
-					{
-						Id = 1,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					},
-					new ImagenesDTO()
-					{
-						Id = 2,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					}
-				}
-			},
-			new BlogDTO()
-			{
-				Id = 10,
-				Titulo = "¿Es posible vender mi Sentencia de Nulidad?",
-				Autor = new AutorDTO()
-				{
-					Id= 1,
-					ImagenAutor = new ImagenesDTO()
-					{
-						Id = 14,
-						URLImagen = "/assets/images/photos/11.jpg",
-						Alt = "altPruebas catorce",
-						Descripcion = "Descripcion prueba catorce",
-						Titulo = "Titulo de la image catorce"
-					},
-					Nombre = "Autor Desconocido 1",
-					Descripcion = "Esta es una descripción del autor desconocido 1"
-				} ,
-				FechaPublicacion = DateTime.Now,
-				Categorias = new List<CategoriaDTO>()
-				{
-					new CategoriaDTO(){ Id = 1, Nombre = "Economia"},
-					new CategoriaDTO(){ Id = 2, Nombre = "Sentencias"},
-					new CategoriaDTO(){ Id = 3, Nombre = "Indicadores economicos"},
-					new CategoriaDTO(){ Id = 4, Nombre = "Juridicos"}
-				},
-				Contenido = "Es decir, en una sentencia de nulidad se discute la legalidad o veracidad de un documento, que, en este caso, es un acto administrativo. En consecuencia, el afectado solicita reparación del daño.",
-				IntroUno = "Iniciemos por dar claridad al concepto. La nulidad y restablecimiento del derecho se caracteriza porque se ejerce para obtener el reconocimiento de una situación jurídica en particular y la adopción de las medidas adecuadas para su pleno restablecimiento o reparación. Esta acción solo se puede ejercer por quien demuestre un interés, es decir, por quien se considere afectado en su derecho.",
-				Comentarios = new List<ComentariosDTO>()
-				{
-					new ComentariosDTO()
-					{
-						Id = 1,
-						Autor = new AutorDTO()
-						{
-							Id= 2,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 15,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas quince",
-								Descripcion = "Descripcion prueba quince",
-								Titulo = "Titulo de la image quince"
-							},
-							Nombre = "Autor Desconocido 2",
-							Descripcion = "Esta es una descripción del autor desconocido 2"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>
-						{
-							new SubComentarioDTO()
-							{
-								Id = 1,
-								SubComentario = 20,
-								Autor = new AutorDTO()
-								{
-									Id= 3,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 2",
-									Descripcion = "Esta es una descripción del autor desconocido 3"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un SubComentario"
-							},
-							new SubComentarioDTO()
-							{
-								Id = 2,
-								SubComentario = 21,
-								Autor = new AutorDTO()
-								{
-									Id= 4,
-									ImagenAutor = new ImagenesDTO()
-									{
-										Id = 16,
-										URLImagen = "/assets/images/photos/11.jpg",
-										Alt = "altPruebas dieciseis",
-										Descripcion = "Descripcion prueba dieciseis",
-										Titulo = "Titulo de la image dieciseis"
-									},
-									Nombre = "Autor Desconocido 4",
-									Descripcion = "Esta es una descripción del autor desconocido 4"
-								},
-								ComentarioId = 1,
-								FechaPublicacion= DateTime.Now,
-								Contenido = "Este es un segundo SubComentario"
-							}
-						}
-					},
-					new ComentariosDTO()
-					{
-						Id = 2,
-						Autor = new AutorDTO()
-						{
-							Id= 5,
-							ImagenAutor = new ImagenesDTO()
-							{
-								Id = 16,
-								URLImagen = "/assets/images/photos/11.jpg",
-								Alt = "altPruebas dieciseis",
-								Descripcion = "Descripcion prueba dieciseis",
-								Titulo = "Titulo de la image dieciseis"
-							},
-							Nombre = "Autor Desconocido 5",
-							Descripcion = "Esta es una descripción del autor desconocido 5"
-						},
-						FechaPublicacion = DateTime.Now,
-						Comentario = "Este es un comentario",
-						SubComentarios = new List<SubComentarioDTO>()
-					}
-				},
-				Galeria = new List<ImagenesDTO>()
-				{
-					new ImagenesDTO()
-					{
-						Id = 1,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					},
-					new ImagenesDTO()
-					{
-						Id = 2,
-						URLImagen = "/assets/images/photos/blogmain2.jpg",
-					}
-				}
-			}
-		};
-		return View(model);
-
-	}
-
+    [HttpGet]
+    public async Task<IActionResult> EditBlog(int id)
+    {
+        var model = await _blogServices.GetById(id);
+        return View(model);
+    }
 }

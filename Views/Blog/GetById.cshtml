@@ -1,33 +1,33 @@
-﻿@model confinancia.Models.BlogDTO
+﻿@using Microsoft.AspNetCore.Html;
+	@model frontend.Models.BlogDTO
 @{
-	Layout = "_Layoutlandingpage";
+	Layout = "_Layoutlandingpage2";
 }
 
 <div class="hor-content main-content mt-0">
 	<div class="side-app">
 		<!-- CONTAINER -->
-		<div class="main-container">
-
-			
-
+		<div class="main-container container-fluid">
 			<!-- DETALLES BLOG -->
-			<div class="section pb-5 bg-white border-bottom" style="padding-bottom:50px; padding-top:120px;">
+			<div style="padding-bottom:50px; padding-top:120px;">
 				<div class="px-5 px-md-0">
 					<div class="row">
 						<div class="col-xl-12">
-							<div class="card">
+							<div class="card" style="background-color: white">
 								<div class="card-body">
 									<div class="row">
+
+
 										<div class="col-xl-8">
 											<div class="">
 												<div class="d-sm-flex d-block align-items-center">
 													<div class="d-flex align-items-center mb-sm-0 mb-2">
 														<div class="me-3">
-															<img class="media-object rounded-circle thumb-sm" alt="64x64" src="@Model.Autor.ImagenAutor.URLImagen" width="50">
+															<img class="avatar avatar-sm rounded-circle cover-image" alt="64x64" src="~/assets/images/landing/Carrousel-1-Confival.png">
 														</div>
-														<h6 class="mb-0 text-muted ms-2 text-13 me-sm-0 me-2">@Model.Autor.Nombre</h6>
+														<h6 class="mb-0 text-muted ms-2 text-13 me-sm-0 me-2">Confival Capital S.A.S.</h6>
 													</div>
-													<a href="#" class="d-f-ai-c mx-0 mb-sm-0 mb-2 mx-sm-4 mx-0 text-13"><span class="fe fe-calendar text-muted me-1 text-15"></span><span class="mt-0 mt-0 text-muted">@Model.FechaPublicacion.ToString()</span></a>
+													<a href="#" class="d-f-ai-c mx-0 mb-sm-0 mb-2 mx-sm-4 mx-0 text-13"><span class="fe fe-calendar text-muted me-1 text-15"></span><span class="mt-0 mt-0 text-muted">@Model.Publicacion.ToString()</span></a>
 													<a href="#" class="me-0 d-f-ai-c mb-sm-0 mb-2 text-13"><span class="fe fe-message-square text-muted me-1 text-15"></span><span class="mt-0 mt-0 text-muted">@Model.Comentarios.Count</span></a>
 												</div>
 												<div>
@@ -35,57 +35,59 @@
 												</div>
 											</div>
 											<div class="ps-relative p-1 bg-light br-5">
-												<img src="@Model.Galeria.FirstOrDefault().URLImagen" alt="@Model.Galeria.FirstOrDefault().Alt.ToString()" title="@Model.Galeria.FirstOrDefault().Titulo.ToString()" class="cover-image br-5 ms-auto me-auto wp-100">
+												<img src="@Model.Imagen" alt="" title="" class="cover-image br-5 ms-auto me-auto wp-100">
 												<span class="badge bg-primary-gradient blog-label label5">Blogs Confival</span>
 											</div>
 											<div class=" mb-2 mt-5 content">
-												<p class="text-muted text-14">@Model.Contenido</p>
+												<p class="text-muted text-14 justify-policy">
+													@(new HtmlString(Model.Contenido))
+												</p>
 											</div>
 											<div class="mt-4 pt-5 border-top">
 												<h3 class="card-title">Comentarios:</h3>
+                                                <input type="hidden" id="id-blog" value="@Model.Id"/>
 												@foreach(var item in Model.Comentarios)
 												{
-													<div class="media mb-4 overflow-visible">
-														<div class="me-3">
-															<img class="media-object rounded-circle thumb-sm" alt="64x64" src="@item.Autor.ImagenAutor.URLImagen">
-														</div>
+													if(item.Id == item.ComentarioId)
+													{
+														<div class="media mb-4 overflow-visible">
 														<div class="media-body overflow-visible">
 															<div class="border mb-5 p-4 br-5 boton-edit">
-																<h5 class="mt-0">@item.Autor.Nombre<span class="text-muted fs-12 ms-1">@item.FechaPublicacion</span></h5>
+																<h5 class="mt-0">Autor desconocido<span class="text-muted fs-12 ms-1">@item.FechaPublicacion</span></h5>
 																<span><i class="fe fe-thumb-up text-danger"></i></span>
 																<p class="font-13 text-muted">@item.Comentario</p>
 																<span class="reply">
-																	<a onclick="responder(@item.Id.ToString())" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
+																	<a onclick="Reply(@item.Id.ToString())" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
 																</span>
 															</div>
 															<div id="@item.Id.ToString()" class="cancel-form-comment"></div>
-
-															@foreach(var subitem in item.SubComentarios)
+															@foreach(var subitem in Model.Comentarios)
 															{
-																<div>
-																	<div class="media mb-4 overflow-visible boton-edit-2">
-																		<div class="me-3">
-																			<img class="media-object rounded-circle thumb-sm" alt="@subitem.Autor.ImagenAutor.Alt.ToString()" title="@subitem.Autor.ImagenAutor.Titulo.ToString()" src="@subitem.Autor.ImagenAutor.URLImagen">
+																if (subitem.ComentarioId == item.Id && subitem.Id != subitem.ComentarioId )
+																{
+																	<div style="margin-left:50px;">
+																		<div class="media mb-4 overflow-visible boton-edit-2">
+																			<div class="media-body border p-4 overflow-visible br-5">
+																				<h5 class="mt-0">Respuesta a comenntario<span class="text-muted fs-12 mx-1 bg-normal-light">Respuesta a comenntario </span><span class="text-muted fs-12 ms-1">@subitem.FechaPublicacion</span></h5>
+																				<span><i class="fe fe-thumb-up text-danger"></i></span>
+																				<p class="font-13 text-muted">
+																					@subitem.Comentario
+																				</p>
+																				<span class="reply">
+																					<a onclick="Reply(@item.Id.ToString())" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
+																				</span>
+																			</div>
 																		</div>
-																		<div class="media-body border p-4 overflow-visible br-5">
-																			<h5 class="mt-0">@subitem.Autor.Nombre<span class="text-muted fs-12 mx-1 bg-normal-light">Reply to @item.Autor.Nombre </span><span class="text-muted fs-12 ms-1">@subitem.FechaPublicacion</span></h5>
-																			<span><i class="fe fe-thumb-up text-danger"></i></span>
-																			<p class="font-13 text-muted">
-																				@subitem.Contenido
-																			</p>
-																			<span class="reply">
-																				<a onclick="responderDos(@subitem.ComentarioId, @subitem.Id)" class="btn-form-comment"><span class="badge badge-sm btn-info-light rounded-pill py-2 px-3 pointer"><i class="fe fe-corner-up-left me-1"></i>Responder</span></a>
-																			</span>
-																		</div>
+																		@{
+																			var identificador = @subitem.ComentarioId.ToString() + "s" + @subitem.Id.ToString();
+																		}
+																		<div id="@identificador" class="cancel-form-comment"></div>
 																	</div>
-																	@{
-																		var identificador = @subitem.ComentarioId.ToString() + "s" + @subitem.Id.ToString();
-																	}
-																	<div id="@identificador" class="cancel-form-comment"></div>
-																</div>
+																}
 															}
 														</div>
 													</div>
+													}
 												}
 												<div id="main-form-comentario">
 													<div class="row row-xs form-group-wrapper">
@@ -112,23 +114,24 @@
 															<div class="invalid-feedback" id="invalid-comentario-comentario">El campo comentario es requerido</div>
 														</div>
 														<div class="col-md-12 my-2">
-															<button class="btn btn-primary text-white float-end" onclick="EnviarComentario()">Enviar</button>
+															<button class="btn btn-primary text-white float-end" onclick="SendComment(@Model.Id)">Enviar</button>
 														</div>
 													</div>
 												</div>
+												
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="card-confival-blogs overflow-hidden border br-5">
 												<div class="card-header border-bottom">
-													<h4 class="card-title header-family">Acerca  del autor</h4>
+													<h3 class="card-title">Acerca del Autor</h3>
 												</div>
 												<div class="card-body">
 													<div class="text-center">
-														<img class="card-img-top w-100 w-100" src="@Model.Autor.ImagenAutor.URLImagen" alt="@Model.Autor.ImagenAutor.Alt" title="@Model.Autor.ImagenAutor.Titulo">
+														<img class="card-img-top w-100 w-100" src="~/assets/images/landing/Carrousel-1-Confival.png" alt="" title="">
 														<div class="br-5 pt-3 text-justify">
 															<p class="m-0 text-muted">
-																@Model.Autor.Descripcion
+																 Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nulla deleniti voluptas officia accusamus magnam ullam inventore Lorem ipsum dolor, sit amet consectetur dolorem quibusdam?. 
 															</p>
 														</div>
 													</div>
@@ -136,23 +139,34 @@
 											</div>
 											<div class="card-confival-blogs border overflow-hidden">
 												<div class="card-header border-bottom">
-														<h4 class="card-title mb-1 header-family">Categorias del Blog</h4>
+													<h3 class="card-title">Categorias del Blog</h3>
 												</div>
 												<div class="card-body">
 													<div>
 														<div class="tags">
 															@foreach (var item in Model.Categorias)
 															{
-																<a onclick="BlogsCategoria(@item.Id)" class="tag">@item.Nombre</a>
+																<a onclick="TopCategoriaB('@item.Id', '@item.Nombre')" class="tag">@item.Nombre</a>
 															}
 														</div>
 													</div>
 												</div>
 											</div>
-											<div id="blogs-categoria"></div>
+											<div id="blogs-categoria" class="hide-info">
+												<div class="card-confival-blogs border overflow-hidden">' 
+													<div class="card-header border-bottom">
+														<h3 class="card-title">Publicaciones similares</h3>
+													</div>
+													<div class="card-body">
+														<div class="item-list" id="list-blogs">
+
+														</div>
+													</div>
+												</div>
+											</div>
 											<div class="card-confival-blogs overflow-hidden border">
 												<div class="card-header border-bottom">
-													<h4 class="card-title header-family">Galeria</h4>
+													<h4 class="card-title"">Galeria</h4>
 												</div>
 												<div class="card-body">
 													<div class="text-center demo-gallery">
@@ -160,10 +174,8 @@
 															<ul id="lightgallery" class="list-unstyled row row-sm">
 																@foreach (var item in Model.Galeria)
 																{
-																	<li class="col-sm-6 col-lg-4">
-																		<a href="javascript:void(0)">
-																			<img class="img-responsive br-5 w-100" height="90" src="@item.URLImagen" alt="@item.Alt" title="@item.Titulo">
-																		</a>
+																	<li class="col-sm-6 col-lg-4"  onclick="SeeGallery('@Model.Id', '@Model.Titulo')">
+																			<img class="img-responsive br-5 w-100" height="90" src="@item">
 																	</li>
 																}
 															</ul>
@@ -179,21 +191,67 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
-
-	<partial name="~/Views/Shared/_Footer1.cshtml" />
+	<div>
+		<partial name="~/Views/Shared/_Footer1.cshtml" />
+		<partial name="~/Views/Shared/_Footer1.cshtml" />
+	</div>
 
 </div>
 
-
-
+<div class="modal fade"  id="modal-gallery" tabindex="-1" role="dialog" style="padding-top: 120px;">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header" id="modal-header-galeria">
+					<h5 class="modal-title" >Modal title</h5>
+					<button  class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body" id="modal-body-gallery">
+					<h4>Galeria de imagenes</h4>
+					<div class="card-body h-100">
+                        <div id="carousel-indicators" class="carousel slide responsive-indicators-banners" data-bs-ride="carousel">
+                            <ol class="carousel-indicators carousel-indicators" id="ol-indicators">
+                            </ol>
+                            <div class="carousel-inner" id="src-imagen">
+                            </div>
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="modal fade"  id="modal-comment-success">
+	<div class="modal-dialog modal-dialog-centered text-center " role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal" ><span aria-hidden="true">&times;</span></button>
+				<i class="fe fe-check-circle fs-65 text-success lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-success tx-semibold">Registro exitoso!</h4>
+				<p class="text-muted">Tu comentario está siendo analizado por uno de nuestros analistas, en caso de ser aprobado lo podrás ver en nuestro blog.</p><button aria-label="Close" class="btn btn-success pd-x-25" data-bs-dismiss="modal" >Continuar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade"  id="modal-comment-error">
+	<div class="modal-dialog modal-dialog-centered text-center" role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal" ><span aria-hidden="true">&times;</span></button>
+				<i class="fe fe-x-circle fs-65 text-danger lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-danger">Error: registro no exitoso!</h4>
+				<p class="text-muted">Nuestro sistema está presentando cambios, inténtalo de nuevo más tarde.</p><button aria-label="Close" class="btn btn-danger pd-x-25" data-bs-dismiss="modal" >Continue</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 @section scripts {
 
-	<script src="../assets/js/WebConfival/Blogs/form-comentario.js"></script>
-	<script src="../assets/js/WebConfival/Blogs/Blogs.js"></script>
+	<script src="~/assets/js/WebConfival/Blogs/BlogId.js"></script>
+	<script src="~/assets/js/WebConfival/Blogs/Blogs.js"></script>
 
 
 	<!--Internal Fancy uploader js-->

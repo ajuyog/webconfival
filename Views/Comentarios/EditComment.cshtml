@@ -1,0 +1,146 @@
+﻿@model frontend.Models.ComentariosDTO
+@{
+	Layout = "_Layout3";
+}
+<!-- PAGE-HEADER -->
+<div class="page-header">
+	<div>
+		<h1 class="page-title">Comentarios</h1>
+	</div>
+	<div class="ms-auto pageheader-btn">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">Blogs</li>
+			<li class="breadcrumb-item active" aria-current="page">Gestionar comentarios</li>
+		</ol>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
+
+
+				<ul class="">
+					<li class="d-flex pt-0 px-0">
+						<img src="@ViewBag.ImagenBlog" class="avatar br-5 avatar-lg me-3 my-auto" style="width: 5rem; height: 5rem;">
+						<div>
+							<span class="d-block text-muted">Categoria: @ViewBag.Categoria</span>
+							<h3>@ViewBag.Titulo</h3>
+							<h4 class="d-block text-muted">@ViewBag.Publicacion</h4>
+						</div>
+					</li>
+
+				</ul>
+
+				
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="row">
+	<div class="col-xl-12 col-md-12">
+		<div class="card cart">
+			<div class="card-header border-bottom">
+				<h3 class="card-title">Listado de comentarios</h3>
+			</div>
+			<div class="card-body">
+				<input id="blog-id" type="hidden" value="@ViewBag.IdBlog" />
+				<div class="table-responsive">
+					<table class="table table-bordered border-bottom text-nowrap">
+						<thead>
+							<tr class="border-top">
+								<th class="w-15">Id</th>
+								<th class="w-5">Comentario</th>
+								<th class="w-5">Fecha publicación</th>
+								<th class="w-5">Estado</th>
+								<th class="w-5">Revisado</th>
+								<th class="w-5">Tipo comentario</th>
+								<th class="w-10">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model.comentariosBlog)
+							{
+								<tr>
+									<td>
+										<span class="badge bg-primary">@item.Id</span>
+									</td>
+									<td>
+										@item.Comentario
+									</td>
+									<td>
+										@item.FechaPublicacion;
+									</td>
+									<td>
+										@if(item.Estado == true)
+										{
+											<span class="badge bg-success">Activo</span>
+										}
+										else
+										{
+											<span class="badge bg-danger">Inactivo</span>
+										}
+									</td>
+									<td>
+										@if (item.Revisado == true)
+										{
+											<span class="badge bg-success">Revisado</span>
+										}
+										else
+										{
+											<span class="badge bg-danger">Sin revisar</span>
+										}
+									</td>
+									<td>
+										@(item.Id == item.ComentarioId ? "Principal" : "Respuesta")
+									</td>
+									<td>
+										<a class="btn btn-primary-light btn-square br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar" onclick="EditComment('@item.Id', '@item.Comentario')"><i class="fe fe-refresh-ccw"></i></a>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+				<partial name="~/Views/Shared/_Paginador.cshtml" />
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script src="~/assets/js/WebConfival/Blogs/Comentarios.js"></script>
+
+<div class="modal fade" id="approve-item">
+	<div class="modal-dialog modal-dialog-centered text-center" role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+				<i class="fe fe-x-circle fs-65 text-info lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-danger">Aprovar Comentario!</h4>
+				<div id="message-approve">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="api-error-approve">
+	<div class="modal-dialog modal-dialog-centered text-center " role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<i class="ion-wrench fs-65 text-primary lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-success tx-semibold">Estamos trabajando para solucionar!</h4>
+				<p class="text-muted">Nuestro sistema esta presentando cambios, intentalo de nuevo mas tarde.</p>
+				<button aria-label="Close" class="btn btn-info pd-x-25" data-bs-dismiss="modal">Continuar</button>
+			</div>
+		</div>
+	</div>
+</div>

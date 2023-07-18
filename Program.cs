@@ -1,24 +1,62 @@
-using confinancia.Services.Token;
+using frontend;
+using frontend.Services.Blogs;
+using frontend.Services.Categorias;
+using frontend.Services.Comentarios;
+using frontend.Services.Graph;
+using frontend.Services.Token;
+using frontend.Services.Utilidaddes;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using static System.Net.WebRequestMethods;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAuthentication(options =>
+//builder.Services.AddAuthentication(options =>
+//{
+//	options.DefaultScheme =
+//	CookieAuthenticationDefaults.AuthenticationScheme;
+//	options.DefaultChallengeScheme = MicrosoftAccountDefaults.AuthenticationScheme;
+//}).AddCookie().AddMicrosoftAccount(o =>
+//{
+//	o.ClientId = builder.Configuration.GetValue<string>("Azure:ClientId");
+//	o.ClientSecret = builder.Configuration.GetValue<string>("Azure:ClientSecret");
+//	o.AuthorizationEndpoint = "https://login.microsoftonline.com/" + builder.Configuration.GetValue<string>("Azure:TenantId") + "/oauth2/v2.0/authorize";
+//	o.TokenEndpoint = "https://login.microsoftonline.com/" + builder.Configuration.GetValue<string>("Azure:TenantId") + "/oauth2/v2.0/token";
+//	o.SaveTokens = true;
+//});
+
+builder.Services.AddAuthentication().AddMicrosoftAccount(o =>
 {
-    options.DefaultScheme =
-    CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = MicrosoftAccountDefaults.AuthenticationScheme;
-}).AddCookie().AddMicrosoftAccount(o =>
-{
-	o.ClientId = "57f0978d-23bc-4172-ae60-d548461c018d";
-	o.ClientSecret = "PMg8Q~~v5L5tXpeasGljOnNIcCZbdmIRZ5_sUazM";
-	o.AuthorizationEndpoint = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/authorize";
-	o.TokenEndpoint = "https://login.microsoftonline.com/4003e53b-966b-4b92-9425-eeb681bd62a5/oauth2/v2.0/token";
+	o.ClientId = builder.Configuration.GetValue<string>("Azure:ClientId");
+	o.ClientSecret = builder.Configuration.GetValue<string>("Azure:ClientSecret");
+	o.AuthorizationEndpoint = "https://login.microsoftonline.com/" + builder.Configuration.GetValue<string>("Azure:TenantId") + "/oauth2/v2.0/authorize";
+	o.TokenEndpoint = "https://login.microsoftonline.com/" + builder.Configuration.GetValue<string>("Azure:TenantId") + "/oauth2/v2.0/token";
+	o.SaveTokens = true;
+	o.Scope.Add("offline_access User.Read Mail.Read Calendars.Read");
 });
 
-//builder.Services.AddScoped<IGetToken, GetToken>();
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddTransient<IGetToken, GetToken>();
+builder.Services.AddTransient<IMail, Mail>();
+builder.Services.AddTransient<IGraphServices, GraphServices>();
+builder.Services.AddTransient<IBlogServices, BlogServices>();
+builder.Services.AddTransient<ICategoriasServices, CategoriasServices>();
+builder.Services.AddTransient<IComentariosServices, ComentariosServices>();
+
+builder.Services.AddHttpClient();
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+	options.UseSqlServer(connectionString));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(opciones =>
+{
+	opciones.SignIn.RequireConfirmedAccount = false;
+}).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

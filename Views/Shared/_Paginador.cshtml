@@ -1,0 +1,62 @@
+﻿@{
+    var anterior = (Model.PaginaActual - 1).ToString();
+    var siguiente = (Model.PaginaActual + 1).ToString();
+    var botonAnterior = Model.PaginaActual > 1;
+    var botonSiguiente = Model.PaginaActual < Model.Paginas;
+    var radio = 2;
+}
+
+
+<ul class="pagination mb-4">
+    <li class="page-item @(botonAnterior ? null : "disabled")">
+
+        @if (botonAnterior)
+        {
+            <a class="page-link" href="@string.Format(Model.BaseUrl + "{0}", 1)">  <span class="text-pagination-left" data-letras="Primero" data-icono="<<"></span></a>
+        }
+        else
+        {
+            <span class="page-link text-pagination-left" data-letras="Primero" data-icono="<<"></span>
+        }
+    </li>
+    <li class="page-item @(botonAnterior ? null : "disabled")">
+        @if (botonAnterior)
+        {
+            <a class="page-link" href="@Model.BaseUrl@anterior"><span class="text-pagination-left" data-letras="Anterior" data-icono="<"></span>  </a>
+        }
+        else
+        {
+            <span class="page-link text-pagination-left" data-letras="Anterior" data-icono="<"></span>
+        }
+    </li>
+    @for (var pagina = 1; pagina <= Model.Paginas; pagina++)
+    {
+        if (pagina >= Model.PaginaActual - radio && pagina <= Model.PaginaActual + radio)
+        {
+            <li class="page-item @(pagina == Model.PaginaActual ? "active" : null)">
+                <a class="page-link" href="@Model.BaseUrl@pagina.ToString()">@pagina</a>
+            </li>
+        }
+    }
+    <li class="page-item @(botonSiguiente ? null : "disabled")">
+        @if (botonSiguiente)
+        {
+            <a class="page-link" href="@Model.BaseUrl@siguiente">  <span class="text-pagination-left" data-letras="Siguiente" data-icono=">"></span></a>
+        }
+        else
+        {
+            <span class="page-link text-pagination-left" data-letras="Siguiente" data-icono=">"></span>
+        }
+    </li>
+    <li class="page-item @(botonSiguiente ? null : "disabled")">
+
+        @if (botonSiguiente)
+        {
+            <a class="page-link" href="@string.Format(Model.BaseUrl + "{0}", (int)Math.Ceiling((double)Model.Count / 10))">  <span class="text-pagination-left" data-letras="Ultimo" data-icono=">>"></span></a>
+        }
+        else
+        {
+            <span class="page-link text-pagination-left" data-letras="Ultimo" data-icono=">>"></span>
+        }
+    </li>
+</ul>
