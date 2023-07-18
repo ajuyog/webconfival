@@ -1,0 +1,169 @@
+﻿@using Microsoft.AspNetCore.Html;
+@model frontend.Models.BlogDTO
+
+@{
+	Layout = "_Layout3";
+}
+<!-- Miga de pan -->
+<div class="page-header">
+	<div>
+		<h1 class="page-title">Blogs sin aprobar</h1>
+	</div>
+	<div class="ms-auto pageheader-btn">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">Publicaciones</li>
+			<li class="breadcrumb-item active" aria-current="page">Blogs</li>
+			<li class="breadcrumb-item active" aria-current="page">Aprobar publicaciòn</li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xl-12">
+		<div class="card" style="background-color: white">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-xl-8">
+						<div class="">
+							<div class="d-sm-flex d-block align-items-center">
+								<div class="d-flex align-items-center mb-sm-0 mb-2">
+									<div class="me-3">
+										<img class="avatar avatar-sm rounded-circle cover-image" alt="64x64" src="~/assets/images/landing/Carrousel-1-Confival.png">
+									</div>
+									<h6 class="mb-0 text-muted ms-2 text-13 me-sm-0 me-2">Confival Capital S.A.S.</h6>
+								</div>
+								<a href="#" class="d-f-ai-c mx-0 mb-sm-0 mb-2 mx-sm-4 mx-0 text-13"><span class="fe fe-calendar text-muted me-1 text-15"></span><span class="mt-0 mt-0 text-muted">@Model.Publicacion.ToString()</span></a>
+								<a href="#" class="me-0 d-f-ai-c mb-sm-0 mb-2 text-13"><span class="fe fe-message-square text-muted me-1 text-15"></span><span class="mt-0 mt-0 text-muted">@Model.Comentarios.Count</span></a>
+							</div>
+							<div>
+								<h3 class="font-weight-normal text-dark-light mt-4 mb-4">@Model.Titulo</h3>
+							</div>
+						</div>
+						<div class="ps-relative p-1 bg-light br-5">
+							<img src="@Model.Imagen" alt="" title="" class="cover-image br-5 ms-auto me-auto wp-100">
+							<span class="badge bg-primary-gradient blog-label label5">Blogs Confival</span>
+						</div>
+						<div class=" mb-2 mt-5 content">
+							<p class="text-muted text-14 justify-policy">
+								@(new HtmlString(Model.Contenido))
+							</p>
+						</div>
+					</div>
+					<div class="col-xl-4">
+						<div class="card-confival-blogs overflow-hidden border br-5">
+							<div class="card-header border-bottom">
+								<h3 class="card-title">Acerca del Autor</h3>
+							</div>
+							<div class="card-body">
+								<div class="text-center">
+									<img class="card-img-top w-100 w-100" src="~/assets/images/landing/Carrousel-1-Confival.png" alt="" title="">
+									<div class="br-5 pt-3 text-justify">
+										<p class="m-0 text-muted">
+												Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nulla deleniti voluptas officia accusamus magnam ullam inventore Lorem ipsum dolor, sit amet consectetur dolorem quibusdam?. 
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-confival-blogs border overflow-hidden">
+							<div class="card-header border-bottom">
+								<h3 class="card-title">Categorias del Blog</h3>
+							</div>
+							<div class="card-body">
+								<div>
+									<div class="tags">
+										@foreach (var item in Model.Categorias)
+										{
+											<span class="tag">@item.Nombre</span>
+										}
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="card-confival-blogs overflow-hidden border">
+							<div class="card-header border-bottom">
+								<h4 class="card-title"">Galeria</h4>
+							</div>
+							<div class="card-body">
+								<div class="text-center demo-gallery">
+									<div class="mt-2">
+										<ul id="lightgallery" class="list-unstyled row row-sm">
+											@foreach (var item in Model.Galeria)
+											{
+												<li class="col-sm-6 col-lg-4"  onclick="SeeGallery('@Model.Id', '@Model.Titulo')">
+														<img class="img-responsive br-5 w-100" height="90" src="@item">
+												</li>
+											}
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<button class="btn btn-success pd-x-25" onclick="ApproveBlog('@Model.Id' , '@Model.Titulo')">Aprobar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="approve-blog">
+	<div class="modal-dialog modal-dialog-centered text-center" role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+				<i class="fe fe-x-circle fs-65 text-info lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-danger">Aprobar publicaciòn!</h4>
+				<div id="message-approve-blog">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="error-approve-blog">
+	<div class="modal-dialog modal-dialog-centered text-center " role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<i class="ion-wrench fs-65 text-primary lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-success tx-semibold">Estamos trabajando para solucionar!</h4>
+				<p class="text-muted">Nuestro sistema esta presentando cambios, intentalo de nuevo mas tarde.</p>
+				<button aria-label="Close" class="btn btn-info pd-x-25" data-bs-dismiss="modal">Continuar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade"  id="modal-gallery" tabindex="-1" role="dialog" style="padding-top: 120px;">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<div class="modal-header" id="modal-header-galeria">
+				<h5 class="modal-title" >Modal title</h5>
+				<button  class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modal-body-gallery">
+				<h4>Galeria de imagenes</h4>
+				<div class="card-body h-100">
+                    <div id="carousel-indicators" class="carousel slide responsive-indicators-banners" data-bs-ride="carousel">
+                        <ol class="carousel-indicators carousel-indicators" id="ol-indicators">
+                        </ol>
+                        <div class="carousel-inner" id="src-imagen">
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@section scripts {
+	<script src="~/assets/js/WebConfival/Blogs/ApproveBlog.js"></script>
+}

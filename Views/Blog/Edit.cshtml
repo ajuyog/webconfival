@@ -47,7 +47,14 @@
 										@item.Titulo
 									</td>
 									<td>
-										@(item.Estado == true ? "Activo" : "No aprovado")
+										@if(item.Estado == true)
+										{
+											<span class="badge bg-success">Activo</span>
+										}
+										else
+										{
+											<span class="badge bg-info">Sin aprobar</span>
+										}
 									</td>
 									<td>
 										Total: @item.Comentarios.Count()
@@ -59,7 +66,11 @@
 										@(item.Categorias == null ? "" : item.Categorias[0].Nombre)
 									</td>
 									<td>
-										<a asp-action="EditBlog" asp-route-id="@item.Id" class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar Contenido"><i class="fe fe-edit"></i></a>
+										@if(item.Estado == false)
+										{
+													<a asp-action="ApproveBlog" asp-route-id="@item.Id" class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Aprobar Blog"><i class="fe fe-check-circle"></i></a>
+											
+										}
 										<a asp-controller="Comentarios" asp-action="EditComment" asp-route-idBlog="@item.Id" asp-route-titulo="@item.Titulo" class="btn btn-success-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Aprobar Comentarios"><i class="fe fe-message-square"></i></a>
 									</td>
 								</tr>

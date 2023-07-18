@@ -220,9 +220,18 @@ public class BlogController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> EditBlog(int id)
+    public async Task<IActionResult> ApproveBlog(int id)
     {
         var model = await _blogServices.GetById(id);
+        model.Imagen = await _blogServices.Imagen(id);
+        model.Galeria = await _blogServices.Galeria(id);
         return View(model);
+    }
+
+    [HttpGet]
+    public async Task<bool> Approve(int id)
+    {
+        var result = await _blogServices.Approve(id);
+        return result;
     }
 }

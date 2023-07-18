@@ -20,6 +20,7 @@ namespace frontend.Services.Blogs
         string Order(string categoria, List<string> lstCategorias);
 		Task<BlogsDTO> GetByCategoria(int idCategoria, int pagina, int registros);
 		Task<BlogDTO> GetById(int id);
+		Task<bool> Approve(int id);
 	}
     public class BlogServices: IBlogServices
     {
@@ -271,6 +272,32 @@ namespace frontend.Services.Blogs
 				model = JsonConvert.DeserializeObject<BlogDTO>(responseStream);
 			}
             return model;
+		}
+
+        public async Task<bool> Approve(int id)
+        {
+            var result = false;
+			var lst = new List<PatchComentarioDTO>();
+			var obj = new PatchComentarioDTO()
+			{
+				Op = "replace",
+				Path = "/estado",
+				Value = true
+			};
+			lst.Add(obj);
+			var json = JsonConvert.SerializeObject(lst);
+			var token = await _getToken.GetTokenV();
+			var client = new HttpClient();
+			var request = new HttpRequestMessage(HttpMethod.Patch, "https://api2valuezbpm.azurewebsites.net/api/Blog/" + id);
+			request.Headers.Add("Authorization", "Bearer " + token);
+			var content = new StringContent(json, null, "application/json");
+			request.Content = content;
+			var response = await client.SendAsync(request);
+			if(response.IsSuccessStatusCode)
+            {
+                result = true;
+            }
+            return result;
 		}
 
 	}
