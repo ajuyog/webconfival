@@ -51,44 +51,50 @@
 												</div> 
 											</div> 
 											<div xp-if="variable.formPreview.value == 'form'"> 
-												<form class="mb-0" method="POST"> 
-													<div class="row"> 
-														<div class="col"> 
-															<div> 
-																<div class="form-group ml-field-email ml-validate-email ml-validate-required mb-2"> 
-																	<input aria-required="true" aria-label="email" type="email" class="form-control" data-inputmask="" name="mail" placeholder="Correo" autocomplete="email" aria-invalid="false"> 
-																</div> 
-															</div>
-															<div> 
-																<div class="form-group ml-field-name ml-validate-required mb-2"> 
-																	<input aria-required="true" aria-label="name" type="text" class="form-control" data-inputmask="" name="name" placeholder="Nombre Completo" autocomplete="name" aria-invalid="false">
-																</div> 
-															</div>
-															<div>
-																<div class="form-group ml-field-phone ml-validate-required mb-2"> 
-																	<input aria-required="true" aria-label="phone" type="text" class="form-control" data-inputmask="" name="phone" placeholder="Número de Celular" autocomplete="" aria-invalid="false"> 
-																</div> 
-															</div>
-															<div> 
-																<div class="form-group ml-field-tu_caso_es_de_reparacion_directa ml-validate-required mb-0"> 
-																	<input aria-required="true" aria-label="tu_caso_es_de_reparacion_directa" type="text" class="form-control" data-inputmask="" name="reparacionDirecta" placeholder="¿Tu caso es de reparación directa?" autocomplete="" aria-invalid="false">
-																</div>
-															</div> 														
-														</div>													
-													</div> 
-													<div class="row mt-4"> 
-														<div class="col"> 
-															<div class="form-group button-block mb-0"> 
-																<button class="btn btn-primary" type="submit"> Obtén el turno de pago </button> 
-																<button style="display:none;border-top-right-radius:30px;border-bottom-right-radius:30px" class="btn btn-block loading" type="button" disabled="disabled"> 
-																	<div class="spinner-border" style="width:1.25rem;height:1.25rem" role="status"> 
-																		<span class="sr-only">Loading...</span> 
-																	</div> 
-																</button> 
+												<div class="row"> 
+													<div class="col"> 
+														<div> 
+															<div class="form-group ml-field-email ml-validate-email ml-validate-required mb-2"> 
+																<input aria-required="true" aria-label="email" type="email" class="form-control" data-inputmask="" id="mail" placeholder="Correo" autocomplete="email" aria-invalid="false">
+																<div class="invalid-feedback" id="invalid-email-lead">El campo 'email' es requerido</div>
+																<div class="invalid-feedback" id="invalid-mail-regex-lead">Ingrese un correo electronico valido</div>
 															</div> 
+														</div>
+														<div> 
+															<div class="form-group ml-field-name ml-validate-required mb-2"> 
+																<input aria-required="true" aria-label="name" type="text" class="form-control" data-inputmask="" id="name" placeholder="Nombre Completo" autocomplete="name" aria-invalid="false">
+																<div class="invalid-feedback" id="invalid-name-lead">El campo 'nombre' es requerido</div>
+
+															</div> 
+														</div>
+														<div>
+															<div class="form-group ml-field-phone ml-validate-required mb-2"> 
+																<input aria-required="true" aria-label="phone" type="text" class="form-control" data-inputmask="" id="phone" placeholder="Número de Celular" autocomplete="" aria-invalid="false">
+																<div class="invalid-feedback" id="invalid-phone-lead">El campo 'numero de celular' es requerido</div>
+																<div class="invalid-feedback" id="invalid-celular-regex-lead">Ingrese un numero celular valido</div>
+															</div> 
+														</div>
+														<div>
+															<div class="form-group">
+																<label class="form-label">Tu caso es de reparacion directa"</label>
+																<select class="form-select" id="reparacion">
+																	<option selected disabled value="">Seleccione..</option>
+																	<option value="1">Si</option>
+																	<option value="0">No</option>
+																</select>
+															<div class="invalid-feedback" id="invalid-reparacionDirecta-lead">Seleccione una opción</div>
+															</div>
+														</div> 														
+													</div>													
+												</div> 
+												<div class="row mt-4"> 
+													<div class="col"> 
+														<div class="form-group button-block mb-0"> 
+															<button class="btn btn-primary" onclick="Create()"> Obtén el turno de pago </button> 
+																
 														</div> 
-													</div>
-												</form> 
+													</div> 
+												</div>
 											</div> 
 										</div>
 									</div> 
@@ -133,10 +139,39 @@
 </div>
 
 
+
+<div class="modal fade" id="modal-success-lead">
+	<div class="modal-dialog modal-dialog-centered text-center " role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+				<i class="fe fe-check-circle fs-65 text-success lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-success tx-semibold">Registro exitoso!</h4>
+				<p class="text-muted">Tu solicitud fue exitosa, en breve serás contactado por uno de nuestros asesores.</p><button aria-label="Close" class="btn btn-success pd-x-25" data-bs-dismiss="modal">Continuar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="modal-error-lead">
+	<div class="modal-dialog modal-dialog-centered text-center" role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+				<i class="fe fe-x-circle fs-65 text-danger lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-danger">Error: registro no exitoso!</h4>
+				<p class="text-muted">Nuestro sistema está presentando cambios, inténtalo de nuevo más tarde.</p><button aria-label="Close" class="btn btn-danger pd-x-25" data-bs-dismiss="modal">Continue</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+		<script src="~/assets/js/WebConfival/Contacto/Contacto.js"></script>
+
 @section scripts {
 		<!-- Star Rating-1 Js-->
 		<script src="~/assets/plugins/ratings-2/jquery.star-rating.js"></script>
 		<script src="~/assets/plugins/ratings-2/star-rating.js"></script>
+
 
 		<!-- Sweet-alert js  -->
 		<script src="~/assets/js/carousel-confival.js"></script>

@@ -2,6 +2,7 @@ using frontend;
 using frontend.Services.Blogs;
 using frontend.Services.Categorias;
 using frontend.Services.Comentarios;
+using frontend.Services.Contacto;
 using frontend.Services.Graph;
 using frontend.Services.Token;
 using frontend.Services.Utilidaddes;
@@ -45,6 +46,8 @@ builder.Services.AddTransient<IGraphServices, GraphServices>();
 builder.Services.AddTransient<IBlogServices, BlogServices>();
 builder.Services.AddTransient<ICategoriasServices, CategoriasServices>();
 builder.Services.AddTransient<IComentariosServices, ComentariosServices>();
+builder.Services.AddTransient<IContactoServices, ContactoServices>();
+
 
 builder.Services.AddHttpClient();
 
