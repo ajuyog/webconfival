@@ -4,6 +4,7 @@ using frontend.Services.Token;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 
 namespace frontend.Services.Blogs
 {
@@ -21,7 +22,8 @@ namespace frontend.Services.Blogs
 		Task<BlogsDTO> GetByCategoria(int idCategoria, int pagina, int registros);
 		Task<BlogDTO> GetById(int id);
 		Task<bool> Approve(int id);
-	}
+        string Resumen(string contenido);
+    }
     public class BlogServices: IBlogServices
     {
         #region CONSTRUCTOR
@@ -300,5 +302,12 @@ namespace frontend.Services.Blogs
             return result;
 		}
 
-	}
+        public string Resumen(string contenido)
+        {
+            var nuevoContenido = Regex.Replace(contenido, "<.*?>", String.Empty);
+            return "<p class='text-muted text-14' style='text-align: justify;'>" + nuevoContenido + "</p>";
+        }
+
+
+    }
 }

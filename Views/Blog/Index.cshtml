@@ -1,4 +1,5 @@
-﻿@model frontend.Models.BlogsDTO
+﻿@using Microsoft.AspNetCore.Html;
+@model frontend.Models.BlogsDTO
 @{
     Layout = "_Layoutlandingpage2";
 }
@@ -22,7 +23,7 @@
                             </div>
                             <div class="card-body">
                                 <a href="#" class="text-dark blog-title">@Model.ResultBlog[0].Titulo</a>
-                                <p class="mb-0 text-muted mt-4 justify-policy">@Model.ResultBlog[0].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[0].Contenido.Length * 0.25))</p>
+                                <p class="mb-0 text-muted mt-4 justify-policy">@(new HtmlString(Model.ResultBlog[0].Resumen.Substring(0, Convert.ToInt32(Model.ResultBlog[0].Contenido.Length * 0.25))))</p>
                                 <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
                             </div>
                             <div class="card-footer ">
@@ -187,7 +188,7 @@
                             </div>
                             <div class="card-body">
                                 <a href="#" class="text-dark blog-title">@Model.ResultBlog[0].Titulo</a>
-                                <p class="mb-0 text-muted mt-4 justify-policy">@Model.ResultBlog[0].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[0].Contenido.Length * 0.25))</p>
+                                <p class="mb-0 text-muted mt-4 justify-policy">@(new HtmlString(Model.ResultBlog[0].Resumen.Substring(0, Convert.ToInt32(Model.ResultBlog[0].Contenido.Length * 0.25))))</p>
                                 <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
                             </div>
                             <div class="card-footer ">
@@ -349,7 +350,7 @@
                                 <div class="card-body p-0 border border-top-0 br-br-5 br-bl-5 mb-2 mb-lg-0">
                                     <div class="p-5 border-bottom">
                                         <a href="#" class="text-dark blog-title">@Model.ResultBlog[1].Titulo</a>
-                                        <p class="mb-0 text-muted mt-4">@Model.ResultBlog[1].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[1].Contenido.Length * 0.25)) </p>
+                                        <p class="mb-0 text-muted mt-4">@(new HtmlString(Model.ResultBlog[1].Resumen.Substring(0, Convert.ToInt32(Model.ResultBlog[1].Contenido.Length * 0.25)))) </p>
                                     </div>
                                     <div class="d-sm-flex p-5 align-items-center">
                                         <div class="avatar-list indicators">
@@ -392,7 +393,7 @@
                             </div>
                             <div class="card-body">
                                 <a href="#" class="text-dark blog-title">@Model.ResultBlog[0].Titulo</a>
-                                <p class="mb-0 text-muted mt-4 justify-policy">@Model.ResultBlog[0].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[0].Contenido.Length * 0.25))</p>
+                                <p class="mb-0 text-muted mt-4 justify-policy">@(new HtmlString(Model.ResultBlog[0].Resumen.Substring(0, Convert.ToInt32(Model.ResultBlog[0].Contenido.Length * 0.25))))</p>
                                 <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
                             </div>
                             <div class="card-footer ">
@@ -553,7 +554,7 @@
                                     <div class="card-body p-0 border border-top-0 br-br-5 br-bl-5 mb-2 mb-lg-0">
                                         <div class="p-5 border-bottom">
                                             <a href="#" class="text-dark blog-title">@Model.ResultBlog[1].Titulo</a>
-                                            <p class="mb-0 text-muted mt-4">@Model.ResultBlog[1].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[1].Contenido.Length * 0.25)) </p>
+                                            <p class="mb-0 text-muted mt-4">@(new HtmlString(Model.ResultBlog[1].Resumen.Substring(0, Convert.ToInt32(Model.ResultBlog[1].Contenido.Length * 0.25)))) </p>
                                         </div>
                                         <div class="d-sm-flex p-5 align-items-center">
                                             <div class="avatar-list indicators">

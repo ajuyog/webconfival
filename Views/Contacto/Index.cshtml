@@ -3,252 +3,257 @@
 @using frontend.Models;
 
 @{
-	Layout = "_Layoutlandingpage";
-	
+    Layout = "_Layoutlandingpage";
+
 }
 <div class="hor-content main-content mt-0">
-	<div class="side-app">
-		<div class="main-container">
-			<div class="section-banner pb-5" style="padding-top:114px;">
-				<div class="col-12" style="padding-bottom: 20px;">
-					<div id="carousel-indicators5" class="carousel slide  responsive-indicators-banners" data-bs-ride="carousel">
-						<ol class="carousel-indicators carousel-indicators5">
-							@foreach (var item in Model)
-							{
-								<li data-bs-target="#carousel-indicators5" data-bs-slide-to="@item.Posicion" class="@(item.Posicion == 0 ? "active" : null)"></li>
-							}
-						</ol>
-						<div class="carousel-inner">
-							@foreach (var item in Model)
-							{
-								<div class="carousel-item @(item.Posicion == 0 ? "active" : null)">
-									<img class="d-block w-100 responsive-css-banner-principal" alt="" src="@item.UrlSoporte" data-bs-holder-rendered="true">
-								</div>
-							}
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="section pb-5 bg-white" id="Contacto">
-				<div class="container px-5 px-md-0">
-					<div class="row justify-content-center"> 
-						<div class="col col-sm-12"> 
-							<div class=""> 
-								<div class=""> 
-									<div class="ml-subscribe-form row large-gutters align-items-center" id="mlb2-5646992-5"> 
-										<div class="ml-block-form col-12 col-md-6 order-md-last order-first mb-4 mb-md-0"> 
-											<div class="ml-video-5 mb-4 mb-md-0"> 
-												<div class="embed-responsive embed-responsive-16by9"> 
-													<iframe class="embed-responsive-item" frameborder="0" allowfullscreen="" src="https://www.youtube-nocookie.com/embed/16ZAbWDz3DE?rel=0&amp;showinfo=0"></iframe> 
-												</div> 
-											</div> 
-										</div> 
-										<div class="ml-block-form col-12 col-md-6"> 
-											<div class="row mb-4"> 
-												<div class="col"> 
-													<h1 style="text-align:center"><strong>¿Aún no sabes cuándo te pagará el Estado tu sentencia de reparación?</strong></h1> 
-													<p style="text-align:center">En Confival te ayudamos para que conozcas la fecha estimada de tu pago, ¡Nos contactaremos contigo!<br></p>
-												</div> 
-											</div> 
-											<div xp-if="variable.formPreview.value == 'form'"> 
-												<div class="row"> 
-													<div class="col"> 
-														<div> 
-															<div class="form-group ml-field-email ml-validate-email ml-validate-required mb-2"> 
-																<input aria-required="true" aria-label="email" type="email" class="form-control" data-inputmask="" id="mail" placeholder="Correo" autocomplete="email" aria-invalid="false">
-																<div class="invalid-feedback" id="invalid-email-lead">El campo 'email' es requerido</div>
-																<div class="invalid-feedback" id="invalid-mail-regex-lead">Ingrese un correo electronico valido</div>
-															</div> 
-														</div>
-														<div> 
-															<div class="form-group ml-field-name ml-validate-required mb-2"> 
-																<input aria-required="true" aria-label="name" type="text" class="form-control" data-inputmask="" id="name" placeholder="Nombre Completo" autocomplete="name" aria-invalid="false">
-																<div class="invalid-feedback" id="invalid-name-lead">El campo 'nombre' es requerido</div>
+    <div class="side-app">
+        <div class="main-container">
+            <div class="section-banner pb-5 bg-white" style="padding-top:114px;">
+                <div class="col-12" style="padding-bottom: 20px;">
+                    <div id="carousel-indicators5" class="carousel slide  responsive-indicators-banners" data-bs-ride="carousel">
+                        <ol class="carousel-indicators carousel-indicators5">
+                            @foreach (var item in Model)
+                            {
+                                <li data-bs-target="#carousel-indicators5" data-bs-slide-to="@item.Posicion" class="@(item.Posicion == 0 ? "active" : null)"></li>
+                            }
+                        </ol>
+                        <div class="carousel-inner">
+                            @foreach (var item in Model)
+                            {
+                                <div class="carousel-item @(item.Posicion == 0 ? "active" : null)">
+                                    <img class="d-block w-100 responsive-css-banner-principal" alt="" src="@item.UrlSoporte" data-bs-holder-rendered="true">
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section pb-5 bg-white" id="Contacto">
+                <div class="container px-5 px-md-0">
+                    <div class="row justify-content-center">
+                        <div class="col-7">
+                            <div class="">
+                                <div class="">
+                                    <div class="ml-subscribe-form row large-gutters align-items-center" id="mlb2-5646992-5">
+                                        @*<div class="ml-block-form col-12 col-md-6 order-md-last order-first mb-4 mb-md-0">
+                                        <div class="ml-video-5 mb-4 mb-md-0">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" frameborder="0" allowfullscreen="" src="https://www.youtube-nocookie.com/embed/16ZAbWDz3DE?rel=0&amp;showinfo=0"></iframe>
+                                        </div>
+                                        </div>
+                                        </div> *@
+                                        <div class="ml-block-form col-12 col-md-12">
+                                            <div xp-if="variable.formPreview.value == 'form'">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div>
+                                                            <div class="form-group">
+                                                                <label class="form-label">Correo electronico</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text bg-primary-transparent text-primary"><i class="fe fe-mail"></i></span>
+                                                                    <input aria-required="true" aria-label="email" type="email" class="form-control" data-inputmask="" id="mail" placeholder="Ingresa un correo electronico" autocomplete="email" aria-invalid="false">
+                                                                    <div class="invalid-feedback" id="invalid-email-lead">El campo 'email' es requerido</div>
+                                                                    <div class="invalid-feedback" id="invalid-mail-regex-lead">Ingrese un correo electronico valido</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="form-group">
+                                                                <label class="form-label">Nombre Completo</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text bg-primary-transparent text-primary"><i class="fe fe-user"></i></span>
+                                                                    <input aria-required="true" aria-label="name" type="text" class="form-control" data-inputmask="" id="name" placeholder="Nombre Completo" autocomplete="name" aria-invalid="false">
+                                                                    <div class="invalid-feedback" id="invalid-name-lead">El campo 'nombre' es requerido</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="form-group">
+                                                                <label class="form-label">Número Celular</label>
+                                                                <div class="input-group mb-3">
+                                                                    <span class="input-group-text bg-primary-transparent text-primary"><i class="fe fe-smartphone"></i></span>
+                                                                    <input aria-required="true" aria-label="phone" type="text" class="form-control" data-inputmask="" id="phone" placeholder="Ingresa un número de Celular" autocomplete="" aria-invalid="false">
+                                                                    <div class="invalid-feedback" id="invalid-phone-lead">El campo 'numero de celular' es requerido</div>
+                                                                    <div class="invalid-feedback" id="invalid-celular-regex-lead">Ingrese un numero celular valido</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="form-group">
+                                                                <label class="form-label">Tu caso es de reparacion directa</label>
+                                                                <select class="form-select" id="reparacion">
+                                                                    <option selected disabled value="">Seleccione..</option>
+                                                                    <option value="1">Si</option>
+                                                                    <option value="0">No</option>
+                                                                </select>
+                                                                <div class="invalid-feedback" id="invalid-reparacionDirecta-lead">Seleccione una opción</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-4">
+                                                    <div class="col">
+                                                        <div class="form-group button-block mb-0">
+                                                            <button class="btn btn-primary" onclick="Create()"> Registrar! </button>
 
-															</div> 
-														</div>
-														<div>
-															<div class="form-group ml-field-phone ml-validate-required mb-2"> 
-																<input aria-required="true" aria-label="phone" type="text" class="form-control" data-inputmask="" id="phone" placeholder="Número de Celular" autocomplete="" aria-invalid="false">
-																<div class="invalid-feedback" id="invalid-phone-lead">El campo 'numero de celular' es requerido</div>
-																<div class="invalid-feedback" id="invalid-celular-regex-lead">Ingrese un numero celular valido</div>
-															</div> 
-														</div>
-														<div>
-															<div class="form-group">
-																<label class="form-label">Tu caso es de reparacion directa"</label>
-																<select class="form-select" id="reparacion">
-																	<option selected disabled value="">Seleccione..</option>
-																	<option value="1">Si</option>
-																	<option value="0">No</option>
-																</select>
-															<div class="invalid-feedback" id="invalid-reparacionDirecta-lead">Seleccione una opción</div>
-															</div>
-														</div> 														
-													</div>													
-												</div> 
-												<div class="row mt-4"> 
-													<div class="col"> 
-														<div class="form-group button-block mb-0"> 
-															<button class="btn btn-primary" onclick="Create()"> Obtén el turno de pago </button> 
-																
-														</div> 
-													</div> 
-												</div>
-											</div> 
-										</div>
-									</div> 
-								</div>
-							</div> 
-						</div> 
-					</div>
-				</div>
-			</div>
-			<!-- Seccion 4 -- Carrousel Entidades -->
-			<div class="px-5 px-md-0" style="padding-bottom:80px;">
-				<div class="bg-primary-v-dos section">
-					<div class="container px-5 px-md-0">
-						<div class="row justify-content-center text-center">
-							<div class="col-lg-8 text-center">
-								<h3 class="header-family text-white">Entidades</h3>
-								<p class="sub-text text-white pb-3">
-									A las que Confival le compra sentencias
-								</p>
-							</div>
-						</div>
-						<div class="row justify-content-center">
-							<div class="col-lg-12">
-								<div class="customer-logos">
-									<div class="slide"><img src="~/assets/images/landing/Inpec.svg" alt=""></div>
-									<div class="slide"><img src="~/assets/images/landing/Ejercito.svg" alt=""></div>
-									<div class="slide"><img src="~/assets/images/landing/Fiscalia.svg" alt=""></div>
-									<div class="slide"><img src="~/assets/images/landing/Invias.svg" alt=""></div>
-									<div class="slide"><img src="~/assets/images/landing/MiniDefensa.svg" alt=""></div>
-									<div class="slide"><img src="~/assets/images/landing/Policia.svg" alt=""></div>
-									<div class="slide"><img src="~/assets/images/landing/Rama.svg" alt=""></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- FOOTERS -->
-			<partial name="~/Views/Shared/_Footer1.cshtml" />
-		</div>
-	</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Seccion 4 -- Carrousel Entidades -->
+            <div class="px-5 px-md-0" style="padding-bottom:80px;">
+                <div class="bg-primary-v-dos section">
+                    <div class="container px-5 px-md-0">
+                        <div class="row justify-content-center text-center">
+                            <div class="col-lg-8 text-center">
+                                <h3 class="header-family text-white">Entidades</h3>
+                                <p class="sub-text text-white pb-3">
+                                    A las que Confival le compra sentencias
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="customer-logos">
+                                    <div class="slide"><img src="~/assets/images/landing/Inpec.svg" alt=""></div>
+                                    <div class="slide"><img src="~/assets/images/landing/Ejercito.svg" alt=""></div>
+                                    <div class="slide"><img src="~/assets/images/landing/Fiscalia.svg" alt=""></div>
+                                    <div class="slide"><img src="~/assets/images/landing/Invias.svg" alt=""></div>
+                                    <div class="slide"><img src="~/assets/images/landing/MiniDefensa.svg" alt=""></div>
+                                    <div class="slide"><img src="~/assets/images/landing/Policia.svg" alt=""></div>
+                                    <div class="slide"><img src="~/assets/images/landing/Rama.svg" alt=""></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FOOTERS -->
+            <partial name="~/Views/Shared/_Footer1.cshtml" />
+        </div>
+    </div>
 </div>
 
 
 
 <div class="modal fade" id="modal-success-lead">
-	<div class="modal-dialog modal-dialog-centered text-center " role="document">
-		<div class="modal-content tx-size-sm">
-			<div class="modal-body text-center p-4">
-				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-				<i class="fe fe-check-circle fs-65 text-success lh-1 mb-5 d-inline-block"></i>
-				<h4 class="text-success tx-semibold">Registro exitoso!</h4>
-				<p class="text-muted">Tu solicitud fue exitosa, en breve serás contactado por uno de nuestros asesores.</p><button aria-label="Close" class="btn btn-success pd-x-25" data-bs-dismiss="modal">Continuar</button>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog modal-dialog-centered text-center " role="document">
+        <div class="modal-content tx-size-sm">
+            <div class="modal-body text-center p-4">
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <i class="fe fe-check-circle fs-65 text-success lh-1 mb-5 d-inline-block"></i>
+                <h4 class="text-success tx-semibold">Registro exitoso!</h4>
+                <p class="text-muted">Tu solicitud fue exitosa, en breve serás contactado por uno de nuestros asesores.</p><button aria-label="Close" class="btn btn-success pd-x-25" data-bs-dismiss="modal">Continuar</button>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal fade" id="modal-error-lead">
-	<div class="modal-dialog modal-dialog-centered text-center" role="document">
-		<div class="modal-content tx-size-sm">
-			<div class="modal-body text-center p-4">
-				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-				<i class="fe fe-x-circle fs-65 text-danger lh-1 mb-5 d-inline-block"></i>
-				<h4 class="text-danger">Error: registro no exitoso!</h4>
-				<p class="text-muted">Nuestro sistema está presentando cambios, inténtalo de nuevo más tarde.</p><button aria-label="Close" class="btn btn-danger pd-x-25" data-bs-dismiss="modal">Continue</button>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog modal-dialog-centered text-center" role="document">
+        <div class="modal-content tx-size-sm">
+            <div class="modal-body text-center p-4">
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <i class="fe fe-x-circle fs-65 text-danger lh-1 mb-5 d-inline-block"></i>
+                <h4 class="text-danger">Error: registro no exitoso!</h4>
+                <p class="text-muted">Nuestro sistema está presentando cambios, inténtalo de nuevo más tarde.</p><button aria-label="Close" class="btn btn-danger pd-x-25" data-bs-dismiss="modal">Continue</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-		<script src="~/assets/js/WebConfival/Contacto/Contacto.js"></script>
+<script src="~/assets/js/WebConfival/Contacto/Contacto.js"></script>
 
 @section scripts {
-		<!-- Star Rating-1 Js-->
-		<script src="~/assets/plugins/ratings-2/jquery.star-rating.js"></script>
-		<script src="~/assets/plugins/ratings-2/star-rating.js"></script>
+    <!-- Star Rating-1 Js-->
+    <script src="~/assets/plugins/ratings-2/jquery.star-rating.js"></script>
+    <script src="~/assets/plugins/ratings-2/star-rating.js"></script>
 
 
-		<!-- Sweet-alert js  -->
-		<script src="~/assets/js/carousel-confival.js"></script>
-		<script src="~/assets/plugins/sweet-alert/sweetalert.min.js"></script>
-		<script src="~/assets/plugins/sweet-alert/jquery.sweet-alert.js"></script>
+    <!-- Sweet-alert js  -->
+    <script src="~/assets/js/carousel-confival.js"></script>
+    <script src="~/assets/plugins/sweet-alert/sweetalert.min.js"></script>
+    <script src="~/assets/plugins/sweet-alert/jquery.sweet-alert.js"></script>
 
-		<script src="~/assets/plugins/rating/jquery-rate-picker.js"></script>
-		<script src="~/assets/plugins/rating/rating-picker.js"></script>
+    <script src="~/assets/plugins/rating/jquery-rate-picker.js"></script>
+    <script src="~/assets/plugins/rating/rating-picker.js"></script>
 
-		<!-- Bootstrap-Date Range Picker js-->
-		<script src="~/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <!-- Bootstrap-Date Range Picker js-->
+    <script src="~/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 
-		<!-- jQuery UI Date Picker js -->
-		<script src="~/assets/plugins/date-picker/jquery-ui.js"></script>
+    <!-- jQuery UI Date Picker js -->
+    <script src="~/assets/plugins/date-picker/jquery-ui.js"></script>
 
-		<!-- bootstrap-datepicker js (Date picker Style-01) -->
-		<script src="~/assets/plugins/bootstrap-datepicker/js/datepicker.js"></script>
+    <!-- bootstrap-datepicker js (Date picker Style-01) -->
+    <script src="~/assets/plugins/bootstrap-datepicker/js/datepicker.js"></script>
 
-		<!-- Amaze UI Date Picker js-->
-		<script src="~/assets/plugins/amazeui-datetimepicker/js/amazeui.datetimepicker.min.js"></script>
+    <!-- Amaze UI Date Picker js-->
+    <script src="~/assets/plugins/amazeui-datetimepicker/js/amazeui.datetimepicker.min.js"></script>
 
-		<!-- Simple Date Time Picker js-->
-		<script src="~/assets/plugins/jquery-simple-datetimepicker/jquery.simple-dtpicker.js"></script>
+    <!-- Simple Date Time Picker js-->
+    <script src="~/assets/plugins/jquery-simple-datetimepicker/jquery.simple-dtpicker.js"></script>
 
-		<!-- SELECT2 JS -->
-		<script src="~/assets/plugins/select2/select2.full.min.js"></script>
+    <!-- SELECT2 JS -->
+    <script src="~/assets/plugins/select2/select2.full.min.js"></script>
 
-		<!-- BOOTSTRAP MAX-LENGTH JS -->
-@*		<script src="~/assets/plugins/bootstrap-maxlength/dist/bootstrap-maxlength.min.js"></script>
+    <!-- BOOTSTRAP MAX-LENGTH JS -->
+    @*		<script src="~/assets/plugins/bootstrap-maxlength/dist/bootstrap-maxlength.min.js"></script>
 *@
-		<!--Internal Fileuploads js-->
-		<script src="~/assets/plugins/fileuploads/js/fileupload.js"></script>
-		<script src="~/assets/plugins/fileuploads/js/file-upload.js"></script>
+    <!--Internal Fileuploads js-->
+    <script src="~/assets/plugins/fileuploads/js/fileupload.js"></script>
+    <script src="~/assets/plugins/fileuploads/js/file-upload.js"></script>
 
-		<!--Internal Fancy uploader js-->
-		<script src="~/assets/plugins/fancyuploder/jquery.ui.widget.js"></script>
-		<script src="~/assets/plugins/fancyuploder/jquery.fileupload.js"></script>
-		<script src="~/assets/plugins/fancyuploder/jquery.iframe-transport.js"></script>
-		<script src="~/assets/plugins/fancyuploder/jquery.fancy-fileupload.js"></script>
-		<script src="~/assets/plugins/fancyuploder/fancy-uploader.js"></script>
+    <!--Internal Fancy uploader js-->
+    <script src="~/assets/plugins/fancyuploder/jquery.ui.widget.js"></script>
+    <script src="~/assets/plugins/fancyuploder/jquery.fileupload.js"></script>
+    <script src="~/assets/plugins/fancyuploder/jquery.iframe-transport.js"></script>
+    <script src="~/assets/plugins/fancyuploder/jquery.fancy-fileupload.js"></script>
+    <script src="~/assets/plugins/fancyuploder/fancy-uploader.js"></script>
 
-		<!-- FORM ELEMENTADVANCED JS -->
-		<script src="~/assets/js/formelementadvnced.js"></script>
+    <!-- FORM ELEMENTADVANCED JS -->
+    <script src="~/assets/js/formelementadvnced.js"></script>
 
-		<!-- FORM OPORTUNIDAD JS -->
-		<script src="~/assets/js/form-oportunidad.js"></script>
+    <!-- FORM OPORTUNIDAD JS -->
+    <script src="~/assets/js/form-oportunidad.js"></script>
 
-		<!-- INTERNAL Notifications js -->
-		<script src="~/assets/plugins/notify/js/rainbow.js"></script>
-		<script src="~/assets/plugins/notify/js/sample.js"></script>
-		@*<script src="~/assets/plugins/notify/js/jquery.growl.js"></script>*@
-		<script src="~/assets/plugins/notify/js/notifIt.js"></script>
+    <!-- INTERNAL Notifications js -->
+    <script src="~/assets/plugins/notify/js/rainbow.js"></script>
+    <script src="~/assets/plugins/notify/js/sample.js"></script>
+    @*<script src="~/assets/plugins/notify/js/jquery.growl.js"></script>*@
+    <script src="~/assets/plugins/notify/js/notifIt.js"></script>
 
-		<!-- TIME COUNTER JS-->
-		<script src="~/assets/plugins/counters/jquery.missofis-countdown.js"></script>
-		<script src="~/assets/plugins/counters/counter.js"></script>
+    <!-- TIME COUNTER JS-->
+    <script src="~/assets/plugins/counters/jquery.missofis-countdown.js"></script>
+    <script src="~/assets/plugins/counters/counter.js"></script>
 
-		<!-- COUNT-DOWN JS-->
-		<script src="~/assets/plugins/counters/count-down.js"></script>
-		<script src="~/assets/plugins/countdown/moment.min.js"></script>
-		<script src="~/assets/plugins/countdown/moment-timezone.min.js"></script>
-		<script src="~/assets/plugins/countdown/moment-timezone-with-data.min.js"></script>
-		<script src="~/assets/plugins/countdown/countdowntime.js"></script>
+    <!-- COUNT-DOWN JS-->
+    <script src="~/assets/plugins/counters/count-down.js"></script>
+    <script src="~/assets/plugins/countdown/moment.min.js"></script>
+    <script src="~/assets/plugins/countdown/moment-timezone.min.js"></script>
+    <script src="~/assets/plugins/countdown/moment-timezone-with-data.min.js"></script>
+    <script src="~/assets/plugins/countdown/countdowntime.js"></script>
 
-		<!-- COUNTERS JS-->
+    <!-- COUNTERS JS-->
 
-		<script src="~/assets/plugins/counters/counterup.min.js"></script>
-		<script src="~/assets/plugins/counters/waypoints.min.js"></script>
-		<script src="~/assets/plugins/counters/counters-1.js"></script>
+    <script src="~/assets/plugins/counters/counterup.min.js"></script>
+    <script src="~/assets/plugins/counters/waypoints.min.js"></script>
+    <script src="~/assets/plugins/counters/counters-1.js"></script>
 
-		<!-- SIDEBAR JS -->
-		<script src="~/assets/plugins/sidebar/sidebar.js"></script>
+    <!-- SIDEBAR JS -->
+    <script src="~/assets/plugins/sidebar/sidebar.js"></script>
 
-		<!-- PROGRESS BAR JS-->
-		<script src="../assets/js/progress.js"></script>
+    <!-- PROGRESS BAR JS-->
+    <script src="../assets/js/progress.js"></script>
 
-		<!-- UTILIDAD -->
+    <!-- UTILIDAD -->
 
-		<script src="../assets/js/utilidad.js"></script>
+    <script src="../assets/js/utilidad.js"></script>
 }

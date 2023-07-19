@@ -53,6 +53,7 @@ public class BlogController : Controller
                 item.Imagen = imagenBlog;
                 var galeria = await _blogServices.Galeria(item.Id);
                 item.Galeria = galeria;
+                item.Resumen = _blogServices.Resumen(item.Contenido);
             }
             model.Count = model.totalBlogTrue;
             model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
@@ -78,6 +79,7 @@ public class BlogController : Controller
                 item.Imagen = imagenBlog;
                 var galeria = await _blogServices.Galeria(item.Id);
                 item.Galeria = galeria;
+                item.Resumen = _blogServices.Resumen(item.Contenido);
             }
             model.Count = model.TotalBlog;
             model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
