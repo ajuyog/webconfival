@@ -22,7 +22,6 @@ namespace frontend.Services.Blogs
 		Task<BlogsDTO> GetByCategoria(int idCategoria, int pagina, int registros);
 		Task<BlogDTO> GetById(int id);
 		Task<bool> Approve(int id);
-        string Resumen(string contenido);
     }
     public class BlogServices: IBlogServices
     {
@@ -301,13 +300,5 @@ namespace frontend.Services.Blogs
             }
             return result;
 		}
-
-        public string Resumen(string contenido)
-        {
-            var nuevoContenido = Regex.Replace(contenido, "<.*?>", String.Empty);
-            return "<p class='text-muted text-14' style='text-align: justify;'>" + nuevoContenido + "</p>";
-        }
-
-
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -53,7 +54,6 @@ public class BlogController : Controller
                 item.Imagen = imagenBlog;
                 var galeria = await _blogServices.Galeria(item.Id);
                 item.Galeria = galeria;
-                item.Resumen = _blogServices.Resumen(item.Contenido);
             }
             model.Count = model.totalBlogTrue;
             model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
@@ -79,7 +79,6 @@ public class BlogController : Controller
                 item.Imagen = imagenBlog;
                 var galeria = await _blogServices.Galeria(item.Id);
                 item.Galeria = galeria;
-                item.Resumen = _blogServices.Resumen(item.Contenido);
             }
             model.Count = model.TotalBlog;
             model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
@@ -218,7 +217,13 @@ public class BlogController : Controller
 		model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
 		model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/Edit?pagina=";
 		model.PaginaActual = pagina;
-		return View(model);
+        var objToken = await _getToken.GetTokenMicrosoft();
+        var modelMe = await _graphServices.GetMeGraph(objToken.access_token);
+
+        ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+        ViewBag.user = modelMe.DisplayName;
+
+        return View(model);
     }
 
     [HttpGet]
