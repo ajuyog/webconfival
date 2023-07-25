@@ -16,14 +16,12 @@
 							<div class="card" style="background-color: white">
 								<div class="card-body">
 									<div class="row">
-
-
 										<div class="col-xl-8">
 											<div class="">
 												<div class="d-sm-flex d-block align-items-center">
 													<div class="d-flex align-items-center mb-sm-0 mb-2">
 														<div class="me-3">
-															<img class="avatar avatar-sm rounded-circle cover-image" alt="64x64" src="~/assets/images/landing/photo_autor.jpg">
+															<img class="avatar avatar-sm rounded-circle cover-image" src="~/assets/images/landing/photo_autor.jpg" loading="lazy" alt="Autor Blog">
 														</div>
 														<h6 class="mb-0 text-muted ms-2 text-13 me-sm-0 me-2">Confival Capital S.A.S.</h6>
 													</div>
@@ -35,7 +33,7 @@
 												</div>
 											</div>
 											<div class="ps-relative p-1 bg-light br-5">
-												<img src="@Model.Imagen" alt="" title="" class="cover-image br-5 ms-auto me-auto wp-100">
+												<img src="@Model.Imagen" class="cover-image br-5 ms-auto me-auto wp-100" loading="lazy" alt="Imagen blogs Confival Capital S.A.S.">
 												<span class="badge bg-primary-gradient blog-label label5">Blogs Confival</span>
 											</div>
 											<div class=" mb-2 mt-5 content">
@@ -128,7 +126,7 @@
 												</div>
 												<div class="card-body">
 													<div class="text-center">
-														<img class="card-img-top w-100 w-100" src="~/assets/images/landing/photo_autor.jpg" alt="" title="">
+														<img class="card-img-top w-100 w-100" src="~/assets/images/landing/photo_autor.jpg" loading="lazy" alt="Imagen Autor">
 														<div class="br-5 pt-3 text-justify">
 															<p class="m-0 text-muted">
 																Le damos mayor valor a su confianza
@@ -175,7 +173,7 @@
 																@foreach (var item in Model.Galeria)
 																{
 																	<li class="col-sm-6 col-lg-4"  onclick="SeeGallery('@Model.Id', '@Model.Titulo')">
-																			<img class="img-responsive br-5 w-100" height="90" src="@item">
+																		<img class="img-responsive br-5 w-100" height="90" src="@item" loading="lazy" alt="Galeria Confival Capital S.A.S." >
 																	</li>
 																}
 															</ul>
