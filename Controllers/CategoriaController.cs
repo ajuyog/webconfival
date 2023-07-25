@@ -165,5 +165,13 @@ namespace frontend.Controllers
 			}
             return result;
         }
+
+        [Authorize, HttpGet]
+        public async Task<List<CategoriaDTO>> Exists()
+        {
+            return await _categoriasServices.Get(1, 100, true);
+
+        }
+
     }
 }

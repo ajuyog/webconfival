@@ -5,7 +5,7 @@
     if (valid == 0) {
         $.ajax({
             type: "GET",
-            url: '/Blog/ConsultarCategorias',
+            url: '/Categoria/Exists',
             success: function (result) {
                 $.each(result, function (element, index) {
                     if (index.nombre == nombreCorregido) {
@@ -47,7 +47,7 @@ function EditarCategoria() {
     if (valid == 0) {
         $.ajax({
             type: "GET",
-            url: '/Blog/ConsultarCategorias',
+            url: '/Categoria/Exists',
             success: function (result) {
                 console.log(result);
                 $.each(result, function (element, index) {

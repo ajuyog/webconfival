@@ -118,7 +118,7 @@ public class BlogController : Controller
     [HttpGet]
     public async Task<List<CategoriaDTO>> ConsultarCategorias(int id)
     {
-        var lst = await _categoriasServices.Get(1, 0, true);
+        var lst = await _categoriasServices.Get(1, 100, true);
         var lstResult = new List<CategoriaDTO>();
         foreach(var item in  lst)
         {
