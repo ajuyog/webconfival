@@ -1,0 +1,105 @@
+﻿@{
+	Layout = "_Layout3";
+}
+<!-- PAGE-HEADER -->
+<div class="page-header">
+	<div>
+		<h1 class="page-title">Actualizar Carousel</h1>
+	</div>
+	<div class="ms-auto pageheader-btn">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">Landing page</li>
+			<li class="breadcrumb-item active" aria-current="page">Carousel</li>
+		</ol>
+	</div>
+</div>
+
+<div id="form-carousel">
+	<div class="row">
+		<div class="col-lg-12 col-md-12">
+			<div class="card">
+				<div class="card-header border-bottom">
+					<h3 class="card-title">Carousel - ¿Qué hacemos en Confival?</h3>
+				</div>
+				<div class="card-body">
+					<p class="text-muted">Carga una nueva imagen al carrusel</p>
+					<div class="row">
+						<div class="col-md-12 mb-3">
+							<div class="form-group">
+								<label class="form-label">Banner</label>
+								<div class="col-sm-12 col-md-12">
+									<input type="file" class="dropify" data-height="200" accept=" image/jpeg, image/png" id="file-carousel" />
+								</div>
+								<div class="invalid-feedback" id="invalid-file-carousel-principal">Debes agregar una imagen al Carrusel</div>
+								<div class="invalid-feedback" id="invalid-file-carousel-principal-hw">Debes agregar una imagen con un 'heigth' de 1350px con un 'width' de 2400px de al Carrusel</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">
+							<button class="btn btn-primary btn-block" onclick="Upload()">Cargar imagen</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="loader-confival" class="hide-info">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<div class="dimmer active">
+					<div class="spinner2">
+						<div class="cube1"></div>
+						<div class="cube2"></div>
+					</div>
+				</div>
+				<p style="text-align: center;">
+					Estamos cargando la imagen
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div id="banner-success" class="hide-info">
+		<div class="card">
+			<div class="card-body">
+				<div class="alert alert-default pad-text" role="alert">
+					<span class="alert-inner--text"><strong>La imagen  , </strong> ha sido cargada al carrusel principal</span>
+					<div class="row">
+						<div class="col-12">
+							<a asp-action="Index" asp-controller="Home" class="btn btn-success" style="margin-top:20px;">Volver al Inicio !!</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="api-error-carousel">
+	<div class="modal-dialog modal-dialog-centered text-center " role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+				<i class="ion-wrench fs-65 text-primary lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-success tx-semibold">Estamos trabajando para solucionar!</h4>
+				<p class="text-muted">Nuestro sistema esta presentando cambios, intenta de nuevo mas tarde.</p>
+				<button aria-label="Close" class="btn btn-success pd-x-25" data-bs-dismiss="modal">Cerrar</button>
+				<a class="btn btn-info pd-x-25" asp-action="Index" asp-controller="Home">Inicio</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<script src="~/assets/js/WebConfival/Admin/Carousel.js"></script>
+
+	<!--Internal Fileuploads js-->
+	<script src="~/assets/plugins/fileuploads/js/fileupload.js"></script>
+	<script src="~/assets/plugins/fileuploads/js/file-upload.js"></script>
+}
