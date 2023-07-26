@@ -21,8 +21,8 @@ namespace frontend.Services.Blogs
         string Order(string categoria, List<string> lstCategorias);
 		Task<BlogsDTO> GetByCategoria(int idCategoria, int pagina, int registros);
 		Task<BlogDTO> GetById(int id);
-		Task<bool> Approve(int id);
-    }
+		Task<bool> Approve(int id, bool approve);
+	}
     public class BlogServices: IBlogServices
     {
         #region CONSTRUCTOR
@@ -35,7 +35,6 @@ namespace frontend.Services.Blogs
             _getToken = getToken;
         }
         #endregion
-
 
         public string Order(string categoria, List<string> lstCategorias)
         {
@@ -275,7 +274,7 @@ namespace frontend.Services.Blogs
             return model;
 		}
 
-        public async Task<bool> Approve(int id)
+        public async Task<bool> Approve(int id, bool approve)
         {
             var result = false;
 			var lst = new List<PatchComentarioDTO>();
@@ -283,7 +282,7 @@ namespace frontend.Services.Blogs
 			{
 				Op = "replace",
 				Path = "/estado",
-				Value = true
+				Value = approve
 			};
 			lst.Add(obj);
 			var json = JsonConvert.SerializeObject(lst);
@@ -300,5 +299,5 @@ namespace frontend.Services.Blogs
             }
             return result;
 		}
-    }
+	}
 }

@@ -31,6 +31,7 @@
 								<th class="w-5">Nombre</th>
 								<th class="w-5">Estado</th>
 								<th class="w-5">Comentarios aprobados</th>
+								<th class="w-5">Comentarios sin aprobar</th>
 								<th class="w-5">Fecha publicado</th>
 								<th class="w-5">Categoria princial</th>
 								<th class="w-5">Action</th>
@@ -57,7 +58,10 @@
 										}
 									</td>
 									<td>
-										Total: @item.Comentarios.Count()
+										Total: @item.Comentarios.Where(x => x.Estado == true).Count()
+									</td>
+									<td>
+										Total: @item.Comentarios.Where(x => x.Estado == false).Count()
 									</td>
 									<td>
 										@item.Publicacion.ToShortDateString();
@@ -68,10 +72,16 @@
 									<td>
 										@if(item.Estado == false)
 										{
-													<a asp-action="ApproveBlog" asp-route-id="@item.Id" class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Aprobar Blog"><i class="fe fe-check-circle"></i></a>
-											
+											<a asp-action="ApproveBlog" asp-route-id="@item.Id" class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Aprobar Blog"><i class="fe fe-check-circle"></i></a>
 										}
-										<a asp-controller="Comentarios" asp-action="EditComment" asp-route-idBlog="@item.Id" asp-route-titulo="@item.Titulo" class="btn btn-success-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Aprobar Comentarios"><i class="fe fe-message-square"></i></a>
+										else
+										{
+											<a onclick="DisapproveBlog('@item.Id', '@item.Titulo')" class="btn btn-danger-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Desaprobar Blog"><i class="fe fe-x-circle"></i></a>
+										}
+										@if (item.Comentarios.Where(x => x.Estado == false).Count() > 0)
+										{
+											<a asp-controller="Comentarios" asp-action="EditComment" asp-route-idBlog="@item.Id" asp-route-titulo="@item.Titulo" class="btn btn-success-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Aprobar Comentarios"><i class="fe fe-message-square"></i></a>
+										}
 									</td>
 								</tr>
 							}
@@ -84,6 +94,37 @@
 		<partial name="~/Views/Shared/_Paginador.cshtml" />
 	</div>
 </div>
-<!-- ROW-1 CLOSED -->
+
+
+
+<div class="modal fade" id="disapprove-blog">
+	<div class="modal-dialog modal-dialog-centered text-center" role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+				<i class="fe fe-x-circle fs-65 text-info lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-danger">Desaprobar publicaciòn!</h4>
+				<div id="message-disapprove-blog">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="error-disapprove-blog">
+	<div class="modal-dialog modal-dialog-centered text-center " role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<i class="ion-wrench fs-65 text-primary lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-success tx-semibold">Estamos trabajando para solucionar!</h4>
+				<p class="text-muted">Nuestro sistema esta presentando cambios, intentalo de nuevo mas tarde.</p>
+				<button aria-label="Close" class="btn btn-info pd-x-25" data-bs-dismiss="modal">Continuar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
 
 

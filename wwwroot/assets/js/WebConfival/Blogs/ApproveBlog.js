@@ -47,13 +47,41 @@ function ApproveBlog(id, nombre) {
     modal.modal("show");
 };
 
+function DisapproveBlog(id, nombre) {
+    var modal = $("#disapprove-blog");
+    var contenido = $("#message-disapprove-blog");
+    contenido.children().remove();
+    contenido.append('<p class="text-muted">Esta seguro de desaprobar la publicaciòn: ' + nombre + '</p>' +
+        '<button aria-label="Close" class="btn btn-info pd-x-25" data-bs-dismiss="modal">Cancelar</button>' +
+        '<button class="btn btn-success pd-x-25" onclick="Disapprove(' + id + ')" style="margin-left: 15px;">Desaprobar</button>');
+    modal.modal("show");
+};
+
 function Approve(data) {
     var modalConfirm = $("#approve-blog");
     var modalError = $("#error-approve-blog");
     $.ajax({
         type: "GET",
         url: '/Blog/Approve',
-        data: { id: data },
+        data: { id: data, approve: true },
+        success: function (result) {
+            if (result == true) {
+                window.location.href = '/Blog/Edit'
+            } else {
+                modalConfirm.modal("hide");
+                modalError.modal("show");
+            }
+        }
+    });
+};
+
+function Disapprove(data) {
+    var modalConfirm = $("#disapprove-blog");
+    var modalError = $("#error-disapprove-blog");
+    $.ajax({
+        type: "GET",
+        url: '/Blog/Approve',
+        data: { id: data, approve: false },
         success: function (result) {
             if (result == true) {
                 window.location.href = '/Blog/Edit'

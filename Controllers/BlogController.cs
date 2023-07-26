@@ -207,7 +207,7 @@ public class BlogController : Controller
         return obj;
     }
 
-    [HttpGet]
+    [Authorize, HttpGet]
     public async Task<IActionResult> Edit(int pagina, int registros)
     {
         if (pagina == 0) { pagina = 1; }
@@ -226,7 +226,7 @@ public class BlogController : Controller
         return View(model);
     }
 
-    [HttpGet]
+    [Authorize, HttpGet]
     public async Task<IActionResult> ApproveBlog(int id)
     {
         var model = await _blogServices.GetById(id);
@@ -235,10 +235,12 @@ public class BlogController : Controller
         return View(model);
     }
 
-    [HttpGet]
-    public async Task<bool> Approve(int id)
+    [Authorize, HttpGet]
+    public async Task<bool> Approve(int id, bool approve)
     {
-        var result = await _blogServices.Approve(id);
-        return result;
+        return await _blogServices.Approve(id, approve);
     }
+
+    
+
 }
