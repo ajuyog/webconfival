@@ -60,10 +60,18 @@ namespace frontend.Services.Comentarios
 		public async Task<bool> ApproveComment(int id, int idBlog, bool state)
         {
             var result = false;
-            var approve = await Patch(id, idBlog, "estado", state);
-            if(approve == false) { return result; }
-            var revised = await Patch(id, idBlog, "revisado", state);
-            if(revised == false) { return result; }
+			if(state == false) 
+			{
+				var approve = await Patch(id, idBlog, "estado", state);
+				if (approve == false) { return result; }
+			}
+			if(state == true)
+			{
+				var approve = await Patch(id, idBlog, "estado", state);
+				if(approve == false) { return result; }
+				var revised = await Patch(id, idBlog, "revisado", state);
+				if(revised == false) { return result; }
+			}
             result = true;
 			return result;
 		}

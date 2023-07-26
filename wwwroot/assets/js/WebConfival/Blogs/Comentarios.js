@@ -25,7 +25,6 @@ function EditCommentDisapprove(id, comentario) {
         '<button class="btn btn-success pd-x-25" onclick="DisapproveComment(' + id + ')" style="margin-left: 15px;">Desaprobar</button>');
     modal.modal("show");
 }
-
 function ApproveComment(data) {
     var blog = $("#blog-id").val();
     var modalConfirm = $("#approve-item");
