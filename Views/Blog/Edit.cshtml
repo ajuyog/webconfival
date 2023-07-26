@@ -78,9 +78,9 @@
 										{
 											<a onclick="DisapproveBlog('@item.Id', '@item.Titulo')" class="btn btn-danger-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Desaprobar Blog"><i class="fe fe-x-circle"></i></a>
 										}
-										@if (item.Comentarios.Where(x => x.Estado == false).Count() > 0)
+										@if (item.Comentarios.Count() > 0)
 										{
-											<a asp-controller="Comentarios" asp-action="EditComment" asp-route-idBlog="@item.Id" asp-route-titulo="@item.Titulo" class="btn btn-success-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Aprobar Comentarios"><i class="fe fe-message-square"></i></a>
+											<a asp-controller="Comentarios" asp-action="Edit" asp-route-idBlog="@item.Id" asp-route-titulo="@item.Titulo" class="btn btn-success-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Gestionar Comentarios"><i class="fe fe-message-square"></i></a>
 										}
 									</td>
 								</tr>

@@ -101,7 +101,18 @@
 										@(item.Id == item.ComentarioId ? "Principal" : "Respuesta")
 									</td>
 									<td>
-										<a class="btn btn-primary-light btn-square br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar" onclick="EditComment('@item.Id', '@item.Comentario')"><i class="fe fe-refresh-ccw"></i></a>
+										@if(item.Estado == false)
+										{
+											<a class="btn btn-primary-light btn-square br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Aprobar comentario" onclick="EditCommentApprove('@item.Id', '@item.Comentario')"><i class="fe fe-check-circle"></i></a>
+										}
+										else
+										{
+											<a class="btn btn-danger-light btn-square br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Desaprobar comentario" onclick="EditCommentDisapprove('@item.Id', '@item.Comentario')"><i class="fe fe-x-circle"></i></a>
+										}
+										@if(item.Revisado == false)
+										{
+											<a class="btn btn-warning-light btn-square br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Descartar comentario" onclick="EditCommentDiscard('@item.Id', '@item.Comentario')"><i class="fe fe-corner-up-right"></i></a>
+										}
 									</td>
 								</tr>
 							}
@@ -131,6 +142,36 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="disapprove-item">
+	<div class="modal-dialog modal-dialog-centered text-center" role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+				<i class="fe fe-x-circle fs-65 text-info lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-danger">Desaprobar Comentario!</h4>
+				<div id="message-disapprove">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="discard-item">
+	<div class="modal-dialog modal-dialog-centered text-center" role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+				<i class="fe fe-x-circle fs-65 text-info lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-danger">Descartar Comentario!</h4>
+				<div id="message-discard">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 
 <div class="modal fade" id="error-approve">
 	<div class="modal-dialog modal-dialog-centered text-center " role="document">

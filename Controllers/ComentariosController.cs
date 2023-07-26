@@ -36,7 +36,7 @@ namespace frontend.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public async Task<IActionResult> EditComment(int idBlog, string titulo, int pagina, int registros)
+		public async Task<IActionResult> Edit(int idBlog, string titulo, int pagina, int registros)
 		{
 			if(pagina == 0) { pagina = 1; }
 			registros = 10;
@@ -54,10 +54,16 @@ namespace frontend.Controllers
 			return View(model);
 		}
 
-		[HttpGet]
-		public async Task<bool> ApproveComment(int id, int idBlog)
+		[Authorize, HttpGet]
+		public async Task<bool> ApproveComment(int id, int idBlog, bool state)
 		{
-			return await _comentariosServices.ApproveComment(id, idBlog);
+			return await _comentariosServices.ApproveComment(id, idBlog, state);
+		}
+
+		[Authorize, HttpGet]
+		public async Task<bool> DiscardComment(int id, int idBlog)
+		{
+			return await _comentariosServices.DiscardComment(id, idBlog);
 		}
 
 		[HttpGet]

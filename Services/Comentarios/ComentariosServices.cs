@@ -8,8 +8,9 @@ namespace frontend.Services.Comentarios
 {
     public interface IComentariosServices
     {
-		Task<bool> ApproveComment(int id, int idBlog);
+		Task<bool> ApproveComment(int id, int idBlog, bool state);
 		Task<bool> Create(int idBlog, string comentario, string relation);
+		Task<bool> DiscardComment(int id, int idBlog);
 		Task<ComentariosDTO> Get(int idBlog, int pagina, int registros);
     }
     public class ComentariosServices: IComentariosServices
@@ -56,18 +57,28 @@ namespace frontend.Services.Comentarios
 			return result;
 		}
 
-		public async Task<bool> ApproveComment(int id, int idBlog)
+		public async Task<bool> ApproveComment(int id, int idBlog, bool state)
         {
             var result = false;
-            var approve = await Patch(id, idBlog, "estado");
+            var approve = await Patch(id, idBlog, "estado", state);
             if(approve == false) { return result; }
-            var revised = await Patch(id, idBlog, "revisado");
+            var revised = await Patch(id, idBlog, "revisado", state);
             if(revised == false) { return result; }
             result = true;
 			return result;
 		}
 
-        public async Task<bool> Patch(int id, int idBlog, string attribute)
+		public async Task<bool> DiscardComment(int id, int idBlog)
+		{
+			var result = false;
+			var disapprove = await Patch(id, idBlog, "revisado", true);
+			if (disapprove == false) { return result; }
+			result = true;
+			return result;
+		}
+
+
+		public async Task<bool> Patch(int id, int idBlog, string attribute, bool state)
         {
             var result = false;
 			var client = new HttpClient();
@@ -77,7 +88,7 @@ namespace frontend.Services.Comentarios
 			{
 				Op = "replace",
 				Path = "/" + attribute,
-				Value = true
+				Value = state
 			};
 			lst.Add(obj);
 			var json = JsonConvert.SerializeObject(lst);
