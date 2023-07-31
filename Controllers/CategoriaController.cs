@@ -45,7 +45,7 @@ namespace frontend.Controllers
             var me = await _graphServices.GetMeGraph(objToken.access_token);
             ViewBag.user = me.DisplayName;
 
-            var model = await _categoriasServices.Get(pagina, registros, true);
+            var model = await _categoriasServices.GetAdmin(pagina, registros);
             model.Count = model.TotalCategoria;
 			model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
 			model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Categoria/Get?pagina=";
@@ -53,6 +53,50 @@ namespace frontend.Controllers
 			return View(model);
 
         }
+
+        /// <summary>
+        /// Devuelve la vista para visualiza categorias por atributo Search
+        /// </summary>
+        /// <param name="pagina"></param>
+        /// <param name="registros"></param>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        [Authorize, HttpPost]
+        public async Task<IActionResult> EditSearch(int pagina, int registros, string search)
+        {
+            if (pagina == 0) { pagina = 1; }
+            registros = 10;
+            var objToken = await _getToken.GetTokenMicrosoft();
+            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+            var me = await _graphServices.GetMeGraph(objToken.access_token);
+            ViewBag.user = me.DisplayName;
+
+            var model = await _categoriasServices.GetSearch(pagina, registros, search);
+            model.Count = model.TotalCategoria;
+            model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
+            model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Categoria/EditSearchGet?search=" + search + "&pagina=";
+            model.PaginaActual = pagina;
+            return View("~/Views/Categoria/Get.cshtml", model);
+        }
+
+        [Authorize, HttpGet]
+        public async Task<IActionResult> EditSearchGet(string search, int pagina, int registros)
+        {
+            if (pagina == 0) { pagina = 1; }
+            registros = 10;
+            var objToken = await _getToken.GetTokenMicrosoft();
+            ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+            var me = await _graphServices.GetMeGraph(objToken.access_token);
+            ViewBag.user = me.DisplayName;
+
+            var model = await _categoriasServices.GetSearch(pagina, registros, search);
+            model.Count = model.TotalCategoria;
+            model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
+            model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Categoria/EditSearchGet?search=" + search + "&pagina=";
+            model.PaginaActual = pagina;
+            return View("~/Views/Categoria/Get.cshtml", model);
+        }
+
 
         /// <summary>
         /// Devuelve las vista para crear una categoria
@@ -115,6 +159,8 @@ namespace frontend.Controllers
         }
 
 
+
+
         [Authorize]
 		[HttpGet]
 		public async Task<bool> EditCategoryDB(string nombre, string id)
@@ -165,9 +211,9 @@ namespace frontend.Controllers
         }
 
         [Authorize, HttpGet]
-        public async Task<CategoriasDTO> Exists()
+        public async Task<CategoriasAdminDTO> Exists()
         {
-            return await _categoriasServices.Get(1, 100, true);
+            return await _categoriasServices.GetAdmin(1, 1000);
 
         }
 

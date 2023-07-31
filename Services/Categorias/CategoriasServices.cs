@@ -9,6 +9,8 @@ namespace frontend.Services.Categorias
     {
         Task<bool> Delete(int id);
         Task<CategoriasDTO> Get(int pagina, int registros, bool perfil);
+		Task<CategoriasAdminDTO> GetAdmin(int pagina, int registros);
+        Task<CategoriasAdminDTO> GetSearch(int pagina, int registros, string search);
     }
     public class CategoriasServices: ICategoriasServices
     {
@@ -37,6 +39,38 @@ namespace frontend.Services.Categorias
 			}
 			return model;
 		}
+
+        public async Task<CategoriasAdminDTO> GetAdmin(int pagina, int registros)
+        {
+            var model = new CategoriasAdminDTO();
+			var client = new HttpClient();
+			var token = await _getToken.GetTokenV();
+			var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Categoria?Pagina=" + pagina + "&RegistrosPorPagina=" + registros);
+			request.Headers.Add("Authorization", "Bearer " + token);
+			var response = await client.SendAsync(request);
+			if (response.IsSuccessStatusCode)
+			{
+				var responseStream = await response.Content.ReadAsStringAsync();
+				model = JsonConvert.DeserializeObject<CategoriasAdminDTO>(responseStream);
+			}
+			return model;
+		}
+
+        public async Task<CategoriasAdminDTO> GetSearch(int pagina, int registros, string search)
+        {
+            var model = new CategoriasAdminDTO();
+            var token = await _getToken.GetTokenV();
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Categoria?Nombre=" + search + "&Pagina=" + pagina + "&RegistrosPorPagina=" + registros);
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseStream = await response.Content.ReadAsStringAsync();
+                model = JsonConvert.DeserializeObject<CategoriasAdminDTO>(responseStream);
+            }
+            return model;
+        }
 
         public async Task<bool> Delete(int id)
         {

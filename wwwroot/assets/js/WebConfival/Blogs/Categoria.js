@@ -7,7 +7,7 @@
             type: "GET",
             url: '/Categoria/Exists',
             success: function (result) {
-                $.each(result.ResultCategorias, function (element, index) {
+                $.each(result.resultCategoria, function (element, index) {
                     if (index.nombre == nombreCorregido) {
                         count = count + 1;
                         $("#invalid-nombre-categoria-existe").css("display", "block");

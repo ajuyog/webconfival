@@ -232,7 +232,7 @@ public class BlogController : Controller
 		if (pagina == 0) { pagina = 1; }
 		registros = 10;
         var model = await _blogServices.GetSearch(true, pagina, registros, search);
-		model.Count = model.totalBlogTrue + model.totalBlogFalse;
+        model.Count = model.TotalBlog;
 		model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
 		model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/EditSearchGet?search=" + search + "&pagina=";
 		model.PaginaActual = pagina;
@@ -250,7 +250,7 @@ public class BlogController : Controller
 		if (pagina == 0) { pagina = 1; }
 		registros = 10;
 		var model = await _blogServices.GetSearch(true, pagina, registros, search);
-		model.Count = model.totalBlogTrue + model.totalBlogFalse;
+        model.Count = model.TotalBlog;
 		model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
 		model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/EditSearchGet?search=" + search + "&pagina=";
 		model.PaginaActual = pagina;
