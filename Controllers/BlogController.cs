@@ -120,7 +120,7 @@ public class BlogController : Controller
     {
         var lst = await _categoriasServices.Get(1, 100, true);
         var lstResult = new List<CategoriaDTO>();
-        foreach(var item in  lst)
+        foreach(var item in  lst.ResultCategorias)
         {
             if (item.Id != id)
             {
@@ -226,7 +226,42 @@ public class BlogController : Controller
         return View(model);
     }
 
+	[Authorize, HttpPost]
+    public async Task<IActionResult> EditSearch( int pagina, int registros, string search)
+    {
+		if (pagina == 0) { pagina = 1; }
+		registros = 10;
+        var model = await _blogServices.GetSearch(true, pagina, registros, search);
+		model.Count = model.totalBlogTrue + model.totalBlogFalse;
+		model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
+		model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/EditSearchGet?search=" + search + "&pagina=";
+		model.PaginaActual = pagina;
+		var objToken = await _getToken.GetTokenMicrosoft();
+		var modelMe = await _graphServices.GetMeGraph(objToken.access_token);
+		ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+		ViewBag.user = modelMe.DisplayName;
+		return View("~/Views/Blog/Edit.cshtml" ,model);
+	}
+
+	
     [Authorize, HttpGet]
+	public async Task<IActionResult> EditSearchGet(string search, int pagina, int registros)
+	{
+		if (pagina == 0) { pagina = 1; }
+		registros = 10;
+		var model = await _blogServices.GetSearch(true, pagina, registros, search);
+		model.Count = model.totalBlogTrue + model.totalBlogFalse;
+		model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
+		model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/EditSearchGet?search=" + search + "&pagina=";
+		model.PaginaActual = pagina;
+		var objToken = await _getToken.GetTokenMicrosoft();
+		var modelMe = await _graphServices.GetMeGraph(objToken.access_token);
+		ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+		ViewBag.user = modelMe.DisplayName;
+		return View("~/Views/Blog/Edit.cshtml", model);
+	}
+
+	[Authorize, HttpGet]
     public async Task<IActionResult> ApproveBlog(int id)
     {
         var model = await _blogServices.GetById(id);

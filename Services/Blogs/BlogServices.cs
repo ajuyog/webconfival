@@ -22,6 +22,7 @@ namespace frontend.Services.Blogs
 		Task<BlogsDTO> GetByCategoria(int idCategoria, int pagina, int registros);
 		Task<BlogDTO> GetById(int id);
 		Task<bool> Approve(int id, bool approve);
+		Task<BlogsDTO> GetSearch(bool admin, int pagina, int registros, string search);
 	}
     public class BlogServices: IBlogServices
     {
@@ -298,6 +299,22 @@ namespace frontend.Services.Blogs
                 result = true;
             }
             return result;
+		}
+
+        public async Task<BlogsDTO> GetSearch(bool admin, int pagina, int registros, string search)
+        {
+            var model = new BlogsDTO();
+			var client = new HttpClient();
+			var token = await _getToken.GetTokenV();
+			var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Blog/filtro?Titulo=" + search + "&Pagina=" + pagina + "&RegistrosPorPagina=" + registros);
+			request.Headers.Add("Authorization", "Bearer " + token);
+			var response = await client.SendAsync(request);
+            if( response.IsSuccessStatusCode )
+            {
+				var responseStream = await response.Content.ReadAsStringAsync();
+				model = JsonConvert.DeserializeObject<BlogsDTO>(responseStream);
+			}
+            return model;
 		}
 	}
 }

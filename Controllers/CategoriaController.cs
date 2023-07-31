@@ -45,10 +45,8 @@ namespace frontend.Controllers
             var me = await _graphServices.GetMeGraph(objToken.access_token);
             ViewBag.user = me.DisplayName;
 
-            var lstCategorias = await _categoriasServices.Get(pagina, registros, true);
-            var model = new CategoriasDTO();
-            model.Categorias = lstCategorias;
-            model.Count = model.Categorias.Count();
+            var model = await _categoriasServices.Get(pagina, registros, true);
+            model.Count = model.TotalCategoria;
 			model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
 			model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Categoria/Get?pagina=";
 			model.PaginaActual = pagina;
@@ -167,7 +165,7 @@ namespace frontend.Controllers
         }
 
         [Authorize, HttpGet]
-        public async Task<List<CategoriaDTO>> Exists()
+        public async Task<CategoriasDTO> Exists()
         {
             return await _categoriasServices.Get(1, 100, true);
 

@@ -127,7 +127,6 @@ function NextGallery() {
     // Mostrar seccion categoria
     $("#seccion-categorias").removeClass("hide-info");
 };
-
 function Publicar() {
     $("#visualizador-campos").addClass("hide-info");
     $("#visualizar-blog-principal").addClass("hide-info");
@@ -186,6 +185,15 @@ function Publicar() {
     });
 
 };
+
+function Search() {
+    var titleSearch = $("#search").val();
+    $.ajax({
+        type: "GET",
+        url: '/Blog/EditSearch',
+        data: { search: titleSearch }
+    });
+}
 
 $("#categorias-principal").on("change", function () {
     var cartegoriaPrincipal = $("#categorias-principal").val();

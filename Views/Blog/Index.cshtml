@@ -51,7 +51,7 @@
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group blog-topics">
-                            @foreach (var item in ViewBag.Categorias)
+                            @foreach (var item in ViewBag.Categorias.ResultCategorias)
                             {
                                 <li class="list-group-item"><a asp-action="GetByCategoria" asp-controller="Blog" asp-route-idCategoria="@item.Id" class="text-dark-light"><i class="fe fe-chevron-right me-2"></i>@item.Nombre</a><span class="tag float-end">@item.cantidadBlogs</span></li>
                             }
@@ -137,7 +137,7 @@
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group blog-topics">
-                            @foreach (var item in ViewBag.Categorias)
+                            @foreach (var item in ViewBag.Categorias.ResultCategorias)
                             {
                                 <li class="list-group-item"><a asp-action="GetByCategoria" asp-controller="Blog" asp-route-idCategoria="@item.Id" asp-route-nombre="@item.Nombre" class="text-dark-light"><i class="fe fe-chevron-right me-2"></i>@item.Nombre</a><span class="tag float-end">@item.cantidadBlogs</span></li>
                             }
@@ -263,7 +263,7 @@
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group blog-topics">
-                            @foreach (var item in ViewBag.Categorias)
+                            @foreach (var item in ViewBag.Categorias.ResultCategorias)
                             {
                                 <li class="list-group-item"><a asp-action="GetByCategoria" asp-controller="Blog" asp-route-idCategoria="@item.Id" asp-route-nombre="@item.Nombre" class="text-dark-light"><i class="fe fe-chevron-right me-2"></i>@item.Nombre</a><span class="tag float-end">@item.cantidadBlogs</span></li>
                             }

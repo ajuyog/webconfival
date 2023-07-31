@@ -8,7 +8,7 @@ namespace frontend.Services.Categorias
     public interface ICategoriasServices
     {
         Task<bool> Delete(int id);
-        Task<List<CategoriaDTO>> Get(int pagina, int registros, bool perfil);
+        Task<CategoriasDTO> Get(int pagina, int registros, bool perfil);
     }
     public class CategoriasServices: ICategoriasServices
     {
@@ -21,10 +21,10 @@ namespace frontend.Services.Categorias
         }
         #endregion
 
-        public async Task<List<CategoriaDTO>> Get(int pagina, int registros, bool perfil)
+        public async Task<CategoriasDTO> Get(int pagina, int registros, bool perfil)
         {
             if (registros == 0) { registros = 10; }
-            var model = new List<CategoriaDTO>();
+            var model = new CategoriasDTO();
 			var client = new HttpClient();
             var token = await _getToken.GetTokenV();
 			var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Categoria/" + perfil + "/categorias?Pagina=" + pagina + "&RegistrosPorPagina=" + registros);
@@ -33,7 +33,7 @@ namespace frontend.Services.Categorias
 			if (response.IsSuccessStatusCode)
 			{
 				var responseStream = await response.Content.ReadAsStringAsync();
-				model = JsonConvert.DeserializeObject<List<CategoriaDTO>>(responseStream);
+				model = JsonConvert.DeserializeObject<CategoriasDTO>(responseStream);
 			}
 			return model;
 		}

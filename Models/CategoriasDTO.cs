@@ -4,6 +4,7 @@ namespace frontend.Models
 {
     public class CategoriasDTO : PaginadorDTO
     {
-        public List<CategoriaDTO> Categorias { get; set; }
+        public List<CategoriaDTO> ResultCategorias { get; set; }
+        public int TotalCategoria { get; set; }
     }
 }
