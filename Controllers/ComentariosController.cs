@@ -40,10 +40,10 @@ namespace frontend.Controllers
 		{
 			if(pagina == 0) { pagina = 1; }
 			registros = 10;
-			var model = new ComentariosDTO();
-			model = await _comentariosServices.Get(idBlog, pagina, registros);
-			model.Paginas = (int)Math.Ceiling((double)model.totalBlogs / registros);
-			model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Comentarios/EditComment?idBlog=" + idBlog + "&titulo=" + titulo + "&pagina=";
+			var model = await _comentariosServices.Get(idBlog, pagina, registros);
+			model.Count = model.totalBlogs;
+			model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
+			model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Comentarios/Edit?idBlog=" + idBlog + "&titulo=" + titulo + "&pagina=";
 			model.PaginaActual = pagina;
 			var blog = await _blogServices.GetById(idBlog);
 			ViewBag.Titulo = titulo;
@@ -72,8 +72,45 @@ namespace frontend.Controllers
 			var result = await _comentariosServices.Create(id, comentario, relation);
 			return result;
         }
-		
-		
+
+		[Authorize, HttpPost]
+		public async Task<IActionResult> EditSearch(int pagina, int registros, string search, int blogId)
+		{
+            if (pagina == 0) { pagina = 1; }
+            registros = 10;
+            var model = await _comentariosServices.GetSearch(pagina, registros, search, blogId);
+            model.Paginas = (int)Math.Ceiling((double)model.totalBlogs / registros);
+            model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Comentarios/EditSearchGet?search=" + search + "&blogId=" + blogId + "&pagina=";
+            model.PaginaActual = pagina;
+			model.Count = model.totalBlogs;
+			var blog = await _blogServices.GetById(blogId);
+            ViewBag.Titulo = blog.Titulo;
+            ViewBag.Categoria = blog.Categorias.First().Nombre;
+            ViewBag.Publicacion = blog.Publicacion;
+            ViewBag.ImagenBlog = await _blogServices.Imagen(blogId);
+			ViewBag.IdBlog = blogId;
+            return View("~/Views/Comentarios/Edit.cshtml", model);
+        }
+
+		[Authorize, HttpGet]
+		public async Task<IActionResult> EditSearchGet(string search, int blogId, int pagina, int registros)
+		{
+			if (pagina == 0) { pagina = 1; }
+			registros = 10;
+			var model = await _comentariosServices.GetSearch(pagina, registros, search, blogId);
+			model.Paginas = (int)Math.Ceiling((double)model.totalBlogs / registros);
+			model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Comentarios/EditSearchGet?search=" + search + "&blogId=" + blogId + "&pagina=";
+			model.PaginaActual = pagina;
+			model.Count = model.totalBlogs;
+			var blog = await _blogServices.GetById(blogId);
+			ViewBag.Titulo = blog.Titulo;
+			ViewBag.Categoria = blog.Categorias.First().Nombre;
+			ViewBag.Publicacion = blog.Publicacion;
+			ViewBag.ImagenBlog = await _blogServices.Imagen(blogId);
+			ViewBag.IdBlog = blogId;
+			return View("~/Views/Comentarios/Edit.cshtml", model);
+		}
+
 
 	}
 }

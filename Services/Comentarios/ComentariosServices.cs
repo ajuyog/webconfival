@@ -12,6 +12,7 @@ namespace frontend.Services.Comentarios
 		Task<bool> Create(int idBlog, string comentario, string relation);
 		Task<bool> DiscardComment(int id, int idBlog);
 		Task<ComentariosDTO> Get(int idBlog, int pagina, int registros);
+        Task<ComentariosDTO> GetSearch(int pagina, int registros, string search, int blogId);
     }
     public class ComentariosServices: IComentariosServices
     {
@@ -85,7 +86,6 @@ namespace frontend.Services.Comentarios
 			return result;
 		}
 
-
 		public async Task<bool> Patch(int id, int idBlog, string attribute, bool state)
         {
             var result = false;
@@ -109,7 +109,21 @@ namespace frontend.Services.Comentarios
             return result;
 		}
 
-
+		public async Task<ComentariosDTO> GetSearch(int pagina, int registros, string search, int blogId)
+		{
+			var obj = new ComentariosDTO();
+			var token = await _getToken.GetTokenV();
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/blog/" + blogId + "/comentarios/listFalse?Comentario=" + search + "&Pagina=" + pagina + "&RegistrosPorPagina=" + registros);
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var response = await client.SendAsync(request);
+			if (response.IsSuccessStatusCode)
+			{
+                var responseStream = await response.Content.ReadAsStringAsync();
+                obj = JsonConvert.DeserializeObject<ComentariosDTO>(responseStream);
+            }
+			return obj;
+		}
 
 	}
 }

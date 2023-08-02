@@ -50,7 +50,30 @@
 				<h3 class="card-title">Listado de comentarios</h3>
 			</div>
 			<div class="card-body">
-				<input id="blog-id" type="hidden" value="@ViewBag.IdBlog" />
+				<div class="row">
+					<div class="col-md-12 col-lg-6 col-xl-6">
+						<form asp-action="EditSearch">
+							<div class="form-group">
+								<div class="row">
+									<div class="col">
+										<input type="text" class="form-control" asp-for="Search" placeholder="Buscar por titulo...">
+									</div>
+									<span class="col-auto">
+										<button type="submit" class="btn btn-primary text-white p-2 d-flex align-items-center justify-content-center"><i class="fe fe-search"></i></button>
+									</span>
+								</div>
+							</div>
+							<input id="blog-id" type="hidden" asp-for="BlogId" value="@ViewBag.IdBlog" />
+						</form>
+					</div>
+					<div class="col-md-12 col-lg-6 col-xl-6">
+						<ul class="unstyled inbox-pagination">
+							<li><span>Mostrando del registro @((Model.PaginaActual * 10) - 9) al @(Model.PaginaActual * 10 > Model.Count ? Model.Count : Model.PaginaActual * 10) de @Model.Count</span></li>
+						</ul>
+					</div>
+				</div>
+
+
 				<div class="table-responsive">
 					<table class="table table-bordered border-bottom text-nowrap">
 						<thead>
