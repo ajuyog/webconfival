@@ -5,13 +5,13 @@
 <!-- Miga de pan -->
 <div class="page-header">
 	<div>
-		<h1 class="page-title">Podras: editar contenido de los Blogs y aprobar los comentarios</h1>
+		<h1 class="page-title">Gestion de Blogs y Comentarios</h1>
 	</div>
 	<div class="ms-auto pageheader-btn">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item">Publicaciones</li>
 			<li class="breadcrumb-item active" aria-current="page">Blogs</li>
-			<li class="breadcrumb-item active" aria-current="page">Editar</li>
+			<li class="breadcrumb-item active" aria-current="page">Gestion</li>
 		</ol>
 	</div>
 </div>
@@ -23,6 +23,30 @@
 				<h3 class="card-title">Listado de Blogs</h3>
 			</div>
 			<div class="card-body">
+				<div class="row">
+					<div class="col-md-12 col-lg-6 col-xl-6">
+						<form asp-action="EditSearch">
+							<div class="form-group">
+								<div class="row">
+									<div class="col">
+										<input type="text" class="form-control" asp-for="Search" placeholder="Buscar por titulo...">
+									</div>
+									<span class="col-auto">
+										<button type="submit" class="btn btn-primary text-white p-2 d-flex align-items-center justify-content-center"><i class="fe fe-search"></i></button>
+									</span>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-md-12 col-lg-6 col-xl-6">
+						<ul class="unstyled inbox-pagination">
+							<li><span>Mostrando del registro @((Model.PaginaActual * 10) - 9) al @(Model.PaginaActual * 10 > Model.Count ? Model.Count : Model.PaginaActual * 10) de @Model.Count</span></li>
+						</ul>
+					</div>
+				</div>
+
+
+
 				<div class="table-responsive">
 					<table class="table table-bordered border-bottom text-nowrap">
 						<thead>
@@ -31,6 +55,7 @@
 								<th class="w-5">Nombre</th>
 								<th class="w-5">Estado</th>
 								<th class="w-5">Comentarios aprobados</th>
+								<th class="w-5">Comentarios sin aprobar</th>
 								<th class="w-5">Fecha publicado</th>
 								<th class="w-5">Categoria princial</th>
 								<th class="w-5">Action</th>
@@ -47,10 +72,20 @@
 										@item.Titulo
 									</td>
 									<td>
-										@(item.Estado == true ? "Activo" : "No aprovado")
+										@if(item.Estado == true)
+										{
+											<span class="badge bg-success">Activo</span>
+										}
+										else
+										{
+											<span class="badge bg-info">Sin aprobar</span>
+										}
 									</td>
 									<td>
-										Total: @item.Comentarios.Count()
+										Total: @item.Comentarios.Where(x => x.Estado == true).Count()
+									</td>
+									<td>
+										Total: @item.Comentarios.Where(x => x.Estado == false).Count()
 									</td>
 									<td>
 										@item.Publicacion.ToShortDateString();
@@ -59,8 +94,18 @@
 										@(item.Categorias == null ? "" : item.Categorias[0].Nombre)
 									</td>
 									<td>
-										<a asp-action="EditBlog" asp-route-id="@item.Id" class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Editar Contenido"><i class="fe fe-edit"></i></a>
-										<a asp-controller="Comentarios" asp-action="EditComment" asp-route-idBlog="@item.Id" asp-route-titulo="@item.Titulo" class="btn btn-success-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Aprobar Comentarios"><i class="fe fe-message-square"></i></a>
+										@if(item.Estado == false)
+										{
+											<a asp-action="ApproveBlog" asp-route-id="@item.Id" class="btn btn-primary-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Aprobar Blog"><i class="fe fe-check-circle"></i></a>
+										}
+										else
+										{
+											<a onclick="DisapproveBlog('@item.Id', '@item.Titulo')" class="btn btn-danger-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Desaprobar Blog"><i class="fe fe-x-circle"></i></a>
+										}
+										@if (item.Comentarios.Count() > 0)
+										{
+											<a asp-controller="Comentarios" asp-action="Edit" asp-route-idBlog="@item.Id" asp-route-titulo="@item.Titulo" class="btn btn-success-light btn-square  br-50 m-1" data-bs-toggle="tooltip" title="" data-bs-original-title="Gestionar Comentarios"><i class="fe fe-message-square"></i></a>
+										}
 									</td>
 								</tr>
 							}
@@ -73,6 +118,40 @@
 		<partial name="~/Views/Shared/_Paginador.cshtml" />
 	</div>
 </div>
-<!-- ROW-1 CLOSED -->
+
+
+<div class="modal fade" id="disapprove-blog">
+	<div class="modal-dialog modal-dialog-centered text-center" role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+				<i class="fe fe-x-circle fs-65 text-info lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-danger">Desaprobar publicaciòn!</h4>
+				<div id="message-disapprove-blog">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="error-disapprove-blog">
+	<div class="modal-dialog modal-dialog-centered text-center " role="document">
+		<div class="modal-content tx-size-sm">
+			<div class="modal-body text-center p-4">
+				<i class="ion-wrench fs-65 text-primary lh-1 mb-5 d-inline-block"></i>
+				<h4 class="text-success tx-semibold">Estamos trabajando para solucionar!</h4>
+				<p class="text-muted">Nuestro sistema esta presentando cambios, intentalo de nuevo mas tarde.</p>
+				<button aria-label="Close" class="btn btn-info pd-x-25" data-bs-dismiss="modal">Continuar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@section scripts {
+	<script src="~/assets/js/WebConfival/Blogs/Blogs.js"></script>
+
+}
+
+
 
 

@@ -5,9 +5,9 @@
     if (valid == 0) {
         $.ajax({
             type: "GET",
-            url: '/Blog/ConsultarCategorias',
+            url: '/Categoria/Exists',
             success: function (result) {
-                $.each(result, function (element, index) {
+                $.each(result.resultCategoria, function (element, index) {
                     if (index.nombre == nombreCorregido) {
                         count = count + 1;
                         $("#invalid-nombre-categoria-existe").css("display", "block");
@@ -47,10 +47,9 @@ function EditarCategoria() {
     if (valid == 0) {
         $.ajax({
             type: "GET",
-            url: '/Blog/ConsultarCategorias',
+            url: '/Categoria/Exists',
             success: function (result) {
-                console.log(result);
-                $.each(result, function (element, index) {
+                $.each(result.ResultCategorias, function (element, index) {
                     if (index.nombre == nombreCorregido) {
                         count = count + 1;
                         $("#invalid-nombre-categoria-existe").css("display", "block");

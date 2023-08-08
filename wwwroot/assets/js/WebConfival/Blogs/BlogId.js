@@ -117,7 +117,7 @@ function SeeGallery(data, data2) {
                 }
                 indicadores.append('<li data-bs-target="#carousel-indicators" data-bs-slide-to="' + posicion + '" class="' + active + '"></li>');
                 srcImagenes.append('<div class="carousel-item ' + active + '">' +
-                    '<img class="d-block w-100 responsive-css-banner-principal" alt="" src="' + index + '" data-bs-holder-rendered="true">' +
+                    '<img class="d-block w-100 responsive-css-banner-principal" loading="lazy" alt="Galeria Confival Capital S.A.S." src="' + index + '" data-bs-holder-rendered="true">' +
                     '</div>')
                 posicion = posicion + 1;
             })

@@ -6,5 +6,7 @@ namespace frontend.Models
 	{
         public int totalBlogs { get; set; }
         public List<ComentarioDTO> comentariosBlog { get; set; }
+        public string Search { get; set; }
+        public int BlogId { get; set; }
     }
 }

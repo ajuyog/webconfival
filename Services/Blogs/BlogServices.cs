@@ -4,6 +4,7 @@ using frontend.Services.Token;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 
 namespace frontend.Services.Blogs
 {
@@ -20,6 +21,8 @@ namespace frontend.Services.Blogs
         string Order(string categoria, List<string> lstCategorias);
 		Task<BlogsDTO> GetByCategoria(int idCategoria, int pagina, int registros);
 		Task<BlogDTO> GetById(int id);
+		Task<bool> Approve(int id, bool approve);
+		Task<BlogsDTO> GetSearch(bool admin, int pagina, int registros, string search);
 	}
     public class BlogServices: IBlogServices
     {
@@ -33,7 +36,6 @@ namespace frontend.Services.Blogs
             _getToken = getToken;
         }
         #endregion
-
 
         public string Order(string categoria, List<string> lstCategorias)
         {
@@ -273,5 +275,46 @@ namespace frontend.Services.Blogs
             return model;
 		}
 
+        public async Task<bool> Approve(int id, bool approve)
+        {
+            var result = false;
+			var lst = new List<PatchComentarioDTO>();
+			var obj = new PatchComentarioDTO()
+			{
+				Op = "replace",
+				Path = "/estado",
+				Value = approve
+			};
+			lst.Add(obj);
+			var json = JsonConvert.SerializeObject(lst);
+			var token = await _getToken.GetTokenV();
+			var client = new HttpClient();
+			var request = new HttpRequestMessage(HttpMethod.Patch, "https://api2valuezbpm.azurewebsites.net/api/Blog/" + id);
+			request.Headers.Add("Authorization", "Bearer " + token);
+			var content = new StringContent(json, null, "application/json");
+			request.Content = content;
+			var response = await client.SendAsync(request);
+			if(response.IsSuccessStatusCode)
+            {
+                result = true;
+            }
+            return result;
+		}
+
+        public async Task<BlogsDTO> GetSearch(bool admin, int pagina, int registros, string search)
+        {
+            var model = new BlogsDTO();
+			var client = new HttpClient();
+			var token = await _getToken.GetTokenV();
+			var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/Blog/filtro?Titulo=" + search + "&Pagina=" + pagina + "&RegistrosPorPagina=" + registros);
+			request.Headers.Add("Authorization", "Bearer " + token);
+			var response = await client.SendAsync(request);
+            if( response.IsSuccessStatusCode )
+            {
+				var responseStream = await response.Content.ReadAsStringAsync();
+				model = JsonConvert.DeserializeObject<BlogsDTO>(responseStream);
+			}
+            return model;
+		}
 	}
 }

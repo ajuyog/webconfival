@@ -1,4 +1,4 @@
-﻿@model frontend.Models.CategoriasDTO
+﻿@model frontend.Models.CategoriasAdminDTO
 @{
     Layout = "_Layout3";
 }
@@ -23,6 +23,31 @@
                 <h3 class="card-title">Todas las categorias</h3>
             </div>
             <div class="card-body">
+
+
+                <div class="row">
+                    <div class="col-md-12 col-lg-6 col-xl-6">
+                        <form asp-action="EditSearch">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" asp-for="Search" placeholder="Buscar por titulo...">
+                                    </div>
+                                    <span class="col-auto">
+                                        <button type="submit" class="btn btn-primary text-white p-2 d-flex align-items-center justify-content-center"><i class="fe fe-search"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-6">
+                        <ul class="unstyled inbox-pagination">
+                            <li><span>Mostrando del registro @((Model.PaginaActual * 10) - 9) al @(Model.PaginaActual * 10 > Model.Count ? Model.Count : Model.PaginaActual * 10) de @Model.Count</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+
                 <div class="table-responsive">
                     <table class="table table-bordered border-bottom text-nowrap">
                         <thead>
@@ -34,7 +59,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.Categorias)
+                            @foreach (var item in Model.ResultCategoria)
                             {
                                 <tr>
                                     <td>

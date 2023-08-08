@@ -64,22 +64,14 @@
                                 <div class="card-body h-100" style="padding: 0px; margin-left:20px; margin-right:20px;">
                                     <div id="carousel-captions1" class="carousel slide" data-bs-ride="carousel" style="padding-bottom:10px;">
                                         <div class="carousel-inner">
-                                            <div id="vid1" class="carousel-item active">
-                                                <a class="modal-effect" data-bs-effect="effect-just-me" data-bs-toggle="modal" href="#modaldemo8">
-                                                    <img alt="" class="d-block h-carousel-c" src="~/assets/images/landing/Carrousel-1-Confival.png" data-bs-holder-rendered="true">
-                                                </a>
-                                            </div>
-
-                                            <div id="vid2" class="carousel-item">
-                                                <a class="modal-effect" data-bs-effect="effect-just-me" data-bs-toggle="modal" href="#modaldemo10">
-                                                    <img alt="" class="d-block h-carousel-c" src="~/assets/images/landing/Carrousel-2-Confival.png" data-bs-holder-rendered="true">
-                                                </a>
-                                            </div>
-                                            <div id="vid3" class="carousel-item">
-                                                <a class="modal-effect" data-bs-effect="effect-just-me" data-bs-toggle="modal" href="#modaldemo11">
-                                                    <img alt="" class="d-block h-carousel-c" src="~/assets/images/landing/Carrousel-3-Confival.png" data-bs-holder-rendered="true">
-                                                </a>
-                                            </div>
+                                            @foreach (var item in ViewBag.Carousel)
+                                            {
+                                                <div class="carousel-item @(item.Posicion == 0 ? "active" : null)">
+                                                    <a class="modal-effect" data-bs-effect="effect-just-me" data-bs-toggle="modal" href="@item.Modal">
+                                                        <img alt="" class="d-block h-carousel-c" src="@item.UrlSoporte" data-bs-holder-rendered="true">
+                                                    </a>
+                                                </div>
+                                            }
                                         </div>
                                         <a class="carousel-dark carousel-control-prev" href="#carousel-captions1" role="button" data-bs-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -92,33 +84,18 @@
                                     </div>
                                 </div>
                                 <div id="owl-demo2" class="owl-carousel owl-carousel-icons2">
-                                    <div class="item">
-                                        <div class="card">
-                                            <div class="card custom-card overflow-hidden mb-0 ">
-                                                <a href="#carousel-captions1" role="button" data-bs-slide-to="0">
-                                                    <img width="370" class="animation" src="~/assets/images/landing/Carrousel-1-Confival.png">
-                                                </a>
+                                    @foreach (var item in ViewBag.Carousel)
+                                    {
+                                        <div class="item">
+                                            <div class="card">
+                                                <div class="card custom-card overflow-hidden mb-0 ">
+                                                    <a href="#carousel-captions1" role="button" data-bs-slide-to="@item.Posicion">
+                                                        <img width="370" class="animation" src="@item.UrlSoporte">
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="card">
-                                            <div class="card custom-card overflow-hidden mb-0 ">
-                                                <a href="#carousel-captions1" role="button" data-bs-slide-to="1">
-                                                    <img width="370" class="animation" src="~/assets/images/landing/Carrousel-2-Confival.png">
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="card">
-                                            <div class="card custom-card overflow-hidden mb-0 ">
-                                                <a href="#carousel-captions1" role="button" data-bs-slide-to="2">
-                                                    <img width="370" class="animation" src="~/assets/images/landing/Carrousel-3-Confival.png">
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -1202,7 +1179,7 @@
                                                                                                 <div class="col-4">
                                                                                                     <div class="form-check">
                                                                                                         @* en este input tenia el onclick  --  onclick="ChangeActor(@item.Id)"*@
-                                                                                                        <input type="radio" class="form-check-input" name="radio-stacked" id="@item.Id" required> 
+                                                                                                        <input type="radio" class="form-check-input" name="radio-stacked" id="@item.Id" required>
                                                                                                         <label class="form-check-label">@item.Nombre</label>
                                                                                                     </div>
                                                                                                 </div>
@@ -1379,7 +1356,7 @@
                             <div class="col-md-6 col-sm-12 col-lg-4 col-xl-4">
                                 <div class="card bg-white text-center overflow-hidden">
                                     <a asp-action="ServicioLanding">
-                                        <img src="~/assets/images/media/1.jpg" alt="img">
+                                        <img src="~/assets/images/landing/Servicios/compra-de-sentencias.png" loading="lazy" alt="Servicios confival">
                                     </a>
                                     <div class="card-body card-servicios-confival">
                                         <h3 class="mb-3">Compra de Sentencias</h3>
@@ -1394,7 +1371,7 @@
                             <div class="col-md-6 col-sm-12 col-lg-4 col-xl-4">
                                 <div class="card bg-white text-center overflow-hidden">
                                     <a asp-controller="LandingPage" asp-action="ServicioLanding" asp-route-seccion="activos-inmobiliarios">
-                                        <img src="~/assets/images/media/1.jpg" alt="img">
+                                        <img src="~/assets/images/landing/Servicios/activos-inmobiliarios.png" loading="lazy" alt="Servicios confival">
                                     </a>
                                     <div class="card-body card-servicios-confival">
                                         <h3 class="mb-3">Activos inmobiliarios</h3>
@@ -1408,7 +1385,7 @@
                             <div class="col-md-12 col-sm-12 col-lg-4 col-xl-4">
                                 <div class="card bg-white text-center overflow-hidden">
                                     <a asp-controller="LandingPage" asp-action="ServicioLanding" asp-route-seccion="negocios-especiales">
-                                        <img src="~/assets/images/media/1.jpg" alt="img">
+                                        <img src="~/assets/images/landing/Servicios/negocios-especiales.jpg" loading="lazy" alt="Servicios confival">
                                     </a>
                                     <div class="card-body card-servicios-confival">
                                         <h3 class="mb-3">Estructuración de Negocios Especiales</h3>
@@ -1465,48 +1442,48 @@
                 <partial name="~/Views/Shared/_Footer1.cshtml" />
 
                 <!-- MODAL INICIO -->
-                @*<div class="modal fade" data-bs-backdrop="static" id="modaldemo8">
-                <div class="modal-dialog modal-dialog-centered text-center" role="document" id="modal-video">
-                <div class="modal-content modal-content-demo">
-                <div class="modal-header">
-                <h5 class="modal-title" onclick="cierre()" style="color:white;">¿Que es Confival?</h5><button aria-label="Close" class="btn-close" style="font-size: 3.10625rem" ; data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                <div class="modal fade effect-just-me" data-bs-backdrop="static" id="modalcarousel0">
+                    <div class="modal-dialog modal-dialog-centered text-center" role="document" id="modal-video">
+                        <div class="modal-content modal-content-demo">
+                            <div class="modal-header">
+                                <h5 class="modal-title" onclick="cierre()" style="color:white;">¿Que es Confival?</h5><button aria-label="Close" class="btn-close" style="font-size: 3.10625rem" ; data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body-confival-video text-justify">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe id="frame" width="1268" height="713" src="https://www.youtube.com/embed/OfJSn7f7LAY?autoplay=false&controls=0" title="¿Qué es Confival?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body-confival-video text-justify">
-                <div class="embed-responsive embed-responsive-16by9">
-                <iframe id="frame" width="1268" height="713" src="https://www.youtube.com/embed/OfJSn7f7LAY?autoplay=false&controls=0" title="¿Qué es Confival?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <div class="modal fade effect-just-me" data-bs-backdrop="static" id="modalcarousel1">
+                    <div class="modal-dialog modal-dialog-centered text-center" role="document" id="modal-video2">
+                        <div class="modal-content modal-content-demo">
+                            <div class="modal-header">
+                                <h5 class="modal-title" style="color:white;">Abogado: Conoce los beneficios de vender tu sentencia con Confival</h5><button aria-label="Close" class="btn-close" style="font-size: 3.10625rem" ; data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body-confival-video text-justify">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe id="frame2" width="1268" height="713" src="https://www.youtube.com/embed/rlTx0JmN36U?autoplay=false&controls=0" title="Abogado: Conoce los beneficios de vender tu sentencia con Confival." frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <div class="modal fade effect-just-me" data-bs-backdrop="static" id="modalcarousel2">
+                    <div class="modal-dialog modal-dialog-centered text-center" role="document" id="modal-video2">
+                        <div class="modal-content modal-content-demo">
+                            <div class="modal-header">
+                                <h5 class="modal-title-confival" style="color:white;">Nuestro próximo caso de éxito, eres tú</h5><button aria-label="Close" class="btn-close" style="font-size: 3.10625rem" ; data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body-confival-video text-justify">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe id="frame3" width="1268" height="713" src="https://www.youtube.com/embed/h8FE5xHtxVQ?autoplay=false&controls=0" title="Nuestro próximo caso de éxito, eres tú" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                </div>
-                </div>
-                </div>
-                <div class="modal fade effect-just-me" data-bs-backdrop="static" id="modaldemo10">
-                <div class="modal-dialog modal-dialog-centered text-center" role="document" id="modal-video2">
-                <div class="modal-content modal-content-demo">
-                <div class="modal-header">
-                <h5 class="modal-title" style="color:white;">Abogado: Conoce los beneficios de vender tu sentencia con Confival</h5><button aria-label="Close" class="btn-close" style="font-size: 3.10625rem" ; data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body-confival-video text-justify">
-                <div class="embed-responsive embed-responsive-16by9">
-                <iframe id="frame2" width="1268" height="713" src="https://www.youtube.com/embed/rlTx0JmN36U?autoplay=false&controls=0" title="Abogado: Conoce los beneficios de vender tu sentencia con Confival." frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                </div>
-                </div>
-                </div>
-                </div>
-                </div>
-                <div class="modal fade effect-just-me" data-bs-backdrop="static" id="modaldemo11">
-                <div class="modal-dialog modal-dialog-centered text-center" role="document" id="modal-video2">
-                <div class="modal-content modal-content-demo">
-                <div class="modal-header">
-                <h5 class="modal-title-confival" style="color:white;">Nuestro próximo caso de éxito, eres tú</h5><button aria-label="Close" class="btn-close" style="font-size: 3.10625rem" ; data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body-confival-video text-justify">
-                <div class="embed-responsive embed-responsive-16by9">
-                <iframe id="frame3" width="1268" height="713" src="https://www.youtube.com/embed/h8FE5xHtxVQ?autoplay=false&controls=0" title="Nuestro próximo caso de éxito, eres tú" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                </div>
-                </div>
-                </div>
-                </div>
-                </div>*@
                 <div class="modal fade" id="api-error-form-oportunidad">
                     <div class="modal-dialog modal-dialog-centered text-center " role="document">
                         <div class="modal-content tx-size-sm">

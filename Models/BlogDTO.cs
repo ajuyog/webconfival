@@ -15,6 +15,7 @@ namespace frontend.Models
 		public List<ComentarioDTO> Comentarios { get; set; }
         public string Imagen { get; set; }
         public List<string> Galeria { get; set; }
+        public string Resumen { get; set; }
 
     }
 }

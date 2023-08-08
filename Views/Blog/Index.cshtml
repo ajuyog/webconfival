@@ -1,4 +1,5 @@
-﻿@model frontend.Models.BlogsDTO
+﻿@using Microsoft.AspNetCore.Html;
+@model frontend.Models.BlogsDTO
 @{
     Layout = "_Layoutlandingpage2";
 }
@@ -22,14 +23,14 @@
                             </div>
                             <div class="card-body">
                                 <a href="#" class="text-dark blog-title">@Model.ResultBlog[0].Titulo</a>
-                                <p class="mb-0 text-muted mt-4 justify-policy">@Model.ResultBlog[0].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[0].Contenido.Length * 0.25))</p>
+                                <p class="mb-0 text-muted mt-4 justify-policy">@(new HtmlString(Model.ResultBlog[0].Resumen))</p>
                                 <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
                             </div>
                             <div class="card-footer ">
                                 <div class="d-sm-flex align-items-center">
                                     <div class="avatar-list indicators">
                                         <a class="avatar avatar-md rounded-circle">
-                                            <img src="~/assets/images/landing/Carrousel-1-Confival.png" class="rounded-circle">
+                                            <img src="~/assets/images/landing/photo_autor.jpg" class="avatar avatar-sm rounded-circle cover-image">
                                         </a>
                                     </div>
                                     <h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Confival Capital S.A.S.</h6>
@@ -50,7 +51,7 @@
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group blog-topics">
-                            @foreach (var item in ViewBag.Categorias)
+                            @foreach (var item in ViewBag.Categorias.ResultCategorias)
                             {
                                 <li class="list-group-item"><a asp-action="GetByCategoria" asp-controller="Blog" asp-route-idCategoria="@item.Id" class="text-dark-light"><i class="fe fe-chevron-right me-2"></i>@item.Nombre</a><span class="tag float-end">@item.cantidadBlogs</span></li>
                             }
@@ -66,99 +67,20 @@
                             <li class="list-group-item">
                                 <a href="#" class="text-dark-light">
                                     <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/11.jpg" alt="Image description">
+                                        <img class="avatar-md rounded-circle me-3 my-auto" alt="64x64" src="~/assets/images/landing/photo_autor.jpg" alt="Image description">
                                         <div class="media-body d-sm-flex d-block">
                                             <div class="d-flex align-items-center">
                                                 <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Allie Grater</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #1234</p>
+                                                    <h5 class="mb-1 text-dark-light">Confival Capital S.A.S.</h5>
+                                                    <p class="mb-0 text-13 text-muted">Le damos mayor valor a su confianza</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="badge rounded-pill bg-danger-transparent text-danger float-end">12 hrs ago</span>
+                                    @*<span class="badge rounded-pill bg-danger-transparent text-danger float-end">12 hrs ago</span>*@
                                 </a>
                             </li>
-                            <li class="list-group-item">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/7.jpg" alt="Image description">
-                                        <div class="media-body d-sm-flex d-block">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Emilia Clarke</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #1243</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-success-transparent text-success float-end">3 hrs ago</span>
-                                </a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/5.jpg" alt="Image description">
-                                        <div class="media-body d-sm-flex d-block">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Jessica Stallin</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #1432</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-danger-transparent text-danger float-end">11 hrs ago</span>
-                                </a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/8.jpg" alt="Image description">
-                                        <div class="media-body">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Saira Olay</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #3214</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-success-transparent text-success float-end">5 hrs ago</span>
-                                </a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/4.jpg" alt="Image description">
-                                        <div class="media-body">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Sansa Taylor</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #4321</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-success-transparent text-success float-end">4 hrs ago</span>
-                                </a>
-                            </li>
-                            <li class="list-group-item border-bottom-0">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/2.jpg" alt="Image description">
-                                        <div class="media-body">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Jessi Jane</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #3412</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-danger-transparent text-danger float-end">10 hrs ago</span>
-                                </a>
-                            </li>
+ 
                         </ul>
                     </div>
                 </div>
@@ -187,14 +109,14 @@
                             </div>
                             <div class="card-body">
                                 <a href="#" class="text-dark blog-title">@Model.ResultBlog[0].Titulo</a>
-                                <p class="mb-0 text-muted mt-4 justify-policy">@Model.ResultBlog[0].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[0].Contenido.Length * 0.25))</p>
+                                <p class="mb-0 text-muted mt-4 justify-policy">@(new HtmlString(Model.ResultBlog[0].Resumen))</p>
                                 <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
                             </div>
                             <div class="card-footer ">
                                 <div class="d-sm-flex align-items-center">
                                     <div class="avatar-list indicators">
                                         <a class="avatar avatar-md rounded-circle">
-                                            <img src="~/assets/images/landing/Carrousel-1-Confival.png" class="rounded-circle">
+                                            <img src="~/assets/images/landing/photo_autor.jpg" class="avatar avatar-sm rounded-circle cover-image">
                                         </a>
                                     </div>
                                     <h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Confival Capital S.A.S.</h6>
@@ -215,7 +137,7 @@
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group blog-topics">
-                            @foreach (var item in ViewBag.Categorias)
+                            @foreach (var item in ViewBag.Categorias.ResultCategorias)
                             {
                                 <li class="list-group-item"><a asp-action="GetByCategoria" asp-controller="Blog" asp-route-idCategoria="@item.Id" asp-route-nombre="@item.Nombre" class="text-dark-light"><i class="fe fe-chevron-right me-2"></i>@item.Nombre</a><span class="tag float-end">@item.cantidadBlogs</span></li>
                             }
@@ -231,99 +153,20 @@
                             <li class="list-group-item">
                                 <a href="#" class="text-dark-light">
                                     <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/11.jpg" alt="Image description">
+                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/landing/photo_autor.jpg" alt="Image description">
                                         <div class="media-body d-sm-flex d-block">
                                             <div class="d-flex align-items-center">
                                                 <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Allie Grater</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #1234</p>
+                                                    <h5 class="mb-1 text-dark-light">Confival Capital S.A.S.</h5>
+                                                    <p class="mb-0 text-13 text-muted">Le damos mayor valor a su confianza</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="badge rounded-pill bg-danger-transparent text-danger float-end">12 hrs ago</span>
-                                </a>
+@*                                    <span class="badge rounded-pill bg-danger-transparent text-danger float-end">12 hrs ago</span>
+*@                                </a>
                             </li>
-                            <li class="list-group-item">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/7.jpg" alt="Image description">
-                                        <div class="media-body d-sm-flex d-block">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Emilia Clarke</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #1243</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-success-transparent text-success float-end">3 hrs ago</span>
-                                </a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/5.jpg" alt="Image description">
-                                        <div class="media-body d-sm-flex d-block">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Jessica Stallin</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #1432</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-danger-transparent text-danger float-end">11 hrs ago</span>
-                                </a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/8.jpg" alt="Image description">
-                                        <div class="media-body">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Saira Olay</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #3214</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-success-transparent text-success float-end">5 hrs ago</span>
-                                </a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/4.jpg" alt="Image description">
-                                        <div class="media-body">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Sansa Taylor</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #4321</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-success-transparent text-success float-end">4 hrs ago</span>
-                                </a>
-                            </li>
-                            <li class="list-group-item border-bottom-0">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/2.jpg" alt="Image description">
-                                        <div class="media-body">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Jessi Jane</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #3412</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-danger-transparent text-danger float-end">10 hrs ago</span>
-                                </a>
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -349,15 +192,15 @@
                                 <div class="card-body p-0 border border-top-0 br-br-5 br-bl-5 mb-2 mb-lg-0">
                                     <div class="p-5 border-bottom">
                                         <a href="#" class="text-dark blog-title">@Model.ResultBlog[1].Titulo</a>
-                                        <p class="mb-0 text-muted mt-4">@Model.ResultBlog[1].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[1].Contenido.Length * 0.25)) </p>
+                                        <p class="mb-0 text-muted mt-4">@(new HtmlString(Model.ResultBlog[1].Resumen)) </p>
                                     </div>
                                     <div class="d-sm-flex p-5 align-items-center">
                                         <div class="avatar-list indicators">
                                             <a href="javascript:void(0)" class="avatar avatar-md rounded-circle">
-                                                <img src="~/assets/images/photos/11.jpg" class="rounded-circle">
+                                                <img src="~/assets/images/landing/photo_autor.jpg" class="avatar avatar-sm rounded-circle cover-image">
                                             </a>
                                         </div>
-                                        <h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Autor Desconocido</h6>
+                                        <h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Confival Capital S.A.S.</h6>
                                         <div class="d-sm-flex ms-sm-auto">
                                             <a href="#" class="d-flex me-3"><span class="fe fe-calendar text-muted me-2 text-17"></span><div class="mt-0 mt-0 text-muted">@Model.ResultBlog[1].Publicacion.ToShortDateString()</div></a>
                                         </div>
@@ -392,14 +235,14 @@
                             </div>
                             <div class="card-body">
                                 <a href="#" class="text-dark blog-title">@Model.ResultBlog[0].Titulo</a>
-                                <p class="mb-0 text-muted mt-4 justify-policy">@Model.ResultBlog[0].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[0].Contenido.Length * 0.25))</p>
+                                <p class="mb-0 text-muted mt-4 justify-policy">@(new HtmlString(Model.ResultBlog[0].Resumen))</p>
                                 <a asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.ResultBlog[0].Id" class="btn btn-outline-primary mt-2">Ver más...</a>
                             </div>
                             <div class="card-footer ">
                                 <div class="d-sm-flex align-items-center">
                                     <div class="avatar-list indicators">
                                         <a class="avatar avatar-md rounded-circle">
-                                            <img src="~/assets/images/landing/Carrousel-1-Confival.png" class="rounded-circle">
+                                            <img src="~/assets/images/landing/photo_autor.jpg" class="avatar avatar-sm rounded-circle cover-image">
                                         </a>
                                     </div>
                                     <h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Confival Capital S.A.S.</h6>
@@ -420,7 +263,7 @@
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group blog-topics">
-                            @foreach (var item in ViewBag.Categorias)
+                            @foreach (var item in ViewBag.Categorias.ResultCategorias)
                             {
                                 <li class="list-group-item"><a asp-action="GetByCategoria" asp-controller="Blog" asp-route-idCategoria="@item.Id" asp-route-nombre="@item.Nombre" class="text-dark-light"><i class="fe fe-chevron-right me-2"></i>@item.Nombre</a><span class="tag float-end">@item.cantidadBlogs</span></li>
                             }
@@ -436,99 +279,20 @@
                             <li class="list-group-item">
                                 <a href="#" class="text-dark-light">
                                     <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/11.jpg" alt="Image description">
+                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/landing/photo_autor.jpg" alt="Image description">
                                         <div class="media-body d-sm-flex d-block">
                                             <div class="d-flex align-items-center">
                                                 <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Allie Grater</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #1234</p>
+                                                    <h5 class="mb-1 text-dark-light">Confival Capital S.A.S</h5>
+                                                    <p class="mb-0 text-13 text-muted">Le damos mayor valor a su confianza</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="badge rounded-pill bg-danger-transparent text-danger float-end">12 hrs ago</span>
-                                </a>
+@*                                    <span class="badge rounded-pill bg-danger-transparent text-danger float-end">12 hrs ago</span>
+*@                                </a>
                             </li>
-                            <li class="list-group-item">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/7.jpg" alt="Image description">
-                                        <div class="media-body d-sm-flex d-block">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Emilia Clarke</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #1243</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-success-transparent text-success float-end">3 hrs ago</span>
-                                </a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/5.jpg" alt="Image description">
-                                        <div class="media-body d-sm-flex d-block">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Jessica Stallin</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #1432</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-danger-transparent text-danger float-end">11 hrs ago</span>
-                                </a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/8.jpg" alt="Image description">
-                                        <div class="media-body">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Saira Olay</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #3214</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-success-transparent text-success float-end">5 hrs ago</span>
-                                </a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/4.jpg" alt="Image description">
-                                        <div class="media-body">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Sansa Taylor</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #4321</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-success-transparent text-success float-end">4 hrs ago</span>
-                                </a>
-                            </li>
-                            <li class="list-group-item border-bottom-0">
-                                <a href="#" class="text-dark-light">
-                                    <div class="media mt-0 d-sm-flex d-block">
-                                        <img class="avatar-md rounded-circle me-3 my-auto" src="~/assets/images/faces/2.jpg" alt="Image description">
-                                        <div class="media-body">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mt-1">
-                                                    <h5 class="mb-1 text-dark-light">Jessi Jane</h5>
-                                                    <p class="mb-0 text-13 text-muted">User ID: #3412</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="badge rounded-pill bg-danger-transparent text-danger float-end">10 hrs ago</span>
-                                </a>
-                            </li>
+  
                         </ul>
                     </div>
                 </div>
@@ -553,12 +317,12 @@
                                     <div class="card-body p-0 border border-top-0 br-br-5 br-bl-5 mb-2 mb-lg-0">
                                         <div class="p-5 border-bottom">
                                             <a href="#" class="text-dark blog-title">@Model.ResultBlog[1].Titulo</a>
-                                            <p class="mb-0 text-muted mt-4">@Model.ResultBlog[1].Contenido.Substring(0, Convert.ToInt32(Model.ResultBlog[1].Contenido.Length * 0.25)) </p>
+                                            <p class="mb-0 text-muted mt-4">@(new HtmlString(Model.ResultBlog[1].Resumen)) </p>
                                         </div>
                                         <div class="d-sm-flex p-5 align-items-center">
                                             <div class="avatar-list indicators">
                                                 <a href="javascript:void(0)" class="avatar avatar-md rounded-circle">
-                                                    <img src="~/assets/images/landing/Carrousel-1-Confival.png" class="rounded-circle">
+                                                    <img src="~/assets/images/landing/photo_autor.jpg" class="avatar avatar-sm rounded-circle cover-image">
                                                 </a>
                                             </div>
                                             <h6 class="mb-0 text-muted ms-sm-2 mt-sm-0 mt-2">Confival Capital S.A.S.</h6>

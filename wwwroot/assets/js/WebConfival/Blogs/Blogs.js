@@ -48,7 +48,7 @@ function AddContenido() {
         parrafoC.append('<h3>' + subtitulo + '</h3>');
     }
     if (parrafoC.length != 0) {
-        parrafoC.append('<p class="px-3 py-2 text-17 br-5">' + parrafoG + '</p>');
+        parrafoC.append('<p class="text-muted text-14">' + parrafoG + '</p>');
         $("#parrafo" + parrafo).removeClass("hide-info");
         parrafo++;
 
@@ -127,7 +127,6 @@ function NextGallery() {
     // Mostrar seccion categoria
     $("#seccion-categorias").removeClass("hide-info");
 };
-
 function Publicar() {
     $("#visualizador-campos").addClass("hide-info");
     $("#visualizar-blog-principal").addClass("hide-info");
@@ -186,6 +185,15 @@ function Publicar() {
     });
 
 };
+
+function Search() {
+    var titleSearch = $("#search").val();
+    $.ajax({
+        type: "GET",
+        url: '/Blog/EditSearch',
+        data: { search: titleSearch }
+    });
+}
 
 $("#categorias-principal").on("change", function () {
     var cartegoriaPrincipal = $("#categorias-principal").val();

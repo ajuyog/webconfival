@@ -5,6 +5,7 @@ using frontend.Models;
 using frontend.Models.JsonDTO;
 using frontend.Services.Token;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Kiota.Abstractions.Extensions;
@@ -54,6 +55,8 @@ public class LandingPageController : Controller
         if (token.Length == 177)
         {
             var client = new HttpClient();
+
+
 
             #region DropDown Regimen
             var request = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/regimen?Pagina=1&RegistrosPorPagina=10");
@@ -157,10 +160,29 @@ public class LandingPageController : Controller
             {
                 ViewBag.TipoActores = new List<DropDownListDTO>();
             }
-            #endregion
+			#endregion
 
-            #region Banner Principal
-            var requestBannerSuperior = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/archivo/empresaProyectoArchivoSubCategoria?Pagina=1&RegistrosPorPagina=100&EmpresaId=" + _configuration.GetSection("LandingPage:BannerInicio:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:BannerInicio:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:BannerInicio:Agrupacion").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:BannerInicio:SubCategoria:Superior").Value + "&OrigenId=0");
+			#region Carousel Principal
+            var requestCarousel = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/archivo/empresaProyectoArchivoSubCategoria?Pagina=1&RegistrosPorPagina=100&EmpresaId=" + _configuration["LandingPage:BannerInicio:Empresa"] + "&ProyectoId=" + _configuration["LandingPage:BannerInicio:Proyecto"] + "&Agrupacion=" + _configuration["LandingPage:BannerInicio:Agrupacion"] + "&ArchivoSubcategoriaId=" + _configuration["LandingPage:BannerInicio:SubCategoria:Inferior"] + "&OrigenId=0");
+			requestCarousel.Headers.Add("Authorization", "Bearer " + token);
+			var responseCarousel = await client.SendAsync(requestCarousel);
+			if (responseCarousel.IsSuccessStatusCode)
+			{
+				var posicion = 0;
+				var responseStream = await responseCarousel.Content.ReadAsStringAsync();
+				var lstCarousel = JsonConvert.DeserializeObject<List<CarouselDTO>>(responseStream);
+				foreach (var item in lstCarousel)
+				{
+					item.Posicion = posicion;
+                    item.Modal = "#modalcarousel" + posicion.ToString();
+					posicion++;
+                }
+				ViewBag.Carousel = lstCarousel;
+			}
+			#endregion
+
+			#region Banner Principal
+			var requestBannerSuperior = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/archivo/empresaProyectoArchivoSubCategoria?Pagina=1&RegistrosPorPagina=100&EmpresaId=" + _configuration.GetSection("LandingPage:BannerInicio:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:BannerInicio:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:BannerInicio:Agrupacion").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:BannerInicio:SubCategoria:Superior").Value + "&OrigenId=0");
             requestBannerSuperior.Headers.Add("Authorization", "Bearer " + token);
             var responseBannerSuperior = await client.SendAsync(requestBannerSuperior);
             if (responseBannerSuperior.IsSuccessStatusCode)
@@ -245,12 +267,12 @@ public class LandingPageController : Controller
         return View();
     }
 
-    /// <summary>
-    /// Permite el login en la intranet de webConfival con Microsoft
-    /// </summary>
-    /// <param name="proveedor"></param>
-    /// <param name="urlRetorno"></param>
-    /// <returns></returns>
+	/// <summary>
+	/// Permite el login en la intranet de webConfival con Microsoft
+	/// </summary>
+	/// <param name="proveedor"></param>
+	/// <param name="urlRetorno"></param>
+	/// <returns></returns>
 	[HttpGet]
 	public ChallengeResult SignIn(string proveedor, string? urlRetorno = null)
 	{

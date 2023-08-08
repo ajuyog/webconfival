@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -117,9 +118,9 @@ public class BlogController : Controller
     [HttpGet]
     public async Task<List<CategoriaDTO>> ConsultarCategorias(int id)
     {
-        var lst = await _categoriasServices.Get(1, 0, true);
+        var lst = await _categoriasServices.Get(1, 100, true);
         var lstResult = new List<CategoriaDTO>();
-        foreach(var item in  lst)
+        foreach(var item in  lst.ResultCategorias)
         {
             if (item.Id != id)
             {
@@ -206,7 +207,7 @@ public class BlogController : Controller
         return obj;
     }
 
-    [HttpGet]
+    [Authorize, HttpGet]
     public async Task<IActionResult> Edit(int pagina, int registros)
     {
         if (pagina == 0) { pagina = 1; }
@@ -216,13 +217,65 @@ public class BlogController : Controller
 		model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
 		model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/Edit?pagina=";
 		model.PaginaActual = pagina;
-		return View(model);
-    }
+        var objToken = await _getToken.GetTokenMicrosoft();
+        var modelMe = await _graphServices.GetMeGraph(objToken.access_token);
 
-    [HttpGet]
-    public async Task<IActionResult> EditBlog(int id)
-    {
-        var model = await _blogServices.GetById(id);
+        ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+        ViewBag.user = modelMe.DisplayName;
+
         return View(model);
     }
+
+	[Authorize, HttpPost]
+    public async Task<IActionResult> EditSearch( int pagina, int registros, string search)
+    {
+		if (pagina == 0) { pagina = 1; }
+		registros = 10;
+        var model = await _blogServices.GetSearch(true, pagina, registros, search);
+        model.Count = model.TotalBlog;
+		model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
+		model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/EditSearchGet?search=" + search + "&pagina=";
+		model.PaginaActual = pagina;
+		var objToken = await _getToken.GetTokenMicrosoft();
+		var modelMe = await _graphServices.GetMeGraph(objToken.access_token);
+		ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+		ViewBag.user = modelMe.DisplayName;
+		return View("~/Views/Blog/Edit.cshtml" ,model);
+	}
+
+	
+    [Authorize, HttpGet]
+	public async Task<IActionResult> EditSearchGet(string search, int pagina, int registros)
+	{
+		if (pagina == 0) { pagina = 1; }
+		registros = 10;
+		var model = await _blogServices.GetSearch(true, pagina, registros, search);
+        model.Count = model.TotalBlog;
+		model.Paginas = (int)Math.Ceiling((double)model.Count / registros);
+		model.BaseUrl = _configuration["LandingPage:RedirectGraph:https"] + "Blog/EditSearchGet?search=" + search + "&pagina=";
+		model.PaginaActual = pagina;
+		var objToken = await _getToken.GetTokenMicrosoft();
+		var modelMe = await _graphServices.GetMeGraph(objToken.access_token);
+		ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+		ViewBag.user = modelMe.DisplayName;
+		return View("~/Views/Blog/Edit.cshtml", model);
+	}
+
+	[Authorize, HttpGet]
+    public async Task<IActionResult> ApproveBlog(int id)
+    {
+        var model = await _blogServices.GetById(id);
+        model.Imagen = await _blogServices.Imagen(id);
+        model.Galeria = await _blogServices.Galeria(id);
+        return View(model);
+    }
+
+    [Authorize, HttpGet]
+    public async Task<bool> Approve(int id, bool approve)
+    {
+        return await _blogServices.Approve(id, approve);
+    }
+
+    
+
 }
