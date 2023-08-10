@@ -106,12 +106,17 @@ public class BlogController : Controller
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        var model = await _categoriasServices.Get(1, 100, true);
+        var lst = await _categoriasServices.Get(1, 100, true);
+        var lstResult = new List<CategoriaDTO>();
+        foreach (var item in lst.ResultCategorias)
+        {
+            lstResult.Add(item);
+        }
         var objToken = await _getToken.GetTokenMicrosoft();
         ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
         var me = await _graphServices.GetMeGraph(objToken.access_token);
         ViewBag.user = me.DisplayName;
-        return View(model);
+        return View(lstResult);
     }
 
     [Authorize]
