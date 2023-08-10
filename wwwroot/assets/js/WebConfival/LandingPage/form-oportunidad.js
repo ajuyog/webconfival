@@ -324,14 +324,39 @@ function showOTPCelular() {
             url: '/Oportunidad/SendOTP',
             data: { entrada: celular },
             success: function (result) {
-                if (result == true) {
+                if (result == "true") {
                     // LOADER
                     $("#loader2").addClass("hide-info");
+                    $("#valnumOk").val(1);
 
                     // FRONT
                     $("#mensaje-otp").removeClass("hide-info");
                     $("#put-timer2").append('<div class="col-xl-12 col-sm-12 col-xs-12"><div class="card"><div class="card-header border-bottom" style="padding: 0; padding-bottom: 15px;"><h5 class="card-title" style="font-size: 0.9rem;">Hemos enviado un codigo OTP a tu numero celular, ingresalo en el siguiente campo antes de que la cuenta regresiva se acabe.</h5></div><div class="card-body" style="padding: 0;"><div class="example bg-primary-transparent border-primary text-primary" style="padding:1rem;"><div class="d-sm-flex"><span class="mb-sm-0 mb-3"><i class="fs-30 fe fe-clock"></i></span><div class="ms-sm-5 mb-sm-0 mb-3"><span id="timer-countercallback2" class="h3"></span><h5 class="mb-0 mt-1" id="verificar-celular">Verifica tu numero celular!!!</h5></div><span class="h1 text-center ms-auto mb-0 mb-sm-0 mb-3 "></span></div></div></div></div></div>')
                     activeTimer2();
+                } else if (result = "sin token") {
+                    $("#loader2").addClass("hide-info");
+                    var celular = $("#celular").val();
+
+                    // FRONT
+                    $("#invalid-otp-celular").css("display", "none");
+                    $("#celular-hide").addClass("hide-info");
+                    $("#confirmacion-celular").removeClass("hide-info");
+                    $("#validacion-tres").removeClass("hide-info");
+                    $("#validacion-cuatro").addClass("hide-info");
+                    $("#oportunidad-hide").removeClass("hide-info");
+
+                    // INPUT SAVE
+
+                    $("#valnumOk").val(0);
+                    $("#no-contacto-ok").val(celular);
+
+                    // PROGRES BAR
+                    $("#progres-33").addClass("hide-info");
+                    $("#progres-66").addClass("hide-info");
+                    $("#progres-100").removeClass("hide-info");
+                    $("#icon-info-oportunidad").removeClass("hide-info");
+                    $("#confirmacion-correo-status").addClass("hide-info");
+                    $("#confirmacion-documento-status").addClass("hide-info");
                 } else {
                     // LOADER
                     $("#loader2").addClass("hide-info");
@@ -583,7 +608,8 @@ function ResendMailAPI(data) {
         url: '/Oportunidad/SendOTP',
         data: { entrada: data },
         success: function (result) {
-            if (result == true) {
+            console.log(result);
+            if (result == "true") {
                 // lOADER
                 $("#loader1").addClass("hide-info");
                 $("#email-hide").removeClass("hide-info");
@@ -601,7 +627,7 @@ function ResendMailAPI(data) {
                 $("#api-error-form-oportunidad").modal('show');
             }
         },
-        error: function () {
+        error: function (result) {
             // lOADER
             $("#loader1").addClass("hide-info");
             $("#email-hide").removeClass("hide-info");

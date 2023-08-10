@@ -25077,6 +25077,10 @@ img {
     .landing-page .header.hor-header {
         display: none;
     }
+    .divSeccion1 {
+        margin-top: 6rem !important;
+    }
+    
 }
 
 @media (min-width: 1274px) {
@@ -25085,6 +25089,12 @@ img {
     .landing-page.horizontal .app-sidebar .container,
     .landing-page.horizontal .main-content.hor-content .container {
         max-width: 95% !important;
+    }
+    .divSeccion1 {
+        margin-top: 6rem !important;
+    }
+    .bannerInicio {
+        padding-top: 120px !important;
     }
 }
 
@@ -25367,6 +25377,10 @@ img {
     .landing-page .hor-content .container,
     .landing-page .mobile-header .container {
         max-width: 720px;
+    }
+
+    .bannerInicio {
+        padding-top: 120px !important;
     }
 }
 
@@ -26041,6 +26055,9 @@ img {
 @media (min-width: 992px) and (max-width: 1273.98px) {
     .landing-page .landing-top-header .main-demo.main-demo-1 .container {
         max-width: 85%;
+    }
+    .bannerInicio {
+        padding-top: 120px !important;
     }
 }
 
@@ -27097,6 +27114,7 @@ img {
     .landing-page .header-nav-right {
         display: none !important;
     }
+    
 
     .landing-page .navbar-toggler:focus {
         box-shadow: none;
@@ -29956,6 +29974,9 @@ body.fixed-header .header {
         margin-left: 0rem;
         margin-top: 2px;
     }
+    .bannerInicio {
+        padding-top: 73px !important;
+    }
 }
 
 @media (min-width: 768px) {
@@ -29965,6 +29986,9 @@ body.fixed-header .header {
 
     .app-content .side-app {
         padding-top: 0px !important;
+    }
+    .bannerInicio {
+        padding-top: 73px !important;
     }
 }
 
@@ -39742,6 +39766,9 @@ body.dark-mode *:hover::-webkit-scrollbar-thumb {
 
     .dark-mode .header-1 .navsearch i {
         color: #000 !important;
+    }
+    .bannerInicio {
+        padding-top: 73px !important;
     }
 }
 

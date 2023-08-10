@@ -13,5 +13,6 @@
         public string tipoDocumento { get; set; }
         public bool politicaTratamientoDatos { get; set; }
         public bool estado { get; set; }
+        public bool validaNumeroContacto { get; set; }
     }
 }
