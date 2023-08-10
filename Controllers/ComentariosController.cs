@@ -51,6 +51,12 @@ namespace frontend.Controllers
 			ViewBag.Publicacion = blog.Publicacion;
 			ViewBag.ImagenBlog = await _blogServices.Imagen(idBlog);
 			ViewBag.IdBlog = idBlog;
+
+			var objToken = await _getToken.GetTokenMicrosoft();
+			ViewBag.Imagen = await _graphServices.ImgProfile(objToken.access_token);
+			var me = await _graphServices.GetMeGraph(objToken.access_token);
+			ViewBag.user = me.DisplayName;
+
 			return View(model);
 		}
 

@@ -3,23 +3,24 @@
     var valid = ValidCategoria();
     var count = 0;
     if (valid == 0) {
-        $.ajax({
-            type: "GET",
-            url: '/Categoria/Exists',
-            success: function (result) {
-                $.each(result.resultCategoria, function (element, index) {
-                    if (index.nombre == nombreCorregido) {
-                        count = count + 1;
-                        $("#invalid-nombre-categoria-existe").css("display", "block");
-                        return false
-                    }
-                })
-                if (count == 0) {
-                    $("#invalid-nombre-categoria-existe").css("display", "none");
-                    GuardarCategoria(nombreCorregido);
-                }
-            }
-        });
+        GuardarCategoria(nombreCorregido);
+        //$.ajax({
+        //    type: "GET",
+        //    url: '/Categoria/Exists',
+        //    success: function (result) {
+        //        $.each(result.resultCategoria, function (element, index) {
+        //            if (index.nombre == nombreCorregido) {
+        //                count = count + 1;
+        //                $("#invalid-nombre-categoria-existe").css("display", "block");
+        //                return false
+        //            }
+        //        })
+        //        if (count == 0) {
+        //            $("#invalid-nombre-categoria-existe").css("display", "none");
+        //            GuardarCategoria(nombreCorregido);
+        //        }
+        //    }
+        //});
     }
 };
 function GuardarCategoria(nombreCorregido) {
@@ -34,7 +35,11 @@ function GuardarCategoria(nombreCorregido) {
             } else {
                 $("#api-error").modal('show');
             }
+        },
+        error: function () {
+            $("#api-error").modal('show');
         }
+
     });
 };
 function restartCategoria() {

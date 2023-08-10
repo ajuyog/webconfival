@@ -243,7 +243,6 @@ public class BlogController : Controller
 		return View("~/Views/Blog/Edit.cshtml" ,model);
 	}
 
-	
     [Authorize, HttpGet]
 	public async Task<IActionResult> EditSearchGet(string search, int pagina, int registros)
 	{
