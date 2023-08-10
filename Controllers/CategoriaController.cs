@@ -188,9 +188,9 @@ namespace frontend.Controllers
 
         [Authorize]
 		[HttpGet]
-		public async Task<bool> SaveCategoria(string nombre)
+		public async Task<string> SaveCategoria(string nombre)
 		{
-			var result = false;
+			var result = "error";
 			var obj = new CategoriaDTO()
 			{
 				Nombre = nombre
@@ -205,7 +205,15 @@ namespace frontend.Controllers
 			var response = await client.SendAsync(request);
 			if(response.IsSuccessStatusCode)
 			{
-				result = true;
+				result = "success";
+            }
+            else
+            {
+				var responseStream = await response.Content.ReadAsStringAsync();
+				if (responseStream.Contains("La categoria "  + nombre + " ya existe"))
+				{
+					result = "exists";
+				}
 			}
             return result;
         }
