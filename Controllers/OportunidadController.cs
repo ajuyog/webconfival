@@ -42,29 +42,30 @@ namespace frontend.Controllers
 		{
 			var pattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
 			Regex validMail = new Regex(pattern);
-            SMS sms = new SMS();
-            var token = _getToken.GetTokenV();
+			SMS sms = new SMS();
+			var token = _getToken.GetTokenV();
 			var costoSMS = Int32.Parse(_configuration.GetSection("SMS:Costo").Value);
 
-            if (token.Result == "")
+			if (token.Result == "")
 			{
 				return "false";
 			}
 			if (token.Result.Length == 177)
 			{
 				var client = new HttpClient();
-                var request1 = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/sms/creditos");
-                request1.Headers.Add("Authorization", "Bearer "  + token.Result);
-                var response1 = await client.SendAsync(request1);
-                if (response1.IsSuccessStatusCode)
-                {
-                    var responseStream = await response1.Content.ReadAsStringAsync();
-                    sms = JsonConvert.DeserializeObject<SMS>(responseStream);        
-                }
-				if(!validMail.IsMatch(entrada) && float.Parse(sms.credits) < costoSMS) { 
-					return "sin token";  
+				var request1 = new HttpRequestMessage(HttpMethod.Get, "https://api2valuezbpm.azurewebsites.net/api/sms/creditos");
+				request1.Headers.Add("Authorization", "Bearer " + token.Result);
+				var response1 = await client.SendAsync(request1);
+				if (response1.IsSuccessStatusCode)
+				{
+					var responseStream = await response1.Content.ReadAsStringAsync();
+					sms = JsonConvert.DeserializeObject<SMS>(responseStream);
 				}
-                var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/otp/enviar?longitud=" + _configuration.GetSection("OTP:Longitud").Value + "&caducidadSg=" + _configuration.GetSection("OTP:Caducidad").Value);
+				if (!validMail.IsMatch(entrada) && float.Parse(sms.credits) < costoSMS)
+				{
+					return "sin token";
+				}
+				var request = new HttpRequestMessage(HttpMethod.Post, "https://api2valuezbpm.azurewebsites.net/api/otp/enviar?longitud=" + _configuration.GetSection("OTP:Longitud").Value + "&caducidadSg=" + _configuration.GetSection("OTP:Caducidad").Value);
 
 				request.Headers.Add("Authorization", "Bearer " + token.Result);
 				var obj = new EnvioOTPDTO()
@@ -79,25 +80,25 @@ namespace frontend.Controllers
 				var response = await client.SendAsync(request);
 				if (response.IsSuccessStatusCode)
 				{
-                    return "true";
-                }
-                else
+					return "true";
+				}
+				else
 				{
-                    return "false";
+					return "false";
 
-                }
-            }
-            return "false";
+				}
+			}
+			return "false";
 
-        }
+		}
 
-        //[HttpGet]
-        //public bool SendOTP(string entrada)
-        //{
-        //	return true;
-        //}
+		//[HttpGet]
+		//public string SendOTP(string entrada)
+		//{
+		//	return "true";
+		//}
 
-        [HttpGet]
+		[HttpGet]
 		public async Task<string> ValidOTP(string llave, string entrada)
 		{
 			var pattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
@@ -305,7 +306,7 @@ namespace frontend.Controllers
             }
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 			var httpString = "";
-			if(instancia == "primeraInstancia") { httpString = _configuration.GetSection("LandingPage:CotizadorLead:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:CotizadorLead:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:CotizadorLead:Agrupacion").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:SubCategoria:PrimeraInstancia").Value; };
+			if(instancia == "primeraInstancia") { httpString = _configuration["LandingPage:CotizadorLead:Empresa"] + "&ProyectoId=" + _configuration["LandingPage:CotizadorLead:Proyecto"] + "&Agrupacion=" + _configuration["LandingPage:CotizadorLead:Agrupacion"] + "&ArchivoSubcategoriaId=" + _configuration["LandingPage:CotizadorLead:SubCategoria:PrimeraInstancia"]; };
 			if(instancia == "segundaInstancia") { httpString = _configuration.GetSection("LandingPage:CotizadorLead:Empresa").Value + "&ProyectoId=" + _configuration.GetSection("LandingPage:CotizadorLead:Proyecto").Value + "&Agrupacion=" + _configuration.GetSection("LandingPage:CotizadorLead:Agrupacion").Value + "&ArchivoSubcategoriaId=" + _configuration.GetSection("LandingPage:CotizadorLead:SubCategoria:SegundaInstancia").Value; };
 			Console.WriteLine(httpString);
 			var response = await client.PostAsync("https://api2valuezbpm.azurewebsites.net/api/archivo?EmpresaId=" + httpString, formData);

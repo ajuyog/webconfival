@@ -4,23 +4,6 @@
     var count = 0;
     if (valid == 0) {
         GuardarCategoria(nombreCorregido);
-        //$.ajax({
-        //    type: "GET",
-        //    url: '/Categoria/Exists',
-        //    success: function (result) {
-        //        $.each(result.resultCategoria, function (element, index) {
-        //            if (index.nombre == nombreCorregido) {
-        //                count = count + 1;
-        //                $("#invalid-nombre-categoria-existe").css("display", "block");
-        //                return false
-        //            }
-        //        })
-        //        if (count == 0) {
-        //            $("#invalid-nombre-categoria-existe").css("display", "none");
-        //            GuardarCategoria(nombreCorregido);
-        //        }
-        //    }
-        //});
     }
 };
 function GuardarCategoria(nombreCorregido) {
@@ -29,10 +12,12 @@ function GuardarCategoria(nombreCorregido) {
         url: '/Categoria/SaveCategoria',
         data: { nombre: nombreCorregido },
         success: function (result) {
-            if (result == true) {
+            if (result == "success") {
                 $("#form-categoria").addClass("hide-info");
                 $("#categoria-guardada").removeClass("hide-info");
-            } else {
+            } else if (result == "exists") {
+                $("#invalid-nombre-categoria-existe").css("display", "block");
+            } else if (result == "error") {
                 $("#api-error").modal('show');
             }
         },
