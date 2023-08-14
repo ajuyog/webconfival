@@ -9,23 +9,55 @@
 <div class="hor-content main-content mt-0">
     <div class="side-app">
         <div class="main-container">
-            <div class="section-banner pb-5 bg-white" style="padding-top:114px;">
-                <div class="col-12" style="padding-bottom: 20px;">
-                    <div id="carousel-indicators5" class="carousel slide  responsive-indicators-banners" data-bs-ride="carousel">
-                        <ol class="carousel-indicators carousel-indicators5">
-                            @foreach (var item in Model)
-                            {
-                                <li data-bs-target="#carousel-indicators5" data-bs-slide-to="@item.Posicion" class="@(item.Posicion == 0 ? "active" : null)"></li>
-                            }
-                        </ol>
-                        <div class="carousel-inner">
-                            @foreach (var item in Model)
-                            {
-                                <div class="carousel-item @(item.Posicion == 0 ? "active" : null)">
-                                    <img class="d-block w-100 responsive-css-banner-principal" alt="" src="@item.UrlSoporte" data-bs-holder-rendered="true">
+            <!-- Seccion 0 -- Banner Dinamico -->
+            <div class="section-banner bg-white">
+                <div class="col-md-12 col-lg-12 ">
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-lg-6 col-sm-6 hxs p-3">
+                                <div class="col-lg-8" style="float:right">
+                                    <div id="carousel-indicators5" class="carousel slide responsive-indicators-banners" data-bs-ride="carousel">
+                                        @*<ol class="carousel-indicators carousel-indicators5">
+                                        @foreach (var item in Model)
+                                        {
+                                        <li data-bs-target="#carousel-indicators5" data-bs-slide-to="@item.Posicion" class="@(item.Posicion == 0 ? "active" : null)"></li>
+                                        }
+                                        </ol>*@
+                                        <div class="carousel-inner">
+                                            @*@foreach (var item in Model)
+                                            {*@
+                                            <div class="carousel-item active">
+                                                <img class="d-block w-100 responsive-css-banner-principal" alt="" src="https://storageaccountisaac.blob.core.windows.net/apivaluezdocumental/1/2/inicio/2/3/0/71fb43a8-0589-4fd9-ac91-13a545a63f12" data-bs-holder-rendered="true">
+                                            </div>
+                                            @*}*@
+                                        </div>
+                                    </div>
                                 </div>
-                            }
+                            </div>
+                            <div class="col-lg-6 col-sm-6 p-3">
+                                <div class="col-lg-8" style="float:left">
+                                    <div id="carousel-indicators5" class="carousel slide responsive-indicators-banners" data-bs-ride="carousel">
+                                        @*<ol class="carousel-indicators carousel-indicators5">
+                                        @foreach (var item in Model)
+                                        {
+                                        <li data-bs-target="#carousel-indicators5" data-bs-slide-to="@item.Posicion" class="@(item.Posicion == 0 ? "active" : null)"></li>
+                                        }
+                                        </ol>*@
+                                        <div class="carousel-inner">
+                                            @foreach (var item in Model)
+                                            {
+                                                <div class="carousel-item @(item.Posicion == 0 ? "active" : null)">
+                                                    <img class="d-block w-100 responsive-css-banner-principal" alt="" src="@item.UrlSoporte" data-bs-holder-rendered="true">
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
+
                     </div>
                 </div>
             </div>

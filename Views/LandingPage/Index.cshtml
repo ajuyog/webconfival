@@ -22,24 +22,53 @@
 
                     <!-- Seccion 0 -- Banner Dinamico -->
                     <div class="section-banner bg-white">
-                        <div class="col-md-12 col-lg-12">
-                            <div class="card-body h-100">
-                                <div id="carousel-indicators5" class="carousel slide responsive-indicators-banners" data-bs-ride="carousel">
-                                    <ol class="carousel-indicators carousel-indicators5">
-                                        @foreach (var item in Model)
-                                        {
-                                            <li data-bs-target="#carousel-indicators5" data-bs-slide-to="@item.Posicion" class="@(item.Posicion == 0 ? "active" : null)"></li>
-                                        }
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        @foreach (var item in Model)
-                                        {
-                                            <div class="carousel-item @(item.Posicion == 0 ? "active" : null)">
-                                                <img class="d-block w-100 responsive-css-banner-principal" alt="" src="@item.UrlSoporte" data-bs-holder-rendered="true">
+                        <div class="col-md-12 col-lg-12 ">
+                            <div class="card-body">
+                                <div class="row">
+                                    
+                                    <div class="col-lg-6 col-sm-6 hxs p-3">
+                                        <div class="col-lg-8" style="float:right">
+                                            <div id="carousel-indicators5" class="carousel slide responsive-indicators-banners" data-bs-ride="carousel">
+                                                @*<ol class="carousel-indicators carousel-indicators5">
+                                                    @foreach (var item in Model)
+                                                    {
+                                                        <li data-bs-target="#carousel-indicators5" data-bs-slide-to="@item.Posicion" class="@(item.Posicion == 0 ? "active" : null)"></li>
+                                                    }
+                                                </ol>*@
+                                                <div class="carousel-inner">
+                                                    @*@foreach (var item in Model)
+                                                    {*@
+                                                        <div class="carousel-item active">
+                                                            <img class="d-block w-100 responsive-css-banner-principal" alt="" src="https://storageaccountisaac.blob.core.windows.net/apivaluezdocumental/1/2/inicio/2/3/0/71fb43a8-0589-4fd9-ac91-13a545a63f12" data-bs-holder-rendered="true">
+                                                        </div>
+                                                    @*}*@
+                                                </div>
                                             </div>
-                                        }
+                                        </div>
                                     </div>
+                                    <div class="col-lg-6 col-sm-6 p-3">
+                                        <div class="col-lg-8" style="float:left">
+                                            <div id="carousel-indicators5" class="carousel slide responsive-indicators-banners" data-bs-ride="carousel">
+                                                @*<ol class="carousel-indicators carousel-indicators5">
+                                                    @foreach (var item in Model)
+                                                    {
+                                                        <li data-bs-target="#carousel-indicators5" data-bs-slide-to="@item.Posicion" class="@(item.Posicion == 0 ? "active" : null)"></li>
+                                                    }
+                                                </ol>*@
+                                                <div class="carousel-inner">
+                                                    @foreach (var item in Model)
+                                                    {
+                                                        <div class="carousel-item @(item.Posicion == 0 ? "active" : null)">
+                                                            <img class="d-block w-100 responsive-css-banner-principal" alt="" src="@item.UrlSoporte" data-bs-holder-rendered="true">
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -533,36 +562,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Seccion 6 -- ¿Confival en cifras? -->
-                    <div class="container px-5 px-md-0" style="padding-bottom:6px;">
-                        <div class="row justify-content-center text-center">
-                            <div class="col-lg-8 ps-4 mb-lg-0- mb-4 pad-text">
-                                <h3 class="header-family">¿Confival en cifras?</h3>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-body p-4 text-dark">
-                                                <div class="statistics-info">
-                                                    <div class="row text-center">
-                                                        <div class="counter-status">
-                                                            <div class="counter-icon bg-primary-gradient box-shadow-primary">
-                                                                <i class="fe fe-trending-up text-white"></i>
-                                                            </div>
-                                                            <h3 class="mb-2">Más de</h3>
-                                                            <h1 class="display-2 counter mb-0">2709</h1>
-                                                            <h3 class="mb-2">Abogados y beneficiarios satisfechos en toda Colombia</h3>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                                       
                     <!-- Seccion 7 -- Preguntas Frecuentes -->
                     <div class="container px-5 px-md-0" style="padding-bottom:35px;">
                         <div class="container px-5 px-md-0">
@@ -576,12 +576,12 @@
                                     <div class="accordion" id="accordionPreguntas">
                                         <div class="accordion-item shadow-accordion">
                                             <h2 class="accordion-header" id="headingOne">
-                                                <button class="accordion-button " type="button" data-bs-toggle="collapse"
+                                                <button class="accordion-button collapsed shadow-accordion" type="button" data-bs-toggle="collapse"
                                                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                                     ¿Qué es la compra de sentencias judiciales?
                                                 </button>
                                             </h2>
-                                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                            <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne"
                                                  data-bs-parent="#accordionPreguntas">
                                                 <div class="accordion-body text-muted">
                                                     <p class="justify-policy">Es la compra de sentencias, conciliaciones y laudos en firme contra la Nación, o contra entidades  públicas o privadas con capacidad financiera, mediante la cual los demandantes y abogados disponen de los recursos anticipadamente evitando la espera que tiene el Estado para efectuar los pagos.</p>
@@ -622,12 +622,12 @@
                                         </div>
                                         <div class="accordion-item shadow-accordion">
                                             <h2 class="accordion-header" id="headingFour">
-                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                <button class="accordion-button collapsed shadow-accordion" type="button" data-bs-toggle="collapse"
                                                         data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
                                                     ¿Qué es un negocio especial?
                                                 </button>
                                             </h2>
-                                            <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour"
+                                            <div id="collapseFour" class="accordion-collapse collapse " aria-labelledby="headingFour"
                                                  data-bs-parent="#accordionPreguntas">
                                                 <div class="accordion-body text-muted">
                                                     <p class="justify-policy">Es la compra de sentencias, conciliaciones y laudos en firme contra la Nación, o contra entidades  públicas o privadas con capacidad financiera, mediante la cual los demandantes y abogados disponen de los recursos anticipadamente evitando la espera que tiene el Estado para efectuar los pagos.</p>
@@ -641,7 +641,7 @@
                     </div>
 
                     <!-- Seccion 8 -- Contacto -->
-                    <div class="bg-image-landing bg-white section" id="Contact">
+                    <div class="bg-image-landing bg-white section d-none" id="Contact">
                         <div class="container px-5 px-md-0">
                             <div class="row text-center justify-content-center">
                                 <div class="col-lg-8">
@@ -744,587 +744,6 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-xl-7 col-sm-11 col-xs-11 shadow-form-oportunidad" style="padding-left:40px; padding-right:40px; padding-bottom:50px;">
-                                                                                <h4 class="header-family pad-text">Registro de información</h4>
-
-                                                                                <!-- Mensajes temporales -->
-                                                                                <div class="hide-info pad-text" id="validacion-dos">
-                                                                                    <div class="alert alert-default" role="alert">
-                                                                                        <span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>
-                                                                                        <span class="alert-inner--text"><strong>Tu correo electronico!</strong> fue validado correctamente</span>
-                                                                                    </div>
-                                                                                    <h5>Continuemos con tu documento de identidad.</h5>
-                                                                                </div>
-                                                                                <div class="hide-info pad-text" id="validacion-tres">
-                                                                                    <div class="alert alert-default" role="alert">
-                                                                                        <span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>
-                                                                                        <span class="alert-inner--text"><strong>Tu numero de celular!</strong> fue validado correctamente</span>
-                                                                                    </div>
-                                                                                    <h5>Continuemos información de tu sentencia ó concialiación</h5>
-                                                                                </div>
-                                                                                <div class="hide-info pad-text" id="validacion-cuatro">
-                                                                                    <div class="alert alert-default" role="alert">
-                                                                                        <span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>
-                                                                                        <span class="alert-inner--text"><strong>Tu documento de identificación!</strong> fue validado correctamente</span>
-                                                                                    </div>
-                                                                                    <h5>Continuemos con tu numero de contacto.</h5>
-                                                                                </div>
-
-                                                                                <!-- INPUT Email -->
-                                                                                <div id="email-hide">
-                                                                                    <div class="form-group">
-                                                                                        <input class="form-control" type="email" placeholder="Correo electronico" name="Email" id="mail">
-                                                                                        <div class="invalid-feedback pad-text" id="invalid-mail">Ingrese un correo electronico valido</div>
-                                                                                    </div>
-                                                                                    <div id="politica-hide">
-                                                                                        <div class="row">
-                                                                                            <div class="col-lg-1 col-md-12">
-                                                                                                <div class="material-switch">
-                                                                                                    <input id="uncheckedPrimarySwitch-politica" name="switch01" type="checkbox" onclick="politica()" />
-                                                                                                    <label for="uncheckedPrimarySwitch-politica" class="label-primary"></label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-lg-10 col-md-12 margin-auto">
-                                                                                                <p>Autorizo el tratamiento de mis datos y acepto la <strong><a asp-action="DataPolicy" target="_blank">Política de Tratamiento de Datos Personales</a></strong></p>
-                                                                                            </div>
-                                                                                            <div class="invalid-feedback pad-text" id="invalid-politica">Debes autorizar nuestra política de tratamiento de datos personales</div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <div id="btn-validar-correo">
-                                                                                            <a href="#Contact" class="btn btn-primary" onclick="showOTPCorreo()">Validar Correo</a>
-                                                                                        </div>
-                                                                                        <div id="put-timer"></div>
-                                                                                        <div id="mesage-resend" class="pad-text hide-info">
-                                                                                            <div class="text-alert">
-                                                                                                <span class="alert-inner--icon me-2"><i class="fe fe-slash"></i></span>
-                                                                                                <span class="alert-inner--text"><strong>El codigo OTP</strong> enviado a su correo electronico ha vencido.</span>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div id="new-otp-mail" class="hide-info">
-                                                                                            <div class="row">
-                                                                                                <div class="col-lg-12 col-md-12 pad-text" style="text-align:center;">
-                                                                                                    <a href="#Contact" class="btn btn-success mr-confival" onclick="ResendMail()"><i class="fe fe-check me-2"></i> Nuevo codigo</a>
-                                                                                                    <a href="#Contact" class="btn btn-info ml-confival" onclick="Cancel()"><i class="fe fe-x me-2"></i> Cancelar</a>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="hide-info pad-text" id="correo-otp">
-                                                                                        <div class="row">
-                                                                                            <div class="col-xl-6 col-sm-12 col-xs-12">
-                                                                                                <div class="form-group">
-                                                                                                    <div class="otp-input text-start mb-2">
-                                                                                                        <label>Ingrese su codigo OTP de 6 digitos</label>
-                                                                                                        <div class="d-flex align-items-center justify-content-between mt-2">
-                                                                                                            <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-uno" />
-                                                                                                            <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-dos" />
-                                                                                                            <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-tres" />
-                                                                                                            <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-cuatro" />
-                                                                                                            <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-cinco" />
-                                                                                                            <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-seis" />
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="invalid-feedback" id="invalid-otp-mail">El codigo ingresado no corresponde al enviado a su correo</div>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <a href="#Contact" class="btn btn-primary" onclick="ShowDocumento()">Validar Codigo OTP</a>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <partial name="~/Views/Shared/_LoaderOportunidad.cshtml" model="loaderUno" />
-
-                                                                                <!-- ALERTA INTENTOS VERIFIK SUPERADOS -->
-                                                                                <div class="hide-info" id="intentos-verifik-superados">
-                                                                                    <partial name="~/Views/Shared/_IntentosSuperados.cshtml" />
-                                                                                </div>
-
-                                                                                <!-- INPUT Documento Identidad -->
-                                                                                <div class="hide-info pad-text" id="documento-hide">
-                                                                                    <div class="row">
-                                                                                        <div class="hide-info" id="segundo-intento">
-                                                                                            <p class="text-alert" id="mensaje-error-verifica"></p>
-                                                                                        </div>
-                                                                                        <div class="col-lg-4 col-md-4 col-sm-12">
-                                                                                            <div class="form-group">
-                                                                                                <label class="form-label">Tipo de Documento</label>
-                                                                                                <select class="form-control select2 form-select" id="tipo-documento">
-                                                                                                    <option value="0">Seleccione..</option>
-                                                                                                    <option value="CC">CC - Cedula de ciudadania</option>
-                                                                                                    <option value="CE">CE - Cedula de extranjeria</option>
-                                                                                                </select>
-                                                                                                <div class="invalid-feedback" id="invalid-tipo-documento">Seleccione un tipo de documento</div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-4 col-md-4 col-sm-12" id="numero-documento">
-                                                                                            <div class="form-group">
-                                                                                                <label class="form-label">No. de documento</label>
-                                                                                                <input class="form-control" type="text" required="" placeholder="Numero de documento" name="documento" id="documento">
-                                                                                                <div class="invalid-feedback" id="invalid-documento">Ingrese un numero de documento valido</div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-4 col-md-4 col-sm-12">
-                                                                                            <div class="form-group">
-                                                                                                <label class="form-label">Fecha de Expedicion</label>
-                                                                                                <input class="form-control" type="date" id="fecha-expedicion-user">
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="col-lg-4 col-md-4 col-sm-12" id="nombre-lead">
-                                                                                            <div class="form-group">
-                                                                                                <label class="form-label">Nombre completo</label>
-                                                                                                <input class="form-control" type="text" id="nombre-completo-lead">
-                                                                                                <div class="invalid-feedback" id="invalid-nombre-completo-lead">El campo 'Nombre completo' es requerido</div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-4 col-md-4 col-sm-12" id="apellido-lead">
-                                                                                            <div class="form-group">
-                                                                                                <label class="form-label">Apellidos</label>
-                                                                                                <input class="form-control" type="text" id="apellidos-lead">
-                                                                                                <div class="invalid-feedback" id="invalid-apellidos-lead">El campo 'Apellidos' es requerido</div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-lg-4 col-md-4 col-sm-12">
-                                                                                            <div class="form-group">
-                                                                                                <label class="form-label">Fecha de nacimiento</label>
-                                                                                                <input class="form-control" type="date" id="fecha-nacimiento-user">
-                                                                                                <div class="invalid-feedback" id="invalid-fecha-nacimiento-user">Fecha de nacimiento invalida</div>
-
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div id="btn-validar-documento">
-                                                                                        <a href="#Contact" class="btn btn-primary" onclick="ValidarDocumento()" id="intentos-verifik">Validar documento</a>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <partial name="~/Views/Shared/_LoaderOportunidad.cshtml" model="loadertres" />
-
-                                                                                <!-- INFORMACION DOCUMENTO EXISTENTE -->
-                                                                                <div class="hide-info" id="confirmar-documento">
-                                                                                    <div class="row">
-                                                                                        <div class="card">
-                                                                                            <div class="card-header" style="padding: 0; padding-bottom: 15px;">
-                                                                                                <div class="card-title margin-auto" style="font-size: 0.9rem;">Hemos confirmado tu identidad</div>
-                                                                                            </div>
-                                                                                            <div class="card-body" style="padding: 0;">
-                                                                                                <div class="row">
-                                                                                                    <div class="d-flex flex-wrap align-items-center">
-                                                                                                        <div class="margin-auto">
-                                                                                                            <h3 id="full-name" style="text-align: center;"></h3>
-                                                                                                            <h4 id="document-full-name" class="text-muted mb-2"></h4>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row" style="padding-top:20px;">
-                                                                                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                                                                                    <div id="btn-confirmar-datos" style="text-align:center;">
-                                                                                                        <a href="#Contact" class="btn btn-success" onclick="ShowCelular()"><i class="fe fe-check me-2"></i> Confirmar</a>
-                                                                                                        <a href="#Contact" class="btn btn-info" onclick="Cancel()"><i class="fe fe-x me-2"></i> Cancelar</a>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <!-- ALERTA INTENTOS SMS SUPERADOS -->
-                                                                                <div class="hide-info" id="intentos-sms-superados">
-                                                                                    <partial name="~/Views/Shared/_IntentosSuperados.cshtml" />
-                                                                                </div>
-
-                                                                                <!-- INPUT Numero Celular -->
-                                                                                <div class="hide-info" id="celular-hide">
-                                                                                    <div class="form-group">
-                                                                                        <input class="form-control" type="text" required="" placeholder="Celular de contacto" id="celular">
-                                                                                        <div class="invalid-feedback pad-text" id="invalid-celular">Ingrese un numero celular valido</div>
-                                                                                    </div>
-                                                                                    <div id="btn-validar-celular">
-                                                                                        <a href="#Contact" class="btn btn-primary" onclick="showOTPCelular()">Validar No. Celular</a>
-                                                                                    </div>
-                                                                                    <div id="put-timer2"></div>
-                                                                                    <div id="mesage-resend-celular" class="pad-text hide-info">
-                                                                                        <div class="text-alert">
-                                                                                            <span class="alert-inner--icon me-2"><i class="fe fe-slash"></i></span>
-                                                                                            <span class="alert-inner--text"><strong>El codigo OTP</strong> enviado a su numero celular ha vencido.</span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div id="new-otp-celular" class="hide-info">
-                                                                                        <div class="row">
-                                                                                            <div class="col-lg-12 col-md-12 pad-text" style="text-align:center;">
-                                                                                                <a href="#Contact" class="btn btn-success mr-confival" onclick="ResendMesage()" id="intentos-sms"><i class="fe fe-check me-2"></i> Nuevo codigo</a>
-                                                                                                <a href="#Contact" class="btn btn-info ml-confival" onclick="Cancel()"><i class="fe fe-x me-2"></i> Cancelar</a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="hide-info pad-text" id="mensaje-otp">
-                                                                                        <div class="row">
-                                                                                            <div class="col-xl-6 col-sm-12 col-xs-12">
-                                                                                                <div class="form-group">
-                                                                                                    <div class="otp-input text-start mb-2">
-                                                                                                        <label>Ingrese su codigo OTP de 6 digitos</label>
-                                                                                                        <div class="d-flex align-items-center justify-content-between mt-2">
-                                                                                                            <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-uno-m" />
-                                                                                                            <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-dos-m" />
-                                                                                                            <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-tres-m" />
-                                                                                                            <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-cuatro-m" />
-                                                                                                            <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-cinco-m" />
-                                                                                                            <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-seis-m" />
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="invalid-feedback" id="invalid-otp-celular">El codigo ingresado no corresponde al enviado a su numero de celular</div>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <a href="#Contact" class="btn btn-primary" onclick="ShowOportunidad()">Validar Codigo OTP</a>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <partial name="~/Views/Shared/_LoaderOportunidad.cshtml" model="loaderDos" />
-
-                                                                                <!-- <INPUT Oportunidad Seccion 1  -->
-                                                                                <div class="hide-info" id="oportunidad-existente">
-                                                                                    <div class="row" style="padding-bottom:40px;">
-                                                                                        <div class="col-12">
-                                                                                            <div class="counter-status">
-                                                                                                <div class="row">
-                                                                                                    <div class="col-xl-2 col-sm-2 col-xs-12">
-                                                                                                        <div class="row justify-content-center">
-                                                                                                            <div class="counter-icon-form-opotunidad bg-success-gradient box-shadow-success">
-                                                                                                                <i class="icon icon-docs text-white"></i>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col-xl-10 col-sm-10 col-xs-12 margin-auto">
-                                                                                                        <h5 class="mb-2 text-center-icon">Actualmente tu caso ya se encuentra revisado por uno de nuestros asesores.</h5>
-                                                                                                        <h5 class="mb-2 text-center-icon">Nos comunicaremos contigo en el menor tiempo posible</h5>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row text-center justify-content-center">
-                                                                                                    <div class="col-12">
-                                                                                                        <a href="#Contact" class="btn btn-info" onclick="Cancel()">Ententido</a>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="hide-info" id="lead-oportunidad-exitoso">
-                                                                                    <div class="row" style="padding-bottom:40px;">
-                                                                                        <div class="col-12">
-                                                                                            <div class="counter-status">
-                                                                                                <div class="row">
-                                                                                                    <div class="col-xl-2 col-sm-2 col-xs-12">
-                                                                                                        <div class="row justify-content-center">
-                                                                                                            <div class="counter-icon-form-opotunidad bg-primary-gradient box-shadow-primary">
-                                                                                                                <i class="icon icon-rocket text-white"></i>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col-xl-10 col-sm-10 col-xs-12 margin-auto">
-                                                                                                        <h5 class="mb-2 text-center-icon">Tu caso ha sido registrado con exito !!!.</h5>
-                                                                                                        <h5 class="mb-2 text-center-icon">Nos comunicaremos contigo en el menor tiempo posible</h5>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row text-center justify-content-center">
-                                                                                                    <div class="col-12">
-                                                                                                        <a href="#Contact" class="btn btn-info" onclick="Cancel()">Ententido</a>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <div class="hide-info" id="form-oportunidad-error-api">
-                                                                                    <div class="row" style="padding-bottom:40px;">
-                                                                                        <div class="col-12">
-                                                                                            <div class="counter-status">
-                                                                                                <div class="row">
-                                                                                                    <div class="col-xl-2 col-sm-2 col-xs-12">
-                                                                                                        <div class="row justify-content-center">
-                                                                                                            <div class="counter-icon-form-opotunidad bg-danger-gradient box-shadow-danger">
-                                                                                                                <i class="fe fe-trending-up text-white"></i>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="col-xl-10 col-sm-10 col-xs-12 margin-auto">
-                                                                                                        <h5 class="mb-2 text-center-icon" id="intentos-sms-msg">Nuestro sistema esta presentando cambios, intentalo de nuevo mas tarde.</h5>
-                                                                                                        <h5 class="mb-2 text-center-icon" id="intentos-verifik-msg">Estamos trabajando para solucionarlo!</h5>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row text-center justify-content-center">
-                                                                                                    <div class="col-12">
-                                                                                                        <a href="#Contact" class="btn btn-info" onclick="Cancel()">Ententido</a>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="px-5 px-md-0">
-                                                                                        <div class="row text-center justify-content-center">
-                                                                                            <div class="col-xl-12 col-md-12 col-sm-12">
-                                                                                                <div class="services-statistics">
-                                                                                                    <div class="row">
-                                                                                                        <div class="col-6">
-                                                                                                            <div class="card p-0">
-                                                                                                                <div class="card-body p-0">
-                                                                                                                    <div class="row">
-                                                                                                                        <div class="col-xl-2 col-md-2 col-sm-4">
-                                                                                                                            <div class="counter-icon border border-primary text-primary">
-                                                                                                                                <i class="fe fe-map-pin"></i>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="col-xl-10 col-md-10 px-0 mb-1 col-sm-8">
-                                                                                                                            <h5 class="mb-1 fw-semibold">Sede Principal</h5>
-                                                                                                                            <p class="mb-0 fs-13 text-muted">
-                                                                                                                                Bogota, Colombia
-                                                                                                                            </p>
-                                                                                                                            <p class="mb-0 fs-13 text-muted">
-                                                                                                                                Cra 14 No 100-19 Oficina 401-403
-                                                                                                                            </p>
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <div class="col-6">
-                                                                                                            <div class="card p-0">
-                                                                                                                <div class="card-body p-0">
-                                                                                                                    <div class="row">
-                                                                                                                        <div class="col-xl-2 col-md-2 col-sm-4">
-                                                                                                                            <div class="counter-icon border border-primary text-primary">
-                                                                                                                                <i class="fe fe-headphones"></i>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="col-xl-10 col-md-10 px-0 mb-1 col-sm-8">
-                                                                                                                            <h5 class="mb-1 fw-semibold">Telefonos</h5>
-                                                                                                                            <p class="mb-0 fs-13 text-muted">
-                                                                                                                                (57) 321 452 9630
-                                                                                                                            </p>
-                                                                                                                            <p class="mb-0 fs-13 text-muted">
-                                                                                                                                (57) 314 669 9814
-                                                                                                                            </p>
-
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <div class="col-6">
-                                                                                                            <div class="card p-0">
-                                                                                                                <div class="card-body p-0">
-                                                                                                                    <div class="row">
-                                                                                                                        <div class="col-xl-2 col-md-2 col-sm-4">
-                                                                                                                            <div class="counter-icon border border-primary text-primary">
-                                                                                                                                <i class="fe fe-mail"></i>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="col-xl-10 col-md-10 px-0 mb-1 col-sm-8">
-                                                                                                                            <h5 class="mb-1 fw-semibold">Correo</h5>
-                                                                                                                            <p class="fs-13 text-muted">info@confival.com</p>
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <div class="col-6">
-                                                                                                            <div class="card p-0">
-                                                                                                                <div class="card-body p-0">
-                                                                                                                    <div class="row">
-                                                                                                                        <div class="col-xl-2 col-md-2 col-sm-4">
-                                                                                                                            <div class="counter-icon border border-primary text-primary">
-                                                                                                                                <i class="fe fe-airplay"></i>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        <div class="col-xl-10 col-md-10 px-0 mb-1 col-sm-8">
-                                                                                                                            <h5 class="mb-1 fw-semibold">Horario</h5>
-                                                                                                                            <p class="mb-0 fs-13 text-muted">
-                                                                                                                                Lun - Vie: 8am
-                                                                                                                                - 6pm
-                                                                                                                            </p>
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <partial name="~/Views/Shared/_LoaderOportunidad.cshtml" model="loaderCuatro" />
-                                                                                <form id="formLeadOportunidad" name="formLeadOportunidad" method="post" enctype="multipart/form-data">
-                                                                                    <div class="hide-info" id="oportunidad-hide">
-                                                                                        <div>
-                                                                                            <input type="hidden" id="correo-ok" name="correo-ok" />
-                                                                                            <input type="hidden" id="tp-documento-ok" name="tp-documento-ok" />
-                                                                                            <input type="hidden" id="no-documento-ok" name="no-documento-ok" />
-                                                                                            <input type="hidden" id="nombres-ok" name="nombres-ok" />
-                                                                                            <input type="hidden" id="apellidos-ok" name="apellidos-ok" />
-                                                                                            <input type="hidden" id="fNacimiento-ok" name="fNacimiento-ok" />
-                                                                                            <input type="hidden" id="fExpedicion-ok" name="fExpedicion-ok" />
-                                                                                            <input type="hidden" id="no-contacto-ok" name="no-contacto-ok" />
-                                                                                            <input type="hidden" id="valnumOk" name="valnumOk" />
-                                                                                        </div>
-                                                                                        <label class="form-label">¿Cual es su relación con la sentencia ó conciliación</label>
-                                                                                        <div class="row">
-                                                                                            @foreach (var item in ViewBag.TipoActores)
-                                                                                            {
-                                                                                                <div class="col-lg-4 col-xs-12">
-                                                                                                    <div class="form-check">
-                                                                                                        @* en este input tenia el onclick  --  onclick="ChangeActor(@item.Id)"*@
-                                                                                                        <input type="radio" class="form-check-input" name="radio-stacked" id="@item.Id" required>
-                                                                                                        <label class="form-check-label">@item.Nombre</label>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            }
-                                                                                            <div class="invalid-feedback" id="invalid-feedback-tipo-actores">Seleccione un tipo de relación.</div>
-                                                                                        </div>
-                                                                                        <div class="row">
-                                                                                            <div class="col-12">
-                                                                                                <label class="form-label">Demandante</label>
-                                                                                                <input class="form-control" type="text" id="demandante" name="demandante">
-                                                                                                <div class="invalid-feedback" id="invalid-feedback-demandante">El campo 'Demandante' es requerido</div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="row">
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                                <label class="form-label">Cuenta de cobro</label>
-                                                                                                <input class="form-control" type="text" id="cuenta-cobro-user" name="cuenta-cobro-user">
-                                                                                            </div>
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label class="form-label">Fecha de Ejecutoria</label>
-                                                                                                    <input class="form-control" type="date" placeholder="Fecha de Ejecutoria" id="f-ejecutoria" name="f-ejecutoria">
-                                                                                                    <div class="invalid-feedback" id="invalid-f-ejecutoria">El campo 'Fecha de Ejecutoria' es requerido</div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="row">
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label class="form-label">Tipo de Fallo</label>
-                                                                                                    <select class="form-select" id="fallo" name="fallo">
-                                                                                                        <option selected disabled value="">Seleccione..</option>
-                                                                                                        @foreach (var item in ViewBag.LstProvidencia)
-                                                                                                        {
-                                                                                                            <option value="@item.Id">@item.Nombre</option>
-                                                                                                        }
-                                                                                                    </select>
-                                                                                                    <div class="invalid-feedback" id="invalid-feedback-tipo-fallo">Seleccione un tipo de fallo.</div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label class="form-label">Tipo Regimen</label>
-                                                                                                    <select class="form-select" id="tipo-regimen" name="tipo-regimen">
-                                                                                                        <option selected disabled value="">Seleccione..</option>
-                                                                                                        @foreach (var item in ViewBag.LstRegimen)
-                                                                                                        {
-                                                                                                            <option value="@item.Id">@item.Nombre</option>
-                                                                                                        }
-                                                                                                    </select>
-                                                                                                    <div class="invalid-feedback" id="invalid-feedback-tipo-regimen">Seleccione un tipo regimen.</div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="row">
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label class="form-label">Medio de control</label>
-                                                                                                    <select class="form-select" id="medio-control" name="medio-control">
-                                                                                                        <option selected disabled value="">Seleccione..</option>
-                                                                                                        @foreach (var item in ViewBag.LstMedioControl)
-                                                                                                        {
-                                                                                                            <option value="@item.Id">@item.Nombre</option>
-                                                                                                        }
-                                                                                                    </select>
-                                                                                                    <div class="invalid-feedback" id="invalid-feedback-medio-control">Seleccione un medio de control.</div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label class="form-label">Entidad</label>
-                                                                                                    <select class="form-select" id="entidad-pagaduria" name="entidad-pagaduria">
-                                                                                                        <option selected disabled value="">Seleccione..</option>
-                                                                                                        @foreach (var item in ViewBag.LstEntidad)
-                                                                                                        {
-                                                                                                            <option value="@item.Id">@item.Nombre</option>
-                                                                                                        }
-                                                                                                    </select>
-                                                                                                    <div class="invalid-feedback" id="invalid-feedback-entidad-pagaduria">Seleccione una entidad.</div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="row">
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label class="form-label">Tipo de Corporacion</label>
-                                                                                                    <select class="form-select" id="tipo-corporacion">
-                                                                                                        <option selected disabled value="">Seleccione..</option>
-                                                                                                        @foreach (var item in ViewBag.LstCorporacion)
-                                                                                                        {
-                                                                                                            <option value="@item.Id">@item.Nombre</option>
-                                                                                                        }
-                                                                                                    </select>
-                                                                                                    <div class="invalid-feedback" id="invalid-feedback-tipo-corporacion">Seleccione un tipo de corporacion.</div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label class="form-label">Corporacion</label>
-                                                                                                    <select class="form-select select2-show-search" id="corporacion" name="corporacion">
-                                                                                                        <option selected disabled value="">Seleccione..</option>
-                                                                                                    </select>
-                                                                                                    <div class="invalid-feedback" id="invalid-feedback-corporacion">Seleccione una corporacion.</div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="row">
-                                                                                            <div class="col-12">
-                                                                                                <label class="form-label">Numero de radicado</label>
-                                                                                                <input class="form-control" type="text" placeholder="xxxxx - xx  - xx - xxx - xxxx - xxxxx - xx " id="numero-radicado-user" name="numero-radicado-user">
-                                                                                                <div class="invalid-feedback" id="invalid-feedback-no-radicado">El numero de radicado debe tener 23 caracteres.</div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="row">
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label class="form-label">Cargar documento primera instancia <span style="font-style:italic; font-size:12px;"> (opcional)</span></label>
-                                                                                                    <input type="file" class="dropify" data-height="200" id="primera-instancia-file" name="primera-instancia-file" />
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                                                                                <div class="form-group">
-                                                                                                    <label class="form-label">Cargar documento segunda instancia <span style="font-style:italic; font-size:12px;"> (opcional)</span></label>
-                                                                                                    <input type="file" class="dropify" data-height="200" id="segunda-instancia-file" name="segunda-instancia-file" />
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div id="btn-validar-celular">
-                                                                                            <a href="#Contact" class="btn btn-primary" onclick="LeadOportunidad()">Quiero que me contacten</a>
-                                                                                        </div>
-
-                                                                                        <!-- Intentos value -->
-                                                                                        <div class="hide-info">
-                                                                                            <p>Intentos: </p>
-                                                                                            <div id="intentos-sms-count">0</div>
-                                                                                        </div>
-                                                                                        <div class="hide-info">
-                                                                                            <p>Intentos: </p>
-                                                                                            <div id="intentos-verifik-count">0</div>
-                                                                                        </div>
-
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1342,17 +761,23 @@
                 </div>
                 <!-- Inicio FIN-->
                 <!-- Servicios -->
-                <div class="section" id="Servicios" style="padding-top:120px">
+                <div class="section" id="Servicios">
                     <div class="container px-5 px-md-0">
                         <div class="row text-center">
                             <div class="col-lg-12 ps-3">
-                                <h3 class="header-family pad-text">Nuestros Servicios</h3>
+                                <h3 class="header-family pad-text">Confival en cifras</h3>
                             </div>
                         </div>
                         <div>
                             <partial name="~/Views/Shared/_Indicadores.cshtml" />
                         </div>
+
                         <!-- ROW-3 OPEN -->
+                        <div class="row text-center mt-2">
+                            <div class="col-lg-12 ps-3">
+                                <h3 class="header-family pad-text">Nuestros servicios</h3>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-6 col-sm-12 col-lg-4 col-xl-4">
                                 <div class="card bg-white text-center overflow-hidden">
@@ -1555,7 +980,601 @@
 </div>
 
 
+<div class="modal fade" id="modaldemo8" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered text-center modal-lg" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Cotiza tu sentencia</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-xl-12 col-sm-12 col-xs-12 " >
+                    <h4 class="header-family pad-text">Registro de información</h4>
 
+                    <!-- Mensajes temporales -->
+                    <div class="hide-info pad-text" id="validacion-dos">
+                        <div class="alert alert-default" role="alert">
+                            <span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>
+                            <span class="alert-inner--text"><strong>Tu correo electronico!</strong> fue validado correctamente</span>
+                        </div>
+                        <h5>Continuemos con tu documento de identidad.</h5>
+                    </div>
+                    <div class="hide-info pad-text" id="validacion-tres">
+                        <div class="alert alert-default" role="alert">
+                            <span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>
+                            <span class="alert-inner--text"><strong>Tu numero de celular!</strong> fue validado correctamente</span>
+                        </div>
+                        <h5>Continuemos información de tu sentencia ó concialiación</h5>
+                    </div>
+                    <div class="hide-info pad-text" id="validacion-cuatro">
+                        <div class="alert alert-default" role="alert">
+                            <span class="alert-inner--icon me-2"><i class="fe fe-thumbs-up"></i></span>
+                            <span class="alert-inner--text"><strong>Tu documento de identificación!</strong> fue validado correctamente</span>
+                        </div>
+                        <h5>Continuemos con tu numero de contacto.</h5>
+                    </div>
+
+                    <!-- INPUT Email -->
+                    <div id="email-hide">
+                        <div class="form-group">
+                            <input class="form-control" type="email" placeholder="Correo electronico" name="Email" id="mail">
+                            <div class="invalid-feedback pad-text" id="invalid-mail">Ingrese un correo electronico valido</div>
+                        </div>
+                        <div id="politica-hide">
+                            <div class="row">
+                                <div class="col-lg-1 col-md-12">
+                                    <div class="material-switch">
+                                        <input id="uncheckedPrimarySwitch-politica" name="switch01" type="checkbox" onclick="politica()" />
+                                        <label for="uncheckedPrimarySwitch-politica" class="label-primary"></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-10 col-md-12 margin-auto">
+                                    <p>Autorizo el tratamiento de mis datos y acepto la <strong><a asp-action="DataPolicy" target="_blank">Política de Tratamiento de Datos Personales</a></strong></p>
+                                </div>
+                                <div class="invalid-feedback pad-text" id="invalid-politica">Debes autorizar nuestra política de tratamiento de datos personales</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div id="btn-validar-correo">
+                                <a href="#Contact" class="btn btn-primary" onclick="showOTPCorreo()">Validar Correo</a>
+                            </div>
+                            <div id="put-timer"></div>
+                            <div id="mesage-resend" class="pad-text hide-info">
+                                <div class="text-alert">
+                                    <span class="alert-inner--icon me-2"><i class="fe fe-slash"></i></span>
+                                    <span class="alert-inner--text"><strong>El codigo OTP</strong> enviado a su correo electronico ha vencido.</span>
+                                </div>
+                            </div>
+                            <div id="new-otp-mail" class="hide-info">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 pad-text" style="text-align:center;">
+                                        <a href="#Contact" class="btn btn-success mr-confival" onclick="ResendMail()"><i class="fe fe-check me-2"></i> Nuevo codigo</a>
+                                        <a href="#Contact" class="btn btn-info ml-confival" onclick="Cancel()"><i class="fe fe-x me-2"></i> Cancelar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hide-info pad-text" id="correo-otp">
+                            <div class="row">
+                                <div class="col-xl-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <div class="otp-input text-start mb-2">
+                                            <label>Ingrese su codigo OTP de 6 digitos</label>
+                                            <div class="d-flex align-items-center justify-content-between mt-2">
+                                                <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-uno" />
+                                                <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-dos" />
+                                                <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-tres" />
+                                                <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-cuatro" />
+                                                <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-cinco" />
+                                                <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-seis" />
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback" id="invalid-otp-mail">El codigo ingresado no corresponde al enviado a su correo</div>
+                                    </div>
+                                    <div>
+                                        <a href="#Contact" class="btn btn-primary" onclick="ShowDocumento()">Validar Codigo OTP</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <partial name="~/Views/Shared/_LoaderOportunidad.cshtml" model="loaderUno" />
+
+                    <!-- ALERTA INTENTOS VERIFIK SUPERADOS -->
+                    <div class="hide-info" id="intentos-verifik-superados">
+                        <partial name="~/Views/Shared/_IntentosSuperados.cshtml" />
+                    </div>
+
+                    <!-- INPUT Documento Identidad -->
+                    <div class="hide-info pad-text" id="documento-hide">
+                        <div class="row">
+                            <div class="hide-info" id="segundo-intento">
+                                <p class="text-alert" id="mensaje-error-verifica"></p>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label">Tipo de Documento</label>
+                                    <select class="form-control select2 form-select" id="tipo-documento">
+                                        <option value="0">Seleccione..</option>
+                                        <option value="CC">CC - Cedula de ciudadania</option>
+                                        <option value="CE">CE - Cedula de extranjeria</option>
+                                    </select>
+                                    <div class="invalid-feedback" id="invalid-tipo-documento">Seleccione un tipo de documento</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12" id="numero-documento">
+                                <div class="form-group">
+                                    <label class="form-label">No. de documento</label>
+                                    <input class="form-control" type="text" required="" placeholder="Numero de documento" name="documento" id="documento">
+                                    <div class="invalid-feedback" id="invalid-documento">Ingrese un numero de documento valido</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label">Fecha de Expedicion</label>
+                                    <input class="form-control" type="date" id="fecha-expedicion-user">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-12" id="nombre-lead">
+                                <div class="form-group">
+                                    <label class="form-label">Nombre completo</label>
+                                    <input class="form-control" type="text" id="nombre-completo-lead">
+                                    <div class="invalid-feedback" id="invalid-nombre-completo-lead">El campo 'Nombre completo' es requerido</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12" id="apellido-lead">
+                                <div class="form-group">
+                                    <label class="form-label">Apellidos</label>
+                                    <input class="form-control" type="text" id="apellidos-lead">
+                                    <div class="invalid-feedback" id="invalid-apellidos-lead">El campo 'Apellidos' es requerido</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label">Fecha de nacimiento</label>
+                                    <input class="form-control" type="date" id="fecha-nacimiento-user">
+                                    <div class="invalid-feedback" id="invalid-fecha-nacimiento-user">Fecha de nacimiento invalida</div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="btn-validar-documento">
+                            <a href="#Contact" class="btn btn-primary" onclick="ValidarDocumento()" id="intentos-verifik">Validar documento</a>
+                        </div>
+                    </div>
+                    <partial name="~/Views/Shared/_LoaderOportunidad.cshtml" model="loadertres" />
+
+                    <!-- INFORMACION DOCUMENTO EXISTENTE -->
+                    <div class="hide-info" id="confirmar-documento">
+                        <div class="row">
+                            <div class="card">
+                                <div class="card-header" style="padding: 0; padding-bottom: 15px;">
+                                    <div class="card-title margin-auto" style="font-size: 0.9rem;">Hemos confirmado tu identidad</div>
+                                </div>
+                                <div class="card-body" style="padding: 0;">
+                                    <div class="row">
+                                        <div class="d-flex flex-wrap align-items-center">
+                                            <div class="margin-auto">
+                                                <h3 id="full-name" style="text-align: center;"></h3>
+                                                <h4 id="document-full-name" class="text-muted mb-2"></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:20px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div id="btn-confirmar-datos" style="text-align:center;">
+                                            <a href="#Contact" class="btn btn-success" onclick="ShowCelular()"><i class="fe fe-check me-2"></i> Confirmar</a>
+                                            <a href="#Contact" class="btn btn-info" onclick="Cancel()"><i class="fe fe-x me-2"></i> Cancelar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ALERTA INTENTOS SMS SUPERADOS -->
+                    <div class="hide-info" id="intentos-sms-superados">
+                        <partial name="~/Views/Shared/_IntentosSuperados.cshtml" />
+                    </div>
+
+                    <!-- INPUT Numero Celular -->
+                    <div class="hide-info" id="celular-hide">
+                        <div class="form-group">
+                            <input class="form-control" type="text" required="" placeholder="Celular de contacto" id="celular">
+                            <div class="invalid-feedback pad-text" id="invalid-celular">Ingrese un numero celular valido</div>
+                        </div>
+                        <div id="btn-validar-celular">
+                            <a href="#Contact" class="btn btn-primary" onclick="showOTPCelular()">Validar No. Celular</a>
+                        </div>
+                        <div id="put-timer2"></div>
+                        <div id="mesage-resend-celular" class="pad-text hide-info">
+                            <div class="text-alert">
+                                <span class="alert-inner--icon me-2"><i class="fe fe-slash"></i></span>
+                                <span class="alert-inner--text"><strong>El codigo OTP</strong> enviado a su numero celular ha vencido.</span>
+                            </div>
+                        </div>
+                        <div id="new-otp-celular" class="hide-info">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 pad-text" style="text-align:center;">
+                                    <a href="#Contact" class="btn btn-success mr-confival" onclick="ResendMesage()" id="intentos-sms"><i class="fe fe-check me-2"></i> Nuevo codigo</a>
+                                    <a href="#Contact" class="btn btn-info ml-confival" onclick="Cancel()"><i class="fe fe-x me-2"></i> Cancelar</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hide-info pad-text" id="mensaje-otp">
+                            <div class="row">
+                                <div class="col-xl-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <div class="otp-input text-start mb-2">
+                                            <label>Ingrese su codigo OTP de 6 digitos</label>
+                                            <div class="d-flex align-items-center justify-content-between mt-2">
+                                                <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-uno-m" />
+                                                <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-dos-m" />
+                                                <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-tres-m" />
+                                                <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-cuatro-m" />
+                                                <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-cinco-m" />
+                                                <input type="text" maxlength="1" class="inputs shadow-accordion" placeholder="" id="numero-seis-m" />
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback" id="invalid-otp-celular">El codigo ingresado no corresponde al enviado a su numero de celular</div>
+                                    </div>
+                                    <div>
+                                        <a href="#Contact" class="btn btn-primary" onclick="ShowOportunidad()">Validar Codigo OTP</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <partial name="~/Views/Shared/_LoaderOportunidad.cshtml" model="loaderDos" />
+
+                    <!-- <INPUT Oportunidad Seccion 1  -->
+                    <div class="hide-info" id="oportunidad-existente">
+                        <div class="row" style="padding-bottom:40px;">
+                            <div class="col-12">
+                                <div class="counter-status">
+                                    <div class="row">
+                                        <div class="col-xl-2 col-sm-2 col-xs-12">
+                                            <div class="row justify-content-center">
+                                                <div class="counter-icon-form-opotunidad bg-success-gradient box-shadow-success">
+                                                    <i class="icon icon-docs text-white"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-10 col-sm-10 col-xs-12 margin-auto">
+                                            <h5 class="mb-2 text-center-icon">Actualmente tu caso ya se encuentra revisado por uno de nuestros asesores.</h5>
+                                            <h5 class="mb-2 text-center-icon">Nos comunicaremos contigo en el menor tiempo posible</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center justify-content-center">
+                                        <div class="col-12">
+                                            <a href="#Contact" class="btn btn-info" onclick="Cancel()">Ententido</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hide-info" id="lead-oportunidad-exitoso">
+                        <div class="row" style="padding-bottom:40px;">
+                            <div class="col-12">
+                                <div class="counter-status">
+                                    <div class="row">
+                                        <div class="col-xl-2 col-sm-2 col-xs-12">
+                                           @* <div class="row justify-content-center">
+                                                <div class="counter-icon-form-opotunidad bg-primary-gradient box-shadow-primary">
+                                                    <i class="icon icon-rocket text-white"></i>
+                                                </div>
+                                            </div>*@
+                                        </div>
+                                        <div class="col-xl-10 col-sm-10 col-xs-12 margin-auto">
+                                            <h5 class="mb-2 text-center-icon">Tu caso ha sido registrado con exito !!!.</h5>
+                                            <h5 class="mb-2 text-center-icon">Nos comunicaremos contigo en el menor tiempo posible</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center justify-content-center">
+                                        <div class="col-12">
+                                            <a href="#Contact" class="btn btn-info" onclick="Cancel()">Ententido</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hide-info" id="form-oportunidad-error-api">
+                        <div class="row" style="padding-bottom:40px;">
+                            <div class="col-12">
+                                <div class="counter-status">
+                                    <div class="row">
+                                        <div class="col-xl-2 col-sm-2 col-xs-12">
+                                            <div class="row justify-content-center">
+                                                <div class="counter-icon-form-opotunidad bg-danger-gradient box-shadow-danger">
+                                                    <i class="fe fe-trending-up text-white"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-10 col-sm-10 col-xs-12 margin-auto">
+                                            <h5 class="mb-2 text-center-icon" id="intentos-sms-msg">Nuestro sistema esta presentando cambios, intentalo de nuevo mas tarde.</h5>
+                                            <h5 class="mb-2 text-center-icon" id="intentos-verifik-msg">Estamos trabajando para solucionarlo!</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center justify-content-center">
+                                        <div class="col-12">
+                                            <a href="#Contact" class="btn btn-info" onclick="Cancel()">Ententido</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-5 px-md-0">
+                            <div class="row text-center justify-content-center">
+                                <div class="col-xl-12 col-md-12 col-sm-12">
+                                    <div class="services-statistics">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="card p-0">
+                                                    <div class="card-body p-0">
+                                                        <div class="row">
+                                                            <div class="col-xl-2 col-md-2 col-sm-4">
+                                                                <div class="counter-icon border border-primary text-primary">
+                                                                    <i class="fe fe-map-pin"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-10 col-md-10 px-0 mb-1 col-sm-8">
+                                                                <h5 class="mb-1 fw-semibold">Sede Principal</h5>
+                                                                <p class="mb-0 fs-13 text-muted">
+                                                                    Bogota, Colombia
+                                                                </p>
+                                                                <p class="mb-0 fs-13 text-muted">
+                                                                    Cra 14 No 100-19 Oficina 401-403
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="card p-0">
+                                                    <div class="card-body p-0">
+                                                        <div class="row">
+                                                            <div class="col-xl-2 col-md-2 col-sm-4">
+                                                                <div class="counter-icon border border-primary text-primary">
+                                                                    <i class="fe fe-headphones"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-10 col-md-10 px-0 mb-1 col-sm-8">
+                                                                <h5 class="mb-1 fw-semibold">Telefonos</h5>
+                                                                <p class="mb-0 fs-13 text-muted">
+                                                                    (57) 321 452 9630
+                                                                </p>
+                                                                <p class="mb-0 fs-13 text-muted">
+                                                                    (57) 314 669 9814
+                                                                </p>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="card p-0">
+                                                    <div class="card-body p-0">
+                                                        <div class="row">
+                                                            <div class="col-xl-2 col-md-2 col-sm-4">
+                                                                <div class="counter-icon border border-primary text-primary">
+                                                                    <i class="fe fe-mail"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-10 col-md-10 px-0 mb-1 col-sm-8">
+                                                                <h5 class="mb-1 fw-semibold">Correo</h5>
+                                                                <p class="fs-13 text-muted">info@confival.com</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="card p-0">
+                                                    <div class="card-body p-0">
+                                                        <div class="row">
+                                                            <div class="col-xl-2 col-md-2 col-sm-4">
+                                                                <div class="counter-icon border border-primary text-primary">
+                                                                    <i class="fe fe-airplay"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-10 col-md-10 px-0 mb-1 col-sm-8">
+                                                                <h5 class="mb-1 fw-semibold">Horario</h5>
+                                                                <p class="mb-0 fs-13 text-muted">
+                                                                    Lun - Vie: 8am
+                                                                    - 6pm
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <partial name="~/Views/Shared/_LoaderOportunidad.cshtml" model="loaderCuatro" />
+                    <form id="formLeadOportunidad" name="formLeadOportunidad" method="post" enctype="multipart/form-data">
+                        <div class="hide-info" id="oportunidad-hide">
+                            <div>
+                                <input type="hidden" id="correo-ok" name="correo-ok" />
+                                <input type="hidden" id="tp-documento-ok" name="tp-documento-ok" />
+                                <input type="hidden" id="no-documento-ok" name="no-documento-ok" />
+                                <input type="hidden" id="nombres-ok" name="nombres-ok" />
+                                <input type="hidden" id="apellidos-ok" name="apellidos-ok" />
+                                <input type="hidden" id="fNacimiento-ok" name="fNacimiento-ok" />
+                                <input type="hidden" id="fExpedicion-ok" name="fExpedicion-ok" />
+                                <input type="hidden" id="no-contacto-ok" name="no-contacto-ok" />
+                                <input type="hidden" id="valnumOk" name="valnumOk" />
+                            </div>
+                            <label class="form-label">¿Cual es su relación con la sentencia ó conciliación</label>
+                            <div class="row">
+                                @foreach (var item in ViewBag.TipoActores)
+                                {
+                                    <div class="col-lg-4 col-xs-12">
+                                        <div class="form-check">
+                                            @* en este input tenia el onclick  --  onclick="ChangeActor(@item.Id)"*@
+                                            <input type="radio" class="form-check-input" name="radio-stacked" id="@item.Id" required>
+                                            <label class="form-check-label">@item.Nombre</label>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="invalid-feedback" id="invalid-feedback-tipo-actores">Seleccione un tipo de relación.</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="form-label">Demandante</label>
+                                    <input class="form-control" type="text" id="demandante" name="demandante">
+                                    <div class="invalid-feedback" id="invalid-feedback-demandante">El campo 'Demandante' es requerido</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <label class="form-label">Cuenta de cobro</label>
+                                    <input class="form-control" type="text" id="cuenta-cobro-user" name="cuenta-cobro-user">
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Fecha de Ejecutoria</label>
+                                        <input class="form-control" type="date" placeholder="Fecha de Ejecutoria" id="f-ejecutoria" name="f-ejecutoria">
+                                        <div class="invalid-feedback" id="invalid-f-ejecutoria">El campo 'Fecha de Ejecutoria' es requerido</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Tipo de Fallo</label>
+                                        <select class="form-select" id="fallo" name="fallo">
+                                            <option selected disabled value="">Seleccione..</option>
+                                            @foreach (var item in ViewBag.LstProvidencia)
+                                            {
+                                                <option value="@item.Id">@item.Nombre</option>
+                                            }
+                                        </select>
+                                        <div class="invalid-feedback" id="invalid-feedback-tipo-fallo">Seleccione un tipo de fallo.</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Tipo Regimen</label>
+                                        <select class="form-select" id="tipo-regimen" name="tipo-regimen">
+                                            <option selected disabled value="">Seleccione..</option>
+                                            @foreach (var item in ViewBag.LstRegimen)
+                                            {
+                                                <option value="@item.Id">@item.Nombre</option>
+                                            }
+                                        </select>
+                                        <div class="invalid-feedback" id="invalid-feedback-tipo-regimen">Seleccione un tipo regimen.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Medio de control</label>
+                                        <select class="form-select" id="medio-control" name="medio-control">
+                                            <option selected disabled value="">Seleccione..</option>
+                                            @foreach (var item in ViewBag.LstMedioControl)
+                                            {
+                                                <option value="@item.Id">@item.Nombre</option>
+                                            }
+                                        </select>
+                                        <div class="invalid-feedback" id="invalid-feedback-medio-control">Seleccione un medio de control.</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Entidad</label>
+                                        <select class="form-select" id="entidad-pagaduria" name="entidad-pagaduria">
+                                            <option selected disabled value="">Seleccione..</option>
+                                            @foreach (var item in ViewBag.LstEntidad)
+                                            {
+                                                <option value="@item.Id">@item.Nombre</option>
+                                            }
+                                        </select>
+                                        <div class="invalid-feedback" id="invalid-feedback-entidad-pagaduria">Seleccione una entidad.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Tipo de Corporacion</label>
+                                        <select class="form-select" id="tipo-corporacion">
+                                            <option selected disabled value="">Seleccione..</option>
+                                            @foreach (var item in ViewBag.LstCorporacion)
+                                            {
+                                                <option value="@item.Id">@item.Nombre</option>
+                                            }
+                                        </select>
+                                        <div class="invalid-feedback" id="invalid-feedback-tipo-corporacion">Seleccione un tipo de corporacion.</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Corporacion</label>
+                                        <select class="form-select select2-show-search" id="corporacion" name="corporacion">
+                                            <option selected disabled value="">Seleccione..</option>
+                                        </select>
+                                        <div class="invalid-feedback" id="invalid-feedback-corporacion">Seleccione una corporacion.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="form-label">Numero de radicado</label>
+                                    <input class="form-control" type="text" placeholder="xxxxx - xx  - xx - xxx - xxxx - xxxxx - xx " id="numero-radicado-user" name="numero-radicado-user">
+                                    <div class="invalid-feedback" id="invalid-feedback-no-radicado">El numero de radicado debe tener 23 caracteres.</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Cargar documento primera instancia <span style="font-style:italic; font-size:12px;"> (opcional)</span></label>
+                                        <input type="file" class="dropify" data-height="200" id="primera-instancia-file" name="primera-instancia-file" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Cargar documento segunda instancia <span style="font-style:italic; font-size:12px;"> (opcional)</span></label>
+                                        <input type="file" class="dropify" data-height="200" id="segunda-instancia-file" name="segunda-instancia-file" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="btn-validar-celular">
+                                <a href="#Contact" class="btn btn-primary" onclick="LeadOportunidad()">Quiero que me contacten</a>
+                            </div>
+
+                            <!-- Intentos value -->
+                            <div class="hide-info">
+                                <p>Intentos: </p>
+                                <div id="intentos-sms-count">0</div>
+                            </div>
+                            <div class="hide-info">
+                                <p>Intentos: </p>
+                                <div id="intentos-verifik-count">0</div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts {
     <!-- INPUT MASK JS-->
